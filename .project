@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>MagisterkaBudzich</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.xtext.ui.shared.xtextBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>src/application/resources/circle.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/circle.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/clean.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/clean.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/icon.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/icon.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/square.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/square.png</location>
+		</link>
+	</linkedResources>
+</projectDescription>

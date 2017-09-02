@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#anchorPane_OnMouseClicked" prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1366.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="openFileMenuItem" mnemonicParsing="false" text="Open File" />
+                  <MenuItem fx:id="saveFileMenuItem" mnemonicParsing="false" text="Save File" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="settingsMenuItem" mnemonicParsing="false" text="Settings" />
+              	  <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitMenuItem_OnAction" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Separator layoutY="125.0" prefHeight="10.0" prefWidth="1366.0" />
+      <RadioButton fx:id="radio1" layoutX="48.0" layoutY="94.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="18.0" />
+      <RadioButton fx:id="radio2" layoutX="126.0" layoutY="97.0" mnemonicParsing="false" />
+      <Pane fx:id="mainPane" layoutY="130.0" onMouseClicked="#mainPane_OnMouseClicked" prefHeight="608.0" prefWidth="1366.0" />
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="24.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/circle.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="105.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resources/square.png" />
+         </image>
+      </ImageView>
+      <RadioButton fx:id="radio3" layoutX="204.0" layoutY="97.0" mnemonicParsing="false" />
+      <RadioButton fx:id="radio4" layoutX="283.0" layoutY="97.0" mnemonicParsing="false" />
+      <Button fx:id="clearAllButton" layoutX="461.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="60.0" prefWidth="60.0" />
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>
