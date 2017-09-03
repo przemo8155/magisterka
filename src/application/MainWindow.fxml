@@ -8,6 +8,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -50,6 +51,7 @@
       <RadioButton fx:id="radio3" layoutX="204.0" layoutY="97.0" mnemonicParsing="false" />
       <RadioButton fx:id="radio4" layoutX="283.0" layoutY="97.0" mnemonicParsing="false" />
       <Button fx:id="clearAllButton" layoutX="461.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="60.0" prefWidth="60.0" />
+      <ToggleButton layoutX="578.0" layoutY="70.0" mnemonicParsing="false" text="ToggleButton" />
    </children>
    <opaqueInsets>
       <Insets />
