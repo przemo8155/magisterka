@@ -61,6 +61,7 @@ public class MainWindowController {
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
+	ObservableList<Line> lineList = FXCollections.observableArrayList();
 
 	@FXML
 	private MenuItem openFileMenuItem;
@@ -78,7 +79,7 @@ public class MainWindowController {
 	private MenuItem aboutMenuItem;
 
 	@FXML
-	private Button createCircleButton, clearAllButton;
+	private Button clearAllButton;
 
 	@FXML
 	private AnchorPane anchorPane;
@@ -87,7 +88,7 @@ public class MainWindowController {
 	private Pane mainPane;
 
 	@FXML
-	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton;
+	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton;
 
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
@@ -144,18 +145,15 @@ public class MainWindowController {
 		@Override
 		public void handle(MouseEvent event) {
 
-			if( event.getSource() instanceof Circle) {
+			if (event.getSource() instanceof Circle) {
 
-                Circle circle = ((Circle) (event.getSource()));
-                circleId = mainPane.getChildren().indexOf(circle);
-            } else {
+				Circle circle = ((Circle) (event.getSource()));
+				circleId = mainPane.getChildren().indexOf(circle);
+			} else {
 
-                Node node = ((Node) (event.getSource()));
+				Node node = ((Node) (event.getSource()));
 
-
-
-            }
-
+			}
 
 		}
 	};
@@ -188,41 +186,50 @@ public class MainWindowController {
 			squareList.add(r);
 			break;
 
+		case "line":
+			EventHandler<MouseEvent> endOfTheLine = new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent event) {
+
+
+				}
+			};
 		}
 	}
-	
-	int takeMaximumFromLists(){
+
+	int takeMaximumFromLists() {
 		int w = 0;
 		w = circleList.size() + squareList.size();
 		return w;
 	}
-
 
 	@FXML
 	void mainPane_OnMouseDragged(MouseEvent event) {
 		switch (selectedToggle) {
 		case "move":
 			int _it = 0;
-			while(_it < takeMaximumFromLists())
-			{
-				Object g = mainPane.getChildren().get(_it);
-				if (g instanceof Circle) {
-					((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-					((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+			while (_it < takeMaximumFromLists()) {
+				try {
+					Object g = mainPane.getChildren().get(_it);
+					if (g instanceof Circle) {
+						((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+						((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+					}
+
+					if (g instanceof Rectangle) {
+						((Rectangle) g).setOnMousePressed(squareOnMousePressedEventHandler);
+						((Rectangle) g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
+					}
+
+					_it += 1;
+				} catch (Exception e) {
+					e.getMessage();
 				}
 
-				if (g instanceof Rectangle) {
-					 ((Rectangle)g).setOnMousePressed(squareOnMousePressedEventHandler);
-					 ((Rectangle)g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
-				}
-				
-				_it += 1;
-					
 			}
-			
-			
-				//Object g = mainPane.getChildren().get(0);
-			
+
+			// Object g = mainPane.getChildren().get(0);
 
 			break;
 		}
@@ -235,10 +242,12 @@ public class MainWindowController {
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
 		squareToggleButton.setToggleGroup(toggleButtonsGroup);
 		moveToggleButton.setToggleGroup(toggleButtonsGroup);
+		lineToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
 		moveToggleButton.setUserData("move");
+		lineToggleButton.setUserData("line");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
@@ -275,6 +284,5 @@ public class MainWindowController {
 	public static void infoBox(String infoMessage, String titleBar) {
 		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
 	}
-	
 
 }
