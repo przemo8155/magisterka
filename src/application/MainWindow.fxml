@@ -5,12 +5,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
@@ -35,23 +32,10 @@
         </menus>
       </MenuBar>
       <Separator layoutY="125.0" prefHeight="10.0" prefWidth="1366.0" />
-      <RadioButton fx:id="radio1" layoutX="48.0" layoutY="94.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="18.0" />
-      <RadioButton fx:id="radio2" layoutX="126.0" layoutY="97.0" mnemonicParsing="false" />
       <Pane fx:id="mainPane" layoutY="130.0" onMouseClicked="#mainPane_OnMouseClicked" prefHeight="608.0" prefWidth="1366.0" />
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="24.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@resources/circle.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="105.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@resources/square.png" />
-         </image>
-      </ImageView>
-      <RadioButton fx:id="radio3" layoutX="204.0" layoutY="97.0" mnemonicParsing="false" />
-      <RadioButton fx:id="radio4" layoutX="283.0" layoutY="97.0" mnemonicParsing="false" />
       <Button fx:id="clearAllButton" layoutX="461.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="60.0" prefWidth="60.0" />
-      <ToggleButton layoutX="578.0" layoutY="70.0" mnemonicParsing="false" text="ToggleButton" />
+      <ToggleButton fx:id="circleToggleButton" layoutX="21.0" layoutY="52.0" mnemonicParsing="false" text="circle" />
+      <ToggleButton fx:id="squareToggleButton" layoutX="112.0" layoutY="52.0" mnemonicParsing="false" text="square" />
    </children>
    <opaqueInsets>
       <Insets />

@@ -27,6 +27,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -51,6 +53,7 @@ public class MainWindowController {
 	double orgTranslateX, orgTranslateY;
 	static int minusWidth = 130;
 	int radio = 0;
+	String selectedToggle = "";
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 
@@ -73,13 +76,14 @@ public class MainWindowController {
     private Button createCircleButton, clearAllButton;
 
     @FXML
-    private RadioButton radio1, radio2, radio3, radio4;
-
-    @FXML
     private AnchorPane anchorPane;
 
     @FXML
     private Pane mainPane;
+
+    @FXML
+    private ToggleButton squareToggleButton, circleToggleButton;
+
 
     EventHandler<MouseEvent> circleOnMousePressedEventHandler =
             new EventHandler<MouseEvent>() {
@@ -166,70 +170,51 @@ public class MainWindowController {
 			case 3:
 				mainPane.getChildren().clear();
 		}
+
+    	switch(selectedToggle)
+    	{
+    		case "circle":
+    			Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f, Paint.valueOf("#923456"));
+    			c.setStroke(Paint.valueOf("#555555"));
+    			c.setStrokeWidth(5.0f);
+    			mainPane.getChildren().add(c);
+    			c.setOnMousePressed(circleOnMousePressedEventHandler);
+    			circleList.add(c);
+    			break;
+
+    		case "square":
+				Rectangle r = new Rectangle(event.getSceneX() - 20, event.getSceneY() - minusWidth - 20, 40.0f, 40.0f);
+				r.setFill(Paint.valueOf("#ABCDEF"));
+				r.setStroke(Paint.valueOf("#555555"));
+				r.setStrokeWidth(5.0f);
+				mainPane.getChildren().add(r);
+				r.setOnMousePressed(circleOnMousePressedEventHandler);
+				break;
+
+    	}
     }
 
 
 	public void initialize()
 	{
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
+		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
+		circleToggleButton.setToggleGroup(toggleButtonsGroup);
+		squareToggleButton.setToggleGroup(toggleButtonsGroup);
 
-		ToggleGroup group = new ToggleGroup();
-		radio1.setToggleGroup(group);
-		radio2.setToggleGroup(group);
-		radio3.setToggleGroup(group);
-		radio4.setToggleGroup(group);
+		circleToggleButton.setUserData("circle");
+		squareToggleButton.setUserData("square");
 
-		radio1.selectedProperty().addListener(new ChangeListener<Boolean>()
-		{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-		        if (isNowSelected)
-		        {
-		        		radio = 1;
-
-		        }
-
-		    }
+		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+		    public void changed(ObservableValue<? extends Toggle> ov,
+		        Toggle toggle, Toggle new_toggle) {
+		            if (new_toggle == null)
+		                selectedToggle = "null";
+		            else
+		                selectedToggle = (String)toggleButtonsGroup.getSelectedToggle().getUserData();
+		         }
 		});
 
-		radio2.selectedProperty().addListener(new ChangeListener<Boolean>()
-		{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-		        if (isNowSelected)
-		        {
-		        		radio = 2;
-
-		        }
-
-		    }
-		});
-
-		radio3.selectedProperty().addListener(new ChangeListener<Boolean>()
-		{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-		        if (isNowSelected)
-		        {
-		        		radio = 3;
-
-		        }
-
-		    }
-		});
-
-		radio4.selectedProperty().addListener(new ChangeListener<Boolean>()
-		{
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-		        if (isNowSelected)
-		        {
-		        		radio = 4;
-
-		        }
-
-		    }
-		});
 
 
 	}
