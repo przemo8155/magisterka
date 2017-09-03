@@ -57,6 +57,7 @@ public class MainWindowController {
 	static int minusWidth = 95;
 	String selectedToggle = "";
 	String idObj = "";
+	int circleId = 0;
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
@@ -138,6 +139,27 @@ public class MainWindowController {
 		}
 	};
 
+	EventHandler<MouseEvent> myHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+
+			if( event.getSource() instanceof Circle) {
+
+                Circle circle = ((Circle) (event.getSource()));
+                circleId = mainPane.getChildren().indexOf(circle);
+            } else {
+
+                Node node = ((Node) (event.getSource()));
+
+
+
+            }
+
+
+		}
+	};
+
 	@FXML
 	void anchorPane_OnMouseClicked(MouseEvent event) {
 
@@ -168,36 +190,39 @@ public class MainWindowController {
 
 		}
 	}
-	private class MyEventHandler implements EventHandler<Event>{
-        @Override
-        public void handle(Event evt) {
-           System.out.println(((Control)evt.getSource()).getId());
-        }
-    }
+	
+	int takeMaximumFromLists(){
+		int w = 0;
+		w = circleList.size() + squareList.size();
+		return w;
+	}
 
-	EventHandler<Event> checkIdOfObject = new EventHandler<Event>() {
 
-		@Override
-		public void handle(Event event) {
-			idObj = ((Control)event.getSource()).getId();
-
-		}
-	};
 	@FXML
 	void mainPane_OnMouseDragged(MouseEvent event) {
 		switch (selectedToggle) {
 		case "move":
-			Object f = (Object)event.getSource();
-			Object g = mainPane.getChildren().get(0);
-			if (g instanceof Circle) {
-				((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-				((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
-			}
+			int _it = 0;
+			while(_it < takeMaximumFromLists())
+			{
+				Object g = mainPane.getChildren().get(_it);
+				if (g instanceof Circle) {
+					((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+					((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+				}
 
-			if (g instanceof Rectangle) {
-				 ((Rectangle)g).setOnMousePressed(squareOnMousePressedEventHandler);
-				 ((Rectangle)g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
+				if (g instanceof Rectangle) {
+					 ((Rectangle)g).setOnMousePressed(squareOnMousePressedEventHandler);
+					 ((Rectangle)g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
+				}
+				
+				_it += 1;
+					
 			}
+			
+			
+				//Object g = mainPane.getChildren().get(0);
+			
 
 			break;
 		}
@@ -250,5 +275,6 @@ public class MainWindowController {
 	public static void infoBox(String infoMessage, String titleBar) {
 		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
 	}
+	
 
 }
