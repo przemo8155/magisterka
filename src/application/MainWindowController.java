@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -55,6 +56,7 @@ public class MainWindowController {
 	String selectedToggle = "";
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
+	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
 
     @FXML
     private MenuItem openFileMenuItem;
@@ -81,7 +83,7 @@ public class MainWindowController {
     private Pane mainPane;
 
     @FXML
-    private ToggleButton squareToggleButton, circleToggleButton;
+    private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton;
 
 
     EventHandler<MouseEvent> circleOnMousePressedEventHandler =
@@ -111,32 +113,34 @@ public class MainWindowController {
                 }
             };
 
-            EventHandler<MouseEvent> arcOnMousePressedEventHandler =
+            EventHandler<MouseEvent> squareOnMousePressedEventHandler =
                     new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent t) {
                         orgSceneX = t.getSceneX();
-                        orgSceneY = t.getSceneY();
-                        orgTranslateX = ((Arc)(t.getSource())).getTranslateX();
-                        orgTranslateY = ((Arc)(t.getSource())).getTranslateY();
+                        orgSceneY = t.getSceneY() - minusWidth;
+                        orgTranslateX = ((Circle)(t.getSource())).getTranslateX();
+                        orgTranslateY = ((Circle)(t.getSource())).getTranslateY();
                     }
                 };
 
-                EventHandler<MouseEvent> arcOnMouseDraggedEventHandler =
+                EventHandler<MouseEvent> squareOnMouseDraggedEventHandler =
                         new EventHandler<MouseEvent>() {
 
                         @Override
                         public void handle(MouseEvent t) {
                             double offsetX = t.getSceneX() - orgSceneX;
-                            double offsetY = t.getSceneY() - orgSceneY;
-                            double newTranslateX = orgTranslateX + offsetX;
-                            double newTranslateY = orgTranslateY + offsetY;
+                            double offsetY = t.getSceneY() - orgSceneY - minusWidth;
+                            double newTranslateX = orgTranslateX + offsetX - 20;
+                            double newTranslateY = orgTranslateY + offsetY - 20;
 
-                            ((Arc)(t.getSource())).setTranslateX(newTranslateX);
-                            ((Arc)(t.getSource())).setTranslateY(newTranslateY);
+                            ((Rectangle)(t.getSource())).setTranslateX(newTranslateX);
+                            ((Rectangle)(t.getSource())).setTranslateY(newTranslateY);
                         }
                     };
+
+
 
     @FXML
     void anchorPane_OnMouseClicked(MouseEvent event)
@@ -165,11 +169,77 @@ public class MainWindowController {
 				r.setStroke(Paint.valueOf("#555555"));
 				r.setStrokeWidth(5.0f);
 				mainPane.getChildren().add(r);
-				r.setOnMousePressed(circleOnMousePressedEventHandler);
+				r.setOnMousePressed(squareOnMousePressedEventHandler);
+				squareList.add(r);
 				break;
+
 
     	}
     }
+
+    class DragContext {
+        double x;
+        double y;
+    }
+
+    DragContext dragContext = new DragContext();
+
+    @FXML
+    void mainPane_OnMouseDragged(MouseEvent event)
+    {
+    	switch(selectedToggle)
+    	{
+    		case "move":
+    			Object g = mainPane.getChildren().get(0);
+    			((Circle)g).setOnMousePressed(onMousePressedEventHandler);
+    			((Circle)g).setOnMouseDragged(onMouseDraggedEventHandler);
+    				//((Rectangle) g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
+
+
+    			break;
+    	}
+    }
+
+    EventHandler<MouseEvent> onMousePressedEventHandler = event -> {
+
+        if( event.getSource() instanceof Circle) {
+
+            Circle circle = (Circle) (event.getSource());
+
+            dragContext.x = circle.getCenterX() - event.getSceneX();
+            dragContext.y = circle.getCenterY() - event.getSceneY() - minusWidth;
+
+        } else {
+
+            Node node = (Node) (event.getSource());
+
+            dragContext.x = node.getTranslateX() - event.getSceneX();
+            dragContext.y = node.getTranslateY() - event.getSceneY() - minusWidth;
+
+        }
+    };
+
+
+
+    EventHandler<MouseEvent> onMouseDraggedEventHandler = event -> {
+
+        if( event.getSource() instanceof Circle) {
+
+            Circle circle = (Circle) (event.getSource());
+
+            circle.setCenterX( dragContext.x + event.getSceneX());
+            circle.setCenterY( dragContext.y + event.getSceneY() - minusWidth);
+
+        } else {
+
+            Node node = (Node) (event.getSource());
+
+            node.setTranslateX( dragContext.x + event.getSceneX());
+            node.setTranslateY( dragContext.y + event.getSceneY() - minusWidth);
+
+        }
+
+    };
 
 
 	public void initialize()
@@ -178,9 +248,11 @@ public class MainWindowController {
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
 		squareToggleButton.setToggleGroup(toggleButtonsGroup);
+		moveToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
+		moveToggleButton.setUserData("move");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
 		    public void changed(ObservableValue<? extends Toggle> ov,

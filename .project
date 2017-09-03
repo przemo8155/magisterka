@@ -47,6 +47,21 @@
 			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/icon.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/move.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/move.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/moveClicked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/moveClicked.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/moveNoClicked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/moveNoClicked.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/square.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/square.png</location>
