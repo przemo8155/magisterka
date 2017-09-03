@@ -5,3 +5,26 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
+
+#circleToggleButton {
+    -fx-background-image: url('resources/circleNoChecked.png');
+    -fx-background-size: 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#circleToggleButton:selected {
+  -fx-background-image: url('resources/circleChecked.png');
+}
+
+
+#squareToggleButton {
+    -fx-background-image: url('resources/squareNoChecked.png');
+    -fx-background-size: 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#squareToggleButton:selected {
+  -fx-background-image: url('resources/squareChecked.png');
+}

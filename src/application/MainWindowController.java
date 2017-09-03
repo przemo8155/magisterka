@@ -51,8 +51,7 @@ public class MainWindowController {
 
 	double orgSceneX, orgSceneY;
 	double orgTranslateX, orgTranslateY;
-	static int minusWidth = 130;
-	int radio = 0;
+	static int minusWidth = 95;
 	String selectedToggle = "";
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
@@ -148,28 +147,6 @@ public class MainWindowController {
     @FXML
     void mainPane_OnMouseClicked(MouseEvent event)
     {
-    	switch(radio)
-		{
-			case 1:
-				Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f, Paint.valueOf("#923456"));
-				c.setStroke(Paint.valueOf("#555555"));
-				c.setStrokeWidth(5.0f);
-				mainPane.getChildren().add(c);
-				c.setOnMousePressed(circleOnMousePressedEventHandler);
-				circleList.add(c);
-				break;
-
-			case 2:
-				Rectangle r = new Rectangle(event.getSceneX() - 20, event.getSceneY() - minusWidth - 20, 40.0f, 40.0f);
-				r.setFill(Paint.valueOf("#ABCDEF"));
-				r.setStroke(Paint.valueOf("#555555"));
-				r.setStrokeWidth(5.0f);
-				mainPane.getChildren().add(r);
-				r.setOnMousePressed(circleOnMousePressedEventHandler);
-				break;
-			case 3:
-				mainPane.getChildren().clear();
-		}
 
     	switch(selectedToggle)
     	{

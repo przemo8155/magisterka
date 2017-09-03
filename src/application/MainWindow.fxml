@@ -31,11 +31,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Separator layoutY="125.0" prefHeight="10.0" prefWidth="1366.0" />
-      <Pane fx:id="mainPane" layoutY="130.0" onMouseClicked="#mainPane_OnMouseClicked" prefHeight="608.0" prefWidth="1366.0" />
-      <Button fx:id="clearAllButton" layoutX="461.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="60.0" prefWidth="60.0" />
-      <ToggleButton fx:id="circleToggleButton" layoutX="21.0" layoutY="52.0" mnemonicParsing="false" text="circle" />
-      <ToggleButton fx:id="squareToggleButton" layoutX="112.0" layoutY="52.0" mnemonicParsing="false" text="square" />
+      <Separator layoutY="90.0" prefHeight="10.0" prefWidth="1366.0" />
+      <Pane fx:id="mainPane" layoutY="95.0" onMouseClicked="#mainPane_OnMouseClicked" prefHeight="608.0" prefWidth="1366.0" />
+      <Button fx:id="clearAllButton" layoutX="213.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
+      <ToggleButton fx:id="circleToggleButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
+      <ToggleButton fx:id="squareToggleButton" layoutX="70.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
    </children>
    <opaqueInsets>
       <Insets />

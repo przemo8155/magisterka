@@ -27,6 +27,16 @@
 			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/circle.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/circleChecked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/circleChecked.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/circleNoChecked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/circleNoChecked.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/clean.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/clean.png</location>
@@ -40,6 +50,16 @@
 			<name>src/application/resources/square.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/square.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/squareChecked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/squareChecked.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/squareNoChecked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/squareNoChecked.png</location>
 		</link>
 	</linkedResources>
 </projectDescription>
