@@ -59,6 +59,8 @@ public class MainWindowController {
 	String idObj = "";
 	int circleId = 0;
 
+	Utilities utilities = new Utilities();
+
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
 	ObservableList<Line> lineList = FXCollections.observableArrayList();
@@ -198,18 +200,13 @@ public class MainWindowController {
 		}
 	}
 
-	int takeMaximumFromLists() {
-		int w = 0;
-		w = circleList.size() + squareList.size();
-		return w;
-	}
 
 	@FXML
 	void mainPane_OnMouseDragged(MouseEvent event) {
 		switch (selectedToggle) {
 		case "move":
 			int _it = 0;
-			while (_it < takeMaximumFromLists()) {
+			while (_it < utilities.takeMaximumFromLists(circleList, squareList)) {
 				try {
 					Object g = mainPane.getChildren().get(_it);
 					if (g instanceof Circle) {
@@ -229,7 +226,6 @@ public class MainWindowController {
 
 			}
 
-			// Object g = mainPane.getChildren().get(0);
 
 			break;
 		}
@@ -262,27 +258,13 @@ public class MainWindowController {
 
 	@FXML
 	void exitMenuItem_OnAction(ActionEvent event) {
-		Platform.exit();
-		System.exit(0);
+		Utilities.exitFromApplication();
 	}
 
 	@FXML
 	void clearAllButton_OnMouseClicked(MouseEvent event) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Question");
-		alert.setHeaderText("Clear all elements");
-		alert.setContentText("Are you sure?");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			mainPane.getChildren().clear();
-		} else {
-			// ... user chose CANCEL or closed the dialog
-		}
+		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?");
 	}
 
-	public static void infoBox(String infoMessage, String titleBar) {
-		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
-	}
 
 }
