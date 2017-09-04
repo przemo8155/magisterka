@@ -145,6 +145,8 @@ public class MainWindowController {
 		}
 	};
 
+
+
 	EventHandler<MouseEvent> myHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -193,18 +195,49 @@ public class MainWindowController {
 
 		case "line":
 			if(_isFirst){
-				_firstPosX = event.getSceneX();
-				_firstPosY = event.getSceneY() - minusWidth;
-				_isFirst = false;
+				int _it = 0;
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList)) {
+					try {
+						Object g = mainPane.getChildren().get(_it);
+						if (g instanceof Circle || g instanceof Rectangle) {
+							_firstPosX = ((Circle) g).getCenterX();
+							_firstPosY = ((Circle) g).getCenterY();
+							_isFirst = false;
+							break;
+						}
+
+
+						_it += 1;
+					} catch (Exception e) {
+						e.getMessage();
+					}
+
+
+				}
+
 			}
 			else{
-				_secPosX = event.getSceneX();
-				_secPosY = event.getSceneY() - minusWidth;
-				_isFirst = true;
-				Line l = new Line(_firstPosX, _firstPosY, _secPosX, _secPosY);
-				l.setStroke(Paint.valueOf("#FEDCBA"));
-				mainPane.getChildren().add(l);
-				lineList.add(l);
+				int _it = 0;
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList)) {
+					try {
+						Object g = mainPane.getChildren().get(_it);
+						if (g instanceof Circle || g instanceof Rectangle) {
+							_secPosX = ((Circle) g).getCenterX();
+							_secPosY = ((Circle) g).getCenterY();
+							_isFirst = true;
+							Line l = new Line(_firstPosX, _firstPosY, _secPosX, _secPosY);
+							l.setStroke(Paint.valueOf("#ABCDEF"));
+							l.setStrokeWidth(10.0f);
+							mainPane.getChildren().add(l);
+							lineList.add(l);
+							break;
+						}
+						_it += 1;
+					} catch (Exception e) {
+						e.getMessage();
+					}
+				}
+
 			}
 
 
