@@ -59,6 +59,9 @@ public class MainWindowController {
 	String idObj = "";
 	int circleId = 0;
 
+	double _secPosX, _secPosY, _firstPosX, _firstPosY;
+	boolean _isFirst = true;
+
 	Utilities utilities = new Utilities();
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
@@ -189,15 +192,30 @@ public class MainWindowController {
 			break;
 
 		case "line":
-			EventHandler<MouseEvent> endOfTheLine = new EventHandler<MouseEvent>() {
+			if(_isFirst){
+				_firstPosX = event.getSceneX();
+				_firstPosY = event.getSceneY() - minusWidth;
+				_isFirst = false;
+			}
+			else{
+				_secPosX = event.getSceneX();
+				_secPosY = event.getSceneY() - minusWidth;
+				_isFirst = true;
+				Line l = new Line(_firstPosX, _firstPosY, _secPosX, _secPosY);
+				l.setStroke(Paint.valueOf("#FEDCBA"));
+				mainPane.getChildren().add(l);
+				lineList.add(l);
+			}
 
-				@Override
-				public void handle(MouseEvent event) {
 
 
-				}
-			};
 		}
+	}
+
+
+	public void waitOnSecClick(MouseEvent e){
+		_secPosX = e.getSceneX();
+		_secPosY = e.getSceneY();
 	}
 
 

@@ -47,6 +47,16 @@
 			<location>D:/PrzemekWorkspace/Magisterka/src/application/resources/icon.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/lineChecked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/lineChecked.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/lineNoChecked.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/lineNoChecked.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/move.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/move.png</location>

@@ -39,3 +39,14 @@
 #moveToggleButton:selected {
   -fx-background-image: url('resources/moveClicked.png');
 }
+
+#lineToggleButton {
+    -fx-background-image: url('resources/lineNoChecked.png');
+    -fx-background-size: 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#lineToggleButton:selected {
+  -fx-background-image: url('resources/lineChecked.png');
+}
