@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Alert.AlertType;
 
@@ -39,9 +40,9 @@ public class Utilities {
 		System.exit(0);
 	}
 
-	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle) {
+	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle, ObservableList<Line> line) {
 		int w = 0;
-		w = circle.size() + rectangle.size();
+		w = circle.size() + rectangle.size() + line.size();
 		return w;
 	}
 

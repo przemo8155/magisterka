@@ -145,8 +145,6 @@ public class MainWindowController {
 		}
 	};
 
-
-
 	EventHandler<MouseEvent> myHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -194,43 +192,65 @@ public class MainWindowController {
 			break;
 
 		case "line":
-			if(_isFirst){
+			if (_isFirst) {
 				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList)) {
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
 						Object g = mainPane.getChildren().get(_it);
 						if (g instanceof Circle || g instanceof Rectangle) {
-							_firstPosX = ((Circle) g).getCenterX();
-							_firstPosY = ((Circle) g).getCenterY();
-							_isFirst = false;
-							break;
-						}
 
+							Circle check1 = circleList.get(_it);
+
+							double _c1 = check1.getCenterX();
+							double _c2 = check1.getCenterY();
+
+							double _x = event.getSceneX();
+							double _y = event.getSceneY() - minusWidth;
+
+							if ((_x > _c1 - 30) && (_x < _c1 + 30) && (_y > _c2 - 30) && (_y < _c2 + 30)) {
+								Circle check2 = ((Circle) g);
+								_firstPosX = ((Circle) g).getCenterX();
+								_firstPosY = ((Circle) g).getCenterY();
+								_isFirst = false;
+
+							}
+
+
+						}
 
 						_it += 1;
 					} catch (Exception e) {
 						e.getMessage();
 					}
 
-
 				}
 
-			}
-			else{
+			} else {
 				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList)) {
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
 						Object g = mainPane.getChildren().get(_it);
 						if (g instanceof Circle || g instanceof Rectangle) {
-							_secPosX = ((Circle) g).getCenterX();
-							_secPosY = ((Circle) g).getCenterY();
-							_isFirst = true;
-							Line l = new Line(_firstPosX, _firstPosY, _secPosX, _secPosY);
-							l.setStroke(Paint.valueOf("#ABCDEF"));
-							l.setStrokeWidth(10.0f);
-							mainPane.getChildren().add(l);
-							lineList.add(l);
-							break;
+							Circle check1 = circleList.get(_it);
+
+							double _c1 = check1.getCenterX();
+							double _c2 = check1.getCenterY();
+
+							double _x = event.getSceneX();
+							double _y = event.getSceneY() - minusWidth;
+
+							if ((_x > _c1 - 30) && (_x < _c1 + 30) && (_y > _c2 - 30) && (_y < _c2 + 30)) {
+								_secPosX = ((Circle) g).getCenterX();
+								_secPosY = ((Circle) g).getCenterY();
+								Line l = new Line(_firstPosX, _firstPosY, _secPosX, _secPosY);
+								l.setStroke(Paint.valueOf("#ABCDEF"));
+								l.setStrokeWidth(10.0f);
+								mainPane.getChildren().add(l);
+								lineList.add(l);
+								_isFirst = true;
+
+							}
+
 						}
 						_it += 1;
 					} catch (Exception e) {
@@ -239,25 +259,21 @@ public class MainWindowController {
 				}
 
 			}
-
-
 
 		}
 	}
 
-
-	public void waitOnSecClick(MouseEvent e){
+	public void waitOnSecClick(MouseEvent e) {
 		_secPosX = e.getSceneX();
 		_secPosY = e.getSceneY();
 	}
-
 
 	@FXML
 	void mainPane_OnMouseDragged(MouseEvent event) {
 		switch (selectedToggle) {
 		case "move":
 			int _it = 0;
-			while (_it < utilities.takeMaximumFromLists(circleList, squareList)) {
+			while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 				try {
 					Object g = mainPane.getChildren().get(_it);
 					if (g instanceof Circle) {
@@ -276,7 +292,6 @@ public class MainWindowController {
 				}
 
 			}
-
 
 			break;
 		}
@@ -315,7 +330,9 @@ public class MainWindowController {
 	@FXML
 	void clearAllButton_OnMouseClicked(MouseEvent event) {
 		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?");
+		circleList.clear();
+		squareList.clear();
+		lineList.clear();
 	}
-
 
 }
