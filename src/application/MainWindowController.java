@@ -62,7 +62,7 @@ public class MainWindowController {
 	static int circleRay = 30, squareRay = 200, lineRay = 10;
 
 	double _secPosX, _secPosY, _firstPosX, _firstPosY;
-	boolean _isFirst = true;
+	boolean _isCircleFirst = true, _isRectangleFirst = true;
 
 	Utilities utilities = new Utilities();
 
@@ -194,10 +194,11 @@ public class MainWindowController {
 			break;
 
 		case "line":
-			if (_isFirst) {
+			if (_isCircleFirst) {
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
+						utilities.infoBox(Integer.toString(_it));
 						Object g = mainPane.getChildren().get(_it);
 						if (g instanceof Circle) {
 
@@ -209,18 +210,20 @@ public class MainWindowController {
 							double _x = event.getSceneX();
 							double _y = event.getSceneY() - minusWidth;
 
-							if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y > _c2 - circleRay) && (_y < _c2 + circleRay)) {
+							if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y > _c2 - circleRay)
+									&& (_y < _c2 + circleRay)) {
 								Circle check2 = ((Circle) g);
 								_firstPosX = ((Circle) g).getCenterX();
 								_firstPosY = ((Circle) g).getCenterY();
-								_isFirst = false;
+								_isCircleFirst = false;
+								break;
 							}
-
+							_it += 1;
 
 						}
 
-						if(g instanceof Rectangle){
-
+						else {
+							utilities.infoBox("rectangle 1");
 							Rectangle check1 = squareList.get(_it);
 
 							double _c1 = check1.getLayoutX();
@@ -229,25 +232,28 @@ public class MainWindowController {
 							double _x = event.getSceneX() - 20;
 							double _y = event.getSceneY() - minusWidth - 20;
 
-							if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y < _c2 + squareRay) && (_y > _c2 - squareRay)) {
+							if ((_x > _c1 - squareRay) && (_y < _c2 + squareRay)) {
 								_firstPosX = ((Rectangle) g).getX();
 								_firstPosY = ((Rectangle) g).getY();
-								_isFirst = false;
-
+								_isCircleFirst = false;
+								break;
 							}
+							_it += 1;
 						}
 
-						_it += 1;
+						
 					} catch (Exception e) {
 						e.getMessage();
 					}
 
 				}
 
-			} else {
+			}
+			else {
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
+						utilities.infoBox(Integer.toString(_it));
 						Object g = mainPane.getChildren().get(_it);
 						if (g instanceof Circle) {
 							Circle check1 = circleList.get(_it);
@@ -258,7 +264,8 @@ public class MainWindowController {
 							double _x = event.getSceneX();
 							double _y = event.getSceneY() - minusWidth;
 
-							if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y < _c2 + circleRay) && (_y > _c2 - circleRay)) {
+							if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y < _c2 + circleRay)
+									&& (_y > _c2 - circleRay)) {
 								_secPosX = ((Circle) g).getCenterX();
 								_secPosY = ((Circle) g).getCenterY();
 								Line l = new Line(_firstPosX, _firstPosY, _secPosX, _secPosY);
@@ -266,13 +273,16 @@ public class MainWindowController {
 								l.setStrokeWidth(10.0f);
 								mainPane.getChildren().add(l);
 								lineList.add(l);
-								_isFirst = true;
+								_isCircleFirst = true;
+								break;
 
 							}
+							_it += 1;
 
 						}
 
-						if(g instanceof Rectangle){
+						else {
+							utilities.infoBox("rectangle 2");
 							Rectangle check1 = squareList.get(_it);
 
 							double _c1 = check1.getLayoutX();
@@ -281,7 +291,7 @@ public class MainWindowController {
 							double _x = event.getSceneX();
 							double _y = event.getSceneY() - minusWidth;
 
-							if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y < _c2 + squareRay) && (_y > _c2 - squareRay)) {
+							if ((_x > _c1 - squareRay) && (_y < _c2 + squareRay)) {
 								_secPosX = ((Rectangle) g).getX();
 								_secPosY = ((Rectangle) g).getY();
 								Line l = new Line(_firstPosX, _firstPosY, _secPosX, _secPosY);
@@ -289,11 +299,15 @@ public class MainWindowController {
 								l.setStrokeWidth(10.0f);
 								mainPane.getChildren().add(l);
 								lineList.add(l);
-								_isFirst = true;
+								_isCircleFirst = true;
+								break;
 
 							}
+							_it += 1;
 						}
-						_it += 1;
+
+						
+
 					} catch (Exception e) {
 						e.getMessage();
 					}
