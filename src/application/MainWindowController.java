@@ -22,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -241,7 +242,7 @@ public class MainWindowController {
 							_it += 1;
 						}
 
-						
+
 					} catch (Exception e) {
 						e.getMessage();
 					}
@@ -306,7 +307,7 @@ public class MainWindowController {
 							_it += 1;
 						}
 
-						
+
 
 					} catch (Exception e) {
 						e.getMessage();
@@ -380,6 +381,22 @@ public class MainWindowController {
 	@FXML
 	void exitMenuItem_OnAction(ActionEvent event) {
 		Utilities.exitFromApplication();
+	}
+
+	@FXML
+	void settingsMenuItem_OnAction(ActionEvent event){
+		try {
+	        FXMLLoader fxmlLoader = new FXMLLoader();
+	        fxmlLoader.setLocation(getClass().getResource("Settings.fxml"));
+	        Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+	        Stage stage = new Stage();
+	        stage.setTitle("Settings");
+	        stage.setScene(scene);
+	        stage.show();
+	    }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 	@FXML
