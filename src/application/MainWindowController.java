@@ -388,10 +388,13 @@ public class MainWindowController {
 		try {
 	        FXMLLoader fxmlLoader = new FXMLLoader();
 	        fxmlLoader.setLocation(getClass().getResource("Settings.fxml"));
+
 	        Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+	        scene.getStylesheets().add(getClass().getResource("settings.css").toExternalForm());
 	        Stage stage = new Stage();
 	        stage.setTitle("Settings");
 	        stage.setScene(scene);
+	        stage.getIcons().add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
 	        stage.show();
 	    }
         catch (IOException e) {

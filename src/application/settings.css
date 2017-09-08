@@ -1,0 +1,6 @@
+#saveButton {
+    -fx-background-image: url('resources/save.png');
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
