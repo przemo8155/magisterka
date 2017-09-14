@@ -199,7 +199,7 @@ public class MainWindowController {
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
-						utilities.infoBox(Integer.toString(_it));
+						// utilities.infoBox(Integer.toString(_it));
 						Object g = mainPane.getChildren().get(_it);
 						if (g instanceof Circle) {
 
@@ -224,7 +224,7 @@ public class MainWindowController {
 						}
 
 						else {
-							utilities.infoBox("rectangle 1");
+							// utilities.infoBox("rectangle 1");
 							Rectangle check1 = squareList.get(_it);
 
 							double _c1 = check1.getLayoutX();
@@ -242,19 +242,17 @@ public class MainWindowController {
 							_it += 1;
 						}
 
-
 					} catch (Exception e) {
 						e.getMessage();
 					}
 
 				}
 
-			}
-			else {
+			} else {
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
-						utilities.infoBox(Integer.toString(_it));
+						// utilities.infoBox(Integer.toString(_it));
 						Object g = mainPane.getChildren().get(_it);
 						if (g instanceof Circle) {
 							Circle check1 = circleList.get(_it);
@@ -283,7 +281,7 @@ public class MainWindowController {
 						}
 
 						else {
-							utilities.infoBox("rectangle 2");
+							// utilities.infoBox("rectangle 2");
 							Rectangle check1 = squareList.get(_it);
 
 							double _c1 = check1.getLayoutX();
@@ -306,8 +304,6 @@ public class MainWindowController {
 							}
 							_it += 1;
 						}
-
-
 
 					} catch (Exception e) {
 						e.getMessage();
@@ -333,8 +329,50 @@ public class MainWindowController {
 				try {
 					Object g = mainPane.getChildren().get(_it);
 					if (g instanceof Circle) {
-						((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-						((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+						double _lineStartX = 0, _lineStartY = 0, _lineEndX = 0, _lineEndY = 0;
+						boolean start = true;
+						for(Line l : lineList){
+							double _t1 = ((Circle) g).getCenterX();
+							double _t2 = ((Circle) g).getCenterY();
+							
+							if(l.getStartX() == _t1 && l.getStartY() == _t2){
+								_lineEndX = l.getEndX();
+								_lineEndY = l.getEndY();
+								((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+								((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+								double _t3 = ((Circle) g).getCenterX();
+								double _t4 = ((Circle) g).getCenterY();
+								_lineStartX = _t3;
+								_lineStartY = _t4;
+								Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
+								_l.setStroke(Paint.valueOf("#ABCDEF"));
+								_l.setStrokeWidth(10.0f);
+								mainPane.getChildren().add(_l);
+								
+								
+							}
+							if(l.getEndX() == _t1 && l.getEndY() == _t2){
+								_lineStartX = l.getStartX();
+								_lineStartY = l.getStartY();
+								((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+								((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+								double _t3 = ((Circle) g).getCenterX();
+								double _t4 = ((Circle) g).getCenterY();
+								_lineEndX = _t3;
+								_lineEndY = _t4;
+								Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
+								_l.setStroke(Paint.valueOf("#ABCDEF"));
+								_l.setStrokeWidth(10.0f);
+								mainPane.getChildren().add(_l);
+							}
+						}
+						
+						
+						
+						
+						
+						
+
 					}
 
 					if (g instanceof Rectangle) {
@@ -384,22 +422,22 @@ public class MainWindowController {
 	}
 
 	@FXML
-	void settingsMenuItem_OnAction(ActionEvent event){
+	void settingsMenuItem_OnAction(ActionEvent event) {
 		try {
-	        FXMLLoader fxmlLoader = new FXMLLoader();
-	        fxmlLoader.setLocation(getClass().getResource("Settings.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("Settings.fxml"));
 
-	        Scene scene = new Scene(fxmlLoader.load(), 300, 300);
-	        scene.getStylesheets().add(getClass().getResource("settings.css").toExternalForm());
-	        Stage stage = new Stage();
-	        stage.setTitle("Settings");
-	        stage.setScene(scene);
-	        stage.getIcons().add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
-	        stage.show();
-	    }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+			Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+			scene.getStylesheets().add(getClass().getResource("settings.css").toExternalForm());
+			Stage stage = new Stage();
+			stage.setTitle("Settings");
+			stage.setScene(scene);
+			stage.getIcons()
+					.add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
