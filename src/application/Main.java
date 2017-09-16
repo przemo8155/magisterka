@@ -21,10 +21,21 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 
+	private static Stage pStage;
+
+	public static Stage getPrimaryStage() {
+        return pStage;
+    }
+
+    private void setPrimaryStage(Stage pStage) {
+        Main.pStage = pStage;
+    }
+
 	@Override
 	public void start(Stage primaryStage) {
 
 		try {
+			setPrimaryStage(primaryStage);
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("MainWindow.fxml"));
 			BorderPane root = new BorderPane();
@@ -43,7 +54,6 @@ public class Main extends Application {
 			primaryStage.setMaximized(true);
 
 			primaryStage.show();
-
 
 		} catch(Exception e) {
 			e.printStackTrace();

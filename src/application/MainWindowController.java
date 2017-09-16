@@ -10,8 +10,12 @@ import javax.swing.JOptionPane;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import com.sun.javafx.stage.StageHelper;
+
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -46,6 +50,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.*;
 import javafx.scene.shape.*;
 
@@ -66,6 +71,8 @@ public class MainWindowController {
 	boolean _isCircleFirst = true, _isRectangleFirst = true;
 
 	Utilities utilities = new Utilities();
+	FileManager fileManager = new FileManager();
+	Main main = new Main();
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
@@ -97,6 +104,9 @@ public class MainWindowController {
 
 	@FXML
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton;
+
+	@FXML
+	Parent root;
 
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
@@ -334,7 +344,7 @@ public class MainWindowController {
 						for(Line l : lineList){
 							double _t1 = ((Circle) g).getCenterX();
 							double _t2 = ((Circle) g).getCenterY();
-							
+
 							if(l.getStartX() == _t1 && l.getStartY() == _t2){
 								_lineEndX = l.getEndX();
 								_lineEndY = l.getEndY();
@@ -348,8 +358,8 @@ public class MainWindowController {
 								_l.setStroke(Paint.valueOf("#ABCDEF"));
 								_l.setStrokeWidth(10.0f);
 								mainPane.getChildren().add(_l);
-								
-								
+
+
 							}
 							if(l.getEndX() == _t1 && l.getEndY() == _t2){
 								_lineStartX = l.getStartX();
@@ -366,12 +376,12 @@ public class MainWindowController {
 								mainPane.getChildren().add(_l);
 							}
 						}
-						
-						
-						
-						
-						
-						
+
+
+
+
+
+
 
 					}
 
@@ -438,6 +448,54 @@ public class MainWindowController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public enum StageFactory {
+	    INSTANCE ;
+
+	    private final ObservableList<Stage> openStages = FXCollections.observableArrayList();
+
+	    public ObservableList<Stage> getOpenStages() {
+	        return openStages ;
+	    }
+
+	    private final ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
+	    public final ObjectProperty<Stage> currentStageProperty() {
+	        return this.currentStage;
+	    }
+	    public final javafx.stage.Stage getCurrentStage() {
+	        return this.currentStageProperty().get();
+	    }
+	    public final void setCurrentStage(final javafx.stage.Stage currentStage) {
+	        this.currentStageProperty().set(currentStage);
+	    }
+
+	    public void registerStage(Stage stage) {
+	        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, e ->
+	                openStages.add(stage));
+	        stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e ->
+	                openStages.remove(stage));
+	        stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+	            if (isNowFocused) {
+	                currentStage.set(stage);
+	            } else {
+	                currentStage.set(null);
+	            }
+	        });
+	    }
+
+	    public Stage createStage() {
+	        Stage stage = new Stage();
+	        registerStage(stage);
+	        return stage ;
+	    }
+
+	}
+
+	@FXML
+	void saveFileMenuItem_OnAction(ActionEvent event){
+		Stage s = Main.getPrimaryStage();
+		fileManager.SaveFile(s, circleList, squareList, lineList);
 	}
 
 	@FXML
