@@ -107,19 +107,11 @@ public class MainWindowController {
 	@FXML
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton;
 
-	@FXML
-	public Label middleLabel;
 
 	@FXML
 	Parent root;
 
-	public Label getMiddleLabel(){
-		return middleLabel;
-	}
 
-	public void setMiddleLabel(String text){
-		middleLabel.setText(text);
-	}
 
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 

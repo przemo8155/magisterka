@@ -36,11 +36,6 @@
       <Separator layoutY="90.0" prefHeight="10.0" prefWidth="1366.0" />
       <Pane fx:id="mainPane" layoutY="95.0" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" prefHeight="608.0" prefWidth="1366.0">
          <children>
-            <Label fx:id="middleLabel" layoutX="454.0" layoutY="296.0" text="elooooooo">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
          </children></Pane>
       <Button fx:id="clearAllButton" layoutX="324.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="circleToggleButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
