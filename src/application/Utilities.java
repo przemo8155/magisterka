@@ -42,6 +42,14 @@ public class Utilities {
 		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox:", JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	public static void doubleBox(Double infoMessage) {
+		JOptionPane.showMessageDialog(null, infoMessage.toString(), "InfoBox:", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public static void intBox(int infoMessage) {
+		JOptionPane.showMessageDialog(null, Integer.toString(infoMessage), "InfoBox:", JOptionPane.INFORMATION_MESSAGE);
+	}
+
 	public static void exitFromApplication() {
 		Platform.exit();
 		System.exit(0);
