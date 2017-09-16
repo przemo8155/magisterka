@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
@@ -52,7 +53,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import javafx.*;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.scene.shape.*;
 
 import application.Main;
@@ -107,11 +112,25 @@ public class MainWindowController {
 	@FXML
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton;
 
+	@FXML
+	private Label middleLabel;
 
 	@FXML
 	Parent root;
 
+	public void setMiddleLabelText(String text) {
+		middleLabel.setDisable(false);
+		middleLabel.setText(text);
 
+		FadeTransition ft = new FadeTransition(Duration.millis(1500), middleLabel);
+	     ft.setFromValue(1.0);
+	     ft.setToValue(0.0);
+	     ft.setAutoReverse(false);
+	     ft.play();
+	     middleLabel.setDisable(true);
+
+
+	}
 
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
@@ -188,7 +207,6 @@ public class MainWindowController {
 
 	@FXML
 	void mainPane_OnMouseClicked(MouseEvent event) {
-
 		switch (selectedToggle) {
 		case "circle":
 			Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f, Paint.valueOf("#923456"));
@@ -320,6 +338,7 @@ public class MainWindowController {
 							_it += 1;
 						}
 
+
 					} catch (Exception e) {
 						e.getMessage();
 					}
@@ -346,44 +365,49 @@ public class MainWindowController {
 					if (g instanceof Circle) {
 						double _lineStartX = 0, _lineStartY = 0, _lineEndX = 0, _lineEndY = 0;
 						boolean start = true;
-						for(Line l : lineList){
-							double _t1 = ((Circle) g).getCenterX();
-							double _t2 = ((Circle) g).getCenterY();
 
-							if(l.getStartX() == _t1 && l.getStartY() == _t2){
-								_lineEndX = l.getEndX();
-								_lineEndY = l.getEndY();
-								((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-								((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
-								double _t3 = ((Circle) g).getCenterX();
-								double _t4 = ((Circle) g).getCenterY();
-								_lineStartX = _t3;
-								_lineStartY = _t4;
-								Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
-								_l.setStroke(Paint.valueOf("#ABCDEF"));
-								_l.setStrokeWidth(10.0f);
-								mainPane.getChildren().add(_l);
+						if(!lineList.isEmpty()){
+							for (Line l : lineList) {
+								double _t1 = ((Circle) g).getCenterX();
+								double _t2 = ((Circle) g).getCenterY();
+
+								if (l.getStartX() == _t1 && l.getStartY() == _t2) {
+									_lineEndX = l.getEndX();
+									_lineEndY = l.getEndY();
+									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+									double _t3 = ((Circle) g).getCenterX();
+									double _t4 = ((Circle) g).getCenterY();
+									_lineStartX = _t3;
+									_lineStartY = _t4;
+									Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
+									_l.setStroke(Paint.valueOf("#ABCDEF"));
+									_l.setStrokeWidth(10.0f);
+									mainPane.getChildren().add(_l);
 
 
-							}
-							if(l.getEndX() == _t1 && l.getEndY() == _t2){
-								_lineStartX = l.getStartX();
-								_lineStartY = l.getStartY();
-								((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-								((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
-								double _t3 = ((Circle) g).getCenterX();
-								double _t4 = ((Circle) g).getCenterY();
-								_lineEndX = _t3;
-								_lineEndY = _t4;
-								Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
-								_l.setStroke(Paint.valueOf("#ABCDEF"));
-								_l.setStrokeWidth(10.0f);
-								mainPane.getChildren().add(_l);
+								}
+								if (l.getEndX() == _t1 && l.getEndY() == _t2) {
+									_lineStartX = l.getStartX();
+									_lineStartY = l.getStartY();
+									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+									double _t3 = ((Circle) g).getCenterX();
+									double _t4 = ((Circle) g).getCenterY();
+									_lineEndX = _t3;
+									_lineEndY = _t4;
+									Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
+									_l.setStroke(Paint.valueOf("#ABCDEF"));
+									_l.setStrokeWidth(10.0f);
+									mainPane.getChildren().add(_l);
+								}
 							}
 						}
 
-
-
+						else{
+							((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+							((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+						}
 
 
 
@@ -409,6 +433,9 @@ public class MainWindowController {
 	public void initialize() {
 
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
+
+		middleLabel.setDisable(true);
+
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
 		squareToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -424,8 +451,14 @@ public class MainWindowController {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
 				if (new_toggle == null)
 					selectedToggle = "null";
-				else
+				else{
 					selectedToggle = (String) toggleButtonsGroup.getSelectedToggle().getUserData();
+					if(selectedToggle == "circle")setMiddleLabelText("Drawing circles...");
+					else if(selectedToggle == "square")setMiddleLabelText("Drawing squares...");
+					else if(selectedToggle == "line")setMiddleLabelText("Drawing lines...");
+					else if(selectedToggle == "move")setMiddleLabelText("Moving...");
+				}
+
 			}
 		});
 
@@ -456,85 +489,90 @@ public class MainWindowController {
 	}
 
 	public enum StageFactory {
-	    INSTANCE ;
+		INSTANCE;
 
-	    private final ObservableList<Stage> openStages = FXCollections.observableArrayList();
+		private final ObservableList<Stage> openStages = FXCollections.observableArrayList();
 
-	    public ObservableList<Stage> getOpenStages() {
-	        return openStages ;
-	    }
+		public ObservableList<Stage> getOpenStages() {
+			return openStages;
+		}
 
-	    private final ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
-	    public final ObjectProperty<Stage> currentStageProperty() {
-	        return this.currentStage;
-	    }
-	    public final javafx.stage.Stage getCurrentStage() {
-	        return this.currentStageProperty().get();
-	    }
-	    public final void setCurrentStage(final javafx.stage.Stage currentStage) {
-	        this.currentStageProperty().set(currentStage);
-	    }
+		private final ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
 
-	    public void registerStage(Stage stage) {
-	        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, e ->
-	                openStages.add(stage));
-	        stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e ->
-	                openStages.remove(stage));
-	        stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-	            if (isNowFocused) {
-	                currentStage.set(stage);
-	            } else {
-	                currentStage.set(null);
-	            }
-	        });
-	    }
+		public final ObjectProperty<Stage> currentStageProperty() {
+			return this.currentStage;
+		}
 
-	    public Stage createStage() {
-	        Stage stage = new Stage();
-	        registerStage(stage);
-	        return stage ;
-	    }
+		public final javafx.stage.Stage getCurrentStage() {
+			return this.currentStageProperty().get();
+		}
+
+		public final void setCurrentStage(final javafx.stage.Stage currentStage) {
+			this.currentStageProperty().set(currentStage);
+		}
+
+		public void registerStage(Stage stage) {
+			stage.addEventHandler(WindowEvent.WINDOW_SHOWN, e -> openStages.add(stage));
+			stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> openStages.remove(stage));
+			stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+				if (isNowFocused) {
+					currentStage.set(stage);
+				} else {
+					currentStage.set(null);
+				}
+			});
+		}
+
+		public Stage createStage() {
+			Stage stage = new Stage();
+			registerStage(stage);
+			return stage;
+		}
 
 	}
 
 	@FXML
-	void saveFileMenuItem_OnAction(ActionEvent event){
+	void saveFileMenuItem_OnAction(ActionEvent event) {
 		Stage s = Main.getPrimaryStage();
 		fileManager.SaveFile(s, circleList, squareList, lineList);
+		setMiddleLabelText("File saved...");
 	}
 
 	@FXML
-	void openFileMenuItem_OnAction(ActionEvent event){
+	void openFileMenuItem_OnAction(ActionEvent event) {
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		squareList.clear();
 		fileManager.OpenFile(s, circleList, squareList, lineList);
-		for(Circle c : circleList){
+		for (Circle c : circleList) {
 			mainPane.getChildren().add(c);
 			c.setOnMousePressed(circleOnMousePressedEventHandler);
 			c.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		}
 
-		for(Rectangle r : squareList){
+		for (Rectangle r : squareList) {
 			mainPane.getChildren().add(r);
 			r.setOnMousePressed(squareOnMousePressedEventHandler);
 			r.setOnMouseDragged(squareOnMouseDraggedEventHandler);
 		}
 
-		for(Line l : lineList){
+		for (Line l : lineList) {
 			mainPane.getChildren().add(l);
 		}
 
-
+		setMiddleLabelText("File opened...");
 
 	}
 
 	@FXML
 	void clearAllButton_OnMouseClicked(MouseEvent event) {
-		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?");
-		circleList.clear();
-		squareList.clear();
-		lineList.clear();
+		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, squareList,
+				lineList);
+		if (utilities.checkCleared) {
+			setMiddleLabelText("Cleared...");
+		} else {
+			setMiddleLabelText("");
+		}
 	}
 
 }

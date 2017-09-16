@@ -15,7 +15,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Alert.AlertType;
 
 public class Utilities {
-	public void clearUpMessage(Pane pane, String title, String header, String content){
+	private MainWindowController mwc;
+
+	public Boolean checkCleared = false;
+
+	public void clearUpMessage(Pane pane, String title, String header, String content, ObservableList<Circle> circ,
+			ObservableList<Rectangle> rect, ObservableList<Line> lin) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
@@ -24,28 +29,29 @@ public class Utilities {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			pane.getChildren().clear();
+			circ.clear();
+			rect.clear();
+			lin.clear();
+			checkCleared = true;
 		} else {
-			// ... user chose CANCEL or closed the dialog
+			checkCleared = false;
 		}
 	}
-
 
 	public static void infoBox(String infoMessage) {
 		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox:", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-
-	public static void exitFromApplication(){
+	public static void exitFromApplication() {
 		Platform.exit();
 		System.exit(0);
 	}
 
-	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle, ObservableList<Line> line) {
+	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle,
+			ObservableList<Line> line) {
 		int w = 0;
 		w = circle.size() + rectangle.size() + line.size();
 		return w;
 	}
-
-
 
 }
