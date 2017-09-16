@@ -499,6 +499,12 @@ public class MainWindowController {
 	}
 
 	@FXML
+	void openFileMenuItem_OnAction(ActionEvent event){
+		Stage s = Main.getPrimaryStage();
+		fileManager.OpenFile(s, circleList, squareList, lineList);
+	}
+
+	@FXML
 	void clearAllButton_OnMouseClicked(MouseEvent event) {
 		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?");
 		circleList.clear();

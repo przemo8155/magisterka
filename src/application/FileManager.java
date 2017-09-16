@@ -1,6 +1,9 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -100,4 +103,57 @@ public class FileManager {
 
 	}
 
+	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
+			ObservableList<Line> lines) {
+
+		FileChooser fileChooser = new FileChooser();
+		File file;
+
+		fileChooser.setTitle("Open File");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PB files (*.pb)", "*.pb");
+		fileChooser.getExtensionFilters().add(extFilter);
+		file = fileChooser.showOpenDialog(stage);
+		String buffer1 = Reader(file);
+
+		Utilities.infoBox(buffer1);
+
+	}
+
+	private String Reader(File file) {
+		StringBuilder stringBuffer = new StringBuilder();
+
+		StringBuilder circlesBuffer = new StringBuilder();
+		BufferedReader bufferedReader = null;
+
+		try {
+
+			bufferedReader = new BufferedReader(new FileReader(file));
+
+			String text;
+			String circle;
+			while ((text = bufferedReader.readLine()) != null) {
+				if (bufferedReader.readLine() == "circles") {
+					while (bufferedReader.readLine() != "squares") {
+						circlesBuffer.append(text);
+						circlesBuffer.append(System.getProperty("line.separator"));
+
+					}
+				}
+				stringBuffer.append(text);
+			}
+
+		} catch (FileNotFoundException ex) {
+			ex.getLocalizedMessage();
+		} catch (IOException ex) {
+			ex.getLocalizedMessage();
+		} finally {
+			try {
+				bufferedReader.close();
+			} catch (IOException ex) {
+				ex.getLocalizedMessage();
+			}
+		}
+
+		return stringBuffer.toString();
+	}
 }
