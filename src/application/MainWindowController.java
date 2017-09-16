@@ -502,9 +502,18 @@ public class MainWindowController {
 	void openFileMenuItem_OnAction(ActionEvent event){
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
+		squareList.clear();
 		fileManager.OpenFile(s, circleList, squareList, lineList);
 		for(Circle c : circleList){
 			mainPane.getChildren().add(c);
+			c.setOnMousePressed(circleOnMousePressedEventHandler);
+			c.setOnMouseDragged(circleOnMouseDraggedEventHandler);
+		}
+
+		for(Rectangle r : squareList){
+			mainPane.getChildren().add(r);
+			r.setOnMousePressed(squareOnMousePressedEventHandler);
+			r.setOnMouseDragged(squareOnMouseDraggedEventHandler);
 		}
 
 	}

@@ -126,7 +126,9 @@ public class FileManager {
 			ObservableList<Line> lines) {
 		Scanner scanner;
 		Boolean fullCircle = false;
+		Boolean fullSquare = false;
 		Double g1 = 0.0, g2 = 0.0;
+		Double s1 = 0.0, s2 = 0.0;
 		try {
 			scanner = new Scanner(file);
 			while (scanner.hasNext()) {
@@ -147,8 +149,38 @@ public class FileManager {
 							circles.add(c);
 						}
 
+						if(t == "squares")
+						{
+							Utilities.infoBox("weszlo");
+							break;
+						}
+
 					}
 				}
+
+				
+				else if (tmp.equals("squares")) {
+					
+					String t;
+					while (!(t = scanner.next()).equals("lines")) {
+
+						if (!fullSquare) {
+							s1 = Double.parseDouble(t);
+							fullSquare = true;
+						} else {
+							s2 = Double.parseDouble(t);
+							fullSquare = false;
+							Rectangle r = new Rectangle(s1, s2, 40.0f, 40.0f);
+							r.setFill(Paint.valueOf("#ABCDEF"));
+							r.setStroke(Paint.valueOf("#555555"));
+							r.setStrokeWidth(5.0f);
+							squares.add(r);
+						}
+
+					}
+				}
+				
+				Utilities.infoBox(tmp);
 
 
 
