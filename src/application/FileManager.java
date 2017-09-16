@@ -25,7 +25,7 @@ import javafx.stage.Window;
 
 public class FileManager {
 
-
+	private LabelTexts labelTexts;
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<Line> lines) {
@@ -90,6 +90,7 @@ public class FileManager {
 			fileChooser.getExtensionFilters().add(extFilter);
 			file = fileChooser.showSaveDialog(stage);
 			Saver(stringToFile, file);
+			
 		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
@@ -125,14 +126,20 @@ public class FileManager {
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<Line> lines) {
 		Scanner scanner;
+
 		Boolean fullCircle = false;
 		Boolean fullSquare = false;
+
+		int faze = 1;
+
 		Double g1 = 0.0, g2 = 0.0;
 		Double s1 = 0.0, s2 = 0.0;
+		Double ls1 = 0.0, ls2 = 0.0, le1 = 0.0, le2 = 0.0;
 		try {
 			scanner = new Scanner(file);
 			while (scanner.hasNext()) {
 				String tmp = scanner.next();
+
 				if (tmp.equals("circles")) {
 					String t;
 					while (!(t = scanner.next()).equals("squares")) {
@@ -149,18 +156,22 @@ public class FileManager {
 							circles.add(c);
 						}
 
-						if(t == "squares")
-						{
-							Utilities.infoBox("weszlo");
-							break;
-						}
-
 					}
 				}
 
-				
-				else if (tmp.equals("squares")) {
-					
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			scanner = new Scanner(file);
+
+			while (scanner.hasNext()) {
+				String tmp = scanner.next();
+
+				if (tmp.equals("squares")) {
 					String t;
 					while (!(t = scanner.next()).equals("lines")) {
 
@@ -175,16 +186,58 @@ public class FileManager {
 							r.setStroke(Paint.valueOf("#555555"));
 							r.setStrokeWidth(5.0f);
 							squares.add(r);
+
 						}
 
 					}
 				}
-				
-				Utilities.infoBox(tmp);
-
-
 
 			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			scanner = new Scanner(file);
+
+			while (scanner.hasNext()) {
+				String tmp = scanner.next();
+
+				if (tmp.equals("lines")) {
+					String t;
+					while (scanner.hasNext()) {
+						t = scanner.next();
+
+						switch (faze) {
+						case 1:
+							ls1 = Double.parseDouble(t);
+							faze += 1;
+							break;
+						case 2:
+							ls2 = Double.parseDouble(t);
+							faze += 1;
+							break;
+						case 3:
+							le1 = Double.parseDouble(t);
+							faze += 1;
+							break;
+						case 4:
+							le2 = Double.parseDouble(t);
+							faze = 1;
+							Line l = new Line(ls1, ls2, le1, le2);
+							l.setStroke(Paint.valueOf("#ABCDEF"));
+							l.setStrokeWidth(10.0f);
+							lines.add(l);
+							break;
+
+						}
+
+					}
+				}
+
+			}
+
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

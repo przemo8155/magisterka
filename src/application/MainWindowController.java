@@ -33,6 +33,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
@@ -73,6 +74,7 @@ public class MainWindowController {
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
 	Main main = new Main();
+	LabelTexts labelTexts = new LabelTexts();
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
@@ -106,7 +108,18 @@ public class MainWindowController {
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton;
 
 	@FXML
+	public Label middleLabel;
+
+	@FXML
 	Parent root;
+
+	public Label getMiddleLabel(){
+		return middleLabel;
+	}
+
+	public void setMiddleLabel(String text){
+		middleLabel.setText(text);
+	}
 
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
@@ -515,6 +528,12 @@ public class MainWindowController {
 			r.setOnMousePressed(squareOnMousePressedEventHandler);
 			r.setOnMouseDragged(squareOnMouseDraggedEventHandler);
 		}
+
+		for(Line l : lineList){
+			mainPane.getChildren().add(l);
+		}
+
+
 
 	}
 
