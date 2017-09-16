@@ -6,13 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.activation.FileDataSource;
 
 import com.sun.glass.ui.Window.Level;
 import com.sun.javafx.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -21,6 +24,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class FileManager {
+
+
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<Line> lines) {
@@ -113,47 +118,45 @@ public class FileManager {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PB files (*.pb)", "*.pb");
 		fileChooser.getExtensionFilters().add(extFilter);
 		file = fileChooser.showOpenDialog(stage);
-		String buffer1 = Reader(file);
-
-		Utilities.infoBox(buffer1);
+		Reader(file, circles, squares, lines);
 
 	}
 
-	private String Reader(File file) {
-		StringBuilder stringBuffer = new StringBuilder();
-
-		StringBuilder circlesBuffer = new StringBuilder();
-		BufferedReader bufferedReader = null;
-
+	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
+			ObservableList<Line> lines) {
+		Scanner scanner;
+		Boolean fullCircle = false;
+		Double g1 = 0.0, g2 = 0.0;
 		try {
+			scanner = new Scanner(file);
+			while (scanner.hasNext()) {
+				String tmp = scanner.next();
+				if (tmp.equals("circles")) {
+					String t;
+					while (!(t = scanner.next()).equals("squares")) {
 
-			bufferedReader = new BufferedReader(new FileReader(file));
-
-			String text;
-			String circle;
-			while ((text = bufferedReader.readLine()) != null) {
-				if (bufferedReader.readLine() == "circles") {
-					while (bufferedReader.readLine() != "squares") {
-						circlesBuffer.append(text);
-						circlesBuffer.append(System.getProperty("line.separator"));
+						if (!fullCircle) {
+							g1 = Double.parseDouble(t);
+							fullCircle = true;
+						} else {
+							g2 = Double.parseDouble(t);
+							fullCircle = false;
+							Circle c = new Circle(g1, g2, 20.0f, Paint.valueOf("#923456"));
+							c.setStroke(Paint.valueOf("#555555"));
+							c.setStrokeWidth(5.0f);
+							circles.add(c);
+						}
 
 					}
 				}
-				stringBuffer.append(text);
-			}
 
-		} catch (FileNotFoundException ex) {
-			ex.getLocalizedMessage();
-		} catch (IOException ex) {
-			ex.getLocalizedMessage();
-		} finally {
-			try {
-				bufferedReader.close();
-			} catch (IOException ex) {
-				ex.getLocalizedMessage();
+
+
 			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
-		return stringBuffer.toString();
 	}
 }

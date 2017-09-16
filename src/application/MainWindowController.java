@@ -100,7 +100,7 @@ public class MainWindowController {
 	private AnchorPane anchorPane;
 
 	@FXML
-	private Pane mainPane;
+	public Pane mainPane;
 
 	@FXML
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton;
@@ -501,7 +501,12 @@ public class MainWindowController {
 	@FXML
 	void openFileMenuItem_OnAction(ActionEvent event){
 		Stage s = Main.getPrimaryStage();
+		circleList.clear();
 		fileManager.OpenFile(s, circleList, squareList, lineList);
+		for(Circle c : circleList){
+			mainPane.getChildren().add(c);
+		}
+
 	}
 
 	@FXML
