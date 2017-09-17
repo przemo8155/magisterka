@@ -123,7 +123,7 @@ public class MainWindowController {
 		middleLabel.setDisable(false);
 		middleLabel.setText(text);
 
-		FadeTransition ft = new FadeTransition(Duration.millis(1500), middleLabel);
+		FadeTransition ft = new FadeTransition(Duration.millis(1200), middleLabel);
 		ft.setFromValue(1.0);
 		ft.setToValue(0.0);
 		ft.setAutoReverse(false);
@@ -257,6 +257,7 @@ public class MainWindowController {
 									_isCircleFirst = false;
 									// utilities.infoBox("circle 1");
 									_it = 0;
+									setMiddleLabelText("First point of line...");
 									break;
 								}
 								_it += 1;
@@ -279,13 +280,35 @@ public class MainWindowController {
 									_rFirstPosY = ((Rectangle) g).getY() + 20;
 									_isCircleFirst = false;
 									_it = 0;
+									setMiddleLabelText("First point of line...");
 									break;
 								}
 								_it += 1;
 							}
 
-							else if(g.equals(mainPane)){
-								utilities.infoBox("pane");
+							else{
+								double _x = event.getSceneX();
+								double _y = event.getSceneY() - minusWidth;
+
+								for(Circle c : circleList){
+									if((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay) && (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)){
+										_cFirstPosX = c.getCenterX();
+										_cFirstPosY = c.getCenterY();
+										setMiddleLabelText("First point of line...");
+									}
+								}
+
+								for(Rectangle r : squareList){
+									if((_x > r.getX()) && (_x < r.getX() + squareRay) && (_y > r.getY()) && (_y < r.getY() + squareRay)){
+										_cFirstPosX = r.getX() + 20;
+										_cFirstPosY = r.getY() + 20;
+										setMiddleLabelText("First point of line...");
+									}
+								}
+
+
+								_isCircleFirst = false;
+
 								break;
 							}
 						}
@@ -322,7 +345,7 @@ public class MainWindowController {
 									mainPane.getChildren().add(l);
 									lineList.add(l);
 									_isCircleFirst = true;
-									// utilities.infoBox("circle 2");
+									setMiddleLabelText("Second point of line...");
 									_it = 0;
 									break;
 
@@ -350,14 +373,41 @@ public class MainWindowController {
 									mainPane.getChildren().add(l);
 									lineList.add(l);
 									_isCircleFirst = true;
+									setMiddleLabelText("Second point of line...");
 									_it = 0;
 									break;
 
 								}
 								_it += 1;
-							} else if(g.equals(mainPane)){
-								utilities.infoBox("pane");
+							} else{
+								double _x = event.getSceneX();
+								double _y = event.getSceneY() - minusWidth;
+
+								for(Circle c : circleList){
+									if((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay) && (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)){
+										_cSecPosX = c.getCenterX();
+										_cSecPosY = c.getCenterY();
+										setMiddleLabelText("Second point of line...");
+									}
+								}
+
+								for(Rectangle r : squareList){
+									if((_x > r.getX()) && (_x < r.getX() + squareRay) && (_y > r.getY()) && (_y < r.getY() + squareRay)){
+										_cSecPosX = r.getX() + 20;
+										_cSecPosY = r.getY() + 20;
+										setMiddleLabelText("Second point of line...");
+									}
+								}
+
+
+								Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+								l.setStroke(Paint.valueOf("#ABCDEF"));
+								l.setStrokeWidth(10.0f);
+								mainPane.getChildren().add(l);
+								lineList.add(l);
+								_isCircleFirst = true;
 								break;
+
 							}
 						}
 					} catch (Exception e) {
