@@ -219,15 +219,14 @@ public class MainWindowController {
 			break;
 
 		case "line":
-
 			if (_isCircleFirst) {
 				int _it = 0;
 				while (_it <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
 						if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
 							Object g = mainPane.getChildren().get(_it);
+							
 							if (g instanceof Circle) {
-								//utilities.infoBox("pierwszy circ");
 								Circle check1 = circleList.get(_it);
 
 								double _c1 = check1.getCenterX();
@@ -250,7 +249,6 @@ public class MainWindowController {
 							}
 
 							else if (g instanceof Rectangle) {
-								//utilities.infoBox("pierwszy rect");
 								Rectangle check1 = squareList.get(_it);
 
 								double _c1 = check1.getX() + 20;
@@ -274,7 +272,6 @@ public class MainWindowController {
 							else{
 								double _x = event.getSceneX();
 								double _y = event.getSceneY() - minusWidth;
-								//utilities.infoBox("pierwszy els");
 								for(Circle c : circleList){
 									if((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay) && (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)){
 										_cFirstPosX = c.getCenterX();
@@ -298,6 +295,7 @@ public class MainWindowController {
 								_it += 1;
 								break;
 							}
+							
 						}
 
 					} catch (Exception e) {
@@ -311,12 +309,10 @@ public class MainWindowController {
 				while (_it <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
 						if (event.getSceneY() > minusWidth) {
-							//utilities.intBox(_it);
 							Object g = mainPane.getChildren().get(_it);
 							if (g instanceof Circle) {
 
 								Circle check1 = circleList.get(_it);
-								//utilities.infoBox("circ");
 								double _c1 = check1.getCenterX();
 								double _c2 = check1.getCenterY();
 
@@ -334,7 +330,7 @@ public class MainWindowController {
 									lineList.add(l);
 									_isCircleFirst = true;
 									setMiddleLabelText("Second point of line...");
-
+									_it = 0;
 									break;
 
 								}
@@ -344,7 +340,6 @@ public class MainWindowController {
 
 							else if (g instanceof Rectangle) {
 								Rectangle check1 = squareList.get(_it);
-								//utilities.infoBox("rect");
 								double _c1 = check1.getX() + 20;
 								double _c2 = check1.getY() + 20;
 
@@ -362,7 +357,7 @@ public class MainWindowController {
 									lineList.add(l);
 									_isCircleFirst = true;
 									setMiddleLabelText("Second point of line...");
-
+									_it = 0;
 									break;
 
 								}
@@ -370,7 +365,6 @@ public class MainWindowController {
 							} else{
 								double _x = event.getSceneX();
 								double _y = event.getSceneY() - minusWidth;
-								//utilities.infoBox("els");
 								boolean text = false;
 								for(Circle c : circleList){
 									if((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay) && (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)){
@@ -383,8 +377,7 @@ public class MainWindowController {
 										mainPane.getChildren().add(l);
 										lineList.add(l);
 										text = true;
-										//utilities.infoBox("els circ");
-
+										break;
 
 									}
 								}
@@ -399,14 +392,8 @@ public class MainWindowController {
 										l.setStrokeWidth(10.0f);
 										mainPane.getChildren().add(l);
 										lineList.add(l);
-										text = true;
-										//utilities.infoBox("els rect");
-
+										break;
 									}
-								}
-
-								if(!text){
-									utilities.infoBox("nieeeeee lepej nie");
 								}
 
 
@@ -415,6 +402,7 @@ public class MainWindowController {
 								break;
 
 							}
+							
 						}
 					} catch (Exception e) {
 						e.getMessage();
