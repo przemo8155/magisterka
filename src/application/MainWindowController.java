@@ -227,7 +227,7 @@ public class MainWindowController {
 						if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
 							Object g = mainPane.getChildren().get(_it);
 							if (g instanceof Circle) {
-
+								//utilities.infoBox("pierwszy circ");
 								Circle check1 = circleList.get(_it);
 
 								double _c1 = check1.getCenterX();
@@ -250,7 +250,7 @@ public class MainWindowController {
 							}
 
 							else if (g instanceof Rectangle) {
-
+								//utilities.infoBox("pierwszy rect");
 								Rectangle check1 = squareList.get(_it);
 
 								double _c1 = check1.getX() + 20;
@@ -274,12 +274,13 @@ public class MainWindowController {
 							else{
 								double _x = event.getSceneX();
 								double _y = event.getSceneY() - minusWidth;
-
+								//utilities.infoBox("pierwszy els");
 								for(Circle c : circleList){
 									if((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay) && (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)){
 										_cFirstPosX = c.getCenterX();
 										_cFirstPosY = c.getCenterY();
 										setMiddleLabelText("First point of line...");
+										break;
 									}
 								}
 
@@ -288,12 +289,13 @@ public class MainWindowController {
 										_cFirstPosX = r.getX() + 20;
 										_cFirstPosY = r.getY() + 20;
 										setMiddleLabelText("First point of line...");
+										break;
 									}
 								}
 
 
 								_isCircleFirst = false;
-
+								_it += 1;
 								break;
 							}
 						}
@@ -309,11 +311,12 @@ public class MainWindowController {
 				while (_it <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
 						if (event.getSceneY() > minusWidth) {
+							//utilities.intBox(_it);
 							Object g = mainPane.getChildren().get(_it);
 							if (g instanceof Circle) {
 
 								Circle check1 = circleList.get(_it);
-
+								//utilities.infoBox("circ");
 								double _c1 = check1.getCenterX();
 								double _c2 = check1.getCenterY();
 
@@ -331,7 +334,7 @@ public class MainWindowController {
 									lineList.add(l);
 									_isCircleFirst = true;
 									setMiddleLabelText("Second point of line...");
-									_it = 0;
+
 									break;
 
 								}
@@ -341,7 +344,7 @@ public class MainWindowController {
 
 							else if (g instanceof Rectangle) {
 								Rectangle check1 = squareList.get(_it);
-
+								//utilities.infoBox("rect");
 								double _c1 = check1.getX() + 20;
 								double _c2 = check1.getY() + 20;
 
@@ -359,7 +362,7 @@ public class MainWindowController {
 									lineList.add(l);
 									_isCircleFirst = true;
 									setMiddleLabelText("Second point of line...");
-									_it = 0;
+
 									break;
 
 								}
@@ -367,12 +370,22 @@ public class MainWindowController {
 							} else{
 								double _x = event.getSceneX();
 								double _y = event.getSceneY() - minusWidth;
-
+								//utilities.infoBox("els");
+								boolean text = false;
 								for(Circle c : circleList){
 									if((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay) && (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)){
 										_cSecPosX = c.getCenterX();
 										_cSecPosY = c.getCenterY();
 										setMiddleLabelText("Second point of line...");
+										Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										l.setStroke(Paint.valueOf("#ABCDEF"));
+										l.setStrokeWidth(10.0f);
+										mainPane.getChildren().add(l);
+										lineList.add(l);
+										text = true;
+										//utilities.infoBox("els circ");
+
+
 									}
 								}
 
@@ -381,15 +394,23 @@ public class MainWindowController {
 										_cSecPosX = r.getX() + 20;
 										_cSecPosY = r.getY() + 20;
 										setMiddleLabelText("Second point of line...");
+										Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										l.setStroke(Paint.valueOf("#ABCDEF"));
+										l.setStrokeWidth(10.0f);
+										mainPane.getChildren().add(l);
+										lineList.add(l);
+										text = true;
+										//utilities.infoBox("els rect");
+
 									}
 								}
 
+								if(!text){
+									utilities.infoBox("nieeeeee lepej nie");
+								}
 
-								Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-								l.setStroke(Paint.valueOf("#ABCDEF"));
-								l.setStrokeWidth(10.0f);
-								mainPane.getChildren().add(l);
-								lineList.add(l);
+
+								_it += 1;
 								_isCircleFirst = true;
 								break;
 
@@ -652,12 +673,7 @@ public class MainWindowController {
 
 	@FXML
 	void mainPane_OnMouseReseased(MouseEvent event){
-		if(selectedToggle == "move"){
-			for(Circle c : circleList){
-
-			}
-
-		}
+		// nic
 	}
 
 }
