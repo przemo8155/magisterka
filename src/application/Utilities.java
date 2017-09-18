@@ -62,4 +62,11 @@ public class Utilities {
 		return w;
 	}
 
+	public void clearAllLists(ObservableList<Circle> circ,
+			ObservableList<Rectangle> rect, ObservableList<Line> lin){
+		circ.clear();
+		rect.clear();
+		lin.clear();
+	}
+
 }

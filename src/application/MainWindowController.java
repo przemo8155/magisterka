@@ -75,6 +75,7 @@ public class MainWindowController {
 
 	double _cSecPosX, _cSecPosY, _cFirstPosX, _cFirstPosY;
 	double _rFirstPosX, _rFirstPosY, _rSecPosX, _rSecPosY;
+	double _circleLine1, _circleLine2;
 	boolean _isCircleFirst = true, _isRectangleFirst = true;
 
 	Utilities utilities = new Utilities();
@@ -133,14 +134,15 @@ public class MainWindowController {
 	}
 
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
-
 		@Override
 		public void handle(MouseEvent t) {
 			orgSceneX = t.getSceneX();
 			orgSceneY = t.getSceneY() - minusWidth;
 			orgTranslateX = ((Circle) (t.getSource())).getTranslateX();
 			orgTranslateY = ((Circle) (t.getSource())).getTranslateY();
+
 		}
+
 	};
 
 	EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
@@ -154,6 +156,7 @@ public class MainWindowController {
 
 			((Circle) (t.getSource())).setTranslateX(newTranslateX);
 			((Circle) (t.getSource())).setTranslateY(newTranslateY);
+
 		}
 	};
 
@@ -182,23 +185,6 @@ public class MainWindowController {
 		}
 	};
 
-	EventHandler<MouseEvent> myHandler = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent event) {
-
-			if (event.getSource() instanceof Circle) {
-
-				Circle circle = ((Circle) (event.getSource()));
-				circleId = mainPane.getChildren().indexOf(circle);
-			} else {
-
-				Node node = ((Node) (event.getSource()));
-
-			}
-
-		}
-	};
 
 	@FXML
 	void anchorPane_OnMouseClicked(MouseEvent event) {
@@ -255,7 +241,6 @@ public class MainWindowController {
 									_cFirstPosX = ((Circle) g).getCenterX();
 									_cFirstPosY = ((Circle) g).getCenterY();
 									_isCircleFirst = false;
-									// utilities.infoBox("circle 1");
 									_it = 0;
 									setMiddleLabelText("First point of line...");
 									break;
@@ -276,8 +261,8 @@ public class MainWindowController {
 
 								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
 										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
-									_rFirstPosX = ((Rectangle) g).getX() + 20;
-									_rFirstPosY = ((Rectangle) g).getY() + 20;
+									_cFirstPosX = ((Rectangle) g).getX() + 20;
+									_cFirstPosY = ((Rectangle) g).getY() + 20;
 									_isCircleFirst = false;
 									_it = 0;
 									setMiddleLabelText("First point of line...");
@@ -323,7 +308,7 @@ public class MainWindowController {
 				int _it = 0;
 				while (_it <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
-						if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
+						if (event.getSceneY() > minusWidth) {
 							Object g = mainPane.getChildren().get(_it);
 							if (g instanceof Circle) {
 
@@ -365,9 +350,9 @@ public class MainWindowController {
 
 								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
 										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
-									_rSecPosX = ((Rectangle) g).getX() + 20;
-									_rSecPosY = ((Rectangle) g).getY() + 20;
-									Line l = new Line(_rFirstPosX, _rFirstPosY, _rSecPosX, _rSecPosY);
+									_cSecPosX = ((Rectangle) g).getX() + 20;
+									_cSecPosY = ((Rectangle) g).getY() + 20;
+									Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
 									l.setStroke(Paint.valueOf("#ABCDEF"));
 									l.setStrokeWidth(10.0f);
 									mainPane.getChildren().add(l);
@@ -436,7 +421,7 @@ public class MainWindowController {
 					Object g = mainPane.getChildren().get(_it);
 					if (g instanceof Circle) {
 						double _lineStartX = 0, _lineStartY = 0, _lineEndX = 0, _lineEndY = 0;
-						boolean start = true;
+
 
 						if (!lineList.isEmpty()) {
 							for (Line l : lineList) {
@@ -446,38 +431,46 @@ public class MainWindowController {
 								if (l.getStartX() == _t1 && l.getStartY() == _t2) {
 									_lineEndX = l.getEndX();
 									_lineEndY = l.getEndY();
+									int index1 = mainPane.getChildren().indexOf(l);
+									lineList.remove(l);
+									mainPane.getChildren().remove(index1);
 									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
 									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
 									double _t3 = ((Circle) g).getCenterX();
 									double _t4 = ((Circle) g).getCenterY();
+
 									_lineStartX = _t3;
 									_lineStartY = _t4;
-									Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
-									_l.setStroke(Paint.valueOf("#ABCDEF"));
-									_l.setStrokeWidth(10.0f);
-									mainPane.getChildren().add(_l);
+
+
+
+
 
 								}
 								if (l.getEndX() == _t1 && l.getEndY() == _t2) {
 									_lineStartX = l.getStartX();
 									_lineStartY = l.getStartY();
+									int index1 = mainPane.getChildren().indexOf(l);
+									lineList.remove(l);
+									mainPane.getChildren().remove(index1);
 									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
 									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
 									double _t3 = ((Circle) g).getCenterX();
 									double _t4 = ((Circle) g).getCenterY();
 									_lineEndX = _t3;
 									_lineEndY = _t4;
-									Line _l = new Line(_lineStartX, _lineStartY, _lineEndX, _lineEndY);
-									_l.setStroke(Paint.valueOf("#ABCDEF"));
-									_l.setStrokeWidth(10.0f);
-									mainPane.getChildren().add(_l);
+
+
+
 								}
 							}
+
 						}
 
 						else {
 							((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
 							((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+
 						}
 
 					}
@@ -494,6 +487,9 @@ public class MainWindowController {
 
 			}
 
+
+
+
 			break;
 		}
 	}
@@ -503,6 +499,8 @@ public class MainWindowController {
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);
+
+		utilities.clearAllLists(circleList, squareList, lineList);
 
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -528,7 +526,7 @@ public class MainWindowController {
 					else if (selectedToggle == "line")
 						setMiddleLabelText("Drawing lines...");
 					else if (selectedToggle == "move")
-						setMiddleLabelText("Moving...");
+						setMiddleLabelText("Moving objects...");
 				}
 
 			}
@@ -644,6 +642,21 @@ public class MainWindowController {
 			setMiddleLabelText("Cleared...");
 		} else {
 			setMiddleLabelText("");
+		}
+	}
+
+	@FXML
+	void mainPane_OnDragDropped(MouseEvent event){
+		// nic
+	}
+
+	@FXML
+	void mainPane_OnMouseReseased(MouseEvent event){
+		if(selectedToggle == "move"){
+			for(Circle c : circleList){
+
+			}
+
 		}
 	}
 
