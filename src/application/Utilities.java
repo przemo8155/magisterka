@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.swing.JOptionPane;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -68,5 +69,6 @@ public class Utilities {
 		rect.clear();
 		lin.clear();
 	}
+
 
 }

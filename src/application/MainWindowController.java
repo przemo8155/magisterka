@@ -1,5 +1,7 @@
 package application;
 
+//tix
+
 import java.awt.Color;
 import java.awt.List;
 import java.io.IOException;
@@ -87,6 +89,9 @@ public class MainWindowController {
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
 	ObservableList<Line> lineList = FXCollections.observableArrayList();
 
+	ObservableList<Line> startLineList = FXCollections.observableArrayList();
+	ObservableList<Line> endLineList = FXCollections.observableArrayList();
+
 	@FXML
 	private MenuItem openFileMenuItem;
 
@@ -136,10 +141,15 @@ public class MainWindowController {
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 		@Override
 		public void handle(MouseEvent t) {
+			//Circle c = ((Circle)t.getSource());
+			//int index = circleList.indexOf(c);
 			orgSceneX = t.getSceneX();
 			orgSceneY = t.getSceneY() - minusWidth;
 			orgTranslateX = ((Circle) (t.getSource())).getTranslateX();
 			orgTranslateY = ((Circle) (t.getSource())).getTranslateY();
+			//c.setCenterX(orgTranslateX);
+			//c.setCenterY(orgTranslateY);
+			//circleList.set(index, c);
 
 		}
 
@@ -149,14 +159,18 @@ public class MainWindowController {
 
 		@Override
 		public void handle(MouseEvent t) {
+			Circle c = ((Circle)t.getSource());
+			int index = circleList.indexOf(c);
 			double offsetX = t.getSceneX() - orgSceneX;
 			double offsetY = t.getSceneY() - orgSceneY - minusWidth;
 			double newTranslateX = orgTranslateX + offsetX;
 			double newTranslateY = orgTranslateY + offsetY;
 
-			((Circle) (t.getSource())).setTranslateX(newTranslateX);
-			((Circle) (t.getSource())).setTranslateY(newTranslateY);
-
+			//((Circle) (t.getSource())).setTranslateX(newTranslateX);
+			//((Circle) (t.getSource())).setTranslateY(newTranslateY);
+			c.setCenterX(newTranslateX);
+			c.setCenterY(newTranslateY);
+			circleList.set(index, c);
 		}
 	};
 
@@ -225,7 +239,7 @@ public class MainWindowController {
 					try {
 						if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
 							Object g = mainPane.getChildren().get(_it);
-							
+
 							if (g instanceof Circle) {
 								Circle check1 = circleList.get(_it);
 
@@ -295,7 +309,7 @@ public class MainWindowController {
 								_it += 1;
 								break;
 							}
-							
+
 						}
 
 					} catch (Exception e) {
@@ -402,7 +416,7 @@ public class MainWindowController {
 								break;
 
 							}
-							
+
 						}
 					} catch (Exception e) {
 						e.getMessage();
@@ -429,58 +443,22 @@ public class MainWindowController {
 				try {
 					Object g = mainPane.getChildren().get(_it);
 					if (g instanceof Circle) {
-						double _lineStartX = 0, _lineStartY = 0, _lineEndX = 0, _lineEndY = 0;
 
-
-						if (!lineList.isEmpty()) {
-							for (Line l : lineList) {
-								double _t1 = ((Circle) g).getCenterX();
-								double _t2 = ((Circle) g).getCenterY();
-
-								if (l.getStartX() == _t1 && l.getStartY() == _t2) {
-									_lineEndX = l.getEndX();
-									_lineEndY = l.getEndY();
-									int index1 = mainPane.getChildren().indexOf(l);
-									lineList.remove(l);
-									mainPane.getChildren().remove(index1);
-									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
-									double _t3 = ((Circle) g).getCenterX();
-									double _t4 = ((Circle) g).getCenterY();
-
-									_lineStartX = _t3;
-									_lineStartY = _t4;
-
-
-
-
-
-								}
-								if (l.getEndX() == _t1 && l.getEndY() == _t2) {
-									_lineStartX = l.getStartX();
-									_lineStartY = l.getStartY();
-									int index1 = mainPane.getChildren().indexOf(l);
-									lineList.remove(l);
-									mainPane.getChildren().remove(index1);
-									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
-									double _t3 = ((Circle) g).getCenterX();
-									double _t4 = ((Circle) g).getCenterY();
-									_lineEndX = _t3;
-									_lineEndY = _t4;
-
-
-
-								}
+						for(Line l : lineList){
+							if(l.getStartX() == ((Circle)g).getCenterX() && l.getStartY() == ((Circle)g).getCenterY()){
+								startLineList.add(l);
+								lineList.remove(l);
 							}
 
+							if(l.getEndX() == ((Circle)g).getCenterX() && l.getEndY() == ((Circle)g).getCenterY()){
+								endLineList.add(l);
+								lineList.remove(l);
+							}
 						}
 
-						else {
-							((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-							((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+						((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+						((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
 
-						}
 
 					}
 
@@ -661,7 +639,29 @@ public class MainWindowController {
 
 	@FXML
 	void mainPane_OnMouseReseased(MouseEvent event){
-		// nic
+		Object g = event.getTarget();
+		if(g instanceof Circle){
+			int index = circleList.indexOf(g);
+			Circle c = ((Circle)g);
+			c.setCenterX(((Circle) g).getCenterX());
+			c.setCenterY(((Circle) g).getCenterY());
+			circleList.set(index, c);
+
+			for(Line l : endLineList){
+				l.setEndX(c.getCenterX());
+				l.setEndY(c.getCenterY());
+			}
+
+			lineList.addAll(endLineList);
+
+			for(Line l : startLineList){
+				l.setStartX(c.getCenterX());
+				l.setStartY(c.getCenterY());
+			}
+
+			lineList.addAll(startLineList);
+
+		}
 	}
 
 }
