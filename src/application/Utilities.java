@@ -75,5 +75,21 @@ public class Utilities {
 		lin2.clear();
 	}
 
+	public void showCircleList(ObservableList<Circle> circle){
+		for(Circle c : circle){
+			Utilities.infoBox(c.toString());
+		}
+	}
+
+	public void showLineList(ObservableList<Line> line){
+		for(Line l : line){
+			Utilities.infoBox(l.toString());
+		}
+	}
+
+	public void showLineListNumberElements(ObservableList<Line> line){
+
+	}
+
 
 }
