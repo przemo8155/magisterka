@@ -87,6 +87,8 @@ public class MainWindowController {
 	Main main = new Main();
 	LabelTexts labelTexts = new LabelTexts();
 
+	public String backgroundColor;
+
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
 	ObservableList<Line> lineList = FXCollections.observableArrayList();
@@ -119,7 +121,7 @@ public class MainWindowController {
 	public Pane mainPane;
 
 	@FXML
-	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton;
+	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton;
 
 	@FXML
 	private Label middleLabel;
@@ -541,6 +543,8 @@ public class MainWindowController {
 	public void initialize() {
 
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
+
+		backgroundColor = "#FFFFFF";
 
 		middleLabel.setDisable(true);
 

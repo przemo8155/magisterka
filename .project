@@ -72,6 +72,11 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/moveNoClicked.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/remove.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/remove.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/save.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/save.png</location>

@@ -37,7 +37,7 @@
       <Pane fx:id="mainPane" layoutY="95.0" onDragDropped="#mainPane_OnDragDropped" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" onMouseReleased="#mainPane_OnMouseReseased" prefHeight="608.0" prefWidth="1366.0">
          <children>
          </children></Pane>
-      <Button fx:id="clearAllButton" layoutX="324.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
+      <Button fx:id="clearAllButton" layoutX="354.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="circleToggleButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="squareToggleButton" layoutX="70.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="moveToggleButton" layoutX="186.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
@@ -46,6 +46,7 @@
          <font>
             <Font name="Gabriola" size="44.0" />
          </font></Label>
+      <ToggleButton fx:id="removeToggleButton" layoutX="293.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
    </children>
    <opaqueInsets>
       <Insets />
