@@ -70,5 +70,10 @@ public class Utilities {
 		lin.clear();
 	}
 
+	public void clearStartAndEndLineLists(ObservableList<Line> lin1, ObservableList<Line> lin2){
+		lin1.clear();
+		lin2.clear();
+	}
+
 
 }

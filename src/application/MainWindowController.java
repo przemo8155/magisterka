@@ -43,6 +43,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -58,6 +59,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.*;
 import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.shape.*;
@@ -141,36 +143,86 @@ public class MainWindowController {
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 		@Override
 		public void handle(MouseEvent t) {
-			//Circle c = ((Circle)t.getSource());
-			//int index = circleList.indexOf(c);
 			orgSceneX = t.getSceneX();
 			orgSceneY = t.getSceneY() - minusWidth;
 			orgTranslateX = ((Circle) (t.getSource())).getTranslateX();
 			orgTranslateY = ((Circle) (t.getSource())).getTranslateY();
-			//c.setCenterX(orgTranslateX);
-			//c.setCenterY(orgTranslateY);
-			//circleList.set(index, c);
 
 		}
 
+	};
+
+	EventHandler<MouseEvent> circleOnMouseDragIsOver = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			utilities.clearStartAndEndLineLists(startLineList, endLineList);
+			Utilities.infoBox("Done");
+
+		}
+	};
+
+	EventHandler<DragEvent> circleOnDragDone = new EventHandler<DragEvent>() {
+
+		@Override
+		public void handle(DragEvent event) {
+			utilities.clearStartAndEndLineLists(startLineList, endLineList);
+
+
+		}
 	};
 
 	EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
+
 			Circle c = ((Circle)t.getSource());
 			int index = circleList.indexOf(c);
-			double offsetX = t.getSceneX() - orgSceneX;
-			double offsetY = t.getSceneY() - orgSceneY - minusWidth;
+
+			for(Line l : lineList){
+				if(l.getStartX() == c.getCenterX() && l.getStartY() == c.getCenterY()){
+					startLineList.add(l);
+					lineList.remove(l);
+				}
+
+				if(l.getEndX() == c.getCenterX() && l.getEndY() == c.getCenterY()){
+					endLineList.add(l);
+					lineList.remove(l);
+				}
+			}
+
+
+			double offsetX = t.getSceneX();
+			double offsetY = t.getSceneY() - minusWidth;
+
 			double newTranslateX = orgTranslateX + offsetX;
 			double newTranslateY = orgTranslateY + offsetY;
 
-			//((Circle) (t.getSource())).setTranslateX(newTranslateX);
-			//((Circle) (t.getSource())).setTranslateY(newTranslateY);
 			c.setCenterX(newTranslateX);
 			c.setCenterY(newTranslateY);
+
 			circleList.set(index, c);
+
+
+
+			for(Line l : endLineList){
+				l.setEndX(c.getCenterX());
+				l.setEndY(c.getCenterY());
+			}
+
+
+
+			for(Line l : startLineList){
+				l.setStartX(c.getCenterX());
+				l.setStartY(c.getCenterY());
+			}
+
+			lineList.addAll(endLineList);
+			lineList.addAll(startLineList);
+			utilities.clearStartAndEndLineLists(startLineList, endLineList);
+
+
 		}
 	};
 
@@ -379,7 +431,6 @@ public class MainWindowController {
 							} else{
 								double _x = event.getSceneX();
 								double _y = event.getSceneY() - minusWidth;
-								boolean text = false;
 								for(Circle c : circleList){
 									if((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay) && (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)){
 										_cSecPosX = c.getCenterX();
@@ -390,7 +441,6 @@ public class MainWindowController {
 										l.setStrokeWidth(10.0f);
 										mainPane.getChildren().add(l);
 										lineList.add(l);
-										text = true;
 										break;
 
 									}
@@ -444,20 +494,11 @@ public class MainWindowController {
 					Object g = mainPane.getChildren().get(_it);
 					if (g instanceof Circle) {
 
-						for(Line l : lineList){
-							if(l.getStartX() == ((Circle)g).getCenterX() && l.getStartY() == ((Circle)g).getCenterY()){
-								startLineList.add(l);
-								lineList.remove(l);
-							}
 
-							if(l.getEndX() == ((Circle)g).getCenterX() && l.getEndY() == ((Circle)g).getCenterY()){
-								endLineList.add(l);
-								lineList.remove(l);
-							}
-						}
 
 						((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
 						((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+
 
 
 					}
@@ -639,29 +680,8 @@ public class MainWindowController {
 
 	@FXML
 	void mainPane_OnMouseReseased(MouseEvent event){
-		Object g = event.getTarget();
-		if(g instanceof Circle){
-			int index = circleList.indexOf(g);
-			Circle c = ((Circle)g);
-			c.setCenterX(((Circle) g).getCenterX());
-			c.setCenterY(((Circle) g).getCenterY());
-			circleList.set(index, c);
+		//nic
 
-			for(Line l : endLineList){
-				l.setEndX(c.getCenterX());
-				l.setEndY(c.getCenterY());
-			}
-
-			lineList.addAll(endLineList);
-
-			for(Line l : startLineList){
-				l.setStartX(c.getCenterX());
-				l.setStartY(c.getCenterY());
-			}
-
-			lineList.addAll(startLineList);
-
-		}
 	}
 
 }
