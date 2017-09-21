@@ -16,6 +16,8 @@ import javafx.util.Callback;
 
 public class SettingsController {
 
+	public String backgroundColorString;
+
 	@FXML
 	private Button cancelButton, saveButton;
 
@@ -25,7 +27,12 @@ public class SettingsController {
 	@FXML
 	private ComboBox<String> backgroundColorBox;
 
+	public String setBackgroundColorLabel(){
+		return backgroundColorString;
+	}
+
 	public void initialize(){
+
 		backgroundColorBox.getItems().addAll("Default", "Black", "Blue");
 		backgroundColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 
@@ -43,9 +50,12 @@ public class SettingsController {
 	                if (item != null) {
 	                  setText(item);
 	                  if (item.contains("Default (White)")) {
+	                	  backgroundColorString = "White";
 	                  } else if (item.contains("Black")) {
+	                	  backgroundColorString = "Black";
 	                    setTextFill(Color.BLACK);
 	                  } else if (item.contains("Blue")){
+	                	  backgroundColorString = "Blue";
 	                    setTextFill(Color.BLUE);
 	                  }
 	                } else {

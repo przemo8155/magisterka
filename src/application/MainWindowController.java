@@ -86,6 +86,7 @@ public class MainWindowController {
 	FileManager fileManager = new FileManager();
 	Main main = new Main();
 	LabelTexts labelTexts = new LabelTexts();
+	SettingsController settingsController = new SettingsController();
 
 	public String backgroundColor;
 
@@ -542,9 +543,11 @@ public class MainWindowController {
 
 	public void initialize() {
 
-		mainPane.setStyle("-fx-background-color: #FFFFFF");
+		backgroundColor = settingsController.setBackgroundColorLabel();
+		if(backgroundColor.equals(null)){
 
-		backgroundColor = "#FFFFFF";
+		}
+		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);
 
@@ -703,5 +706,6 @@ public class MainWindowController {
 		// nic
 
 	}
+
 
 }
