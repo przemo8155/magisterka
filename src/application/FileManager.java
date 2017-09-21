@@ -18,7 +18,7 @@ public class FileManager {
 
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines) {
+			ObservableList<Line> lines){
 		try {
 			StringBuilder stringBuilder = new StringBuilder();
 			final String _circles = "circles";
@@ -81,8 +81,8 @@ public class FileManager {
 			file = fileChooser.showSaveDialog(stage);
 			Saver(stringToFile, file);
 
-		} catch (Exception e) {
-			e.getLocalizedMessage();
+		} catch(NullPointerException ex){
+			ex.fillInStackTrace();
 		}
 	}
 
@@ -100,7 +100,7 @@ public class FileManager {
 	}
 
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines) {
+			ObservableList<Line> lines){
 
 		FileChooser fileChooser = new FileChooser();
 		File file;

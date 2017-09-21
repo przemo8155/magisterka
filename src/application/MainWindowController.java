@@ -44,6 +44,9 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -290,11 +293,42 @@ public class MainWindowController {
 				try {
 					if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
 						Object g = mainPane.getChildren().get(_it3);
-						utilities.intBox(_it3);
-						if (g instanceof Circle) {
+						if (g instanceof Line) {
+							try {
+								Line check1 = lineList.get(_it3);
+
+								double _c1 = check1.getStartX();
+								double _c2 = check1.getStartY();
+								double _c3 = check1.getEndX();
+								double _c4 = check1.getEndY();
+
+								double _x = event.getSceneX();
+								double _y = event.getSceneY() - minusWidth;
+
+								if ((_x > _c1 - lineRay) && (_x < _c1 + lineRay) && (_y > _c2 - lineRay)
+										&& (_y < _c2 + lineRay)) {
+									lineList.remove(check1);
+									mainPane.getChildren().remove(check1);
+									setMiddleLabelText("Line removed...");
+									break;
+								}
+
+								if ((_x > _c3 - lineRay) && (_x < _c3 + lineRay) && (_y > _c4 - lineRay)
+										&& (_y < _c4 + lineRay)) {
+									lineList.remove(check1);
+									mainPane.getChildren().remove(check1);
+									setMiddleLabelText("Line removed...");
+									break;
+								}
+								_it3 += 1;
+							} catch (Exception e) {
+								e.fillInStackTrace();
+							}
+						}
+
+						else if (g instanceof Circle) {
 							try {
 								Circle check1 = circleList.get(_it3);
-								utilities.infoBox("circ");
 								double _c1 = check1.getCenterX();
 								double _c2 = check1.getCenterY();
 
@@ -303,9 +337,39 @@ public class MainWindowController {
 
 								if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y > _c2 - circleRay)
 										&& (_y < _c2 + circleRay) && (_y > minusWidth)) {
+
+									for (Line l : lineList) {
+										if (l.getStartX() == check1.getCenterX() && l.getStartY() == check1.getCenterY()) {
+											startLineList.add(l);
+										}
+									}
+
+
+
+									for (Line l : lineList) {
+										if (l.getEndX() == check1.getCenterX() && l.getEndY() == check1.getCenterY()) {
+											endLineList.add(l);
+										}
+									}
+
+
+									lineList.removeAll(startLineList);
+									lineList.removeAll(endLineList);
+
+									for(Line l : startLineList){
+										mainPane.getChildren().remove(l);
+									}
+
+									for(Line l : endLineList){
+										mainPane.getChildren().remove(l);
+									}
+
+
+
 									circleList.remove(check1);
 									mainPane.getChildren().remove(check1);
 									setMiddleLabelText("Circle removed...");
+									utilities.clearStartAndEndLineLists(startLineList, endLineList);
 									break;
 								}
 
@@ -316,23 +380,56 @@ public class MainWindowController {
 						}
 
 						else if (g instanceof Rectangle) {
-							Rectangle check1 = squareList.get(_it3);
-							utilities.infoBox("rec");
-							double _c1 = check1.getX() + 20;
-							double _c2 = check1.getY() + 20;
+							try {
+								Rectangle check1 = squareList.get(_it3);
+								double _c1 = check1.getX() + 20;
+								double _c2 = check1.getY() + 20;
 
-							double _x = event.getSceneX();
-							double _y = event.getSceneY() - minusWidth;
+								double _x = event.getSceneX();
+								double _y = event.getSceneY() - minusWidth;
 
-							if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
-									&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
-								squareList.remove(check1);
-								mainPane.getChildren().remove(check1);
-								setMiddleLabelText("Rectangle removed...");
-								break;
+								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
+										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
+
+									for (Line l : lineList) {
+										if (l.getStartX() == check1.getX() + 20 && l.getStartY() == check1.getY() + 20) {
+											startLineList.add(l);
+										}
+									}
+
+
+
+									for (Line l : lineList) {
+										if (l.getEndX() == check1.getX() + 20 && l.getEndY() == check1.getY() + 20) {
+											endLineList.add(l);
+										}
+									}
+
+
+									lineList.removeAll(startLineList);
+									lineList.removeAll(endLineList);
+
+									for(Line l : startLineList){
+										mainPane.getChildren().remove(l);
+									}
+
+									for(Line l : endLineList){
+										mainPane.getChildren().remove(l);
+									}
+
+
+									squareList.remove(check1);
+									mainPane.getChildren().remove(check1);
+									setMiddleLabelText("Rectangle removed...");
+									break;
+								}
+								_it3 += 1;
+							} catch (Exception e) {
+								e.fillInStackTrace();
 							}
-							_it3 += 1;
-						} else {
+						}
+
+						 else {
 							utilities.infoBox("else");
 							_it3 += 1;
 							break;
@@ -610,6 +707,9 @@ public class MainWindowController {
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);
+
+		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 
 		utilities.clearAllLists(circleList, squareList, lineList);
 

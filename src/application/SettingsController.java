@@ -22,7 +22,7 @@ public class SettingsController {
 	private Button cancelButton, saveButton;
 
 	@FXML
-	private Label backgroundColorLabel;
+	private Label backgroundColorLabel, circleColorLabel, rectangleColorLabel, lineColorLabel;
 
 	@FXML
 	private ComboBox<String> backgroundColorBox;

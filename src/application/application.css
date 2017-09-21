@@ -14,7 +14,7 @@
 }
 
 #circleToggleButton:selected {
-  -fx-background-image: url('resources/circleChecked.png');
+  -fx-background-color: darkgray;
 }
 
 
@@ -26,7 +26,7 @@
 }
 
 #squareToggleButton:selected {
-  -fx-background-image: url('resources/squareChecked.png');
+  -fx-background-color: darkgray;
 }
 
 #moveToggleButton {
@@ -37,7 +37,7 @@
 }
 
 #moveToggleButton:selected {
-  -fx-background-image: url('resources/moveClicked.png');
+  -fx-background-color: darkgray;
 }
 
 #lineToggleButton {
@@ -48,7 +48,7 @@
 }
 
 #lineToggleButton:selected {
-  -fx-background-image: url('resources/lineChecked.png');
+  -fx-background-color: darkgray;
 }
 
 #removeToggleButton {
@@ -56,4 +56,30 @@
     -fx-background-size: 40px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
+}
+
+#removeToggleButton:focused {
+	 -fx-background-color: darkgray;
+}
+
+.menu-item:focused {
+     -fx-background-color: darkgray;
+}
+
+.menu-item .label {
+    -fx-text-fill: black;
+    -fx-font-size: 12
+}
+
+.menu .label {
+     -fx-text-fill: black;
+     -fx-font-size: 14
+
+}
+
+.menu {
+	-fx-selection-bar: darkgray;
+}
+.menu-bar:focused {
+	 -fx-background-color: darkgray;
 }
