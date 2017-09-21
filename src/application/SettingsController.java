@@ -27,6 +27,8 @@ public class SettingsController {
 	@FXML
 	private ComboBox<String> backgroundColorBox;
 
+	private String inyy;
+
 	public String setBackgroundColorLabel(){
 		return backgroundColorString;
 	}

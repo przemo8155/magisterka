@@ -544,9 +544,9 @@ public class MainWindowController {
 	public void initialize() {
 
 		backgroundColor = settingsController.setBackgroundColorLabel();
-		if(backgroundColor.equals(null)){
 
-		}
+
+		//infoooo
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);
