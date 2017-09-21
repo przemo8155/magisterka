@@ -1,19 +1,11 @@
 package application;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import javax.activation.FileDataSource;
-
-import com.sun.glass.ui.Window.Level;
-import com.sun.javafx.logging.Logger;
-
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -21,11 +13,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class FileManager {
 
-	private LabelTexts labelTexts;
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<Line> lines) {
@@ -90,7 +80,7 @@ public class FileManager {
 			fileChooser.getExtensionFilters().add(extFilter);
 			file = fileChooser.showSaveDialog(stage);
 			Saver(stringToFile, file);
-			
+
 		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
@@ -161,7 +151,6 @@ public class FileManager {
 
 			}
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -194,7 +183,6 @@ public class FileManager {
 
 			}
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -239,7 +227,6 @@ public class FileManager {
 			}
 
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 

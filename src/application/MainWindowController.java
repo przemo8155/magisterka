@@ -285,6 +285,58 @@ public class MainWindowController {
 	@FXML
 	void mainPane_OnMouseClicked(MouseEvent event) {
 		switch (selectedToggle) {
+
+		case "remove":
+				int _it3 = 0;
+				while (_it3 <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
+					try {
+						if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
+							Object g = mainPane.getChildren().get(_it3);
+
+							if(g instanceof Circle){
+								Circle check1 = circleList.get(_it3);
+
+								double _c1 = check1.getCenterX();
+								double _c2 = check1.getCenterY();
+
+
+								double _x = event.getSceneX();
+								double _y = event.getSceneY() - minusWidth;
+
+								if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y > _c2 - circleRay)
+										&& (_y < _c2 + circleRay) && (_y > minusWidth)) {
+									circleList.remove(check1);
+									mainPane.getChildren().remove(check1);
+									break;
+								}
+							}
+
+
+							else if (g instanceof Rectangle) {
+								Rectangle check1 = squareList.get(_it3);
+
+								double _c1 = check1.getX() + 20;
+								double _c2 = check1.getY() + 20;
+
+								double _x = event.getSceneX();
+								double _y = event.getSceneY() - minusWidth;
+
+								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
+										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
+									squareList.remove(check1);
+									mainPane.getChildren().remove(check1);
+									break;
+								}
+							}
+							_it3 += 1;
+						}
+					}catch(Exception e){
+						e.fillInStackTrace();
+					}
+				}
+
+			break;
+
 		case "circle":
 			if (event.getSceneY() > minusWidth + 10) {
 				Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f,
@@ -546,7 +598,6 @@ public class MainWindowController {
 		backgroundColor = settingsController.setBackgroundColorLabel();
 
 
-		//infoooo
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);
@@ -558,11 +609,13 @@ public class MainWindowController {
 		squareToggleButton.setToggleGroup(toggleButtonsGroup);
 		moveToggleButton.setToggleGroup(toggleButtonsGroup);
 		lineToggleButton.setToggleGroup(toggleButtonsGroup);
+		removeToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
 		moveToggleButton.setUserData("move");
 		lineToggleButton.setUserData("line");
+		removeToggleButton.setUserData("remove");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
@@ -578,6 +631,8 @@ public class MainWindowController {
 						setMiddleLabelText("Drawing lines...");
 					else if (selectedToggle == "move")
 						setMiddleLabelText("Moving objects...");
+					else if (selectedToggle == "remove")
+						setMiddleLabelText("Removing objects...");
 				}
 
 			}
