@@ -171,7 +171,7 @@ public class MainWindowController {
 
 				lineList.removeAll(startLineList);
 
-				for (Line l : lineList){
+				for (Line l : lineList) {
 					if (l.getEndX() == c.getCenterX() && l.getEndY() == c.getCenterY()) {
 						endLineList.add(l);
 					}
@@ -208,7 +208,6 @@ public class MainWindowController {
 				e.printStackTrace();
 			}
 
-
 		}
 	};
 
@@ -239,7 +238,7 @@ public class MainWindowController {
 
 				lineList.removeAll(startLineList);
 
-				for (Line l : lineList){
+				for (Line l : lineList) {
 					if (l.getEndX() - 20 == r.getX() && l.getEndY() - 20 == r.getY()) {
 						endLineList.add(l);
 					}
@@ -251,7 +250,6 @@ public class MainWindowController {
 				double offsetY = t.getSceneY() - orgSceneY;
 				double newTranslateX = orgTranslateX + offsetX;
 				double newTranslateY = orgTranslateY + offsetY;
-
 
 				r.setX(newTranslateX);
 				r.setY(newTranslateY);
@@ -287,18 +285,18 @@ public class MainWindowController {
 		switch (selectedToggle) {
 
 		case "remove":
-				int _it3 = 0;
-				while (_it3 <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
-					try {
-						if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
-							Object g = mainPane.getChildren().get(_it3);
-
-							if(g instanceof Circle){
+			int _it3 = 0;
+			while (_it3 <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
+				try {
+					if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
+						Object g = mainPane.getChildren().get(_it3);
+						utilities.intBox(_it3);
+						if (g instanceof Circle) {
+							try {
 								Circle check1 = circleList.get(_it3);
-
+								utilities.infoBox("circ");
 								double _c1 = check1.getCenterX();
 								double _c2 = check1.getCenterY();
-
 
 								double _x = event.getSceneX();
 								double _y = event.getSceneY() - minusWidth;
@@ -307,44 +305,55 @@ public class MainWindowController {
 										&& (_y < _c2 + circleRay) && (_y > minusWidth)) {
 									circleList.remove(check1);
 									mainPane.getChildren().remove(check1);
+									setMiddleLabelText("Circle removed...");
 									break;
 								}
+
+								_it3 += 1;
+							} catch (Exception e) {
+								e.fillInStackTrace();
 							}
+						}
 
+						else if (g instanceof Rectangle) {
+							Rectangle check1 = squareList.get(_it3);
+							utilities.infoBox("rec");
+							double _c1 = check1.getX() + 20;
+							double _c2 = check1.getY() + 20;
 
-							else if (g instanceof Rectangle) {
-								Rectangle check1 = squareList.get(_it3);
+							double _x = event.getSceneX();
+							double _y = event.getSceneY() - minusWidth;
 
-								double _c1 = check1.getX() + 20;
-								double _c2 = check1.getY() + 20;
-
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
-										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
-									squareList.remove(check1);
-									mainPane.getChildren().remove(check1);
-									break;
-								}
+							if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
+									&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
+								squareList.remove(check1);
+								mainPane.getChildren().remove(check1);
+								setMiddleLabelText("Rectangle removed...");
+								break;
 							}
 							_it3 += 1;
+						} else {
+							utilities.infoBox("else");
+							_it3 += 1;
+							break;
 						}
-					}catch(Exception e){
-						e.fillInStackTrace();
 					}
+				} catch (Exception e) {
+					e.fillInStackTrace();
 				}
+			}
 
 			break;
 
 		case "circle":
 			if (event.getSceneY() > minusWidth + 10) {
 				Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f,
-				Paint.valueOf("#923456"));
+						Paint.valueOf("#923456"));
 				c.setStroke(Paint.valueOf("#555555"));
 				c.setStrokeWidth(5.0f);
 				mainPane.getChildren().add(c);
 				c.setOnMousePressed(circleOnMousePressedEventHandler);
+				setMiddleLabelText("Circle created...");
 				circleList.add(c);
 			}
 			break;
@@ -357,6 +366,7 @@ public class MainWindowController {
 				r.setStrokeWidth(5.0f);
 				mainPane.getChildren().add(r);
 				r.setOnMousePressed(squareOnMousePressedEventHandler);
+				setMiddleLabelText("Rectangle created...");
 				squareList.add(r);
 			}
 			break;
@@ -597,7 +607,6 @@ public class MainWindowController {
 
 		backgroundColor = settingsController.setBackgroundColorLabel();
 
-
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);
@@ -761,6 +770,5 @@ public class MainWindowController {
 		// nic
 
 	}
-
 
 }
