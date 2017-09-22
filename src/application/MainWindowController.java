@@ -317,152 +317,99 @@ public class MainWindowController {
 		switch (selectedToggle) {
 
 		case "remove":
-			int _it3 = 0;
-			while (_it3 <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
-				try {
-					if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
-						Object g = mainPane.getChildren().get(_it3);
-						if (g instanceof Line) {
-							try {
-								Line check1 = lineList.get(_it3);
+			if (event.getSceneY() > minusWidth + 10) {
+				double x = event.getSceneX();
+				double y = event.getSceneY();
+				for (Circle myCircle : circleList) {
+					if ((x > myCircle.getCenterX() - circleRay) && (x < myCircle.getCenterX() + circleRay)
+							&& (y > myCircle.getCenterY() - circleRay + minusWidth)
+							&& (y < myCircle.getCenterY() + circleRay + minusWidth)) {
 
-								double _c1 = check1.getStartX();
-								double _c2 = check1.getStartY();
-								double _c3 = check1.getEndX();
-								double _c4 = check1.getEndY();
 
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - lineRay) && (_x < _c1 + lineRay) && (_y > _c2 - lineRay)
-										&& (_y < _c2 + lineRay)) {
-									lineList.remove(check1);
-									mainPane.getChildren().remove(check1);
-									setMiddleLabelText("Line removed...");
-									break;
-								}
-
-								if ((_x > _c3 - lineRay) && (_x < _c3 + lineRay) && (_y > _c4 - lineRay)
-										&& (_y < _c4 + lineRay)) {
-									lineList.remove(check1);
-									mainPane.getChildren().remove(check1);
-									setMiddleLabelText("Line removed...");
-									break;
-								}
-								_it3 += 1;
-							} catch (Exception e) {
-								e.fillInStackTrace();
+						for (Line l : lineList) {
+							if (l.getStartX() == myCircle.getCenterX()
+									&& l.getStartY() == myCircle.getCenterY()) {
+								startLineList.add(l);
 							}
 						}
 
-						else if (g instanceof Circle) {
-							try {
-								Circle check1 = circleList.get(_it3);
-								double _c1 = check1.getCenterX();
-								double _c2 = check1.getCenterY();
-
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y > _c2 - circleRay)
-										&& (_y < _c2 + circleRay) && (_y > minusWidth)) {
-
-									for (Line l : lineList) {
-										if (l.getStartX() == check1.getCenterX()
-												&& l.getStartY() == check1.getCenterY()) {
-											startLineList.add(l);
-										}
-									}
-
-									for (Line l : lineList) {
-										if (l.getEndX() == check1.getCenterX() && l.getEndY() == check1.getCenterY()) {
-											endLineList.add(l);
-										}
-									}
-
-									lineList.removeAll(startLineList);
-									lineList.removeAll(endLineList);
-
-									for (Line l : startLineList) {
-										mainPane.getChildren().remove(l);
-									}
-
-									for (Line l : endLineList) {
-										mainPane.getChildren().remove(l);
-									}
-
-									circleList.remove(check1);
-									mainPane.getChildren().remove(check1);
-									setMiddleLabelText("Circle removed...");
-									utilities.clearStartAndEndLineLists(startLineList, endLineList);
-									break;
-								}
-
-								_it3 += 1;
-							} catch (Exception e) {
-								e.fillInStackTrace();
+						for (Line l : lineList) {
+							if (l.getEndX() == myCircle.getCenterX() && l.getEndY() == myCircle.getCenterY()) {
+								endLineList.add(l);
 							}
 						}
 
-						else if (g instanceof Rectangle) {
-							try {
-								Rectangle check1 = squareList.get(_it3);
-								double _c1 = check1.getX() + 20;
-								double _c2 = check1.getY() + 20;
-
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
-										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
-
-									for (Line l : lineList) {
-										if (l.getStartX() == check1.getX() + 20
-												&& l.getStartY() == check1.getY() + 20) {
-											startLineList.add(l);
-										}
-									}
-
-									for (Line l : lineList) {
-										if (l.getEndX() == check1.getX() + 20 && l.getEndY() == check1.getY() + 20) {
-											endLineList.add(l);
-										}
-									}
-
-									lineList.removeAll(startLineList);
-									lineList.removeAll(endLineList);
-
-									for (Line l : startLineList) {
-										mainPane.getChildren().remove(l);
-									}
-
-									for (Line l : endLineList) {
-										mainPane.getChildren().remove(l);
-									}
-
-									squareList.remove(check1);
-									mainPane.getChildren().remove(check1);
-									setMiddleLabelText("Rectangle removed...");
-									break;
-								}
-								_it3 += 1;
-							} catch (Exception e) {
-								e.fillInStackTrace();
+						if(!startLineList.isEmpty()){
+							lineList.removeAll(startLineList);
+							for (Line l : startLineList) {
+								mainPane.getChildren().remove(l);
 							}
 						}
 
-						else {
-							_it3 += 1;
-							break;
+						if(!endLineList.isEmpty()){
+							lineList.removeAll(endLineList);
+							for (Line l : endLineList) {
+								mainPane.getChildren().remove(l);
+							}
+
 						}
+
+						circleList.remove(myCircle);
+						mainPane.getChildren().remove(myCircle);
+
+						setMiddleLabelText("Circle removed...");
+						utilities.clearStartAndEndLineLists(startLineList, endLineList);
+						break;
 					}
-				} catch (Exception e) {
-					e.fillInStackTrace();
 				}
+
+
+				for (Rectangle myRectangle : squareList) {
+					if ((x > myRectangle.getX() + 20 - squareRay) && (x < myRectangle.getX() + 20 + squareRay)
+							&& (y > myRectangle.getY() + 20 - squareRay + minusWidth)
+							&& (y < myRectangle.getY() + 20 + squareRay + minusWidth)) {
+
+
+						for (Line l : lineList) {
+							if (l.getStartX() == myRectangle.getX() + 20
+									&& l.getStartY() == myRectangle.getY() + 20) {
+								startLineList.add(l);
+							}
+						}
+
+						for (Line l : lineList) {
+							if (l.getEndX() == myRectangle.getX() + 20 && l.getEndY() == myRectangle.getY() + 20) {
+								endLineList.add(l);
+							}
+						}
+
+						if(!startLineList.isEmpty()){
+							lineList.removeAll(startLineList);
+							for (Line l : startLineList) {
+								mainPane.getChildren().remove(l);
+							}
+						}
+
+						if(!endLineList.isEmpty()){
+							lineList.removeAll(endLineList);
+							for (Line l : endLineList) {
+								mainPane.getChildren().remove(l);
+							}
+
+						}
+
+						squareList.remove(myRectangle);
+						mainPane.getChildren().remove(myRectangle);
+
+						setMiddleLabelText("Rectangle removed...");
+						utilities.clearStartAndEndLineLists(startLineList, endLineList);
+						break;
+					}
+				}
+
+
 			}
-
 			break;
-
 		case "circle":
 			if (event.getSceneY() > minusWidth + 10) {
 				Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f,
@@ -611,6 +558,7 @@ public class MainWindowController {
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 
+
 		utilities.clearAllLists(circleList, squareList, lineList);
 
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
@@ -725,15 +673,25 @@ public class MainWindowController {
 
 	@FXML
 	void openFileMenuItem_OnAction(ActionEvent event) {
-		for (Line l : lineList) {
-			utilities.doubleBox(l.getEndX());
-			utilities.doubleBox(l.getEndY());
+
+		for(Circle c : circleList){
+			mainPane.getChildren().remove(c);
 		}
+
+		for(Rectangle r : squareList){
+			mainPane.getChildren().remove(r);
+		}
+
+		for(Line l : lineList){
+			mainPane.getChildren().remove(l);
+		}
+		utilities.clearAllLists(circleList, squareList, lineList);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		squareList.clear();
 		fileManager.OpenFile(s, circleList, squareList, lineList);
+
 		for (Circle c : circleList) {
 			mainPane.getChildren().add(c);
 			c.setOnMousePressed(circleOnMousePressedEventHandler);
