@@ -452,7 +452,6 @@ public class MainWindowController {
 						}
 
 						else {
-							utilities.infoBox("else");
 							_it3 += 1;
 							break;
 						}
@@ -493,10 +492,10 @@ public class MainWindowController {
 		case "line":
 			if (_isCircleFirst) {
 				int _it = 0;
-				while (_it <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
 
-						if (event.getSceneY() > minusWidth + 10 && event.getSceneY() > 10) {
+						if (event.getSceneY() > minusWidth + 10) {
 							Object g = mainPane.getChildren().get(_it);
 
 							if (g instanceof Circle) {
@@ -523,7 +522,7 @@ public class MainWindowController {
 										- 1) {
 									break;
 								}
-								_it += 1;
+
 
 							}
 
@@ -551,7 +550,7 @@ public class MainWindowController {
 										- 1) {
 									break;
 								}
-								_it += 1;
+
 							}
 
 							else {
@@ -586,9 +585,10 @@ public class MainWindowController {
 								}
 
 								_isCircleFirst = false;
-								_it += 1;
+
 								break;
 							}
+							_it += 1;
 
 						}
 
@@ -600,7 +600,7 @@ public class MainWindowController {
 
 			} else {
 				int _it = 0;
-				while (_it <= utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
 					try {
 						if (event.getSceneY() > minusWidth) {
 							Object g = mainPane.getChildren().get(_it);
@@ -636,7 +636,11 @@ public class MainWindowController {
 										- 1) {
 									break;
 								}
-								_it += 1;
+
+
+
+
+
 
 							}
 
@@ -669,7 +673,8 @@ public class MainWindowController {
 										- 1) {
 									break;
 								}
-								_it += 1;
+
+
 							} else {
 								boolean getElse = true;
 								double _x = event.getSceneX();
@@ -712,11 +717,13 @@ public class MainWindowController {
 									break;
 								}
 
-								_it += 1;
+
 								_isCircleFirst = true;
 								break;
 
 							}
+
+							_it += 1;
 
 						}
 
