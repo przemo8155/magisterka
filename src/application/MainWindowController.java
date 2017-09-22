@@ -490,250 +490,77 @@ public class MainWindowController {
 			break;
 
 		case "line":
-			if (_isCircleFirst) {
-				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
-					try {
+			if (event.getSceneY() > minusWidth + 10) {
+				double x = event.getSceneX();
+				double y = event.getSceneY();
 
-						if (event.getSceneY() > minusWidth + 10) {
-							Object g = mainPane.getChildren().get(_it);
+				boolean goIntoRectangle = false;
+				boolean goIntoCircle = false;
 
-							if (g instanceof Circle) {
-								boolean getElse = true;
-								Circle check1 = circleList.get(_it);
-
-								double _c1 = check1.getCenterX();
-								double _c2 = check1.getCenterY();
-
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y > _c2 - circleRay)
-										&& (_y < _c2 + circleRay) && (_y > minusWidth)) {
-									_cFirstPosX = ((Circle) g).getCenterX();
-									_cFirstPosY = ((Circle) g).getCenterY();
-									_isCircleFirst = false;
-									_it = 0;
-									setMiddleLabelText("First point of line...");
-									getElse = false;
-									break;
-								}
-								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
-										- 1) {
-									break;
-								}
-
-
-							}
-
-							else if (g instanceof Rectangle) {
-								boolean getElse = true;
-								Rectangle check1 = squareList.get(_it);
-
-								double _c1 = check1.getX() + 20;
-								double _c2 = check1.getY() + 20;
-
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
-										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
-									_cFirstPosX = ((Rectangle) g).getX() + 20;
-									_cFirstPosY = ((Rectangle) g).getY() + 20;
-									_isCircleFirst = false;
-									_it = 0;
-									setMiddleLabelText("First point of line...");
-									getElse = false;
-									break;
-								}
-								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
-										- 1) {
-									break;
-								}
-
-							}
-
-							else {
-								boolean getElse = true;
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-								for (Circle c : circleList) {
-									if ((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay)
-											&& (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)) {
-										_cFirstPosX = c.getCenterX();
-										_cFirstPosY = c.getCenterY();
-										setMiddleLabelText("First point of line...");
-										getElse = false;
-										break;
-									}
-								}
-
-								for (Rectangle r : squareList) {
-									if ((_x > r.getX()) && (_x < r.getX() + squareRay) && (_y > r.getY())
-											&& (_y < r.getY() + squareRay)) {
-										_cFirstPosX = r.getX() + 20;
-										_cFirstPosY = r.getY() + 20;
-										setMiddleLabelText("First point of line...");
-										getElse = false;
-										break;
-									}
-								}
-
-								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
-										- 1) {
-									break;
-								}
-
-								_isCircleFirst = false;
-
-								break;
-							}
-							_it += 1;
-
+				for (Circle myCircle : circleList) {
+					if ((x > myCircle.getCenterX() - circleRay) && (x < myCircle.getCenterX() + circleRay)
+							&& (y > myCircle.getCenterY() - circleRay + minusWidth)
+							&& (y < myCircle.getCenterY() + circleRay + minusWidth)) {
+						if (_cFirstPosX == 0 && _cFirstPosY == 0 && !goIntoCircle) {
+							_cFirstPosX = myCircle.getCenterX();
+							_cFirstPosY = myCircle.getCenterY();
+							setMiddleLabelText("First point of line...");
+							goIntoRectangle = true;
+							break;
 						}
 
-					} catch (Exception e) {
-						e.getMessage();
+						if (_cFirstPosX != 0 && _cFirstPosY != 0) {
+							_cSecPosX = myCircle.getCenterX();
+							_cSecPosY = myCircle.getCenterY();
+							Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+							l.setStroke(Paint.valueOf("#ABCDEF"));
+							l.setStrokeWidth(10.0f);
+							mainPane.getChildren().add(l);
+							lineList.add(l);
+							setMiddleLabelText("Second point of line...");
+							_cFirstPosX = 0;
+							_cFirstPosY = 0;
+							_cSecPosX = 0;
+							_cSecPosY = 0;
+							goIntoRectangle = false;
+							break;
+						}
 					}
-
 				}
 
-			} else {
-				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList, lineList)) {
-					try {
-						if (event.getSceneY() > minusWidth) {
-							Object g = mainPane.getChildren().get(_it);
-							if (g instanceof Circle) {
-								boolean getElse = true;
-								Circle check1 = circleList.get(_it);
-								double _c1 = check1.getCenterX();
-								double _c2 = check1.getCenterY();
-
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - circleRay) && (_x < _c1 + circleRay) && (_y < _c2 + circleRay)
-										&& (_y > _c2 - circleRay) && (_y > minusWidth)) {
-
-									_cSecPosX = ((Circle) g).getCenterX();
-									_cSecPosY = ((Circle) g).getCenterY();
-									Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-									l.setStroke(Paint.valueOf("#ABCDEF"));
-									l.setStrokeWidth(10.0f);
-									mainPane.getChildren().add(l);
-									lineList.add(l);
-									_isCircleFirst = true;
-									getElse = false;
-									setMiddleLabelText("Second point of line...");
-
-									_it = 0;
-									break;
-
-								}
-
-								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
-										- 1) {
-									break;
-								}
-
-
-
-
-
-
-							}
-
-							else if (g instanceof Rectangle) {
-								boolean getElse = true;
-								Rectangle check1 = squareList.get(_it);
-								double _c1 = check1.getX() + 20;
-								double _c2 = check1.getY() + 20;
-
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-
-								if ((_x > _c1 - squareRay) && (_x < _c1 + squareRay) && (_y > _c2 - squareRay)
-										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
-									_cSecPosX = ((Rectangle) g).getX() + 20;
-									_cSecPosY = ((Rectangle) g).getY() + 20;
-									Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-									l.setStroke(Paint.valueOf("#ABCDEF"));
-									l.setStrokeWidth(10.0f);
-									mainPane.getChildren().add(l);
-									lineList.add(l);
-									_isCircleFirst = true;
-									getElse = false;
-									setMiddleLabelText("Second point of line...");
-									_it = 0;
-									break;
-
-								}
-								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
-										- 1) {
-									break;
-								}
-
-
-							} else {
-								boolean getElse = true;
-								double _x = event.getSceneX();
-								double _y = event.getSceneY() - minusWidth;
-								for (Circle c : circleList) {
-									if ((_x > c.getCenterX() - circleRay) && (_x < c.getCenterX() + circleRay)
-											&& (_y > c.getCenterY() - circleRay) && (_y < c.getCenterY() + circleRay)) {
-										_cSecPosX = c.getCenterX();
-										_cSecPosY = c.getCenterY();
-										setMiddleLabelText("Second point of line...");
-										getElse = false;
-										Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-										l.setStroke(Paint.valueOf("#ABCDEF"));
-										l.setStrokeWidth(10.0f);
-										mainPane.getChildren().add(l);
-										lineList.add(l);
-										break;
-
-									}
-								}
-
-								for (Rectangle r : squareList) {
-									if ((_x > r.getX()) && (_x < r.getX() + squareRay) && (_y > r.getY())
-											&& (_y < r.getY() + squareRay)) {
-										_cSecPosX = r.getX() + 20;
-										_cSecPosY = r.getY() + 20;
-										setMiddleLabelText("Second point of line...");
-										getElse = false;
-										Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-										l.setStroke(Paint.valueOf("#ABCDEF"));
-										l.setStrokeWidth(10.0f);
-										mainPane.getChildren().add(l);
-										lineList.add(l);
-										break;
-									}
-								}
-
-								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
-										- 1) {
-									break;
-								}
-
-
-								_isCircleFirst = true;
-								break;
-
-							}
-
-							_it += 1;
-
+				for (Rectangle myRectangle : squareList) {
+					if ((x > myRectangle.getX() + 20 - squareRay) && (x < myRectangle.getX() + 20 + squareRay)
+							&& (y > myRectangle.getY() + 20 - squareRay + minusWidth)
+							&& (y < myRectangle.getY() + 20 + squareRay + minusWidth)) {
+						if (_cFirstPosX == 0 && _cFirstPosY == 0 && !goIntoRectangle) {
+							_cFirstPosX = myRectangle.getX() + 20;
+							_cFirstPosY = myRectangle.getY() + 20;
+							setMiddleLabelText("First point of line...");
+							goIntoCircle = true;
+							break;
 						}
 
-					} catch (Exception e) {
-						e.getMessage();
+						if (_cFirstPosX != 0 && _cFirstPosY != 0) {
+							_cSecPosX = myRectangle.getX() + 20;
+							_cSecPosY = myRectangle.getY() + 20;
+							Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+							l.setStroke(Paint.valueOf("#ABCDEF"));
+							l.setStrokeWidth(10.0f);
+							mainPane.getChildren().add(l);
+							lineList.add(l);
+							setMiddleLabelText("Second point of line...");
+							_cFirstPosX = 0;
+							_cFirstPosY = 0;
+							_cSecPosX = 0;
+							_cSecPosY = 0;
+							goIntoCircle = false;
+							break;
+						}
 					}
-
 				}
-
 			}
+
+
 
 		}
 	}
