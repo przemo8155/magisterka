@@ -152,11 +152,11 @@ public class MainWindowController {
 
 		@Override
 		public void handle(MouseEvent event) {
-			if(_cFirstPosX != 0 && _cFirstPosY != 0){
-				if(!moveLineList.isEmpty()){
+			if (_cFirstPosX != 0 && _cFirstPosY != 0) {
+				if (!moveLineList.isEmpty()) {
 					lineList.removeAll(moveLineList);
 
-					for(Line l : moveLineList){
+					for (Line l : moveLineList) {
 						mainPane.getChildren().remove(l);
 					}
 
@@ -171,11 +171,6 @@ public class MainWindowController {
 
 				moveLineList.add(l);
 			}
-
-
-
-
-
 
 		}
 	};
@@ -373,12 +368,11 @@ public class MainWindowController {
 										&& (_y < _c2 + circleRay) && (_y > minusWidth)) {
 
 									for (Line l : lineList) {
-										if (l.getStartX() == check1.getCenterX() && l.getStartY() == check1.getCenterY()) {
+										if (l.getStartX() == check1.getCenterX()
+												&& l.getStartY() == check1.getCenterY()) {
 											startLineList.add(l);
 										}
 									}
-
-
 
 									for (Line l : lineList) {
 										if (l.getEndX() == check1.getCenterX() && l.getEndY() == check1.getCenterY()) {
@@ -386,19 +380,16 @@ public class MainWindowController {
 										}
 									}
 
-
 									lineList.removeAll(startLineList);
 									lineList.removeAll(endLineList);
 
-									for(Line l : startLineList){
+									for (Line l : startLineList) {
 										mainPane.getChildren().remove(l);
 									}
 
-									for(Line l : endLineList){
+									for (Line l : endLineList) {
 										mainPane.getChildren().remove(l);
 									}
-
-
 
 									circleList.remove(check1);
 									mainPane.getChildren().remove(check1);
@@ -426,12 +417,11 @@ public class MainWindowController {
 										&& (_y < _c2 + squareRay) && (_y > minusWidth)) {
 
 									for (Line l : lineList) {
-										if (l.getStartX() == check1.getX() + 20 && l.getStartY() == check1.getY() + 20) {
+										if (l.getStartX() == check1.getX() + 20
+												&& l.getStartY() == check1.getY() + 20) {
 											startLineList.add(l);
 										}
 									}
-
-
 
 									for (Line l : lineList) {
 										if (l.getEndX() == check1.getX() + 20 && l.getEndY() == check1.getY() + 20) {
@@ -439,18 +429,16 @@ public class MainWindowController {
 										}
 									}
 
-
 									lineList.removeAll(startLineList);
 									lineList.removeAll(endLineList);
 
-									for(Line l : startLineList){
+									for (Line l : startLineList) {
 										mainPane.getChildren().remove(l);
 									}
 
-									for(Line l : endLineList){
+									for (Line l : endLineList) {
 										mainPane.getChildren().remove(l);
 									}
-
 
 									squareList.remove(check1);
 									mainPane.getChildren().remove(check1);
@@ -463,7 +451,7 @@ public class MainWindowController {
 							}
 						}
 
-						 else {
+						else {
 							utilities.infoBox("else");
 							_it3 += 1;
 							break;
@@ -531,7 +519,8 @@ public class MainWindowController {
 									getElse = false;
 									break;
 								}
-								if(getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList) - 1){
+								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
+										- 1) {
 									break;
 								}
 								_it += 1;
@@ -558,7 +547,8 @@ public class MainWindowController {
 									getElse = false;
 									break;
 								}
-								if(getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList) - 1){
+								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
+										- 1) {
 									break;
 								}
 								_it += 1;
@@ -590,7 +580,8 @@ public class MainWindowController {
 									}
 								}
 
-								if(getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList) - 1){
+								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
+										- 1) {
 									break;
 								}
 
@@ -615,7 +606,6 @@ public class MainWindowController {
 							Object g = mainPane.getChildren().get(_it);
 							if (g instanceof Circle) {
 								boolean getElse = true;
-
 								Circle check1 = circleList.get(_it);
 								double _c1 = check1.getCenterX();
 								double _c2 = check1.getCenterY();
@@ -642,7 +632,8 @@ public class MainWindowController {
 
 								}
 
-								if(getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList) - 1){
+								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
+										- 1) {
 									break;
 								}
 								_it += 1;
@@ -674,7 +665,8 @@ public class MainWindowController {
 									break;
 
 								}
-								if(getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList) - 1){
+								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
+										- 1) {
 									break;
 								}
 								_it += 1;
@@ -715,10 +707,10 @@ public class MainWindowController {
 									}
 								}
 
-								if(getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList) - 1){
+								if (getElse && _it == utilities.takeMaximumFromLists(circleList, squareList, lineList)
+										- 1) {
 									break;
 								}
-
 
 								_it += 1;
 								_isCircleFirst = true;
@@ -727,6 +719,7 @@ public class MainWindowController {
 							}
 
 						}
+
 					} catch (Exception e) {
 						e.getMessage();
 					}
@@ -898,11 +891,10 @@ public class MainWindowController {
 
 	@FXML
 	void openFileMenuItem_OnAction(ActionEvent event) {
-		for(Line l : lineList){
+		for (Line l : lineList) {
 			utilities.doubleBox(l.getEndX());
 			utilities.doubleBox(l.getEndY());
 		}
-
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
@@ -948,6 +940,26 @@ public class MainWindowController {
 	void mainPane_OnMouseReseased(MouseEvent event) {
 		// nic
 
+	}
+
+	@FXML
+	void aboutMenuItem_OnAction(ActionEvent event) {
+		try {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("About Box");
+			alert.setHeaderText("Using Chernikova's Algorithm");
+			alert.setContentText("You have actions to execute:\n" + "1. Create circle\n" + "You can create a circle\n\n"
+					+ "2. Create rectangle\n" + "You can create a rectangle\n\n" + "3. Create line\n"
+					+ "You can create a line\n\n" + "4. Move\n" + "You can move a created object\n\n"
+					+ "5. Delete object\n" + "You can delete a created object\n\n" + "6. Clear all\n"
+					+ "You can clear all lists and all visible objects\n");
+
+			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(new Image(this.getClass().getResource("resources/yellowbulb.jpg").toString()));
+			alert.show();
+		} catch (Exception e) {
+			e.fillInStackTrace();
+		}
 	}
 
 }
