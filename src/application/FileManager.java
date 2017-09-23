@@ -4,7 +4,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Paint;
@@ -18,6 +27,11 @@ public class FileManager {
 
 	public Boolean somethingOpened = false;
 	public Boolean somethingSaved = false;
+
+	String cryptoKey = "PrzemekBudzich";
+	String fileName;
+
+
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<Line> lines) {
@@ -263,5 +277,13 @@ public class FileManager {
 
 	public void setSomethingSaved(Boolean a){
 		somethingSaved = a;
+	}
+
+	public static final byte[] intToByteArray(int value) {
+	    return new byte[] {
+	            (byte)(value >>> 24),
+	            (byte)(value >>> 16),
+	            (byte)(value >>> 8),
+	            (byte)value};
 	}
 }
