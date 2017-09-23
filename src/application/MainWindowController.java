@@ -4,6 +4,7 @@ package application;
 
 import java.awt.Color;
 import java.awt.List;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -562,6 +563,8 @@ public class MainWindowController {
 	public void initialize() {
 
 		backgroundColor = settingsController.setBackgroundColorLabel();
+
+		
 
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 

@@ -1,9 +1,14 @@
 package application;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
@@ -28,8 +33,7 @@ public class FileManager {
 	public Boolean somethingOpened = false;
 	public Boolean somethingSaved = false;
 
-	String cryptoKey = "PrzemekBudzich";
-	String fileName;
+	String key = "przemkeb123123zx";
 
 
 
@@ -103,6 +107,25 @@ public class FileManager {
 
 			Saver(stringToFile, file);
 
+
+
+			String absolutePath = file.getAbsolutePath();
+			String directoryPath = file.getParent();
+			File inputFile = new File(absolutePath);
+		    File encryptedFile = new File(directoryPath + "\\encrypt");
+		        try {
+		            CryptoUtils.encrypt(key, inputFile, encryptedFile);
+		        } catch (CryptoException ex) {
+		            System.out.println(ex.getMessage());
+		            ex.printStackTrace();
+		        }
+		    file.delete();
+		    encryptedFile.renameTo(inputFile);
+
+
+
+
+
 		} catch (NullPointerException ex) {
 			ex.fillInStackTrace();
 		}
@@ -134,9 +157,25 @@ public class FileManager {
 			if(file != null){
 				setSomethingOpened(true);
 			}
-			Reader(file, circles, squares, lines);
 
-		} catch (NullPointerException ex) {
+			String directoryPath = file.getParent();
+
+			File decryptedFile = new File(directoryPath + "\\decrypt.txt");
+
+			decryptedFile.createNewFile();
+			 try {
+		            CryptoUtils.decrypt(key, file, decryptedFile);
+		        } catch (CryptoException ex) {
+		            System.out.println(ex.getMessage());
+		            ex.printStackTrace();
+		        }
+
+
+
+			Reader(decryptedFile, circles, squares, lines);
+			decryptedFile.delete();
+
+		} catch (NullPointerException | IOException ex) {
 			ex.fillInStackTrace();
 		}
 
@@ -180,7 +219,9 @@ public class FileManager {
 					}
 				}
 
+
 			}
+			scanner.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -211,8 +252,8 @@ public class FileManager {
 
 					}
 				}
-
 			}
+			scanner.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -257,6 +298,7 @@ public class FileManager {
 
 			}
 
+			scanner.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
