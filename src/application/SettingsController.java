@@ -16,7 +16,7 @@ import javafx.util.Callback;
 
 public class SettingsController {
 
-	public String backgroundColorString;
+	public String backgroundColorString, circleColorString, rectangleColorString, lineColorString;
 
 	@FXML
 	private Button cancelButton, saveButton;
@@ -25,13 +25,11 @@ public class SettingsController {
 	private Label backgroundColorLabel, circleColorLabel, rectangleColorLabel, lineColorLabel;
 
 	@FXML
-	private ComboBox<String> backgroundColorBox;
+	private ComboBox<String> backgroundColorBox, circleColorBox, rectangleColorBox, lineColorBox;
 
-	private String inyy;
 
-	public String setBackgroundColorLabel(){
-		return backgroundColorString;
-	}
+
+
 
 	public void initialize(){
 
@@ -68,6 +66,41 @@ public class SettingsController {
 	            return cell;
 	          }
 		});
+
+
+	}
+
+
+	public String getBackgroundColorLabel(){
+		return backgroundColorString;
+	}
+
+	public void setBackgroundColorLabel(String a){
+		backgroundColorString = a;
+	}
+
+	public String getCircleColorLabel(){
+		return circleColorString;
+	}
+
+	public void setCircleColorLabel(String a){
+		circleColorString = a;
+	}
+
+	public String getRectangleColorLabel(){
+		return rectangleColorString;
+	}
+
+	public void setRectangleColorLabel(String a){
+		rectangleColorString = a;
+	}
+
+	public String getLineColorLabel(){
+		return lineColorString;
+	}
+
+	public void setLineColorLabel(String a){
+		lineColorString = a;
 	}
 
 }

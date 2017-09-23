@@ -4,15 +4,31 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SettingsController">
    <children>
       <Button fx:id="saveButton" layoutX="54.0" layoutY="226.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
-      <Button fx:id="cancelButton" layoutX="150.0" layoutY="226.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
-      <Label fx:id="backgroundColorLabel" layoutX="14.0" layoutY="14.0" text="Background color:" />
-      <ComboBox fx:id="backgroundColorBox" layoutX="136.0" layoutY="10.0" prefWidth="150.0" />
-      <Label fx:id="circleColorLabel" layoutX="14.0" layoutY="47.0" text="Circle color:" />
-      <Label fx:id="rectangleColorLabel" layoutX="15.0" layoutY="78.0" prefHeight="17.0" prefWidth="88.0" text="Rectangle color:" />
-      <Label fx:id="lineColorLabel" layoutX="16.0" layoutY="111.0" prefHeight="17.0" prefWidth="69.0" text="Line color:" />
+      <Button fx:id="cancelButton" layoutX="186.0" layoutY="226.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
+      <Label fx:id="backgroundColorLabel" layoutX="14.0" layoutY="15.0" text="Background color:">
+         <font>
+            <Font name="Comic Sans MS" size="14.0" />
+         </font></Label>
+      <ComboBox fx:id="backgroundColorBox" layoutX="136.0" layoutY="15.0" prefWidth="150.0" />
+      <Label fx:id="circleColorLabel" layoutX="14.0" layoutY="50.0" text="Circle color:">
+         <font>
+            <Font name="Comic Sans MS" size="14.0" />
+         </font></Label>
+      <Label fx:id="rectangleColorLabel" layoutX="14.0" layoutY="85.0" prefHeight="21.0" prefWidth="116.0" text="Rectangle color:">
+         <font>
+            <Font name="Comic Sans MS" size="14.0" />
+         </font></Label>
+      <Label fx:id="lineColorLabel" layoutX="14.0" layoutY="120.0" prefHeight="17.0" prefWidth="69.0" text="Line color:">
+         <font>
+            <Font name="Comic Sans MS" size="14.0" />
+         </font></Label>
+      <ComboBox fx:id="circleColorBox" layoutX="136.0" layoutY="50.0" prefWidth="150.0" />
+      <ComboBox fx:id="rectangleColorBox" layoutX="136.0" layoutY="85.0" prefWidth="150.0" />
+      <ComboBox fx:id="lineColorBox" layoutX="136.0" layoutY="120.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

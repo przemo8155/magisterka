@@ -562,9 +562,6 @@ public class MainWindowController {
 
 	public void initialize() {
 
-		backgroundColor = settingsController.setBackgroundColorLabel();
-
-		
 
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
