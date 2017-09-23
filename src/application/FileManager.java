@@ -16,10 +16,13 @@ import javafx.stage.Stage;
 
 public class FileManager {
 
+	public Boolean somethingOpened = false;
+	public Boolean somethingSaved = false;
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines){
+			ObservableList<Line> lines) {
 		try {
+			setSomethingSaved(false);
 			StringBuilder stringBuilder = new StringBuilder();
 			final String _circles = "circles";
 			stringBuilder.append(_circles);
@@ -79,9 +82,14 @@ public class FileManager {
 			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PB files (*.pb)", "*.pb");
 			fileChooser.getExtensionFilters().add(extFilter);
 			file = fileChooser.showSaveDialog(stage);
+
+			if(file != null){
+				setSomethingSaved(true);
+			}
+
 			Saver(stringToFile, file);
 
-		} catch(NullPointerException ex){
+		} catch (NullPointerException ex) {
 			ex.fillInStackTrace();
 		}
 	}
@@ -100,18 +108,27 @@ public class FileManager {
 	}
 
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines){
+			ObservableList<Line> lines) {
+		try {
+			setSomethingOpened(false);
+			FileChooser fileChooser = new FileChooser();
+			File file;
+			fileChooser.setTitle("Open File");
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PB files (*.pb)", "*.pb");
+			fileChooser.getExtensionFilters().add(extFilter);
+			file = fileChooser.showOpenDialog(stage);
+			if(file != null){
+				setSomethingOpened(true);
+			}
+			Reader(file, circles, squares, lines);
 
-		FileChooser fileChooser = new FileChooser();
-		File file;
-
-		fileChooser.setTitle("Open File");
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PB files (*.pb)", "*.pb");
-		fileChooser.getExtensionFilters().add(extFilter);
-		file = fileChooser.showOpenDialog(stage);
-		Reader(file, circles, squares, lines);
+		} catch (NullPointerException ex) {
+			ex.fillInStackTrace();
+		}
 
 	}
+
+
 
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<Line> lines) {
@@ -230,5 +247,21 @@ public class FileManager {
 			e1.printStackTrace();
 		}
 
+	}
+
+	public Boolean getSomethingOpened(){
+		return somethingOpened;
+	}
+
+	public void setSomethingOpened(Boolean a){
+		somethingOpened = a;
+	}
+
+	public Boolean getSomethingSaved(){
+		return somethingSaved;
+	}
+
+	public void setSomethingSaved(Boolean a){
+		somethingSaved = a;
 	}
 }

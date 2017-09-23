@@ -148,6 +148,16 @@ public class MainWindowController {
 
 	}
 
+	EventHandler<MouseEvent> deleteSecondLastLineEventHandler = new EventHandler<MouseEvent>(){
+		@Override
+		public void handle(MouseEvent event) {
+			if(lineList.size() > 1){
+				lineList.remove(lineList.size() - 2);
+			}
+		}
+
+	};
+
 	EventHandler<MouseEvent> secondPointOfLineEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -170,7 +180,11 @@ public class MainWindowController {
 				lineList.add(l);
 
 				moveLineList.add(l);
+
+
 			}
+
+
 
 		}
 	};
@@ -453,6 +467,7 @@ public class MainWindowController {
 							_cFirstPosY = myCircle.getCenterY();
 							setMiddleLabelText("First point of line...");
 							goIntoRectangle = true;
+							mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 							break;
 						}
 
@@ -484,6 +499,7 @@ public class MainWindowController {
 							_cFirstPosY = myRectangle.getY() + 20;
 							setMiddleLabelText("First point of line...");
 							goIntoCircle = true;
+							mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 							break;
 						}
 
@@ -512,10 +528,6 @@ public class MainWindowController {
 		}
 	}
 
-	public void waitOnSecClick(MouseEvent e) {
-		_cSecPosX = e.getSceneX();
-		_cSecPosY = e.getSceneY();
-	}
 
 	@FXML
 	void mainPane_OnMouseDragged(MouseEvent event) {
@@ -668,11 +680,17 @@ public class MainWindowController {
 	void saveFileMenuItem_OnAction(ActionEvent event) {
 		Stage s = Main.getPrimaryStage();
 		fileManager.SaveFile(s, circleList, squareList, lineList);
-		setMiddleLabelText("File saved...");
+		Boolean fileSaved = fileManager.getSomethingSaved();
+		if(fileSaved){
+			setMiddleLabelText("File saved...");
+
+		}
 	}
 
 	@FXML
 	void openFileMenuItem_OnAction(ActionEvent event) {
+
+
 
 		for(Circle c : circleList){
 			mainPane.getChildren().remove(c);
@@ -708,7 +726,13 @@ public class MainWindowController {
 			mainPane.getChildren().add(l);
 		}
 
-		setMiddleLabelText("File opened...");
+		Boolean fileOpened = fileManager.getSomethingOpened();
+		if(fileOpened){
+			setMiddleLabelText("File opened...");
+
+		}
+
+
 
 	}
 
