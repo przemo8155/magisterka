@@ -562,7 +562,8 @@ public class MainWindowController {
 
 	public void initialize() {
 
-
+		//backgroundColor = settingsController.getBackgroundColorLabel();
+		//mainPane.setStyle("-fx-background-color: " + backgroundColor);
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);

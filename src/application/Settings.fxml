@@ -8,8 +8,8 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SettingsController">
    <children>
-      <Button fx:id="saveButton" layoutX="54.0" layoutY="226.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
-      <Button fx:id="cancelButton" layoutX="186.0" layoutY="226.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
+      <Button fx:id="saveButton" layoutX="54.0" layoutY="226.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" onAction="#saveButton_OnAction"/>
+      <Button fx:id="cancelButton" layoutX="186.0" layoutY="226.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" onAction="#cancelButton_OnAction"/>
       <Label fx:id="backgroundColorLabel" layoutX="14.0" layoutY="15.0" text="Background color:">
          <font>
             <Font name="Comic Sans MS" size="14.0" />
