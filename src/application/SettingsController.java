@@ -2,6 +2,8 @@
 package application;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.channels.SeekableByteChannel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,14 +63,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default (White)"))
 							{
-								backgroundColorString = "White";
+								setBackgroundColorLabel("White");
 							} else if (item.contains("Black"))
 							{
-								backgroundColorString = "Black";
+								setBackgroundColorLabel("White");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								backgroundColorString = "Blue";
+								setBackgroundColorLabel("White");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -105,14 +107,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default (White)"))
 							{
-								circleColorString = "White";
+								setCircleColorLabel("White");
 							} else if (item.contains("Black"))
 							{
-								circleColorString = "Black";
+								setCircleColorLabel("White");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								circleColorString = "Blue";
+								setCircleColorLabel("White");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -149,14 +151,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default (White)"))
 							{
-								rectangleColorString = "White";
+								setRectangleColorLabel("White");
 							} else if (item.contains("Black"))
 							{
-								rectangleColorString = "Black";
+								setRectangleColorLabel("White");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								rectangleColorString = "Blue";
+								setRectangleColorLabel("White");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -193,14 +195,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default (White)"))
 							{
-								lineColorString = "White";
+								setLineColorLabel("White");
 							} else if (item.contains("Black"))
 							{
-								lineColorString = "Black";
+								setLineColorLabel("White");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								lineColorString = "Blue";
+								setLineColorLabel("White");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -218,10 +220,34 @@ public class SettingsController
 	@FXML
 	void saveButton_OnAction(ActionEvent event)
 	{
-		File settingsFile = new File("settings.set");
-		settingsFileManager.SaveSettingsFile(settingsFile, backgroundColorString, circleColorString,
-				rectangleColorString, lineColorString);
+		try
+		{
+			if(backgroundColorString.equals(null))
+			{
+				backgroundColorString = "White";
+			}
 
+			if(circleColorString.equals(null))
+			{
+				circleColorString = "White";
+
+			}
+
+			if(rectangleColorString.equals(null))
+			{
+				rectangleColorString = "White";
+			}
+
+			if(lineColorString.equals(null))
+			{
+				lineColorString = "White";
+			}
+			settingsFileManager.SaveSettingsFile(backgroundColorString, circleColorString, rectangleColorString, lineColorString);
+
+		} catch (NullPointerException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

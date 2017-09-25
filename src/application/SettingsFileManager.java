@@ -8,7 +8,7 @@ import java.io.IOException;
 public class SettingsFileManager
 {
 
-	public void SaveSettingsFile(File file, String background, String circle, String square, String line)
+	public void SaveSettingsFile(String background, String circle, String square, String line)
 	{
 		try
 		{
@@ -22,10 +22,11 @@ public class SettingsFileManager
 			stringBuilder.append(System.getProperty("line.separator"));
 			stringBuilder.append(line);
 
+			File settingsFile = new File("settings.txt");
+
 			final String stringToFile = stringBuilder.toString();
-			Utilities.infoBox(stringToFile);
-			Saver(stringToFile, file);
-		} catch (NullPointerException ex)
+			Saver(stringToFile, settingsFile);
+		} catch (Exception ex)
 		{
 			ex.fillInStackTrace();
 		}
