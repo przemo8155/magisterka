@@ -1,11 +1,13 @@
+
 package application;
 
-
-public class LabelTexts {
+public class LabelTexts
+{
 
 	private MainWindowController mwc;
 
-	public void blankingMiddleLabelText(String pText){
+	public void blankingMiddleLabelText(String pText)
+	{
 
 	}
 

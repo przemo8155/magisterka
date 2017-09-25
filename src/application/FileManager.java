@@ -1,3 +1,4 @@
+
 package application;
 
 import java.io.File;
@@ -28,24 +29,26 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class FileManager {
+public class FileManager
+{
 
 	public Boolean somethingOpened = false;
 	public Boolean somethingSaved = false;
 
 	String key = "przemkeb123123zx";
 
-
-
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines) {
-		try {
+			ObservableList<Line> lines)
+	{
+		try
+		{
 			setSomethingSaved(false);
 			StringBuilder stringBuilder = new StringBuilder();
 			final String _circles = "circles";
 			stringBuilder.append(_circles);
 			stringBuilder.append(System.getProperty("line.separator"));
-			for (Circle c : circles) {
+			for (Circle c : circles)
+			{
 				Double _d1 = c.getCenterX();
 				Double _d2 = c.getCenterY();
 				Integer _i1 = _d1.intValue();
@@ -59,7 +62,8 @@ public class FileManager {
 			final String _squares = "squares";
 			stringBuilder.append(_squares);
 			stringBuilder.append(System.getProperty("line.separator"));
-			for (Rectangle r : squares) {
+			for (Rectangle r : squares)
+			{
 				Double _d1 = r.getX();
 				Double _d2 = r.getY();
 				Integer _i1 = _d1.intValue();
@@ -73,7 +77,8 @@ public class FileManager {
 			final String _lines = "lines";
 			stringBuilder.append(_lines);
 			stringBuilder.append(System.getProperty("line.separator"));
-			for (Line l : lines) {
+			for (Line l : lines)
+			{
 				Double _d1 = l.getStartX();
 				Double _d2 = l.getStartY();
 				Double _d3 = l.getEndX();
@@ -101,52 +106,55 @@ public class FileManager {
 			fileChooser.getExtensionFilters().add(extFilter);
 			file = fileChooser.showSaveDialog(stage);
 
-			if(file != null){
+			if (file != null)
+			{
 				setSomethingSaved(true);
 			}
 
 			Saver(stringToFile, file);
 
-
-
 			String absolutePath = file.getAbsolutePath();
 			String directoryPath = file.getParent();
 			File inputFile = new File(absolutePath);
-		    File encryptedFile = new File(directoryPath + "\\encrypt");
-		        try {
-		            CryptoUtils.encrypt(key, inputFile, encryptedFile);
-		        } catch (CryptoException ex) {
-		            System.out.println(ex.getMessage());
-		            ex.printStackTrace();
-		        }
-		    file.delete();
-		    encryptedFile.renameTo(inputFile);
+			File encryptedFile = new File(directoryPath + "\\encrypt");
+			try
+			{
+				CryptoUtils.encrypt(key, inputFile, encryptedFile);
+			} catch (CryptoException ex)
+			{
+				System.out.println(ex.getMessage());
+				ex.printStackTrace();
+			}
+			file.delete();
+			encryptedFile.renameTo(inputFile);
 
-
-
-
-
-		} catch (NullPointerException ex) {
+		} catch (NullPointerException ex)
+		{
 			ex.fillInStackTrace();
 		}
 	}
 
-	private void Saver(String content, File file) {
-		try {
+	private void Saver(String content, File file)
+	{
+		try
+		{
 			FileWriter fileWriter = null;
 
 			fileWriter = new FileWriter(file);
 			fileWriter.write(content);
 			fileWriter.close();
-		} catch (IOException ex) {
+		} catch (IOException ex)
+		{
 			ex.getLocalizedMessage();
 		}
 
 	}
 
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines) {
-		try {
+			ObservableList<Line> lines)
+	{
+		try
+		{
 			setSomethingOpened(false);
 			FileChooser fileChooser = new FileChooser();
 			File file;
@@ -154,7 +162,8 @@ public class FileManager {
 			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PB files (*.pb)", "*.pb");
 			fileChooser.getExtensionFilters().add(extFilter);
 			file = fileChooser.showOpenDialog(stage);
-			if(file != null){
+			if (file != null)
+			{
 				setSomethingOpened(true);
 			}
 
@@ -163,28 +172,28 @@ public class FileManager {
 			File decryptedFile = new File(directoryPath + "\\decrypt.txt");
 
 			decryptedFile.createNewFile();
-			 try {
-		            CryptoUtils.decrypt(key, file, decryptedFile);
-		        } catch (CryptoException ex) {
-		            System.out.println(ex.getMessage());
-		            ex.printStackTrace();
-		        }
-
-
+			try
+			{
+				CryptoUtils.decrypt(key, file, decryptedFile);
+			} catch (CryptoException ex)
+			{
+				System.out.println(ex.getMessage());
+				ex.printStackTrace();
+			}
 
 			Reader(decryptedFile, circles, squares, lines);
 			decryptedFile.delete();
 
-		} catch (NullPointerException | IOException ex) {
+		} catch (NullPointerException | IOException ex)
+		{
 			ex.fillInStackTrace();
 		}
 
 	}
 
-
-
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines) {
+			ObservableList<Line> lines)
+	{
 		Scanner scanner;
 
 		Boolean fullCircle = false;
@@ -195,19 +204,25 @@ public class FileManager {
 		Double g1 = 0.0, g2 = 0.0;
 		Double s1 = 0.0, s2 = 0.0;
 		Double ls1 = 0.0, ls2 = 0.0, le1 = 0.0, le2 = 0.0;
-		try {
+		try
+		{
 			scanner = new Scanner(file);
-			while (scanner.hasNext()) {
+			while (scanner.hasNext())
+			{
 				String tmp = scanner.next();
 
-				if (tmp.equals("circles")) {
+				if (tmp.equals("circles"))
+				{
 					String t;
-					while (!(t = scanner.next()).equals("squares")) {
+					while (!(t = scanner.next()).equals("squares"))
+					{
 
-						if (!fullCircle) {
+						if (!fullCircle)
+						{
 							g1 = Double.parseDouble(t);
 							fullCircle = true;
-						} else {
+						} else
+						{
 							g2 = Double.parseDouble(t);
 							fullCircle = false;
 							Circle c = new Circle(g1, g2, 20.0f, Paint.valueOf("#923456"));
@@ -219,27 +234,33 @@ public class FileManager {
 					}
 				}
 
-
 			}
 			scanner.close();
-		} catch (FileNotFoundException e1) {
+		} catch (FileNotFoundException e1)
+		{
 			e1.printStackTrace();
 		}
 
-		try {
+		try
+		{
 			scanner = new Scanner(file);
 
-			while (scanner.hasNext()) {
+			while (scanner.hasNext())
+			{
 				String tmp = scanner.next();
 
-				if (tmp.equals("squares")) {
+				if (tmp.equals("squares"))
+				{
 					String t;
-					while (!(t = scanner.next()).equals("lines")) {
+					while (!(t = scanner.next()).equals("lines"))
+					{
 
-						if (!fullSquare) {
+						if (!fullSquare)
+						{
 							s1 = Double.parseDouble(t);
 							fullSquare = true;
-						} else {
+						} else
+						{
 							s2 = Double.parseDouble(t);
 							fullSquare = false;
 							Rectangle r = new Rectangle(s1, s2, 40.0f, 40.0f);
@@ -254,42 +275,48 @@ public class FileManager {
 				}
 			}
 			scanner.close();
-		} catch (FileNotFoundException e1) {
+		} catch (FileNotFoundException e1)
+		{
 			e1.printStackTrace();
 		}
 
-		try {
+		try
+		{
 			scanner = new Scanner(file);
 
-			while (scanner.hasNext()) {
+			while (scanner.hasNext())
+			{
 				String tmp = scanner.next();
 
-				if (tmp.equals("lines")) {
+				if (tmp.equals("lines"))
+				{
 					String t;
-					while (scanner.hasNext()) {
+					while (scanner.hasNext())
+					{
 						t = scanner.next();
 
-						switch (faze) {
-						case 1:
-							ls1 = Double.parseDouble(t);
-							faze += 1;
-							break;
-						case 2:
-							ls2 = Double.parseDouble(t);
-							faze += 1;
-							break;
-						case 3:
-							le1 = Double.parseDouble(t);
-							faze += 1;
-							break;
-						case 4:
-							le2 = Double.parseDouble(t);
-							faze = 1;
-							Line l = new Line(ls1, ls2, le1, le2);
-							l.setStroke(Paint.valueOf("#ABCDEF"));
-							l.setStrokeWidth(10.0f);
-							lines.add(l);
-							break;
+						switch (faze)
+						{
+							case 1:
+								ls1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 2:
+								ls2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 3:
+								le1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 4:
+								le2 = Double.parseDouble(t);
+								faze = 1;
+								Line l = new Line(ls1, ls2, le1, le2);
+								l.setStroke(Paint.valueOf("#ABCDEF"));
+								l.setStrokeWidth(10.0f);
+								lines.add(l);
+								break;
 
 						}
 
@@ -299,33 +326,35 @@ public class FileManager {
 			}
 
 			scanner.close();
-		} catch (FileNotFoundException e1) {
+		} catch (FileNotFoundException e1)
+		{
 			e1.printStackTrace();
 		}
 
 	}
 
-	public Boolean getSomethingOpened(){
+	public Boolean getSomethingOpened()
+	{
 		return somethingOpened;
 	}
 
-	public void setSomethingOpened(Boolean a){
+	public void setSomethingOpened(Boolean a)
+	{
 		somethingOpened = a;
 	}
 
-	public Boolean getSomethingSaved(){
+	public Boolean getSomethingSaved()
+	{
 		return somethingSaved;
 	}
 
-	public void setSomethingSaved(Boolean a){
+	public void setSomethingSaved(Boolean a)
+	{
 		somethingSaved = a;
 	}
 
-	public static final byte[] intToByteArray(int value) {
-	    return new byte[] {
-	            (byte)(value >>> 24),
-	            (byte)(value >>> 16),
-	            (byte)(value >>> 8),
-	            (byte)value};
+	public static final byte[] intToByteArray(int value)
+	{
+		return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16), (byte) (value >>> 8), (byte) value };
 	}
 }

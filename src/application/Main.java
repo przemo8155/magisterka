@@ -1,3 +1,4 @@
+
 package application;
 
 import java.awt.event.ActionEvent;
@@ -17,24 +18,27 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 
-
-
-public class Main extends Application {
+public class Main extends Application
+{
 
 	private static Stage pStage;
 
-	public static Stage getPrimaryStage() {
-        return pStage;
-    }
+	public static Stage getPrimaryStage()
+	{
+		return pStage;
+	}
 
-    private void setPrimaryStage(Stage pStage) {
-        Main.pStage = pStage;
-    }
+	private void setPrimaryStage(Stage pStage)
+	{
+		Main.pStage = pStage;
+	}
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage)
+	{
 
-		try {
+		try
+		{
 			setPrimaryStage(primaryStage);
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("MainWindow.fxml"));
@@ -43,8 +47,7 @@ public class Main extends Application {
 			Screen screen = Screen.getPrimary();
 			Rectangle2D bounds = screen.getVisualBounds();
 
-
-			Scene scene = new Scene(loader.load(),1200,700);
+			Scene scene = new Scene(loader.load(), 1200, 700);
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -55,18 +58,18 @@ public class Main extends Application {
 
 			primaryStage.show();
 
-		} catch(Exception e) {
+		} catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 
-
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 
 		launch(args);
 
 	}
-
 
 }
