@@ -34,7 +34,7 @@
         </menus>
       </MenuBar>
       <Separator layoutY="90.0" prefHeight="10.0" prefWidth="1366.0" />
-      <Pane fx:id="mainPane" layoutY="95.0" onDragDropped="#mainPane_OnDragDropped" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" onMouseReleased="#mainPane_OnMouseReseased" prefHeight="608.0" prefWidth="1366.0">
+      <Pane fx:id="mainPane" layoutY="95.0" onDragDropped="#mainPane_OnDragDropped" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" onMouseReleased="#mainPane_OnMouseReseased" prefHeight="608.0" prefWidth="1366.0" onMouseMoved="#mainPane_OnMouseMoved" >
          <children>
          </children></Pane>
       <Button fx:id="clearAllButton" layoutX="354.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />

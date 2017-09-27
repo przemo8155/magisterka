@@ -30,6 +30,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -68,7 +69,7 @@ import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.shape.*;
-
+import javafx.scene.transform.Scale;
 import application.Main;
 
 public class MainWindowController
@@ -80,6 +81,9 @@ public class MainWindowController
 	String selectedToggle = "";
 	String idObj = "";
 	int circleId = 0;
+
+	Scale scaleTransform;
+	Group zoomGroup;
 
 	static int circleRay = 30, squareRay = 40, lineRay = 10;
 
@@ -95,6 +99,7 @@ public class MainWindowController
 	SettingsController settingsController = new SettingsController();
 
 	public String backgroundColor;
+	private Boolean deleteSecondOfEndLine = false;
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
@@ -193,6 +198,7 @@ public class MainWindowController
 				lineList.add(l);
 
 				moveLineList.add(l);
+				deleteSecondOfEndLine = true;
 
 			}
 
@@ -590,6 +596,8 @@ public class MainWindowController
 				}
 
 		}
+
+
 	}
 
 	@FXML
@@ -637,6 +645,7 @@ public class MainWindowController
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		middleLabel.setDisable(true);
+
 
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -853,8 +862,19 @@ public class MainWindowController
 	@FXML
 	void mainPane_OnMouseReseased(MouseEvent event)
 	{
-		// nic
 
+
+	}
+
+	@FXML
+	void mainPane_OnMouseMoved(MouseEvent event)
+	{
+		if(deleteSecondOfEndLine)
+		{
+			mainPane.getChildren().remove(mainPane.getChildren().size() - 2);
+
+			deleteSecondOfEndLine = false;
+		}
 	}
 
 	@FXML
