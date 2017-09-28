@@ -97,6 +97,7 @@ public class MainWindowController
 	Main main = new Main();
 	LabelTexts labelTexts = new LabelTexts();
 	SettingsController settingsController = new SettingsController();
+	Counters counters = new Counters();
 
 	public String backgroundColor;
 	private Boolean deleteSecondOfEndLine = false;
@@ -365,7 +366,7 @@ public class MainWindowController
 	@FXML
 	void anchorPane_OnMouseClicked(MouseEvent event)
 	{
-
+		counters.circleCounter(circleList, circleNumbers);
 	}
 
 	@FXML
@@ -690,7 +691,6 @@ public class MainWindowController
 
 			}
 		});
-
 
 
 
