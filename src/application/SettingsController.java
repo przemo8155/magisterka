@@ -23,7 +23,7 @@ import javafx.util.Callback;
 public class SettingsController
 {
 
-	public String backgroundColorString, circleColorString, rectangleColorString, lineColorString;
+	public String backgroundColorString = null, circleColorString = null, rectangleColorString = null, lineColorString = null;
 
 	@FXML
 	private Button cancelButton, saveButton;
@@ -36,14 +36,190 @@ public class SettingsController
 
 	private SettingsFileManager settingsFileManager;
 
+	public ObservableList<String> allEnableColors = FXCollections.observableArrayList();
+
 	public void initialize()
 	{
 
 		backgroundColorBox.getItems().addAll("Default", "Black", "Blue");
+		backgroundColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
+
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				final ListCell<String> cell = new ListCell<String>()
+				{
+
+					{
+						super.setPrefWidth(100);
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if (item != null)
+						{
+							setText(item);
+							if (item.contains("Default"))
+							{
+								setBackgroundColorLabel("Default");
+							} else if (item.contains("Black"))
+							{
+								setBackgroundColorLabel("Black");
+								setTextFill(Color.BLACK);
+							} else if( item.contains("Blue"))
+							{
+								setBackgroundColorLabel("Blue");
+								setTextFill(Color.BLUE);
+							}
+						} else
+						{
+							setText(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
+
+
+
 
 		circleColorBox.getItems().addAll("Default", "Black", "Blue");
+		circleColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
+
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				final ListCell<String> cell = new ListCell<String>()
+				{
+
+					{
+						super.setPrefWidth(100);
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if (item != null)
+						{
+							setText(item);
+							if (item.contains("Default"))
+							{
+								setCircleColorLabel("Default");
+							} else if (item.contains("Black"))
+							{
+								setCircleColorLabel("Black");
+								setTextFill(Color.BLACK);
+							} else if( item.contains("Blue"))
+							{
+								setCircleColorLabel("Blue");
+								setTextFill(Color.BLUE);
+							}
+						} else
+						{
+							setText(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
+
+
+
+
+
 		rectangleColorBox.getItems().addAll("Default", "Black", "Blue");
+		rectangleColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
+
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				final ListCell<String> cell = new ListCell<String>()
+				{
+
+					{
+						super.setPrefWidth(100);
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if (item != null)
+						{
+							setText(item);
+							if (item.contains("Default"))
+							{
+								setRectangleColorLabel("Default");
+							} else if (item.contains("Black"))
+							{
+								setRectangleColorLabel("Black");
+								setTextFill(Color.BLACK);
+							} else if( item.contains("Blue"))
+							{
+								setRectangleColorLabel("Blue");
+								setTextFill(Color.BLUE);
+							}
+						} else
+						{
+							setText(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
+
+
 		lineColorBox.getItems().addAll("Default", "Black", "Blue");
+		lineColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
+
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				final ListCell<String> cell = new ListCell<String>()
+				{
+
+					{
+						super.setPrefWidth(100);
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if (item != null)
+						{
+							setText(item);
+							if (item.contains("Default"))
+							{
+								setLineColorLabel("Default");
+							} else if (item.contains("Black"))
+							{
+								setLineColorLabel("Black");
+								setTextFill(Color.BLACK);
+							} else if( item.contains("Blue"))
+							{
+								setLineColorLabel("Blue");
+								setTextFill(Color.BLUE);
+							}
+						} else
+						{
+							setText(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
 
 	}
 
@@ -52,27 +228,28 @@ public class SettingsController
 	{
 		try
 		{
-			if(backgroundColorString.equals(null))
+			if (backgroundColorString.equals(null))
 			{
 				backgroundColorString = "White";
 			}
 
-			if(circleColorString.equals(null))
+			if (circleColorString.equals(null))
 			{
 				circleColorString = "White";
 
 			}
 
-			if(rectangleColorString.equals(null))
+			if (rectangleColorString.equals(null))
 			{
 				rectangleColorString = "White";
 			}
 
-			if(lineColorString.equals(null))
+			if (lineColorString.equals(null))
 			{
 				lineColorString = "White";
 			}
-			settingsFileManager.SaveSettingsFile(backgroundColorString, circleColorString, rectangleColorString, lineColorString);
+			settingsFileManager.SaveSettingsFile(backgroundColorString, circleColorString, rectangleColorString,
+					lineColorString);
 
 		} catch (NullPointerException e)
 		{

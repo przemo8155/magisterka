@@ -32,7 +32,7 @@ public class SettingsFileManager
 		}
 	}
 
-	private void Saver(String content, File file)
+	public void Saver(String content, File file)
 	{
 		try
 		{

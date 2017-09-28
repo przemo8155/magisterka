@@ -28,13 +28,13 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" onAction="#aboutMenuItem_OnAction" />
+              <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#aboutMenuItem_OnAction" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
       <Separator layoutY="90.0" prefHeight="10.0" prefWidth="1366.0" />
-      <Pane fx:id="mainPane" layoutY="95.0" onDragDropped="#mainPane_OnDragDropped" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" onMouseReleased="#mainPane_OnMouseReseased" prefHeight="608.0" prefWidth="1366.0" onMouseMoved="#mainPane_OnMouseMoved" >
+      <Pane fx:id="mainPane" layoutY="95.0" onDragDropped="#mainPane_OnDragDropped" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" onMouseMoved="#mainPane_OnMouseMoved" onMouseReleased="#mainPane_OnMouseReseased" prefHeight="608.0" prefWidth="1366.0">
          <children>
          </children></Pane>
       <Button fx:id="clearAllButton" layoutX="354.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
@@ -47,6 +47,7 @@
             <Font name="Gabriola" size="44.0" />
          </font></Label>
       <ToggleButton fx:id="removeToggleButton" layoutX="293.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
+      <Label fx:id="circleNumbers" layoutX="1259.0" layoutY="44.0" prefHeight="33.0" prefWidth="50.0" text="Label" />
    </children>
    <opaqueInsets>
       <Insets />

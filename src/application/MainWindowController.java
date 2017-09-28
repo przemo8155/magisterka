@@ -138,7 +138,7 @@ public class MainWindowController
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton;
 
 	@FXML
-	private Label middleLabel;
+	private Label middleLabel, circleNumbers;
 
 	@FXML
 	Parent root;
@@ -371,6 +371,7 @@ public class MainWindowController
 	@FXML
 	void mainPane_OnMouseClicked(MouseEvent event)
 	{
+
 		switch (selectedToggle)
 		{
 
@@ -689,6 +690,10 @@ public class MainWindowController
 
 			}
 		});
+
+
+
+
 
 	}
 
