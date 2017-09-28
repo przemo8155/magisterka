@@ -144,6 +144,9 @@ public class MainWindowController
 	@FXML
 	Parent root;
 
+	@FXML
+	private Button enableStatisticsButton;
+
 	public void setMiddleLabelText(String text)
 	{
 		middleLabel.setDisable(false);
@@ -366,7 +369,7 @@ public class MainWindowController
 	@FXML
 	void anchorPane_OnMouseClicked(MouseEvent event)
 	{
-		counters.circleCounter(circleList, circleNumbers);
+		//counters.circleCounter(circleList, circleNumbers);
 	}
 
 	@FXML
@@ -895,6 +898,28 @@ public class MainWindowController
 					+ "You can create a line\n\n" + "4. Move\n" + "You can move a created object\n\n"
 					+ "5. Delete object\n" + "You can delete a created object\n\n" + "6. Clear all\n"
 					+ "You can clear all lists and all visible objects\n");
+
+			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(new Image(this.getClass().getResource("resources/yellowbulb.jpg").toString()));
+			alert.show();
+		} catch (Exception e)
+		{
+			e.fillInStackTrace();
+		}
+	}
+
+	@FXML
+	void enableStaticticsButton_OnAction(ActionEvent event)
+	{
+		try
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Using Chernikova's Algorithm");
+			alert.setHeaderText("Statistics");
+			alert.setContentText("Circles exists: " + counters.circleCounter(circleList) + "\n"
+					+ "Rectangles exists: " + counters.rectangleCounter(squareList) + "\n"
+					+ "Lines exists: " + counters.lineCounter(lineList) + "\n"
+					+ "");
 
 			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 			stage.getIcons().add(new Image(this.getClass().getResource("resources/yellowbulb.jpg").toString()));

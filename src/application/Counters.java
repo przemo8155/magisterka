@@ -9,14 +9,29 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 
 public class Counters
 {
-	public void circleCounter(ObservableList<Circle> circle, Label label)
+	public String circleCounter(ObservableList<Circle> list)
 	{
-		final int number = circle.size();
+		final int number = list.size();
 		String text = Integer.toString(number);
-		label.setText(text);
+		return text;
+	}
 
+	public String rectangleCounter(ObservableList<Rectangle> list)
+	{
+		final int number = list.size();
+		String text = Integer.toString(number);
+		return text;
+	}
+
+	public String lineCounter(ObservableList<Line> list)
+	{
+		final int number = list.size();
+		String text = Integer.toString(number);
+		return text;
 	}
 }
