@@ -30,10 +30,12 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -42,6 +44,8 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -58,6 +62,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -69,6 +75,7 @@ import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
 import application.Main;
 
@@ -112,6 +119,12 @@ public class MainWindowController
 	ObservableList<Line> moveLineList = FXCollections.observableArrayList();
 
 	@FXML
+	private TitledPane titledPaneStats;
+
+	@FXML
+	private Accordion accordionStats;
+
+	@FXML
 	private MenuItem openFileMenuItem;
 
 	@FXML
@@ -139,13 +152,10 @@ public class MainWindowController
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton;
 
 	@FXML
-	private Label middleLabel, circleNumbers;
+	private Label middleLabel;
 
 	@FXML
 	Parent root;
-
-	@FXML
-	private Button enableStatisticsButton;
 
 	public void setMiddleLabelText(String text)
 	{
@@ -649,6 +659,23 @@ public class MainWindowController
 		// mainPane.setStyle("-fx-background-color: " + backgroundColor);
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
+		Label objects = new Label("Objects");
+		objects.setFont(Font.font("Arial", 30));
+
+		GridPane grid = new GridPane();
+		grid.getColumnConstraints().add(new ColumnConstraints(100));
+		grid.setVgap(5);
+		
+
+		grid.add(objects, 0, 0);
+		grid.setPadding(new Insets(5, 5, 5, 5));
+		grid.add(new TextField(), 1, 0);
+		grid.add(new Label("Last Name: "), 0, 1);
+		grid.add(new TextField(), 1, 1);
+		grid.add(new Label("Email: "), 0, 2);
+		grid.add(new TextField(), 1, 2);
+		titledPaneStats.setContent(grid);
+
 		middleLabel.setDisable(true);
 
 
@@ -898,28 +925,6 @@ public class MainWindowController
 					+ "You can create a line\n\n" + "4. Move\n" + "You can move a created object\n\n"
 					+ "5. Delete object\n" + "You can delete a created object\n\n" + "6. Clear all\n"
 					+ "You can clear all lists and all visible objects\n");
-
-			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image(this.getClass().getResource("resources/yellowbulb.jpg").toString()));
-			alert.show();
-		} catch (Exception e)
-		{
-			e.fillInStackTrace();
-		}
-	}
-
-	@FXML
-	void enableStaticticsButton_OnAction(ActionEvent event)
-	{
-		try
-		{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Using Chernikova's Algorithm");
-			alert.setHeaderText("Statistics");
-			alert.setContentText("Circles exists: " + counters.circleCounter(circleList) + "\n"
-					+ "Rectangles exists: " + counters.rectangleCounter(squareList) + "\n"
-					+ "Lines exists: " + counters.lineCounter(lineList) + "\n"
-					+ "");
 
 			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 			stage.getIcons().add(new Image(this.getClass().getResource("resources/yellowbulb.jpg").toString()));
