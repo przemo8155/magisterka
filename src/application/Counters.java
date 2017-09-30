@@ -45,5 +45,12 @@ public class Counters
 		return text;
 	}
 
+	public String objDeleted(int n, Label label)
+	{
+		String text = Integer.toString(n);
+		label.setText(text);
+		return text;
+	}
+
 
 }

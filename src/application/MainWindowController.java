@@ -96,6 +96,7 @@ public class MainWindowController
 	int circleId = 0;
 
 	int mouseBothClicked = 0, mouseRightClicked = 0, mouseLeftClicked = 0;
+	int objectsDeleted = 0;
 
 	Scale scaleTransform;
 	Group zoomGroup;
@@ -124,6 +125,9 @@ public class MainWindowController
 
 	Label mouseLeftClickL = new Label("Mouse left clicked: ");
 	Label numberOfMouseLeftClickL = new Label("0");
+
+	Label objectsDeletedL = new Label("Objects deleted: ");
+	Label numberOfObjectsDeletedL = new Label("0");
 
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
@@ -411,6 +415,7 @@ public class MainWindowController
 		counters.mouseClickerCounter(mouseBothClicked, numberOfMouseBothClickL);
 		counters.mouseClickerCounter(mouseRightClicked, numberOfMouseRightClickL);
 		counters.mouseClickerCounter(mouseLeftClicked, numberOfMouseLeftClickL);
+		counters.objDeleted(objectsDeleted, numberOfObjectsDeletedL);
 	}
 
 	@FXML
@@ -469,7 +474,7 @@ public class MainWindowController
 
 							circleList.remove(myCircle);
 							mainPane.getChildren().remove(myCircle);
-
+							objectsDeleted += 1;
 							setMiddleLabelText("Circle removed...");
 							utilities.clearStartAndEndLineLists(startLineList, endLineList);
 							break;
@@ -521,7 +526,7 @@ public class MainWindowController
 
 							squareList.remove(myRectangle);
 							mainPane.getChildren().remove(myRectangle);
-
+							objectsDeleted += 1;
 							setMiddleLabelText("Rectangle removed...");
 							utilities.clearStartAndEndLineLists(startLineList, endLineList);
 							break;
@@ -972,6 +977,11 @@ public class MainWindowController
 		GridPane.setHalignment(circlesCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(rectanglesCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(linesCreatedL, HPos.RIGHT);
+		GridPane.setHalignment(mouseBothClickL, HPos.RIGHT);
+		GridPane.setHalignment(mouseLeftClickL, HPos.RIGHT);
+		GridPane.setHalignment(mouseRightClickL, HPos.RIGHT);
+		GridPane.setHalignment(objectsDeletedL, HPos.RIGHT);
+
 		grid.setPadding(new Insets(5, 5, 5, 5));
 
 		grid.add(objects, 0, 0);
@@ -997,6 +1007,9 @@ public class MainWindowController
 
 		grid.add(mouseLeftClickL, 0, 8);
 		grid.add(numberOfMouseLeftClickL, 1, 8);
+
+		grid.add(objectsDeletedL, 0, 9);
+		grid.add(numberOfObjectsDeletedL, 1, 9);
 
 
 
