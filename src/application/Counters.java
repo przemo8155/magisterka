@@ -14,24 +14,27 @@ import javafx.scene.shape.Rectangle;
 
 public class Counters
 {
-	public String circleCounter(ObservableList<Circle> list)
+	public String circleCounter(ObservableList<Circle> list, Label label)
 	{
 		final int number = list.size();
 		String text = Integer.toString(number);
+		label.setText(text);
 		return text;
 	}
 
-	public String rectangleCounter(ObservableList<Rectangle> list)
+	public String rectangleCounter(ObservableList<Rectangle> list, Label label)
 	{
 		final int number = list.size();
 		String text = Integer.toString(number);
+		label.setText(text);
 		return text;
 	}
 
-	public String lineCounter(ObservableList<Line> list)
+	public String lineCounter(ObservableList<Line> list, Label label)
 	{
 		final int number = list.size();
 		String text = Integer.toString(number);
+		label.setText(text);
 		return text;
 	}
 }

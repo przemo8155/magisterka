@@ -30,7 +30,11 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -44,6 +48,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Toggle;
@@ -98,6 +103,15 @@ public class MainWindowController
 	double _rFirstPosX, _rFirstPosY, _rSecPosX, _rSecPosY;
 	double _circleLine1, _circleLine2;
 	boolean _isCircleFirst = true, _isRectangleFirst = true;
+
+
+	Label circlesCreatedL = new Label("Circles created: ");
+	Label numberOfCirclesCreatedL = new Label("0");
+
+	Label rectanglesCreatedL = new Label("Rectangles created: ");
+	Label numberofRectanglesCreatedL = new Label("0");
+
+
 
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
@@ -379,7 +393,7 @@ public class MainWindowController
 	@FXML
 	void anchorPane_OnMouseClicked(MouseEvent event)
 	{
-		//counters.circleCounter(circleList, circleNumbers);
+		counters.circleCounter(circleList, numberOfCirclesCreatedL);
 	}
 
 	@FXML
@@ -659,22 +673,7 @@ public class MainWindowController
 		// mainPane.setStyle("-fx-background-color: " + backgroundColor);
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
-		Label objects = new Label("Objects");
-		objects.setFont(Font.font("Arial", 30));
-
-		GridPane grid = new GridPane();
-		grid.getColumnConstraints().add(new ColumnConstraints(100));
-		grid.setVgap(5);
-		
-
-		grid.add(objects, 0, 0);
-		grid.setPadding(new Insets(5, 5, 5, 5));
-		grid.add(new TextField(), 1, 0);
-		grid.add(new Label("Last Name: "), 0, 1);
-		grid.add(new TextField(), 1, 1);
-		grid.add(new Label("Email: "), 0, 2);
-		grid.add(new TextField(), 1, 2);
-		titledPaneStats.setContent(grid);
+		initializeStats();
 
 		middleLabel.setDisable(true);
 
@@ -933,6 +932,47 @@ public class MainWindowController
 		{
 			e.fillInStackTrace();
 		}
+	}
+
+	protected void initializeStats()
+	{
+		Label objects = new Label("Objects");
+		objects.setFont(Font.font("Arial", 30));
+		objects.setAlignment(Pos.CENTER);
+
+
+
+		Separator separator1 = new Separator();
+		separator1.setOrientation(Orientation.HORIZONTAL);
+		separator1.setMinWidth(100.0);
+		Separator separator2 = new Separator();
+		separator2.setOrientation(Orientation.HORIZONTAL);
+		separator2.setMinWidth(100.0);
+
+
+		GridPane grid = new GridPane();
+		grid.getColumnConstraints().add(new ColumnConstraints(150));
+		grid.setVgap(5);
+		GridPane.setHalignment(objects, HPos.RIGHT);
+		GridPane.setHalignment(circlesCreatedL, HPos.RIGHT);
+		GridPane.setHalignment(rectanglesCreatedL, HPos.RIGHT);
+		grid.setPadding(new Insets(5, 5, 5, 5));
+
+
+		grid.add(objects, 0, 0);
+		grid.add(circlesCreatedL, 0, 1);
+		grid.add(numberOfCirclesCreatedL, 1, 1);
+
+		grid.add(rectanglesCreatedL, 0, 2);
+		grid.add(numberofRectanglesCreatedL, 1, 2);
+
+		grid.add(separator1, 0, 3);
+		grid.add(separator2, 1, 3);
+
+		titledPaneStats.setContent(grid);
+
+
+
 	}
 
 }
