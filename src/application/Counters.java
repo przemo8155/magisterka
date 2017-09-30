@@ -37,4 +37,13 @@ public class Counters
 		label.setText(text);
 		return text;
 	}
+
+	public String mouseClickerCounter(int n, Label label)
+	{
+		String text = Integer.toString(n);
+		label.setText(text);
+		return text;
+	}
+
+
 }

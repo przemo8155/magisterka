@@ -59,6 +59,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -94,6 +95,8 @@ public class MainWindowController
 	String idObj = "";
 	int circleId = 0;
 
+	int mouseBothClicked = 0, mouseRightClicked = 0, mouseLeftClicked = 0;
+
 	Scale scaleTransform;
 	Group zoomGroup;
 
@@ -104,14 +107,23 @@ public class MainWindowController
 	double _circleLine1, _circleLine2;
 	boolean _isCircleFirst = true, _isRectangleFirst = true;
 
-
 	Label circlesCreatedL = new Label("Circles created: ");
 	Label numberOfCirclesCreatedL = new Label("0");
 
 	Label rectanglesCreatedL = new Label("Rectangles created: ");
-	Label numberofRectanglesCreatedL = new Label("0");
+	Label numberOfRectanglesCreatedL = new Label("0");
 
+	Label linesCreatedL = new Label("Lines created: ");
+	Label numberOfLinesCreatedL = new Label("0");
 
+	Label mouseBothClickL = new Label("Mouse both clicked: ");
+	Label numberOfMouseBothClickL = new Label("0");
+
+	Label mouseRightClickL = new Label("Mouse right clicked: ");
+	Label numberOfMouseRightClickL = new Label("0");
+
+	Label mouseLeftClickL = new Label("Mouse left clicked: ");
+	Label numberOfMouseLeftClickL = new Label("0");
 
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
@@ -394,6 +406,11 @@ public class MainWindowController
 	void anchorPane_OnMouseClicked(MouseEvent event)
 	{
 		counters.circleCounter(circleList, numberOfCirclesCreatedL);
+		counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
+		counters.lineCounter(lineList, numberOfLinesCreatedL);
+		counters.mouseClickerCounter(mouseBothClicked, numberOfMouseBothClickL);
+		counters.mouseClickerCounter(mouseRightClicked, numberOfMouseRightClickL);
+		counters.mouseClickerCounter(mouseLeftClicked, numberOfMouseLeftClickL);
 	}
 
 	@FXML
@@ -626,7 +643,6 @@ public class MainWindowController
 
 		}
 
-
 	}
 
 	@FXML
@@ -677,6 +693,7 @@ public class MainWindowController
 
 		middleLabel.setDisable(true);
 
+		mainPane_AddEventHandlerClick();
 
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -720,9 +737,6 @@ public class MainWindowController
 
 			}
 		});
-
-
-
 
 	}
 
@@ -897,13 +911,12 @@ public class MainWindowController
 	void mainPane_OnMouseReseased(MouseEvent event)
 	{
 
-
 	}
 
 	@FXML
 	void mainPane_OnMouseMoved(MouseEvent event)
 	{
-		if(deleteSecondOfEndLine)
+		if (deleteSecondOfEndLine)
 		{
 			mainPane.getChildren().remove(mainPane.getChildren().size() - 2);
 
@@ -940,7 +953,9 @@ public class MainWindowController
 		objects.setFont(Font.font("Arial", 30));
 		objects.setAlignment(Pos.CENTER);
 
-
+		Label interactions = new Label("Interactions");
+		interactions.setFont(Font.font("Arial", 30));
+		interactions.setAlignment(Pos.CENTER);
 
 		Separator separator1 = new Separator();
 		separator1.setOrientation(Orientation.HORIZONTAL);
@@ -949,30 +964,63 @@ public class MainWindowController
 		separator2.setOrientation(Orientation.HORIZONTAL);
 		separator2.setMinWidth(100.0);
 
-
 		GridPane grid = new GridPane();
-		grid.getColumnConstraints().add(new ColumnConstraints(150));
+		grid.getColumnConstraints().add(new ColumnConstraints(180));
 		grid.setVgap(5);
 		GridPane.setHalignment(objects, HPos.RIGHT);
+		GridPane.setHalignment(interactions, HPos.RIGHT);
 		GridPane.setHalignment(circlesCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(rectanglesCreatedL, HPos.RIGHT);
+		GridPane.setHalignment(linesCreatedL, HPos.RIGHT);
 		grid.setPadding(new Insets(5, 5, 5, 5));
-
 
 		grid.add(objects, 0, 0);
 		grid.add(circlesCreatedL, 0, 1);
 		grid.add(numberOfCirclesCreatedL, 1, 1);
 
 		grid.add(rectanglesCreatedL, 0, 2);
-		grid.add(numberofRectanglesCreatedL, 1, 2);
+		grid.add(numberOfRectanglesCreatedL, 1, 2);
 
-		grid.add(separator1, 0, 3);
-		grid.add(separator2, 1, 3);
+		grid.add(linesCreatedL, 0, 3);
+		grid.add(numberOfLinesCreatedL, 1, 3);
+
+		grid.add(separator1, 0, 4);
+		grid.add(separator2, 1, 4);
+
+		grid.add(interactions, 0, 5);
+
+		grid.add(mouseBothClickL, 0, 6);
+		grid.add(numberOfMouseBothClickL, 1, 6);
+
+		grid.add(mouseRightClickL, 0, 7);
+		grid.add(numberOfMouseRightClickL, 1, 7);
+
+		grid.add(mouseLeftClickL, 0, 8);
+		grid.add(numberOfMouseLeftClickL, 1, 8);
+
+
 
 		titledPaneStats.setContent(grid);
 
+	}
 
+	protected void mainPane_AddEventHandlerClick()
+	{
+		mainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, e ->
+		{
 
+			if (e.isPrimaryButtonDown() && e.isSecondaryButtonDown())
+			{
+				mouseBothClicked += 1;
+			} else if (e.isPrimaryButtonDown())
+			{
+				mouseRightClicked += 1;
+			} else if (e.isSecondaryButtonDown())
+			{
+				mouseLeftClicked += 1;
+			}
+
+		});
 	}
 
 }
