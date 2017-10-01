@@ -1,116 +1,76 @@
+
 package application;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.DoubleProperty;
-import javafx.scene.Group;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Transform;
 
-public class Arrow extends Group {
+public class Arrow
+{
 
-    private final Line line;
+	public void drawArrow(Pane gc, double node1X, double node1Y, double node2X, double node2Y)
+	{
+		double arrowAngle = Math.toRadians(45.0);
+		double arrowLength = 30.0;
+		double dx = node1X - node2X;
+		double dy = node1Y - node2Y;
+		double angle = Math.atan2(dy, dx);
+		double x1 = Math.cos(angle + arrowAngle) * arrowLength + node2X;
+		double y1 = Math.sin(angle + arrowAngle) * arrowLength + node2Y;
 
-    public Arrow() {
-        this(new Line(), new Line(), new Line());
-    }
+		double x2 = Math.cos(angle - arrowAngle) * arrowLength + node2X;
+		double y2 = Math.sin(angle - arrowAngle) * arrowLength + node2Y;
+		Line l1 = new Line(node2X, node2Y, x1, y1);
+		Line l2 = new Line(node2X, node2Y, x2, y2);
+		l1.setStroke(Paint.valueOf("#ABCDEF"));
+		l1.setStrokeWidth(10.0f);
 
-    private static final double arrowLength = 20;
-    private static final double arrowWidth = 7;
+		l2.setStroke(Paint.valueOf("#ABCDEF"));
+		l2.setStrokeWidth(10.0f);
+		gc.getChildren().add(l1);
+		gc.getChildren().add(l2);
 
-    private Arrow(Line line, Line arrow1, Line arrow2) {
-        super(line, arrow1, arrow2);
-        this.line = line;
-        InvalidationListener updater = o -> {
-            double ex = getEndX();
-            double ey = getEndY();
-            double sx = getStartX();
-            double sy = getStartY();
+		Line l = new Line(node1X, node1Y, node2X, node2Y);
+		l.setStroke(Paint.valueOf("#ABCDEF"));
+		l.setStrokeWidth(10.0f);
 
-            arrow1.setEndX(ex);
-            arrow1.setEndY(ey);
-            arrow2.setEndX(ex);
-            arrow2.setEndY(ey);
+		gc.getChildren().add(l);
 
-            if (ex == sx && ey == sy) {
-                // arrow parts of length 0
-                arrow1.setStartX(ex);
-                arrow1.setStartY(ey);
-                arrow2.setStartX(ex);
-                arrow2.setStartY(ey);
-            } else {
-                double factor = arrowLength / Math.hypot(sx-ex, sy-ey);
-                double factorO = arrowWidth / Math.hypot(sx-ex, sy-ey);
+	}
 
-                // part in direction of main line
-                double dx = (sx - ex) * factor;
-                double dy = (sy - ey) * factor;
+	public void graphDrawArrow(Line line, GraphicsContext gc)
+	{
+		double arrowAngle = Math.toRadians(45.0);
+		double arrowLength = 10.0;
+		double dx = line.getStartX() - line.getEndX();
+		double dy = line.getStartY() - line.getEndY();
+		double angle = Math.atan2(dy, dx);
 
-                // part ortogonal to main line
-                double ox = (sx - ex) * factorO;
-                double oy = (sy - ey) * factorO;
+		double x1 = Math.cos(angle + arrowAngle) * arrowLength + line.getEndX();
+		double y1 = Math.sin(angle + arrowAngle) * arrowLength + line.getEndY();
 
-                arrow1.setStartX(ex + dx - oy);
-                arrow1.setStartY(ey + dy + ox);
-                arrow2.setStartX(ex + dx + oy);
-                arrow2.setStartY(ey + dy - ox);
-            }
-        };
+		double x2 = Math.cos(angle - arrowAngle) * arrowLength + line.getEndX();
+		double y2 = Math.sin(angle - arrowAngle) * arrowLength + line.getEndY();
+		gc.strokeLine(line.getEndX(), line.getEndY(), x1, y1);
+		gc.strokeLine(line.getEndX(), line.getEndY(), x2, y2);
+	}
 
-        // add updater to properties
-        startXProperty().addListener(updater);
-        startYProperty().addListener(updater);
-        endXProperty().addListener(updater);
-        endYProperty().addListener(updater);
-        updater.invalidated(null);
-    }
+	void drawArrow2(GraphicsContext gc, int x1, int y1, int x2, int y2) {
+		final int ARR_SIZE = 8;
 
-    // start/end properties
+	    double dx = x2 - x1, dy = y2 - y1;
+	    double angle = Math.atan2(dy, dx);
+	    int len = (int) Math.sqrt(dx * dx + dy * dy);
 
-    public final void setStartX(double value) {
-        line.setStartX(value);
-    }
+	    Transform transform = Transform.translate(x1, y1);
+	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
+	    gc.setTransform(new Affine(transform));
 
-    public final double getStartX() {
-        return line.getStartX();
-    }
-
-    public final DoubleProperty startXProperty() {
-        return line.startXProperty();
-    }
-
-    public final void setStartY(double value) {
-        line.setStartY(value);
-    }
-
-    public final double getStartY() {
-        return line.getStartY();
-    }
-
-    public final DoubleProperty startYProperty() {
-        return line.startYProperty();
-    }
-
-    public final void setEndX(double value) {
-        line.setEndX(value);
-    }
-
-    public final double getEndX() {
-        return line.getEndX();
-    }
-
-    public final DoubleProperty endXProperty() {
-        return line.endXProperty();
-    }
-
-    public final void setEndY(double value) {
-        line.setEndY(value);
-    }
-
-    public final double getEndY() {
-        return line.getEndY();
-    }
-
-    public final DoubleProperty endYProperty() {
-        return line.endYProperty();
-    }
-
+	    gc.strokeLine(0, 0, len, 0);
+	    gc.fillPolygon(new double[]{len, len - ARR_SIZE, len - ARR_SIZE, len}, new double[]{0, -ARR_SIZE, ARR_SIZE, 0},
+	            4);
+	}
 }

@@ -600,11 +600,16 @@ public class MainWindowController
 							{
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
+
 								Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
 								l.setStroke(Paint.valueOf("#ABCDEF"));
 								l.setStrokeWidth(10.0f);
 								mainPane.getChildren().add(l);
 								lineList.add(l);
+
+								//Arrow a = new Arrow();
+								//a.drawArrow(mainPane, _cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+
 								setMiddleLabelText("Second point of line...");
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
@@ -1054,20 +1059,6 @@ public class MainWindowController
 		});
 	}
 
-	void drawArrow(GraphicsContext gc, int x1, int y1, int x2, int y2) {
-		final int ARR_SIZE = 8;
 
-	    double dx = x2 - x1, dy = y2 - y1;
-	    double angle = Math.atan2(dy, dx);
-	    int len = (int) Math.sqrt(dx * dx + dy * dy);
-
-	    Transform transform = Transform.translate(x1, y1);
-	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
-	    gc.setTransform(new Affine(transform));
-
-	    gc.strokeLine(0, 0, len, 0);
-	    gc.fillPolygon(new double[]{len, len - ARR_SIZE, len - ARR_SIZE, len}, new double[]{0, -ARR_SIZE, ARR_SIZE, 0},
-	            4);
-	}
 
 }
