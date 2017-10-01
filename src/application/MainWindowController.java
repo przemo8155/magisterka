@@ -39,6 +39,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -82,7 +83,9 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Affine;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Transform;
 import application.Main;
 
 public class MainWindowController
@@ -96,7 +99,7 @@ public class MainWindowController
 	int circleId = 0;
 
 	int mouseBothClicked = 0, mouseRightClicked = 0, mouseLeftClicked = 0;
-	int objectsDeleted = 0;
+	int objectsDeleted = 0, objectsMoved = 0;
 
 	Scale scaleTransform;
 	Group zoomGroup;
@@ -128,6 +131,9 @@ public class MainWindowController
 
 	Label objectsDeletedL = new Label("Objects deleted: ");
 	Label numberOfObjectsDeletedL = new Label("0");
+
+	Label objectsMovedL = new Label("Objects moved: ");
+	Label numberOfObjectsMovedL = new Label("0");
 
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
@@ -416,6 +422,7 @@ public class MainWindowController
 		counters.mouseClickerCounter(mouseRightClicked, numberOfMouseRightClickL);
 		counters.mouseClickerCounter(mouseLeftClicked, numberOfMouseLeftClickL);
 		counters.objDeleted(objectsDeleted, numberOfObjectsDeletedL);
+		counters.objDeleted(objectsMoved, numberOfObjectsMovedL);
 	}
 
 	@FXML
@@ -666,6 +673,7 @@ public class MainWindowController
 						{
 							((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
 							((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+							objectsMoved += 1;
 
 						}
 
@@ -673,6 +681,7 @@ public class MainWindowController
 						{
 							((Rectangle) g).setOnMousePressed(squareOnMousePressedEventHandler);
 							((Rectangle) g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
+							objectsMoved += 1;
 						}
 
 						_it += 1;
@@ -697,6 +706,8 @@ public class MainWindowController
 		initializeStats();
 
 		middleLabel.setDisable(true);
+
+
 
 		mainPane_AddEventHandlerClick();
 
@@ -899,6 +910,9 @@ public class MainWindowController
 				lineList);
 		if (utilities.checkCleared)
 		{
+			counters.circleCounter(circleList, numberOfCirclesCreatedL);
+			counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
+			counters.lineCounter(lineList, numberOfLinesCreatedL);
 			setMiddleLabelText("Cleared...");
 		} else
 		{
@@ -981,6 +995,7 @@ public class MainWindowController
 		GridPane.setHalignment(mouseLeftClickL, HPos.RIGHT);
 		GridPane.setHalignment(mouseRightClickL, HPos.RIGHT);
 		GridPane.setHalignment(objectsDeletedL, HPos.RIGHT);
+		GridPane.setHalignment(objectsMovedL, HPos.RIGHT);
 
 		grid.setPadding(new Insets(5, 5, 5, 5));
 
@@ -1011,6 +1026,9 @@ public class MainWindowController
 		grid.add(objectsDeletedL, 0, 9);
 		grid.add(numberOfObjectsDeletedL, 1, 9);
 
+		grid.add(objectsMovedL, 0, 10);
+		grid.add(numberOfObjectsMovedL, 1, 10);
+
 
 
 		titledPaneStats.setContent(grid);
@@ -1034,6 +1052,22 @@ public class MainWindowController
 			}
 
 		});
+	}
+
+	void drawArrow(GraphicsContext gc, int x1, int y1, int x2, int y2) {
+		final int ARR_SIZE = 8;
+
+	    double dx = x2 - x1, dy = y2 - y1;
+	    double angle = Math.atan2(dy, dx);
+	    int len = (int) Math.sqrt(dx * dx + dy * dy);
+
+	    Transform transform = Transform.translate(x1, y1);
+	    transform = transform.createConcatenation(Transform.rotate(Math.toDegrees(angle), 0, 0));
+	    gc.setTransform(new Affine(transform));
+
+	    gc.strokeLine(0, 0, len, 0);
+	    gc.fillPolygon(new double[]{len, len - ARR_SIZE, len - ARR_SIZE, len}, new double[]{0, -ARR_SIZE, ARR_SIZE, 0},
+	            4);
 	}
 
 }
