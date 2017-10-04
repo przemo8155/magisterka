@@ -148,11 +148,16 @@ public class MainWindowController
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
 	ObservableList<Line> lineList = FXCollections.observableArrayList();
+	ObservableList<Arrow> arrowList = FXCollections.observableArrayList();
 
 	ObservableList<Line> startLineList = FXCollections.observableArrayList();
 	ObservableList<Line> endLineList = FXCollections.observableArrayList();
 
+	ObservableList<Arrow> endArrowList = FXCollections.observableArrayList();
+	ObservableList<Arrow> startArrowList = FXCollections.observableArrayList();
+
 	ObservableList<Line> moveLineList = FXCollections.observableArrayList();
+	ObservableList<Arrow> moveArrowList = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -288,8 +293,17 @@ public class MainWindowController
 						startLineList.add(l);
 					}
 				}
+				/*
+				for(Arrow a : arrowList)
+				{
+					if(a.getStartX() == c.getCenterX() && a.getStartY() == c.getCenterY())
+					{
+						startArrowList.add(a);
+					}
+				}*/
 
 				lineList.removeAll(startLineList);
+				//arrowList.removeAll(startArrowList);
 
 				for (Line l : lineList)
 				{
@@ -299,7 +313,16 @@ public class MainWindowController
 					}
 				}
 
+				/*for(Arrow a : arrowList)
+				{
+					if(a.getEndX() == c.getCenterX() && a.getEndY() == c.getCenterY())
+					{
+						endArrowList.add(a);
+					}
+				}*/
+
 				lineList.removeAll(endLineList);
+				//arrowList.removeAll(endArrowList);
 
 				double offsetX = t.getSceneX();
 				double offsetY = t.getSceneY() - minusWidth;
@@ -323,9 +346,24 @@ public class MainWindowController
 					l.setStartX(c.getCenterX());
 					l.setStartY(c.getCenterY());
 				}
+				/*
+				for(Arrow a : endArrowList)
+				{
+					a.setEndX(c.getCenterX());
+					a.setEndY(c.getCenterY());
+				}
+
+				for(Arrow a : startArrowList)
+				{
+					a.setStartX(c.getCenterX());
+					a.setStartY(c.getCenterY());
+				}*/
 
 				lineList.addAll(endLineList);
 				lineList.addAll(startLineList);
+				//arrowList.addAll(startArrowList);
+				//arrowList.addAll(endArrowList);
+				//utilities.clearStartAndEndArrowLists(endArrowList, startArrowList);
 				utilities.clearStartAndEndLineLists(startLineList, endLineList);
 
 			} catch (Exception e)
@@ -601,15 +639,15 @@ public class MainWindowController
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
 
-								Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-								l.setStroke(Paint.valueOf("#ABCDEF"));
-								l.setStrokeWidth(10.0f);
-								mainPane.getChildren().add(l);
-								lineList.add(l);
+								 Line l = new Line(_cFirstPosX, _cFirstPosY,
+								 _cSecPosX, _cSecPosY);
+								 l.setStroke(Paint.valueOf("#ABCDEF"));
+								 l.setStrokeWidth(10.0f);
+								 mainPane.getChildren().add(l);
+								 lineList.add(l);
 
-								//Arrow a = new Arrow();
-								//a.drawArrow(mainPane, _cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-
+								//Arrow a = new Arrow(mainPane, _cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+								//arrowList.add(a);
 								setMiddleLabelText("Second point of line...");
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
@@ -647,6 +685,7 @@ public class MainWindowController
 								mainPane.getChildren().add(l);
 								lineList.add(l);
 								setMiddleLabelText("Second point of line...");
+
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
 								_cSecPosX = 0;
@@ -711,8 +750,6 @@ public class MainWindowController
 		initializeStats();
 
 		middleLabel.setDisable(true);
-
-
 
 		mainPane_AddEventHandlerClick();
 
@@ -1034,8 +1071,6 @@ public class MainWindowController
 		grid.add(objectsMovedL, 0, 10);
 		grid.add(numberOfObjectsMovedL, 1, 10);
 
-
-
 		titledPaneStats.setContent(grid);
 
 	}
@@ -1058,7 +1093,5 @@ public class MainWindowController
 
 		});
 	}
-
-
 
 }
