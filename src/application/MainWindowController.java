@@ -162,6 +162,9 @@ public class MainWindowController
 	ObservableList<Line> leftArrowList = FXCollections.observableArrayList();
 	ObservableList<Line> rightArrowList = FXCollections.observableArrayList();
 
+	ObservableList<Line> moveRightArrowList = FXCollections.observableArrayList();
+	ObservableList<Line> moveLeftArrowList = FXCollections.observableArrayList();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -289,11 +292,15 @@ public class MainWindowController
 				Circle c = ((Circle) t.getSource());
 				int index = circleList.indexOf(c);
 
+
+				double ax1 = c.getCenterX();
+				double ay1 = c.getCenterY();
 				for (Line l : lineList)
 				{
 					if (l.getStartX() == c.getCenterX() && l.getStartY() == c.getCenterY())
 					{
 						startLineList.add(l);
+
 					}
 				}
 
@@ -304,9 +311,32 @@ public class MainWindowController
 					if (l.getEndX() == c.getCenterX() && l.getEndY() == c.getCenterY())
 					{
 						endLineList.add(l);
+
+						for(Line x : leftArrowList)
+						{
+							if(x.getStartX() == c.getCenterX() && l.getStartY() == c.getCenterY())
+							{
+								moveLeftArrowList.add(x);
+
+							}
+
+						}
+
+						for(Line x : rightArrowList)
+						{
+							if(x.getStartX() == c.getCenterX() && l.getStartY() == c.getCenterY())
+							{
+								moveRightArrowList.add(x);
+
+							}
+
+						}
 					}
 				}
 				lineList.removeAll(endLineList);
+
+				leftArrowList.removeAll(moveLeftArrowList);
+				rightArrowList.removeAll(moveRightArrowList);
 
 				double offsetX = t.getSceneX();
 				double offsetY = t.getSceneY() - minusWidth;
@@ -318,6 +348,37 @@ public class MainWindowController
 				c.setCenterY(newTranslateY);
 
 				circleList.set(index, c);
+
+				double ax2 = c.getCenterX();
+				double ay2 = c.getCenterY();
+				
+				double arrowAngle = Math.toRadians(25.0);
+				double arrowLength = 30.0;
+				double dx = ax1 - ax2;
+				double dy = ay1 - ay2;
+				double angle = Math.atan2(dy, dx);
+				double x1 = Math.cos(angle + arrowAngle) * arrowLength + ax2;
+				double y1 = Math.sin(angle + arrowAngle) * arrowLength + ay2;
+				double x2 = Math.cos(angle - arrowAngle) * arrowLength + ax2;
+				double y2 = Math.sin(angle - arrowAngle) * arrowLength + ay2;
+
+				for(Line l : leftArrowList)
+				{
+					l.setStartX(c.getCenterX());
+					l.setStartY(c.getCenterY());
+					
+					l.setEndX(x1);
+					l.setEndY(y1);
+				}
+
+				for(Line l : rightArrowList)
+				{
+					l.setStartX(c.getCenterX());
+					l.setStartY(c.getCenterY());
+					l.setEndX(x2);
+					l.setEndY(y2);
+				}
+
 
 				for (Line l : endLineList)
 				{
@@ -332,7 +393,13 @@ public class MainWindowController
 				}
 				lineList.addAll(endLineList);
 				lineList.addAll(startLineList);
+
+				leftArrowList.addAll(moveLeftArrowList);
+				rightArrowList.addAll(moveRightArrowList);
+
 				utilities.clearStartAndEndLineLists(startLineList, endLineList);
+
+				utilities.clearStartAndEndLineLists(moveRightArrowList, moveLeftArrowList);
 
 			} catch (Exception e)
 			{
