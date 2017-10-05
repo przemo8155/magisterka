@@ -12,6 +12,8 @@ import javafx.scene.transform.Transform;
 public class Arrow
 {
 	public double x1, x2, y1, y2;
+	public double s1x, s1y;
+	public double s2x, s2y;
 
 	public Arrow(Pane gc, double node1X, double node1Y, double node2X, double node2Y)
 	{
@@ -29,6 +31,11 @@ public class Arrow
 
 		double x2 = Math.cos(angle - arrowAngle) * arrowLength + node2X;
 		double y2 = Math.sin(angle - arrowAngle) * arrowLength + node2Y;
+
+		this.s1x = x1;
+		this.s1y = y1;
+		this.s2x = x2;
+		this.s2y = y2;
 
 		Line l1 = new Line(node2X, node2Y, x1, y1);
 		Line l2 = new Line(node2X, node2Y, x2, y2);
@@ -87,6 +94,46 @@ public class Arrow
 	public final void setEndY(double val)
 	{
 		this.y2 = val;
+	}
+
+	public final double getS1X()
+	{
+		return this.s1x;
+	}
+
+	public final double getS2X()
+	{
+		return this.s2x;
+	}
+
+	public final double getS1Y()
+	{
+		return this.s1y;
+	}
+
+	public final double getS2Y()
+	{
+		return this.s2y;
+	}
+
+	public final void setS1X(double val)
+	{
+		this.s1x = val;
+	}
+
+	public final void setS2X(double val)
+	{
+		this.s2x = val;
+	}
+
+	public final void setS1Y(double val)
+	{
+		this.s1y = val;
+	}
+
+	public final void setS2Y(double val)
+	{
+		this.s2y = val;
 	}
 
 
