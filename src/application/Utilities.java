@@ -77,10 +77,10 @@ public class Utilities
 	}
 
 	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle,
-			ObservableList<Line> line)
+			ObservableList<Arrow> arrow)
 	{
 		int w = 0;
-		w = circle.size() + rectangle.size() + line.size();
+		w = circle.size() + rectangle.size() + arrow.size();
 		return w;
 	}
 
