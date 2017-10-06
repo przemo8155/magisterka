@@ -68,26 +68,41 @@ public class HeadArrow
 		return this.endPointY;
 	}
 
-	public final void setStartX(double val)
+	public final void setStartX(double val, Pane gc)
 	{
+		gc.getChildren().remove(main);
 		this.startPointX = val;
+		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		main.setStrokeWidth(5.0f);
+		gc.getChildren().add(main);
 	}
 
-	public final void setStartY(double val)
+	public final void setStartY(double val, Pane gc)
 	{
+		gc.getChildren().remove(main);
 		this.startPointY = val;
+		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		main.setStrokeWidth(5.0f);
+		gc.getChildren().add(main);
 	}
 
-	public final void setEndX(double val)
+	public final void setEndX(double val, Pane gc)
 	{
+		gc.getChildren().remove(main);
 		this.endPointX = val;
+		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		main.setStrokeWidth(5.0f);
+		gc.getChildren().add(main);
 	}
 
-	public final void setEndY(double val)
+	public final void setEndY(double val, Pane gc)
 	{
+		gc.getChildren().remove(main);
 		this.endPointY = val;
+		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		main.setStrokeWidth(5.0f);
+		gc.getChildren().add(main);
 	}
-
 
 
 	public final double getLeftX()
@@ -110,25 +125,47 @@ public class HeadArrow
 		return this.y2;
 	}
 
-	public final void setLeftX(double val)
+	public final void setLeft(double valX, double valY, Pane gc)
 	{
-		this.x1 = val;
+		gc.getChildren().remove(left);
+		this.x1 = valX;
+		this.y1 = valY;
+
+		double arrowAngle = Math.toRadians(25.0);
+		double arrowLength = 30.0;
+		double dx = startPointX - endPointX;
+		double dy = startPointX - endPointY;
+		double angle = Math.atan2(dy, dx);
+		double x1 = Math.cos(angle + arrowAngle) * arrowLength + endPointX;
+		double y1 = Math.sin(angle + arrowAngle) * arrowLength + endPointY;
+
+
+		this.left = new Line(endPointX, endPointY, x1, y1);
+		left.setStrokeWidth(5.0f);
+		gc.getChildren().add(left);
 	}
 
-	public final void setLeftY(double val)
+	public final void setRight(double valX, double valY, Pane gc)
 	{
-		this.y1 = val;
+
+		gc.getChildren().remove(right);
+		this.y2 = valY;
+		this.x2 = valX;
+
+		double arrowAngle = Math.toRadians(25.0);
+		double arrowLength = 30.0;
+		double dx = startPointX - endPointX;
+		double dy = startPointX - endPointY;
+		double angle = Math.atan2(dy, dx);
+		double x2 = Math.cos(angle - arrowAngle) * arrowLength + endPointX;
+		double y2 = Math.sin(angle - arrowAngle) * arrowLength + endPointY;
+
+
+		this.right = new Line(endPointX, endPointY, x2, y2);
+		right.setStrokeWidth(5.0f);
+		gc.getChildren().add(right);
 	}
 
-	public final void setRightY(double val)
-	{
-		this.y2 = val;
-	}
-
-	public final void setRightX(double val)
-	{
-		this.x2 = val;
-	}
 
 
 }

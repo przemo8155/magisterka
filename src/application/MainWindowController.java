@@ -353,14 +353,19 @@ public class MainWindowController
 
 				for(HeadArrow ha : endHeadArrowList)
 				{
-					ha.setEndX(c.getCenterX());
-					ha.setEndY(c.getCenterY());
+					ha.setEndX(c.getCenterX(), mainPane);
+					ha.setEndY(c.getCenterY(), mainPane);
+					ha.setLeft(c.getCenterX(), c.getCenterY(), mainPane);
+					ha.setRight(c.getCenterX(), c.getCenterY(), mainPane);
+
 				}
 
 				for(HeadArrow ha : startHeadArrowList)
 				{
-					ha.setStartX(c.getCenterX());
-					ha.setStartY(c.getCenterY());
+					ha.setStartX(c.getCenterX(), mainPane);
+					ha.setStartY(c.getCenterY(), mainPane);
+					ha.setLeft(c.getCenterX(), c.getCenterY(), mainPane);
+					ha.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 				}
 
 				headArrowList.addAll(startHeadArrowList);
