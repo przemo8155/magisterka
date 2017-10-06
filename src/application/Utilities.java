@@ -97,6 +97,12 @@ public class Utilities
 		lin2.clear();
 	}
 
+	public void clearStartAndEndHeadArrowLists(ObservableList<HeadArrow> lin1, ObservableList<HeadArrow> lin2)
+	{
+		lin1.clear();
+		lin2.clear();
+	}
+
 	public void showCircleList(ObservableList<Circle> circle)
 	{
 		for (Circle c : circle)
