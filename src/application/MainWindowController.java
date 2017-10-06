@@ -251,14 +251,14 @@ public class MainWindowController
 
 					for (HeadArrow ha : moveHeadArrowList)
 					{
-						mainPane.getChildren().remove(ha);
+						ha.removeFromMainPane(mainPane);
 					}
 
 					moveHeadArrowList.clear();
 				}
 
-
-				HeadArrow ha = new HeadArrow(_cFirstPosX, _cFirstPosY, event.getScreenX(), event.getSceneY() - minusWidth, mainPane);
+				HeadArrow ha = new HeadArrow(_cFirstPosX, _cFirstPosY, event.getScreenX(),
+						event.getSceneY() - minusWidth, mainPane);
 				headArrowList.add(ha);
 
 				moveHeadArrowList.add(ha);
@@ -295,9 +295,9 @@ public class MainWindowController
 				Circle c = ((Circle) t.getSource());
 				int index = circleList.indexOf(c);
 
-				for(HeadArrow ha : headArrowList)
+				for (HeadArrow ha : headArrowList)
 				{
-					if(ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
+					if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
 					{
 						startHeadArrowList.add(ha);
 					}
@@ -305,17 +305,15 @@ public class MainWindowController
 
 				headArrowList.removeAll(startHeadArrowList);
 
-
-				for(HeadArrow ha : headArrowList)
+				for (HeadArrow ha : headArrowList)
 				{
-					if(ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
+					if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
 					{
 						endHeadArrowList.add(ha);
 					}
 				}
 
 				headArrowList.removeAll(endHeadArrowList);
-
 
 				double offsetX = t.getSceneX();
 				double offsetY = t.getSceneY() - minusWidth;
@@ -328,7 +326,7 @@ public class MainWindowController
 
 				circleList.set(index, c);
 
-				for(HeadArrow ha : endHeadArrowList)
+				for (HeadArrow ha : endHeadArrowList)
 				{
 					ha.setEndX(c.getCenterX(), mainPane);
 					ha.setEndY(c.getCenterY(), mainPane);
@@ -337,7 +335,7 @@ public class MainWindowController
 
 				}
 
-				for(HeadArrow ha : startHeadArrowList)
+				for (HeadArrow ha : startHeadArrowList)
 				{
 					ha.setStartX(c.getCenterX(), mainPane);
 					ha.setStartY(c.getCenterY(), mainPane);
@@ -349,7 +347,6 @@ public class MainWindowController
 				headArrowList.addAll(endHeadArrowList);
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
-
 
 			} catch (Exception e)
 			{
@@ -383,10 +380,9 @@ public class MainWindowController
 				Rectangle r = ((Rectangle) t.getSource());
 				int index = squareList.indexOf(r);
 
-
-				for(HeadArrow ha : headArrowList)
+				for (HeadArrow ha : headArrowList)
 				{
-					if(ha.getStartX() - 20 == r.getX() && ha.getStartY() - 20 == r.getY())
+					if (ha.getStartX() - 20 == r.getX() && ha.getStartY() - 20 == r.getY())
 					{
 						startHeadArrowList.add(ha);
 					}
@@ -394,10 +390,9 @@ public class MainWindowController
 
 				headArrowList.removeAll(startHeadArrowList);
 
-
-				for(HeadArrow ha : headArrowList)
+				for (HeadArrow ha : headArrowList)
 				{
-					if(ha.getEndX() - 20 == r.getX() && ha.getEndY() - 20 == r.getY())
+					if (ha.getEndX() - 20 == r.getX() && ha.getEndY() - 20 == r.getY())
 					{
 						endHeadArrowList.add(ha);
 					}
@@ -415,7 +410,7 @@ public class MainWindowController
 
 				squareList.set(index, r);
 
-				for(HeadArrow ha : endHeadArrowList)
+				for (HeadArrow ha : endHeadArrowList)
 				{
 					ha.setEndX(r.getX() + 20, mainPane);
 					ha.setEndY(r.getY() + 20, mainPane);
@@ -424,10 +419,10 @@ public class MainWindowController
 
 				}
 
-				for(HeadArrow ha : startHeadArrowList)
+				for (HeadArrow ha : startHeadArrowList)
 				{
-					ha.setEndX(r.getX() + 20, mainPane);
-					ha.setEndY(r.getY() + 20, mainPane);
+					ha.setStartX(r.getX() + 20, mainPane);
+					ha.setStartY(r.getY() + 20, mainPane);
 					ha.setLeft(r.getX() + 20, r.getY() + 20, mainPane);
 					ha.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 				}
@@ -475,82 +470,46 @@ public class MainWindowController
 								&& (y < myCircle.getCenterY() + circleRay + minusWidth))
 						{
 
-							/*for (Line l : lineList)
+							for (HeadArrow ha : headArrowList)
 							{
-								if (l.getStartX() == myCircle.getCenterX() && l.getStartY() == myCircle.getCenterY())
-								{
-									startLineList.add(l);
-								}
-							}
-
-							for (Line l : lineList)
-							{
-								if (l.getEndX() == myCircle.getCenterX() && l.getEndY() == myCircle.getCenterY())
-								{
-									endLineList.add(l);
-								}
-							}*/
-
-							for(HeadArrow ha : headArrowList)
-							{
-								if(ha.getStartX() == myCircle.getCenterX() && ha.getStartY() == myCircle.getCenterY())
+								if (ha.getStartX() == myCircle.getCenterX() && ha.getStartY() == myCircle.getCenterY())
 								{
 									startHeadArrowList.add(ha);
 								}
 							}
 
-							for(HeadArrow ha : headArrowList)
+							for (HeadArrow ha : headArrowList)
 							{
-								if(ha.getEndX() == myCircle.getCenterX() && ha.getEndY() == myCircle.getCenterY())
+								if (ha.getEndX() == myCircle.getCenterX() && ha.getEndY() == myCircle.getCenterY())
 								{
 									endHeadArrowList.add(ha);
 								}
 							}
 
-							if(!startHeadArrowList.isEmpty())
+							if (!startHeadArrowList.isEmpty())
 							{
 								headArrowList.removeAll(startHeadArrowList);
 
-								for(HeadArrow ha : startHeadArrowList)
+								for (HeadArrow ha : startHeadArrowList)
 								{
 									ha.removeFromMainPane(mainPane);
 								}
 							}
 
-							if(!endHeadArrowList.isEmpty())
+							if (!endHeadArrowList.isEmpty())
 							{
 								headArrowList.removeAll(endHeadArrowList);
 
-								for(HeadArrow ha : endHeadArrowList)
+								for (HeadArrow ha : endHeadArrowList)
 								{
 									ha.removeFromMainPane(mainPane);
 								}
 							}
-
-							/*if (!startLineList.isEmpty())
-							{
-								lineList.removeAll(startLineList);
-								for (Line l : startLineList)
-								{
-									mainPane.getChildren().remove(l);
-								}
-							}
-
-							if (!endLineList.isEmpty())
-							{
-								lineList.removeAll(endLineList);
-								for (Line l : endLineList)
-								{
-									mainPane.getChildren().remove(l);
-								}
-
-							}*/
 
 							circleList.remove(myCircle);
 							mainPane.getChildren().remove(myCircle);
 							objectsDeleted += 1;
 							setMiddleLabelText("Circle removed...");
-							//utilities.clearStartAndEndLineLists(startLineList, endLineList);
 							utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 							break;
 						}
@@ -563,47 +522,48 @@ public class MainWindowController
 								&& (y < myRectangle.getY() + 20 + squareRay + minusWidth))
 						{
 
-							for (Line l : lineList)
+							for (HeadArrow ha : headArrowList)
 							{
-								if (l.getStartX() == myRectangle.getX() + 20
-										&& l.getStartY() == myRectangle.getY() + 20)
+								if (ha.getStartX() == myRectangle.getX() + 20
+										&& ha.getStartY() == myRectangle.getY() + 20)
 								{
-									startLineList.add(l);
+									startHeadArrowList.add(ha);
 								}
 							}
 
-							for (Line l : lineList)
+							for (HeadArrow ha : headArrowList)
 							{
-								if (l.getEndX() == myRectangle.getX() + 20 && l.getEndY() == myRectangle.getY() + 20)
+								if (ha.getEndX() == myRectangle.getX() + 20 && ha.getEndY() == myRectangle.getY() + 20)
 								{
-									endLineList.add(l);
+									endHeadArrowList.add(ha);
 								}
 							}
 
-							if (!startLineList.isEmpty())
+							if (!startHeadArrowList.isEmpty())
 							{
-								lineList.removeAll(startLineList);
-								for (Line l : startLineList)
+								headArrowList.removeAll(startHeadArrowList);
+
+								for (HeadArrow ha : startHeadArrowList)
 								{
-									mainPane.getChildren().remove(l);
+									ha.removeFromMainPane(mainPane);
 								}
 							}
 
-							if (!endLineList.isEmpty())
+							if (!endHeadArrowList.isEmpty())
 							{
-								lineList.removeAll(endLineList);
-								for (Line l : endLineList)
-								{
-									mainPane.getChildren().remove(l);
-								}
+								headArrowList.removeAll(endHeadArrowList);
 
+								for (HeadArrow ha : endHeadArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
 							}
 
 							squareList.remove(myRectangle);
 							mainPane.getChildren().remove(myRectangle);
 							objectsDeleted += 1;
 							setMiddleLabelText("Rectangle removed...");
-							utilities.clearStartAndEndLineLists(startLineList, endLineList);
+							utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 							break;
 						}
 					}
@@ -660,7 +620,7 @@ public class MainWindowController
 								_cFirstPosY = myCircle.getCenterY();
 								setMiddleLabelText("First point of line...");
 								goIntoRectangle = true;
-								//mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 								break;
 							}
 
@@ -669,11 +629,9 @@ public class MainWindowController
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
 
-								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY, mainPane);
+								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+										mainPane);
 								headArrowList.add(headArrow);
-
-
-
 
 								setMiddleLabelText("Second point of line...");
 								_cFirstPosX = 0;
@@ -698,7 +656,7 @@ public class MainWindowController
 								_cFirstPosY = myRectangle.getY() + 20;
 								setMiddleLabelText("First point of line...");
 								goIntoCircle = true;
-								//mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 								break;
 							}
 
@@ -707,7 +665,8 @@ public class MainWindowController
 								_cSecPosX = myRectangle.getX() + 20;
 								_cSecPosY = myRectangle.getY() + 20;
 
-								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY, mainPane);
+								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+										mainPane);
 								headArrowList.add(headArrow);
 								setMiddleLabelText("Second point of line...");
 
@@ -768,8 +727,6 @@ public class MainWindowController
 	public void initialize()
 	{
 
-		// backgroundColor = settingsController.getBackgroundColorLabel();
-		// mainPane.setStyle("-fx-background-color: " + backgroundColor);
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		initializeStats();
@@ -974,7 +931,7 @@ public class MainWindowController
 	void clearAllButton_OnMouseClicked(MouseEvent event)
 	{
 		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, squareList,
-				lineList);
+				headArrowList);
 		if (utilities.checkCleared)
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);

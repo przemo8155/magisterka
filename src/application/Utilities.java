@@ -34,7 +34,7 @@ public class Utilities
 	public Boolean checkCleared = false;
 
 	public void clearUpMessage(Pane pane, String title, String header, String content, ObservableList<Circle> circ,
-			ObservableList<Rectangle> rect, ObservableList<Line> lin)
+			ObservableList<Rectangle> rect, ObservableList<HeadArrow> lin)
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);
