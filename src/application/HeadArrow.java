@@ -15,7 +15,7 @@ public class HeadArrow
 
 	public HeadArrow(double ax1, double ay1, double ax2, double ay2, Pane gc)
 	{
-		double arrowAngle = Math.toRadians(25.0);
+		double arrowAngle = Math.toRadians(8.0);
 		double arrowLength = 30.0;
 		double dx = ax1 - ax2;
 		double dy = ay1 - ay2;
@@ -125,7 +125,7 @@ public class HeadArrow
 		return this.y2;
 	}
 
-	public final void setLeft(double valX, double valY, Pane gc)
+	public final void setLeftTemponary(double valX, double valY, Pane gc)
 	{
 		gc.getChildren().remove(left);
 		this.x1 = valX;
@@ -145,14 +145,14 @@ public class HeadArrow
 		gc.getChildren().add(left);
 	}
 
-	public final void setRight(double valX, double valY, Pane gc)
+	public final void setRightTemponary(double valX, double valY, Pane gc)
 	{
 
 		gc.getChildren().remove(right);
 		this.y2 = valY;
 		this.x2 = valX;
 
-		double arrowAngle = Math.toRadians(25.0);
+		double arrowAngle = Math.toRadians(45.0);
 		double arrowLength = 30.0;
 		double dx = startPointX - endPointX;
 		double dy = startPointX - endPointY;
@@ -164,6 +164,58 @@ public class HeadArrow
 		this.right = new Line(endPointX, endPointY, x2, y2);
 		right.setStrokeWidth(5.0f);
 		gc.getChildren().add(right);
+	}
+
+	public final void setRight(double valX, double valY, Pane gc)
+	{
+		gc.getChildren().remove(right);
+		this.x1 = valX;
+		this.y1 = valY;
+		double arrowLength = 30;
+		double arrowWidth = 5;
+		double sx = this.startPointX;
+		double ex = this.endPointX;
+		double sy = this.startPointY;
+		double ey = this.endPointY;
+		 double factor = arrowLength / Math.hypot(sx-ex, sy-ey);
+         double factorO = arrowWidth / Math.hypot(sx-ex, sy-ey);
+
+         // part in direction of main line
+         double dx = (sx - ex) * factor;
+         double dy = (sy - ey) * factor;
+
+         // part ortogonal to main line
+         double ox = (sx - ex) * factorO;
+         double oy = (sy - ey) * factorO;
+         this.right = new Line(endPointX, endPointY, ex + dx + oy, ey + dy - ox );
+         right.setStrokeWidth(5.0f);
+         gc.getChildren().add(right);
+	}
+
+	public final void setLeft(double valX, double valY, Pane gc)
+	{
+		gc.getChildren().remove(left);
+		this.x1 = valX;
+		this.y1 = valY;
+		double arrowLength = 30;
+		double arrowWidth = 5;
+		double sx = this.startPointX;
+		double ex = this.endPointX;
+		double sy = this.startPointY;
+		double ey = this.endPointY;
+		 double factor = arrowLength / Math.hypot(sx-ex, sy-ey);
+         double factorO = arrowWidth / Math.hypot(sx-ex, sy-ey);
+
+         // part in direction of main line
+         double dx = (sx - ex) * factor;
+         double dy = (sy - ey) * factor;
+
+         // part ortogonal to main line
+         double ox = (sx - ex) * factorO;
+         double oy = (sy - ey) * factorO;
+         this.left = new Line(endPointX, endPointY, ex + dx - oy, ey + dy + ox);
+         left.setStrokeWidth(5.0f);
+         gc.getChildren().add(left);
 	}
 
 

@@ -318,27 +318,6 @@ public class MainWindowController
 
 				headArrowList.removeAll(endHeadArrowList);
 
-				/*for (Line l : lineList)
-				{
-					if (l.getStartX() == c.getCenterX() && l.getStartY() == c.getCenterY())
-					{
-						startLineList.add(l);
-
-					}
-				}
-
-				lineList.removeAll(startLineList);
-
-				for (Line l : lineList)
-				{
-					if (l.getEndX() == c.getCenterX() && l.getEndY() == c.getCenterY())
-					{
-						endLineList.add(l);
-
-					}
-				}
-				lineList.removeAll(endLineList);
-				*/
 
 				double offsetX = t.getSceneX();
 				double offsetY = t.getSceneY() - minusWidth;
@@ -373,23 +352,6 @@ public class MainWindowController
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 
-				/*for (Line l : endLineList)
-				{
-					l.setEndX(c.getCenterX());
-					l.setEndY(c.getCenterY());
-				}
-
-				for (Line l : startLineList)
-				{
-					l.setStartX(c.getCenterX());
-					l.setStartY(c.getCenterY());
-				}
-				lineList.addAll(endLineList);
-				lineList.addAll(startLineList);
-
-
-				utilities.clearStartAndEndLineLists(startLineList, endLineList);*/
-
 
 			} catch (Exception e)
 			{
@@ -423,25 +385,27 @@ public class MainWindowController
 				Rectangle r = ((Rectangle) t.getSource());
 				int index = squareList.indexOf(r);
 
-				for (Line l : lineList)
+
+				for(HeadArrow ha : headArrowList)
 				{
-					if (l.getStartX() - 20 == r.getX() && l.getStartY() - 20 == r.getY())
+					if(ha.getStartX() - 20 == r.getX() && ha.getStartY() - 20 == r.getY())
 					{
-						startLineList.add(l);
+						startHeadArrowList.add(ha);
 					}
 				}
 
-				lineList.removeAll(startLineList);
+				headArrowList.removeAll(startHeadArrowList);
 
-				for (Line l : lineList)
+
+				for(HeadArrow ha : headArrowList)
 				{
-					if (l.getEndX() - 20 == r.getX() && l.getEndY() - 20 == r.getY())
+					if(ha.getEndX() - 20 == r.getX() && ha.getEndY() - 20 == r.getY())
 					{
-						endLineList.add(l);
+						endHeadArrowList.add(ha);
 					}
 				}
 
-				lineList.removeAll(endLineList);
+				headArrowList.removeAll(endHeadArrowList);
 
 				double offsetX = t.getSceneX() - orgSceneX;
 				double offsetY = t.getSceneY() - orgSceneY;
@@ -453,21 +417,27 @@ public class MainWindowController
 
 				squareList.set(index, r);
 
-				for (Line l : endLineList)
+				for(HeadArrow ha : endHeadArrowList)
 				{
-					l.setEndX(r.getX() + 20);
-					l.setEndY(r.getY() + 20);
+					ha.setEndX(r.getX() + 20, mainPane);
+					ha.setEndY(r.getY() + 20, mainPane);
+					ha.setLeft(r.getX() + 20, r.getY() + 20, mainPane);
+					ha.setRight(r.getX() + 20, r.getY() + 20, mainPane);
+
 				}
 
-				for (Line l : startLineList)
+				for(HeadArrow ha : startHeadArrowList)
 				{
-					l.setStartX(r.getX() + 20);
-					l.setStartY(r.getY() + 20);
+					ha.setEndX(r.getX() + 20, mainPane);
+					ha.setEndY(r.getY() + 20, mainPane);
+					ha.setLeft(r.getX() + 20, r.getY() + 20, mainPane);
+					ha.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 				}
 
-				lineList.addAll(endLineList);
-				lineList.addAll(startLineList);
-				utilities.clearStartAndEndLineLists(startLineList, endLineList);
+				headArrowList.addAll(startHeadArrowList);
+				headArrowList.addAll(endHeadArrowList);
+
+				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -664,13 +634,6 @@ public class MainWindowController
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
 
-								 /*Line l = new Line(_cFirstPosX, _cFirstPosY,
-								 _cSecPosX, _cSecPosY);
-								 l.setStroke(Paint.valueOf("#ABCDEF"));
-								 l.setStrokeWidth(5.0f);
-								 mainPane.getChildren().add(l);
-								 lineList.add(l);*/
-
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY, mainPane);
 								headArrowList.add(headArrow);
 
@@ -708,11 +671,9 @@ public class MainWindowController
 							{
 								_cSecPosX = myRectangle.getX() + 20;
 								_cSecPosY = myRectangle.getY() + 20;
-								Line l = new Line(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-								l.setStroke(Paint.valueOf("#ABCDEF"));
-								l.setStrokeWidth(5.0f);
-								mainPane.getChildren().add(l);
-								lineList.add(l);
+
+								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY, mainPane);
+								headArrowList.add(headArrow);
 								setMiddleLabelText("Second point of line...");
 
 								_cFirstPosX = 0;
