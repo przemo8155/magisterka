@@ -38,6 +38,14 @@ public class Counters
 		return text;
 	}
 
+	public String headArrowCounter(ObservableList<HeadArrow> list, Label label)
+	{
+		final int number = list.size();
+		String text = Integer.toString(number);
+		label.setText(text);
+		return text;
+	}
+
 	public String mouseClickerCounter(int n, Label label)
 	{
 		String text = Integer.toString(n);

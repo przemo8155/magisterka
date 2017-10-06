@@ -171,6 +171,15 @@ public class Utilities
 	    }
 
 
+	 public void refreshCreatedLine(ObservableList<HeadArrow> arr, ObservableList<Circle> cir, ObservableList<Rectangle> rec, Pane gc)
+	 {
+		 gc.getChildren().remove(arr.size() + cir.size() + rec.size() - 2);
+		 gc.getChildren().remove(arr.size() + cir.size() + rec.size() - 1);
+
+		 arr.remove(arr.size() - 2);
+	 }
+
+
 
 
 }

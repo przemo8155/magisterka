@@ -12,6 +12,11 @@ public class HeadArrow
 	public Line main;
 	public Line left, right;
 
+	public HeadArrow()
+	{
+
+	}
+
 
 	public HeadArrow(double ax1, double ay1, double ax2, double ay2, Pane gc)
 	{

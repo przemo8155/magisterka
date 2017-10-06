@@ -229,9 +229,10 @@ public class MainWindowController
 		@Override
 		public void handle(MouseEvent event)
 		{
-			if (headArrowList.size() > 1)
+			if (headArrowList.size() > 1 && deleteSecondOfEndLine)
 			{
-				headArrowList.remove(headArrowList.size() - 2);
+				headArrowList.remove(headArrowList.size() - 1);
+				deleteSecondOfEndLine = false;
 			}
 		}
 
@@ -443,7 +444,7 @@ public class MainWindowController
 	{
 		counters.circleCounter(circleList, numberOfCirclesCreatedL);
 		counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
-		counters.lineCounter(lineList, numberOfLinesCreatedL);
+		counters.headArrowCounter(headArrowList, numberOfLinesCreatedL);
 		counters.mouseClickerCounter(mouseBothClicked, numberOfMouseBothClickL);
 		counters.mouseClickerCounter(mouseRightClicked, numberOfMouseRightClickL);
 		counters.mouseClickerCounter(mouseLeftClicked, numberOfMouseLeftClickL);
@@ -620,7 +621,7 @@ public class MainWindowController
 								_cFirstPosY = myCircle.getCenterY();
 								setMiddleLabelText("First point of line...");
 								goIntoRectangle = true;
-								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								//mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 								break;
 							}
 
@@ -656,7 +657,8 @@ public class MainWindowController
 								_cFirstPosY = myRectangle.getY() + 20;
 								setMiddleLabelText("First point of line...");
 								goIntoCircle = true;
-								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								//mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+
 								break;
 							}
 
@@ -675,6 +677,8 @@ public class MainWindowController
 								_cSecPosX = 0;
 								_cSecPosY = 0;
 								goIntoCircle = false;
+
+
 								break;
 							}
 						}
@@ -936,7 +940,7 @@ public class MainWindowController
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);
 			counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
-			counters.lineCounter(lineList, numberOfLinesCreatedL);
+			counters.headArrowCounter(headArrowList, numberOfLinesCreatedL);
 			setMiddleLabelText("Cleared...");
 		} else
 		{
@@ -959,12 +963,7 @@ public class MainWindowController
 	@FXML
 	void mainPane_OnMouseMoved(MouseEvent event)
 	{
-		if (deleteSecondOfEndLine)
-		{
-			mainPane.getChildren().remove(mainPane.getChildren().size() - 2);
 
-			deleteSecondOfEndLine = false;
-		}
 	}
 
 	@FXML
@@ -1074,6 +1073,14 @@ public class MainWindowController
 			}
 
 		});
+	}
+
+	protected void refreshLine()
+	{
+		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
+		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
+		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
+		headArrowList.remove(headArrowList.size() - 1);
 	}
 
 }
