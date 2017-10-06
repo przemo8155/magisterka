@@ -218,6 +218,13 @@ public class HeadArrow
          gc.getChildren().add(left);
 	}
 
+	public void removeFromMainPane(Pane gc)
+	{
+		gc.getChildren().remove(left);
+		gc.getChildren().remove(right);
+		gc.getChildren().remove(main);
+	}
+
 
 
 }

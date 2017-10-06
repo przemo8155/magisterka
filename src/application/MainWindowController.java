@@ -229,9 +229,9 @@ public class MainWindowController
 		@Override
 		public void handle(MouseEvent event)
 		{
-			if (lineList.size() > 1)
+			if (headArrowList.size() > 1)
 			{
-				lineList.remove(lineList.size() - 2);
+				headArrowList.remove(headArrowList.size() - 2);
 			}
 		}
 
@@ -245,25 +245,23 @@ public class MainWindowController
 		{
 			if (_cFirstPosX != 0 && _cFirstPosY != 0)
 			{
-				if (!moveLineList.isEmpty())
+				if (!moveHeadArrowList.isEmpty())
 				{
-					lineList.removeAll(moveLineList);
+					headArrowList.removeAll(moveHeadArrowList);
 
-					for (Line l : moveLineList)
+					for (HeadArrow ha : moveHeadArrowList)
 					{
-						mainPane.getChildren().remove(l);
+						mainPane.getChildren().remove(ha);
 					}
 
-					moveLineList.clear();
+					moveHeadArrowList.clear();
 				}
 
-				Line l = new Line(_cFirstPosX, _cFirstPosY, event.getScreenX(), event.getSceneY() - minusWidth);
-				l.setStroke(Paint.valueOf("#ABCDEF"));
-				l.setStrokeWidth(10.0f);
-				mainPane.getChildren().add(l);
-				lineList.add(l);
 
-				moveLineList.add(l);
+				HeadArrow ha = new HeadArrow(_cFirstPosX, _cFirstPosY, event.getScreenX(), event.getSceneY() - minusWidth, mainPane);
+				headArrowList.add(ha);
+
+				moveHeadArrowList.add(ha);
 				deleteSecondOfEndLine = true;
 
 			}
@@ -477,7 +475,7 @@ public class MainWindowController
 								&& (y < myCircle.getCenterY() + circleRay + minusWidth))
 						{
 
-							for (Line l : lineList)
+							/*for (Line l : lineList)
 							{
 								if (l.getStartX() == myCircle.getCenterX() && l.getStartY() == myCircle.getCenterY())
 								{
@@ -491,9 +489,45 @@ public class MainWindowController
 								{
 									endLineList.add(l);
 								}
+							}*/
+
+							for(HeadArrow ha : headArrowList)
+							{
+								if(ha.getStartX() == myCircle.getCenterX() && ha.getStartY() == myCircle.getCenterY())
+								{
+									startHeadArrowList.add(ha);
+								}
 							}
 
-							if (!startLineList.isEmpty())
+							for(HeadArrow ha : headArrowList)
+							{
+								if(ha.getEndX() == myCircle.getCenterX() && ha.getEndY() == myCircle.getCenterY())
+								{
+									endHeadArrowList.add(ha);
+								}
+							}
+
+							if(!startHeadArrowList.isEmpty())
+							{
+								headArrowList.removeAll(startHeadArrowList);
+
+								for(HeadArrow ha : startHeadArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if(!endHeadArrowList.isEmpty())
+							{
+								headArrowList.removeAll(endHeadArrowList);
+
+								for(HeadArrow ha : endHeadArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							/*if (!startLineList.isEmpty())
 							{
 								lineList.removeAll(startLineList);
 								for (Line l : startLineList)
@@ -510,13 +544,14 @@ public class MainWindowController
 									mainPane.getChildren().remove(l);
 								}
 
-							}
+							}*/
 
 							circleList.remove(myCircle);
 							mainPane.getChildren().remove(myCircle);
 							objectsDeleted += 1;
 							setMiddleLabelText("Circle removed...");
-							utilities.clearStartAndEndLineLists(startLineList, endLineList);
+							//utilities.clearStartAndEndLineLists(startLineList, endLineList);
+							utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 							break;
 						}
 					}
