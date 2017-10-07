@@ -44,13 +44,13 @@ public class HeadArrow
 
 		this.main = new Line(ax1, ay1, ax2, ay2);
 		main.setStrokeWidth(5.0f);
-		gc.getChildren().add(main);
+		//gc.getChildren().add(main);
 		this.left = new Line(ax2, ay2, x1, y1);
 		left.setStrokeWidth(5.0f);
-		gc.getChildren().add(left);
+		//gc.getChildren().add(left);
 		this.right = new Line(ax2, ay2, x2, y2);
 		right.setStrokeWidth(5.0f);
-		gc.getChildren().add(right);
+		//gc.getChildren().add(right);
 	}
 
 	public final double getStartX()
@@ -228,6 +228,13 @@ public class HeadArrow
 		gc.getChildren().remove(left);
 		gc.getChildren().remove(right);
 		gc.getChildren().remove(main);
+	}
+
+	public void addToMainPane(Pane gc)
+	{
+		gc.getChildren().add(left);
+		gc.getChildren().add(right);
+		gc.getChildren().add(main);
 	}
 
 

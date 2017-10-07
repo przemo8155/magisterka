@@ -22,6 +22,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import javafx.collections.ObservableList;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -38,7 +39,7 @@ public class FileManager
 	String key = "przemkeb123123zx";
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines)
+			ObservableList<HeadArrow> arrows)
 	{
 		try
 		{
@@ -74,10 +75,10 @@ public class FileManager
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
 
-			final String _lines = "lines";
-			stringBuilder.append(_lines);
+			final String _arrows = "arrows";
+			stringBuilder.append(_arrows);
 			stringBuilder.append(System.getProperty("line.separator"));
-			for (Line l : lines)
+			for (HeadArrow l : arrows)
 			{
 				Double _d1 = l.getStartX();
 				Double _d2 = l.getStartY();
@@ -151,7 +152,7 @@ public class FileManager
 	}
 
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines)
+			ObservableList<HeadArrow> arrows, Pane gc)
 	{
 		try
 		{
@@ -181,7 +182,7 @@ public class FileManager
 				ex.printStackTrace();
 			}
 
-			Reader(decryptedFile, circles, squares, lines);
+			Reader(decryptedFile, circles, squares, arrows, gc);
 			decryptedFile.delete();
 
 		} catch (NullPointerException | IOException ex)
@@ -192,7 +193,7 @@ public class FileManager
 	}
 
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<Line> lines)
+			ObservableList<HeadArrow> arrows, Pane gc)
 	{
 		Scanner scanner;
 
@@ -252,7 +253,7 @@ public class FileManager
 				if (tmp.equals("squares"))
 				{
 					String t;
-					while (!(t = scanner.next()).equals("lines"))
+					while (!(t = scanner.next()).equals("arrows"))
 					{
 
 						if (!fullSquare)
@@ -288,7 +289,7 @@ public class FileManager
 			{
 				String tmp = scanner.next();
 
-				if (tmp.equals("lines"))
+				if (tmp.equals("arrows"))
 				{
 					String t;
 					while (scanner.hasNext())
@@ -312,10 +313,8 @@ public class FileManager
 							case 4:
 								le2 = Double.parseDouble(t);
 								faze = 1;
-								Line l = new Line(ls1, ls2, le1, le2);
-								l.setStroke(Paint.valueOf("#ABCDEF"));
-								l.setStrokeWidth(10.0f);
-								lines.add(l);
+								HeadArrow ha = new HeadArrow(ls1, ls2, le1, le2, gc);
+								arrows.add(ha);
 								break;
 
 						}

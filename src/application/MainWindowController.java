@@ -633,6 +633,7 @@ public class MainWindowController
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 										mainPane);
 								headArrowList.add(headArrow);
+								headArrow.addToMainPane(mainPane);
 
 								setMiddleLabelText("Second point of line...");
 								_cFirstPosX = 0;
@@ -670,6 +671,8 @@ public class MainWindowController
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 										mainPane);
 								headArrowList.add(headArrow);
+								headArrow.addToMainPane(mainPane);
+
 								setMiddleLabelText("Second point of line...");
 
 								_cFirstPosX = 0;
@@ -742,7 +745,7 @@ public class MainWindowController
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 
-		utilities.clearAllLists(circleList, squareList, lineList);
+		utilities.clearAllLists(circleList, squareList, headArrowList);
 
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -869,7 +872,7 @@ public class MainWindowController
 	void saveFileMenuItem_OnAction(ActionEvent event)
 	{
 		Stage s = Main.getPrimaryStage();
-		fileManager.SaveFile(s, circleList, squareList, lineList);
+		fileManager.SaveFile(s, circleList, squareList, headArrowList);
 		Boolean fileSaved = fileManager.getSomethingSaved();
 		if (fileSaved)
 		{
@@ -892,16 +895,16 @@ public class MainWindowController
 			mainPane.getChildren().remove(r);
 		}
 
-		for (Line l : lineList)
+		for (HeadArrow ha : headArrowList)
 		{
-			mainPane.getChildren().remove(l);
+			ha.removeFromMainPane(mainPane);
 		}
-		utilities.clearAllLists(circleList, squareList, lineList);
+		utilities.clearAllLists(circleList, squareList, headArrowList);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		squareList.clear();
-		fileManager.OpenFile(s, circleList, squareList, lineList);
+		fileManager.OpenFile(s, circleList, squareList, headArrowList, mainPane);
 
 		for (Circle c : circleList)
 		{
@@ -917,9 +920,9 @@ public class MainWindowController
 			r.setOnMouseDragged(squareOnMouseDraggedEventHandler);
 		}
 
-		for (Line l : lineList)
+		for (HeadArrow ha : headArrowList)
 		{
-			mainPane.getChildren().add(l);
+			ha.addToMainPane(mainPane);
 		}
 
 		Boolean fileOpened = fileManager.getSomethingOpened();
