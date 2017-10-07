@@ -117,8 +117,8 @@ public class MainWindowController
 	Label rectanglesCreatedL = new Label("Rectangles created: ");
 	Label numberOfRectanglesCreatedL = new Label("0");
 
-	Label linesCreatedL = new Label("Lines created: ");
-	Label numberOfLinesCreatedL = new Label("0");
+	Label arrowsCreatedL = new Label("Arrows created: ");
+	Label numberOfArrowsCreatedL = new Label("0");
 
 	Label mouseBothClickL = new Label("Mouse both clicked: ");
 	Label numberOfMouseBothClickL = new Label("0");
@@ -444,7 +444,7 @@ public class MainWindowController
 	{
 		counters.circleCounter(circleList, numberOfCirclesCreatedL);
 		counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
-		counters.headArrowCounter(headArrowList, numberOfLinesCreatedL);
+		counters.headArrowCounter(headArrowList, numberOfArrowsCreatedL);
 		counters.mouseClickerCounter(mouseBothClicked, numberOfMouseBothClickL);
 		counters.mouseClickerCounter(mouseRightClicked, numberOfMouseRightClickL);
 		counters.mouseClickerCounter(mouseLeftClicked, numberOfMouseLeftClickL);
@@ -943,7 +943,7 @@ public class MainWindowController
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);
 			counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
-			counters.headArrowCounter(headArrowList, numberOfLinesCreatedL);
+			counters.headArrowCounter(headArrowList, numberOfArrowsCreatedL);
 			setMiddleLabelText("Cleared...");
 		} else
 		{
@@ -1016,7 +1016,7 @@ public class MainWindowController
 		GridPane.setHalignment(interactions, HPos.RIGHT);
 		GridPane.setHalignment(circlesCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(rectanglesCreatedL, HPos.RIGHT);
-		GridPane.setHalignment(linesCreatedL, HPos.RIGHT);
+		GridPane.setHalignment(arrowsCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(mouseBothClickL, HPos.RIGHT);
 		GridPane.setHalignment(mouseLeftClickL, HPos.RIGHT);
 		GridPane.setHalignment(mouseRightClickL, HPos.RIGHT);
@@ -1032,8 +1032,8 @@ public class MainWindowController
 		grid.add(rectanglesCreatedL, 0, 2);
 		grid.add(numberOfRectanglesCreatedL, 1, 2);
 
-		grid.add(linesCreatedL, 0, 3);
-		grid.add(numberOfLinesCreatedL, 1, 3);
+		grid.add(arrowsCreatedL, 0, 3);
+		grid.add(numberOfArrowsCreatedL, 1, 3);
 
 		grid.add(separator1, 0, 4);
 		grid.add(separator2, 1, 4);
