@@ -960,7 +960,8 @@ public class MainWindowController
 	@FXML
 	void mainPane_OnMouseReseased(MouseEvent event)
 	{
-
+			ConnectToDatabase dts = new ConnectToDatabase();
+			dts.Connect();
 	}
 
 	@FXML

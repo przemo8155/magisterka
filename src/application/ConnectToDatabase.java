@@ -12,7 +12,7 @@ public class ConnectToDatabase
 {
 	public static final String URL = "jdbc:mysql://localhost:3306/chernikova?useSSL=false";
 	public static final String USER = "przemek";
-	public static final String PASSWORD = "Przemo94";
+	public static final String PASSWORD = "przemek";
 
 	public void Connect()
 	{
