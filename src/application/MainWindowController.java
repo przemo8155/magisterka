@@ -141,8 +141,14 @@ public class MainWindowController
 	LabelTexts labelTexts = new LabelTexts();
 	SettingsController settingsController = new SettingsController();
 	Counters counters = new Counters();
+	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
 
-	public String backgroundColor;
+	private String backgroundColor;
+	private String circleColor;
+	private String rectangleColor;
+	private String arrowColor;
+
+
 	private Boolean deleteSecondOfEndLine = false;
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
@@ -590,6 +596,7 @@ public class MainWindowController
 				{
 					Rectangle r = new Rectangle(event.getSceneX() - 20, event.getSceneY() - minusWidth - 20, 40.0f,
 							40.0f);
+					//r.setFill(Paint.valueOf(rectangleColor));
 					r.setFill(Paint.valueOf("#ABCDEF"));
 					r.setStroke(Paint.valueOf("#555555"));
 					r.setStrokeWidth(5.0f);
@@ -775,7 +782,7 @@ public class MainWindowController
 					else if (selectedToggle == "square")
 						setMiddleLabelText("Drawing squares...");
 					else if (selectedToggle == "line")
-						setMiddleLabelText("Drawing lines...");
+						setMiddleLabelText("Drawing arrows...");
 					else if (selectedToggle == "move")
 						setMiddleLabelText("Moving objects...");
 					else if (selectedToggle == "remove")
@@ -960,8 +967,7 @@ public class MainWindowController
 	@FXML
 	void mainPane_OnMouseReseased(MouseEvent event)
 	{
-			ConnectToDatabase dts = new ConnectToDatabase();
-			dts.Connect();
+
 	}
 
 	@FXML
@@ -1085,6 +1091,15 @@ public class MainWindowController
 		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
 		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
 		headArrowList.remove(headArrowList.size() - 1);
+	}
+
+	private void getStringsFromDatabase()
+	{
+		ConnectToDatabase ctd = new ConnectToDatabase();
+		this.backgroundColor = ctd.getBackgroundString();
+		this.arrowColor = ctd.getArrowString();
+		this.circleColor = ctd.getCircleString();
+		this.rectangleColor = ctd.getRectangleString();
 	}
 
 }
