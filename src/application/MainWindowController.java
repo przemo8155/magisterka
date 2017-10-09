@@ -748,8 +748,8 @@ public class MainWindowController
 		circleColor = ctd.getCircleString();
 		arrowColor = ctd.getArrowString();
 
-
-		mainPane.setStyle("-fx-background-color: #FFFFFF");
+		mainPane.setStyle("-fx-background-color: " + backgroundColor);
+		//mainPane.setStyle("-fx-background-color: #FFFFFF");
 
 		initializeStats();
 

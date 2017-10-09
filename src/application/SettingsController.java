@@ -23,7 +23,8 @@ import javafx.util.Callback;
 public class SettingsController
 {
 
-	public String backgroundColorString = null, circleColorString = null, rectangleColorString = null, lineColorString = null;
+	public String backgroundColorString = null, circleColorString = null, rectangleColorString = null,
+			lineColorString = null;
 
 	@FXML
 	private Button cancelButton, saveButton;
@@ -34,14 +35,15 @@ public class SettingsController
 	@FXML
 	private ComboBox<String> backgroundColorBox, circleColorBox, rectangleColorBox, lineColorBox;
 
-	private SettingsFileManager settingsFileManager;
-
 	public ObservableList<String> allEnableColors = FXCollections.observableArrayList();
 
-	public void initialize()
-	{
+	//colors
+	private final String white = "#FFFFFF";
+	private final String black = "#3A3938";
+	private final String blue = "#5C4CFB";
 
-		backgroundColorBox.getItems().addAll("Default", "Black", "Blue");
+	private void backgroundSetItems()
+	{
 		backgroundColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
 		{
 
@@ -64,14 +66,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setBackgroundColorLabel("Default");
+								setBackgroundColor("#FFFFFF");
 							} else if (item.contains("Black"))
 							{
-								setBackgroundColorLabel("Black");
+								setBackgroundColor("#3A3938");
 								setTextFill(Color.BLACK);
-							} else if( item.contains("Blue"))
+							} else if (item.contains("Blue"))
 							{
-								setBackgroundColorLabel("Blue");
+								setBackgroundColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -84,10 +86,10 @@ public class SettingsController
 			}
 		});
 
+	}
 
-
-
-		circleColorBox.getItems().addAll("Default", "Black", "Blue");
+	private void circleSetItems()
+	{
 		circleColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
 		{
 
@@ -110,14 +112,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setCircleColorLabel("Default");
+								setCircleColor("#555555");
 							} else if (item.contains("Black"))
 							{
-								setCircleColorLabel("Black");
+								setCircleColor("#3A3938");
 								setTextFill(Color.BLACK);
-							} else if( item.contains("Blue"))
+							} else if (item.contains("Blue"))
 							{
-								setCircleColorLabel("Blue");
+								setCircleColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -130,11 +132,10 @@ public class SettingsController
 			}
 		});
 
+	}
 
-
-
-
-		rectangleColorBox.getItems().addAll("Default", "Black", "Blue");
+	private void rectangleSetItems()
+	{
 		rectangleColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
 		{
 
@@ -157,14 +158,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setRectangleColorLabel("Default");
+								setRectangleColor("#ABCDEF");
 							} else if (item.contains("Black"))
 							{
-								setRectangleColorLabel("Black");
+								setRectangleColor("#3A3938");
 								setTextFill(Color.BLACK);
-							} else if( item.contains("Blue"))
+							} else if (item.contains("Blue"))
 							{
-								setRectangleColorLabel("Blue");
+								setRectangleColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -177,8 +178,10 @@ public class SettingsController
 			}
 		});
 
+	}
 
-		lineColorBox.getItems().addAll("Default", "Black", "Blue");
+	private void arrowSetItems()
+	{
 		lineColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
 		{
 
@@ -201,14 +204,14 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setLineColorLabel("Default");
+								setLineColor("#FFFFFF");
 							} else if (item.contains("Black"))
 							{
-								setLineColorLabel("Black");
+								setLineColor("#3A3938");
 								setTextFill(Color.BLACK);
-							} else if( item.contains("Blue"))
+							} else if (item.contains("Blue"))
 							{
-								setLineColorLabel("Blue");
+								setLineColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -223,38 +226,40 @@ public class SettingsController
 
 	}
 
+	public void initialize()
+	{
+
+		backgroundColorBox.getItems().addAll("Default", "Black", "Blue");
+		circleColorBox.getItems().addAll("Default", "Black", "Blue");
+		rectangleColorBox.getItems().addAll("Default", "Black", "Blue");
+		lineColorBox.getItems().addAll("Default", "Black", "Blue");
+		getDataFromDatabase();
+		setComboItems();
+		backgroundSetItems();
+		circleSetItems();
+		rectangleSetItems();
+		arrowSetItems();
+
+	}
+
 	@FXML
 	void saveButton_OnAction(ActionEvent event)
 	{
-		try
+		switch(backgroundColorBox.getSelectionModel().getSelectedIndex())
 		{
-			if (backgroundColorString.equals(null))
-			{
-				backgroundColorString = "White";
-			}
-
-			if (circleColorString.equals(null))
-			{
-				circleColorString = "White";
-
-			}
-
-			if (rectangleColorString.equals(null))
-			{
-				rectangleColorString = "White";
-			}
-
-			if (lineColorString.equals(null))
-			{
-				lineColorString = "White";
-			}
-			settingsFileManager.SaveSettingsFile(backgroundColorString, circleColorString, rectangleColorString,
-					lineColorString);
-
-		} catch (NullPointerException e)
-		{
-			e.printStackTrace();
+			case 0:
+				setBackgroundColor(white);
+				break;
+			case 1:
+				setBackgroundColor(black);
+				break;
+			case 2:
+				setBackgroundColor(blue);
+				break;
 		}
+		UpdateDatabase updateDatabase = new UpdateDatabase();
+		updateDatabase.Update(backgroundColorString, "background");
+
 	}
 
 	@FXML
@@ -264,44 +269,109 @@ public class SettingsController
 		stage.close();
 	}
 
-	public String getBackgroundColorLabel()
+	public String getBackgroundColor()
 	{
 		return backgroundColorString;
 	}
 
-	public void setBackgroundColorLabel(String a)
+	public void setBackgroundColor(String a)
 	{
 		backgroundColorString = a;
 	}
 
-	public String getCircleColorLabel()
+	public String getCircleColor()
 	{
 		return circleColorString;
 	}
 
-	public void setCircleColorLabel(String a)
+	public void setCircleColor(String a)
 	{
 		circleColorString = a;
 	}
 
-	public String getRectangleColorLabel()
+	public String getRectangleColor()
 	{
 		return rectangleColorString;
 	}
 
-	public void setRectangleColorLabel(String a)
+	public void setRectangleColor(String a)
 	{
 		rectangleColorString = a;
 	}
 
-	public String getLineColorLabel()
+	public String getLineColor()
 	{
 		return lineColorString;
 	}
 
-	public void setLineColorLabel(String a)
+	public void setLineColor(String a)
 	{
 		lineColorString = a;
+	}
+
+	private void getDataFromDatabase()
+	{
+		ConnectToDatabase ctd = new ConnectToDatabase();
+		ctd.Connect();
+		this.backgroundColorString = ctd.getBackgroundString();
+		this.circleColorString = ctd.getCircleString();
+		this.rectangleColorString = ctd.getRectangleString();
+		this.lineColorString = ctd.getArrowString();
+	}
+
+	private void setComboItems()
+	{
+		switch (backgroundColorString)
+		{
+			case "#FFFFFF":
+				backgroundColorBox.getSelectionModel().select(0);
+				break;
+			case "#3A3938":
+				backgroundColorBox.getSelectionModel().select(1);
+				break;
+			case "#5C4CFB":
+				backgroundColorBox.getSelectionModel().select(2);
+				break;
+		}
+
+		switch (circleColorString)
+		{
+			case "#555555":
+				circleColorBox.getSelectionModel().select(0);
+				break;
+			case "#3A3938":
+				circleColorBox.getSelectionModel().select(1);
+				break;
+			case "#5C4CFB":
+				circleColorBox.getSelectionModel().select(2);
+				break;
+		}
+
+		switch (rectangleColorString)
+		{
+			case "#ABCDEF":
+				rectangleColorBox.getSelectionModel().select(0);
+				break;
+			case "#3A3938":
+				rectangleColorBox.getSelectionModel().select(1);
+				break;
+			case "#5C4CFB":
+				rectangleColorBox.getSelectionModel().select(2);
+				break;
+		}
+
+		switch (lineColorString)
+		{
+			case "#FFFFFF":
+				lineColorBox.getSelectionModel().select(0);
+				break;
+			case "#3A3938":
+				lineColorBox.getSelectionModel().select(1);
+				break;
+			case "#5C4CFB":
+				lineColorBox.getSelectionModel().select(2);
+				break;
+		}
 	}
 
 }
