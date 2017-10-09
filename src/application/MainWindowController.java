@@ -1101,7 +1101,7 @@ public class MainWindowController
 		headArrowList.remove(headArrowList.size() - 1);
 	}
 
-	public void getArrowColor()
+	public String getArrowColor()
 	{
 		return this.arrowColor;
 	}
