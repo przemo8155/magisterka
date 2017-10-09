@@ -582,7 +582,8 @@ public class MainWindowController
 				{
 					Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f,
 							Paint.valueOf("#923456"));
-					c.setStroke(Paint.valueOf("#555555"));
+					c.setStroke(Paint.valueOf(circleColor));
+					//c.setStroke(Paint.valueOf("#555555"));
 					c.setStrokeWidth(5.0f);
 					mainPane.getChildren().add(c);
 					c.setOnMousePressed(circleOnMousePressedEventHandler);
@@ -596,8 +597,8 @@ public class MainWindowController
 				{
 					Rectangle r = new Rectangle(event.getSceneX() - 20, event.getSceneY() - minusWidth - 20, 40.0f,
 							40.0f);
-					//r.setFill(Paint.valueOf(rectangleColor));
-					r.setFill(Paint.valueOf("#ABCDEF"));
+					r.setFill(Paint.valueOf(rectangleColor));
+					//r.setFill(Paint.valueOf("#ABCDEF"));
 					r.setStroke(Paint.valueOf("#555555"));
 					r.setStrokeWidth(5.0f);
 					mainPane.getChildren().add(r);
@@ -740,6 +741,13 @@ public class MainWindowController
 
 	public void initialize()
 	{
+		ConnectToDatabase ctd = new ConnectToDatabase();
+		ctd.Connect();
+		backgroundColor = ctd.getBackgroundString();
+		rectangleColor = ctd.getRectangleString();
+		circleColor = ctd.getCircleString();
+		arrowColor = ctd.getArrowString();
+
 
 		mainPane.setStyle("-fx-background-color: #FFFFFF");
 
@@ -1093,13 +1101,10 @@ public class MainWindowController
 		headArrowList.remove(headArrowList.size() - 1);
 	}
 
-	private void getStringsFromDatabase()
+	public void getArrowColor()
 	{
-		ConnectToDatabase ctd = new ConnectToDatabase();
-		this.backgroundColor = ctd.getBackgroundString();
-		this.arrowColor = ctd.getArrowString();
-		this.circleColor = ctd.getCircleString();
-		this.rectangleColor = ctd.getRectangleString();
+		return this.arrowColor;
 	}
+
 
 }
