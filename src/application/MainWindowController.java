@@ -25,6 +25,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -148,7 +149,6 @@ public class MainWindowController
 	private String rectangleColor;
 	private String arrowColor;
 
-
 	private Boolean deleteSecondOfEndLine = false;
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
@@ -214,6 +214,39 @@ public class MainWindowController
 
 	@FXML
 	Parent root;
+
+	Task<Void> task = new Task<Void>()
+	{
+
+		@Override
+		protected Void call() throws Exception
+		{
+			int iterations;
+			for(iterations = 0; iterations < 1000; iterations++)
+			{
+				ConnectToDatabase ctd = new ConnectToDatabase();
+				ctd.Connect();
+				backgroundColor = ctd.getBackgroundString();
+				rectangleColor = ctd.getRectangleString();
+				circleColor = ctd.getCircleString();
+				arrowColor = ctd.getArrowString();
+				updateProgress(iterations, 1000);
+
+				try {
+	                Thread.sleep(100);
+	            } catch (InterruptedException interrupted) {
+	                if (isCancelled()) {
+	                    updateMessage("Cancelled");
+	                    break;
+	                }
+	            }
+			}
+
+
+			return null;
+		}
+
+	};
 
 	public void setMiddleLabelText(String text)
 	{
@@ -598,7 +631,7 @@ public class MainWindowController
 					Rectangle r = new Rectangle(event.getSceneX() - 20, event.getSceneY() - minusWidth - 20, 40.0f,
 							40.0f);
 					r.setFill(Paint.valueOf(rectangleColor));
-					//r.setFill(Paint.valueOf("#ABCDEF"));
+					// r.setFill(Paint.valueOf("#ABCDEF"));
 					r.setStroke(Paint.valueOf("#555555"));
 					r.setStrokeWidth(5.0f);
 					mainPane.getChildren().add(r);
@@ -629,7 +662,7 @@ public class MainWindowController
 								_cFirstPosY = myCircle.getCenterY();
 								setMiddleLabelText("First point of line...");
 								goIntoRectangle = true;
-								//mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 								break;
 							}
 
@@ -640,6 +673,7 @@ public class MainWindowController
 
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 										mainPane);
+								headArrow.setFill(arrowColor);
 								headArrowList.add(headArrow);
 								headArrow.addToMainPane(mainPane);
 
@@ -666,7 +700,7 @@ public class MainWindowController
 								_cFirstPosY = myRectangle.getY() + 20;
 								setMiddleLabelText("First point of line...");
 								goIntoCircle = true;
-								//mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 
 								break;
 							}
@@ -678,6 +712,7 @@ public class MainWindowController
 
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 										mainPane);
+								headArrow.setFill(arrowColor);
 								headArrowList.add(headArrow);
 								headArrow.addToMainPane(mainPane);
 
@@ -688,7 +723,6 @@ public class MainWindowController
 								_cSecPosX = 0;
 								_cSecPosY = 0;
 								goIntoCircle = false;
-
 
 								break;
 							}
@@ -741,12 +775,7 @@ public class MainWindowController
 
 	public void initialize()
 	{
-		ConnectToDatabase ctd = new ConnectToDatabase();
-		ctd.Connect();
-		backgroundColor = ctd.getBackgroundString();
-		rectangleColor = ctd.getRectangleString();
-		circleColor = ctd.getCircleString();
-		arrowColor = ctd.getArrowString();
+		mainWindowControllerConnectToDatabase();
 
 		setBackgroundColor();
 
@@ -823,11 +852,27 @@ public class MainWindowController
 			stage.getIcons()
 					.add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
 			stage.show();
+			stage.setOnHiding(closeWindow);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 	}
+
+	EventHandler<WindowEvent> closeWindow = new EventHandler<WindowEvent>()
+	{
+
+		@Override
+		public void handle(WindowEvent event)
+		{
+			mainWindowControllerConnectToDatabase();
+			setBackgroundColor();
+			setCircleColor();
+			setRectangleColor();
+			setArrowColor();
+
+		}
+	};
 
 	public enum StageFactory
 	{
@@ -1100,20 +1145,61 @@ public class MainWindowController
 		headArrowList.remove(headArrowList.size() - 1);
 	}
 
+	private void mainWindowControllerConnectToDatabase()
+	{
+		ConnectToDatabase ctd = new ConnectToDatabase();
+		ctd.Connect();
+		backgroundColor = ctd.getBackgroundString();
+		rectangleColor = ctd.getRectangleString();
+		circleColor = ctd.getCircleString();
+		arrowColor = ctd.getArrowString();
+	}
+
 	public void setBackgroundColor()
 	{
 		mainPane.setStyle("-fx-background-color: " + backgroundColor);
 	}
 
+	protected void setCircleColor()
+	{
+
+
+		for(Circle c : circleList)
+		{
+			c.setFill(Paint.valueOf(circleColor));
+		}
+
+
+	}
+
+	protected void setRectangleColor()
+	{
+
+		for(Rectangle r : squareList)
+		{
+			r.setFill(Paint.valueOf(rectangleColor));
+		}
+	}
+
+	protected void setArrowColor()
+	{
+		for(HeadArrow ha : headArrowList)
+		{
+			ha.setFill(headArrowList, arrowColor);
+		}
+	}
+
+
 	public String getArrowColor()
 	{
 		return this.arrowColor;
 	}
-	
+
 	public final Pane pane()
 	{
 		return this.mainPane;
 	}
+
 
 
 }

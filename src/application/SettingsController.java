@@ -196,7 +196,6 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setLineColor("#FFFFFF");
 							} else if (item.contains("Black"))
 							{
 								setTextFill(Color.BLACK);
@@ -274,10 +273,26 @@ public class SettingsController
 				setRectangleColor(blue);
 				break;
 		}
+
+		switch(lineColorBox.getSelectionModel().getSelectedIndex())
+		{
+			case 0:
+				setLineColor(white);
+				break;
+			case 1:
+				setLineColor(black);
+				break;
+			case 2:
+				setLineColor(blue);
+				break;
+		}
 		UpdateDatabase updateDatabase = new UpdateDatabase();
 		updateDatabase.Update(backgroundColorString, "background");
 		updateDatabase.Update(circleColorString, "circle");
 		updateDatabase.Update(rectangleColorString, "rectangle");
+		updateDatabase.Update(lineColorString, "arrow");
+
+		cancelButton_OnAction(event);
 
 	}
 

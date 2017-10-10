@@ -1,6 +1,8 @@
 package application;
 
+import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
 public class HeadArrow
@@ -232,6 +234,25 @@ public class HeadArrow
 		gc.getChildren().add(left);
 		gc.getChildren().add(right);
 		gc.getChildren().add(main);
+	}
+
+	public void setFill(ObservableList<HeadArrow> list, String val)
+	{
+		for(HeadArrow ha : list)
+		{
+			ha.left.setFill(Paint.valueOf(val));
+			ha.right.setFill(Paint.valueOf(val));
+			ha.main.setFill(Paint.valueOf(val));
+		}
+	}
+
+	public void setFill(String val)
+	{
+
+			this.left.setFill(Paint.valueOf(val));
+			this.right.setFill(Paint.valueOf(val));
+			this.main.setFill(Paint.valueOf(val));
+
 	}
 
 
