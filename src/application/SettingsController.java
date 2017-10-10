@@ -153,7 +153,7 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-							} else if (item.contains("Black"))
+							} else if (item.contains("White"))
 							{
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
@@ -196,9 +196,10 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-							} else if (item.contains("Black"))
-							{
 								setTextFill(Color.BLACK);
+							} else if (item.contains("White"))
+							{
+
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
@@ -221,7 +222,7 @@ public class SettingsController
 		backgroundColorBox.getItems().addAll("Default", "Black", "Blue");
 		circleColorBox.getItems().addAll("Default", "Black", "Blue");
 		rectangleColorBox.getItems().addAll("Default", "Black", "Blue");
-		lineColorBox.getItems().addAll("Default", "Black", "Blue");
+		lineColorBox.getItems().addAll("Default", "White", "Blue");
 		getDataFromDatabase();
 		setComboItems();
 		backgroundSetItems();
@@ -277,10 +278,10 @@ public class SettingsController
 		switch(lineColorBox.getSelectionModel().getSelectedIndex())
 		{
 			case 0:
-				setLineColor(white);
+				setLineColor(black);
 				break;
 			case 1:
-				setLineColor(black);
+				setLineColor(white);
 				break;
 			case 2:
 				setLineColor(blue);
@@ -396,10 +397,10 @@ public class SettingsController
 
 		switch (lineColorString)
 		{
-			case white:
+			case black:
 				lineColorBox.getSelectionModel().select(0);
 				break;
-			case black:
+			case white:
 				lineColorBox.getSelectionModel().select(1);
 				break;
 			case blue:

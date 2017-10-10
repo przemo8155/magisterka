@@ -37,6 +37,7 @@ public class FileManager
 	public Boolean somethingOpened = false;
 	public Boolean somethingSaved = false;
 
+
 	String key = "przemkeb123123zx";
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,

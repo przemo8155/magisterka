@@ -33,7 +33,6 @@ public class HeadArrow
 		double x2 = Math.cos(angle - arrowAngle) * arrowLength + ax2;
 		double y2 = Math.sin(angle - arrowAngle) * arrowLength + ay2;
 
-
 		this.startPointX = ax1;
 		this.startPointY = ay1;
 		this.endPointX = ax2;
@@ -240,18 +239,18 @@ public class HeadArrow
 	{
 		for(HeadArrow ha : list)
 		{
-			ha.left.setFill(Paint.valueOf(val));
-			ha.right.setFill(Paint.valueOf(val));
-			ha.main.setFill(Paint.valueOf(val));
+			ha.left.setStroke(Paint.valueOf(val));
+			ha.main.setStroke(Paint.valueOf(val));
+			ha.right.setStroke(Paint.valueOf(val));
 		}
 	}
 
 	public void setFill(String val)
 	{
 
-			this.left.setFill(Paint.valueOf(val));
-			this.right.setFill(Paint.valueOf(val));
-			this.main.setFill(Paint.valueOf(val));
+			this.left.setStroke(Paint.valueOf(val));
+			this.right.setStroke(Paint.valueOf(val));
+			this.main.setStroke(Paint.valueOf(val));
 
 	}
 

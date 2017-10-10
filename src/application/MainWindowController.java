@@ -222,7 +222,7 @@ public class MainWindowController
 		protected Void call() throws Exception
 		{
 			int iterations;
-			for(iterations = 0; iterations < 1000; iterations++)
+			for (iterations = 0; iterations < 1000; iterations++)
 			{
 				ConnectToDatabase ctd = new ConnectToDatabase();
 				ctd.Connect();
@@ -232,16 +232,18 @@ public class MainWindowController
 				arrowColor = ctd.getArrowString();
 				updateProgress(iterations, 1000);
 
-				try {
-	                Thread.sleep(100);
-	            } catch (InterruptedException interrupted) {
-	                if (isCancelled()) {
-	                    updateMessage("Cancelled");
-	                    break;
-	                }
-	            }
+				try
+				{
+					Thread.sleep(100);
+				} catch (InterruptedException interrupted)
+				{
+					if (isCancelled())
+					{
+						updateMessage("Cancelled");
+						break;
+					}
+				}
 			}
-
 
 			return null;
 		}
@@ -300,7 +302,7 @@ public class MainWindowController
 				HeadArrow ha = new HeadArrow(_cFirstPosX, _cFirstPosY, event.getScreenX(),
 						event.getSceneY() - minusWidth, mainPane);
 				headArrowList.add(ha);
-
+				ha.setFill(arrowColor);
 				moveHeadArrowList.add(ha);
 				deleteSecondOfEndLine = true;
 
@@ -388,6 +390,11 @@ public class MainWindowController
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 
+				for(HeadArrow ha : headArrowList)
+				{
+					ha.setFill(arrowColor);
+				}
+
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -471,6 +478,11 @@ public class MainWindowController
 				headArrowList.addAll(endHeadArrowList);
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+				
+				for(HeadArrow ha : headArrowList)
+				{
+					ha.setFill(arrowColor);
+				}
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -1163,19 +1175,17 @@ public class MainWindowController
 	protected void setCircleColor()
 	{
 
-
-		for(Circle c : circleList)
+		for (Circle c : circleList)
 		{
 			c.setFill(Paint.valueOf(circleColor));
 		}
-
 
 	}
 
 	protected void setRectangleColor()
 	{
 
-		for(Rectangle r : squareList)
+		for (Rectangle r : squareList)
 		{
 			r.setFill(Paint.valueOf(rectangleColor));
 		}
@@ -1183,12 +1193,11 @@ public class MainWindowController
 
 	protected void setArrowColor()
 	{
-		for(HeadArrow ha : headArrowList)
+		for (HeadArrow ha : headArrowList)
 		{
 			ha.setFill(headArrowList, arrowColor);
 		}
 	}
-
 
 	public String getArrowColor()
 	{
@@ -1199,7 +1208,5 @@ public class MainWindowController
 	{
 		return this.mainPane;
 	}
-
-
 
 }
