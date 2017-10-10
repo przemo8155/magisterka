@@ -581,9 +581,9 @@ public class MainWindowController
 				if (event.getSceneY() > minusWidth + 10)
 				{
 					Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f,
-							Paint.valueOf("#923456"));
-					c.setStroke(Paint.valueOf(circleColor));
-					//c.setStroke(Paint.valueOf("#555555"));
+							Paint.valueOf(circleColor));
+
+					c.setStroke(Paint.valueOf("#555555"));
 					c.setStrokeWidth(5.0f);
 					mainPane.getChildren().add(c);
 					c.setOnMousePressed(circleOnMousePressedEventHandler);
@@ -748,8 +748,7 @@ public class MainWindowController
 		circleColor = ctd.getCircleString();
 		arrowColor = ctd.getArrowString();
 
-		mainPane.setStyle("-fx-background-color: " + backgroundColor);
-		//mainPane.setStyle("-fx-background-color: #FFFFFF");
+		setBackgroundColor();
 
 		initializeStats();
 
@@ -1101,9 +1100,19 @@ public class MainWindowController
 		headArrowList.remove(headArrowList.size() - 1);
 	}
 
+	public void setBackgroundColor()
+	{
+		mainPane.setStyle("-fx-background-color: " + backgroundColor);
+	}
+
 	public String getArrowColor()
 	{
 		return this.arrowColor;
+	}
+	
+	public final Pane pane()
+	{
+		return this.mainPane;
 	}
 
 

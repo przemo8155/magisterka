@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -66,14 +67,11 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setBackgroundColor("#FFFFFF");
 							} else if (item.contains("Black"))
 							{
-								setBackgroundColor("#3A3938");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								setBackgroundColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -112,14 +110,11 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setCircleColor("#555555");
 							} else if (item.contains("Black"))
 							{
-								setCircleColor("#3A3938");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								setCircleColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -158,14 +153,11 @@ public class SettingsController
 							setText(item);
 							if (item.contains("Default"))
 							{
-								setRectangleColor("#ABCDEF");
 							} else if (item.contains("Black"))
 							{
-								setRectangleColor("#3A3938");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								setRectangleColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -207,11 +199,9 @@ public class SettingsController
 								setLineColor("#FFFFFF");
 							} else if (item.contains("Black"))
 							{
-								setLineColor("#3A3938");
 								setTextFill(Color.BLACK);
 							} else if (item.contains("Blue"))
 							{
-								setLineColor("#5C4CFB");
 								setTextFill(Color.BLUE);
 							}
 						} else
@@ -257,8 +247,37 @@ public class SettingsController
 				setBackgroundColor(blue);
 				break;
 		}
+
+
+		switch(circleColorBox.getSelectionModel().getSelectedIndex())
+		{
+			case 0:
+				setCircleColor(white);
+				break;
+			case 1:
+				setCircleColor(black);
+				break;
+			case 2:
+				setCircleColor(blue);
+				break;
+		}
+
+		switch(rectangleColorBox.getSelectionModel().getSelectedIndex())
+		{
+			case 0:
+				setRectangleColor(white);
+				break;
+			case 1:
+				setRectangleColor(black);
+				break;
+			case 2:
+				setRectangleColor(blue);
+				break;
+		}
 		UpdateDatabase updateDatabase = new UpdateDatabase();
 		updateDatabase.Update(backgroundColorString, "background");
+		updateDatabase.Update(circleColorString, "circle");
+		updateDatabase.Update(rectangleColorString, "rectangle");
 
 	}
 
@@ -323,52 +342,52 @@ public class SettingsController
 	{
 		switch (backgroundColorString)
 		{
-			case "#FFFFFF":
+			case white:
 				backgroundColorBox.getSelectionModel().select(0);
 				break;
-			case "#3A3938":
+			case black:
 				backgroundColorBox.getSelectionModel().select(1);
 				break;
-			case "#5C4CFB":
+			case blue:
 				backgroundColorBox.getSelectionModel().select(2);
 				break;
 		}
 
 		switch (circleColorString)
 		{
-			case "#555555":
+			case white:
 				circleColorBox.getSelectionModel().select(0);
 				break;
-			case "#3A3938":
+			case black:
 				circleColorBox.getSelectionModel().select(1);
 				break;
-			case "#5C4CFB":
+			case blue:
 				circleColorBox.getSelectionModel().select(2);
 				break;
 		}
 
 		switch (rectangleColorString)
 		{
-			case "#ABCDEF":
+			case white:
 				rectangleColorBox.getSelectionModel().select(0);
 				break;
-			case "#3A3938":
+			case black:
 				rectangleColorBox.getSelectionModel().select(1);
 				break;
-			case "#5C4CFB":
+			case blue:
 				rectangleColorBox.getSelectionModel().select(2);
 				break;
 		}
 
 		switch (lineColorString)
 		{
-			case "#FFFFFF":
+			case white:
 				lineColorBox.getSelectionModel().select(0);
 				break;
-			case "#3A3938":
+			case black:
 				lineColorBox.getSelectionModel().select(1);
 				break;
-			case "#5C4CFB":
+			case blue:
 				lineColorBox.getSelectionModel().select(2);
 				break;
 		}
