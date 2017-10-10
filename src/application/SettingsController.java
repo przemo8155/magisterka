@@ -42,6 +42,10 @@ public class SettingsController
 	private final String white = "#FFFFFF";
 	private final String black = "#3A3938";
 	private final String blue = "#5C4CFB";
+	private final String red = "#FF420E";
+	private final String green = "#89C25E";
+	private final String yellow = "E7DF18";
+	private final String pink = "D118E7";
 
 	private void backgroundSetItems()
 	{
@@ -73,7 +77,20 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
+							} else if(item.contains("Red"))
+							{
+								setTextFill(Color.RED);
+							} else if(item.contains("Green"))
+							{
+								setTextFill(Color.GREEN);
+							} else if(item.contains("Yellow"))
+							{
+								setTextFill(Color.YELLOW);
+							} else if(item.contains("Pink"))
+							{
+								setTextFill(Color.PINK);
 							}
+
 						} else
 						{
 							setText(null);
@@ -116,6 +133,18 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
+							}else if(item.contains("Red"))
+							{
+								setTextFill(Color.RED);
+							}else if(item.contains("Green"))
+							{
+								setTextFill(Color.GREEN);
+							} else if(item.contains("Yellow"))
+							{
+								setTextFill(Color.YELLOW);
+							} else if(item.contains("Pink"))
+							{
+								setTextFill(Color.PINK);
 							}
 						} else
 						{
@@ -159,6 +188,18 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
+							}else if(item.contains("Red"))
+							{
+								setTextFill(Color.RED);
+							}else if(item.contains("Green"))
+							{
+								setTextFill(Color.GREEN);
+							} else if(item.contains("Yellow"))
+							{
+								setTextFill(Color.YELLOW);
+							} else if(item.contains("Pink"))
+							{
+								setTextFill(Color.PINK);
 							}
 						} else
 						{
@@ -203,6 +244,18 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
+							}else if(item.contains("Red"))
+							{
+								setTextFill(Color.RED);
+							}else if(item.contains("Green"))
+							{
+								setTextFill(Color.GREEN);
+							} else if(item.contains("Yellow"))
+							{
+								setTextFill(Color.YELLOW);
+							} else if(item.contains("Pink"))
+							{
+								setTextFill(Color.PINK);
 							}
 						} else
 						{
@@ -219,10 +272,10 @@ public class SettingsController
 	public void initialize()
 	{
 
-		backgroundColorBox.getItems().addAll("Default", "Black", "Blue");
-		circleColorBox.getItems().addAll("Default", "Black", "Blue");
-		rectangleColorBox.getItems().addAll("Default", "Black", "Blue");
-		lineColorBox.getItems().addAll("Default", "White", "Blue");
+		backgroundColorBox.getItems().addAll("Default", "Black", "Blue", "Red", "Green", "Yellow", "Pink");
+		circleColorBox.getItems().addAll("Default", "Black", "Blue", "Red", "Green", "Yellow", "Pink");
+		rectangleColorBox.getItems().addAll("Default", "Black", "Blue", "Red", "Green", "Yellow", "Pink");
+		lineColorBox.getItems().addAll("Default", "White", "Blue", "Red", "Green", "Yellow", "Pink");
 		getDataFromDatabase();
 		setComboItems();
 		backgroundSetItems();
@@ -246,6 +299,18 @@ public class SettingsController
 			case 2:
 				setBackgroundColor(blue);
 				break;
+			case 3:
+				setBackgroundColor(red);
+				break;
+			case 4:
+				setBackgroundColor(green);
+				break;
+			case 5:
+				setBackgroundColor(yellow);
+				break;
+			case 6:
+				setBackgroundColor(pink);
+				break;
 		}
 
 
@@ -260,6 +325,18 @@ public class SettingsController
 			case 2:
 				setCircleColor(blue);
 				break;
+			case 3:
+				setCircleColor(red);
+				break;
+			case 4:
+				setCircleColor(green);
+				break;
+			case 5:
+				setCircleColor(yellow);
+				break;
+			case 6:
+				setCircleColor(pink);
+				break;
 		}
 
 		switch(rectangleColorBox.getSelectionModel().getSelectedIndex())
@@ -273,6 +350,18 @@ public class SettingsController
 			case 2:
 				setRectangleColor(blue);
 				break;
+			case 3:
+				setRectangleColor(red);
+				break;
+			case 4:
+				setRectangleColor(green);
+				break;
+			case 5:
+				setRectangleColor(yellow);
+				break;
+			case 6:
+				setRectangleColor(pink);
+				break;
 		}
 
 		switch(lineColorBox.getSelectionModel().getSelectedIndex())
@@ -285,6 +374,18 @@ public class SettingsController
 				break;
 			case 2:
 				setLineColor(blue);
+				break;
+			case 3:
+				setLineColor(red);
+				break;
+			case 4:
+				setLineColor(green);
+				break;
+			case 5:
+				setLineColor(yellow);
+				break;
+			case 6:
+				setLineColor(pink);
 				break;
 		}
 		UpdateDatabase updateDatabase = new UpdateDatabase();
@@ -367,6 +468,18 @@ public class SettingsController
 			case blue:
 				backgroundColorBox.getSelectionModel().select(2);
 				break;
+			case red:
+				backgroundColorBox.getSelectionModel().select(3);
+				break;
+			case green:
+				backgroundColorBox.getSelectionModel().select(4);
+				break;
+			case yellow:
+				backgroundColorBox.getSelectionModel().select(5);
+				break;
+			case pink:
+				backgroundColorBox.getSelectionModel().select(6);
+				break;
 		}
 
 		switch (circleColorString)
@@ -379,6 +492,18 @@ public class SettingsController
 				break;
 			case blue:
 				circleColorBox.getSelectionModel().select(2);
+				break;
+			case red:
+				circleColorBox.getSelectionModel().select(3);
+				break;
+			case green:
+				circleColorBox.getSelectionModel().select(4);
+				break;
+			case yellow:
+				circleColorBox.getSelectionModel().select(5);
+				break;
+			case pink:
+				circleColorBox.getSelectionModel().select(6);
 				break;
 		}
 
@@ -393,6 +518,18 @@ public class SettingsController
 			case blue:
 				rectangleColorBox.getSelectionModel().select(2);
 				break;
+			case red:
+				rectangleColorBox.getSelectionModel().select(3);
+				break;
+			case green:
+				rectangleColorBox.getSelectionModel().select(4);
+				break;
+			case yellow:
+				rectangleColorBox.getSelectionModel().select(5);
+				break;
+			case pink:
+				rectangleColorBox.getSelectionModel().select(6);
+				break;
 		}
 
 		switch (lineColorString)
@@ -405,6 +542,18 @@ public class SettingsController
 				break;
 			case blue:
 				lineColorBox.getSelectionModel().select(2);
+				break;
+			case red:
+				lineColorBox.getSelectionModel().select(3);
+				break;
+			case green:
+				lineColorBox.getSelectionModel().select(4);
+				break;
+			case yellow:
+				lineColorBox.getSelectionModel().select(5);
+				break;
+			case pink:
+				lineColorBox.getSelectionModel().select(6);
 				break;
 		}
 	}
