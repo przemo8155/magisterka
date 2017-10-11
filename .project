@@ -27,6 +27,16 @@
 			<location>C:/Users/przem/Downloads/mysql-connector-java-5.1.44/mysql-connector-java-5.1.44/mysql-connector-java-5.1.44-bin.jar</location>
 		</link>
 		<link>
+			<name>slf4j-api-1.7.25.jar</name>
+			<type>1</type>
+			<location>C:/Users/przem/Downloads/slf4j-1.7.25/slf4j-1.7.25/slf4j-api-1.7.25.jar</location>
+		</link>
+		<link>
+			<name>slf4j-simple-1.7.25.jar</name>
+			<type>1</type>
+			<location>C:/Users/przem/Downloads/slf4j-1.7.25/slf4j-1.7.25/slf4j-simple-1.7.25.jar</location>
+		</link>
+		<link>
 			<name>src/application/resources/yellowbulb.jpg</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/yellowbulb.jpg</location>

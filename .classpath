@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="itext7-pdftest-7.0.4.jar"/>
 	<classpathentry kind="lib" path="itext7-sign-7.0.4-sources.jar"/>
 	<classpathentry kind="lib" path="itext7-sign-7.0.4.jar"/>
+	<classpathentry kind="lib" path="slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="slf4j-simple-1.7.25.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

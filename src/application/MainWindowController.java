@@ -6,6 +6,7 @@ package application;
 import java.awt.Color;
 import java.awt.List;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -18,9 +19,13 @@ import javax.swing.Timer;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfDocumentInfo;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.WriterProperties;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
 import com.sun.javafx.font.FontFactory;
 import com.sun.javafx.stage.StageHelper;
 
@@ -152,6 +157,7 @@ public class MainWindowController
 	SettingsController settingsController = new SettingsController();
 	Counters counters = new Counters();
 	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
+	ExportPDF exportPdf = new ExportPDF();
 
 	private String backgroundColor;
 	private String circleColor;
@@ -809,7 +815,7 @@ public class MainWindowController
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 
-		exportToPdf.setOnAction(exportToPdfEventHandler);
+		exportToPdf.setOnAction(exportPdf.exportToPdfEventHandler);
 
 		utilities.clearAllLists(circleList, squareList, headArrowList);
 
@@ -1222,16 +1228,7 @@ public class MainWindowController
 		return this.mainPane;
 	}
 
-	EventHandler<ActionEvent> exportToPdfEventHandler = new EventHandler<ActionEvent>()
-	{
 
-		@Override
-		public void handle(ActionEvent event)
-		{
-
-
-		}
-	};
 
 	public void createPdf()
 	{
