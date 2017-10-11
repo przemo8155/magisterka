@@ -153,7 +153,6 @@ public class MainWindowController
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
 	Main main = new Main();
-	LabelTexts labelTexts = new LabelTexts();
 	SettingsController settingsController = new SettingsController();
 	Counters counters = new Counters();
 	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
@@ -1228,11 +1227,5 @@ public class MainWindowController
 		return this.mainPane;
 	}
 
-
-
-	public void createPdf()
-	{
-
-	}
 
 }
