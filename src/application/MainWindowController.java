@@ -6,15 +6,22 @@ package application;
 import java.awt.Color;
 import java.awt.List;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javax.lang.model.element.Element;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.sun.javafx.font.FontFactory;
 import com.sun.javafx.stage.StageHelper;
 
 import javafx.application.Application;
@@ -135,6 +142,8 @@ public class MainWindowController
 
 	Label objectsMovedL = new Label("Objects moved: ");
 	Label numberOfObjectsMovedL = new Label("0");
+
+	Button exportToPdf = new Button("Export PDF");
 
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
@@ -390,7 +399,7 @@ public class MainWindowController
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 
-				for(HeadArrow ha : headArrowList)
+				for (HeadArrow ha : headArrowList)
 				{
 					ha.setFill(arrowColor);
 				}
@@ -478,8 +487,8 @@ public class MainWindowController
 				headArrowList.addAll(endHeadArrowList);
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
-				
-				for(HeadArrow ha : headArrowList)
+
+				for (HeadArrow ha : headArrowList)
 				{
 					ha.setFill(arrowColor);
 				}
@@ -799,6 +808,8 @@ public class MainWindowController
 
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+
+		exportToPdf.setOnAction(exportToPdfEventHandler);
 
 		utilities.clearAllLists(circleList, squareList, headArrowList);
 
@@ -1126,6 +1137,8 @@ public class MainWindowController
 		grid.add(objectsMovedL, 0, 10);
 		grid.add(numberOfObjectsMovedL, 1, 10);
 
+		grid.add(exportToPdf, 0, 11);
+
 		titledPaneStats.setContent(grid);
 
 	}
@@ -1207,6 +1220,22 @@ public class MainWindowController
 	public final Pane pane()
 	{
 		return this.mainPane;
+	}
+
+	EventHandler<ActionEvent> exportToPdfEventHandler = new EventHandler<ActionEvent>()
+	{
+
+		@Override
+		public void handle(ActionEvent event)
+		{
+
+
+		}
+	};
+
+	public void createPdf()
+	{
+
 	}
 
 }

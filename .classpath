@@ -4,5 +4,15 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="lib" path="mysql-connector-java-5.1.44-bin.jar"/>
+	<classpathentry kind="lib" path="itext7-barcodes-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-forms-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-hyph-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-io-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-kernel-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-layout-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-pdfa-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-pdftest-7.0.4.jar"/>
+	<classpathentry kind="lib" path="itext7-sign-7.0.4-sources.jar"/>
+	<classpathentry kind="lib" path="itext7-sign-7.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

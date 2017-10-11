@@ -38,7 +38,7 @@ public class SettingsController
 
 	public ObservableList<String> allEnableColors = FXCollections.observableArrayList();
 
-	//colors
+	// colors
 	private final String white = "#FFFFFF";
 	private final String black = "#3A3938";
 	private final String blue = "#5C4CFB";
@@ -77,16 +77,16 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
-							} else if(item.contains("Red"))
+							} else if (item.contains("Red"))
 							{
 								setTextFill(Color.RED);
-							} else if(item.contains("Green"))
+							} else if (item.contains("Green"))
 							{
 								setTextFill(Color.GREEN);
-							} else if(item.contains("Yellow"))
+							} else if (item.contains("Yellow"))
 							{
 								setTextFill(Color.YELLOW);
-							} else if(item.contains("Pink"))
+							} else if (item.contains("Pink"))
 							{
 								setTextFill(Color.PINK);
 							}
@@ -133,16 +133,16 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
-							}else if(item.contains("Red"))
+							} else if (item.contains("Red"))
 							{
 								setTextFill(Color.RED);
-							}else if(item.contains("Green"))
+							} else if (item.contains("Green"))
 							{
 								setTextFill(Color.GREEN);
-							} else if(item.contains("Yellow"))
+							} else if (item.contains("Yellow"))
 							{
 								setTextFill(Color.YELLOW);
-							} else if(item.contains("Pink"))
+							} else if (item.contains("Pink"))
 							{
 								setTextFill(Color.PINK);
 							}
@@ -188,16 +188,16 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
-							}else if(item.contains("Red"))
+							} else if (item.contains("Red"))
 							{
 								setTextFill(Color.RED);
-							}else if(item.contains("Green"))
+							} else if (item.contains("Green"))
 							{
 								setTextFill(Color.GREEN);
-							} else if(item.contains("Yellow"))
+							} else if (item.contains("Yellow"))
 							{
 								setTextFill(Color.YELLOW);
-							} else if(item.contains("Pink"))
+							} else if (item.contains("Pink"))
 							{
 								setTextFill(Color.PINK);
 							}
@@ -244,16 +244,16 @@ public class SettingsController
 							} else if (item.contains("Blue"))
 							{
 								setTextFill(Color.BLUE);
-							}else if(item.contains("Red"))
+							} else if (item.contains("Red"))
 							{
 								setTextFill(Color.RED);
-							}else if(item.contains("Green"))
+							} else if (item.contains("Green"))
 							{
 								setTextFill(Color.GREEN);
-							} else if(item.contains("Yellow"))
+							} else if (item.contains("Yellow"))
 							{
 								setTextFill(Color.YELLOW);
-							} else if(item.contains("Pink"))
+							} else if (item.contains("Pink"))
 							{
 								setTextFill(Color.PINK);
 							}
@@ -288,7 +288,7 @@ public class SettingsController
 	@FXML
 	void saveButton_OnAction(ActionEvent event)
 	{
-		switch(backgroundColorBox.getSelectionModel().getSelectedIndex())
+		switch (backgroundColorBox.getSelectionModel().getSelectedIndex())
 		{
 			case 0:
 				setBackgroundColor(white);
@@ -313,8 +313,7 @@ public class SettingsController
 				break;
 		}
 
-
-		switch(circleColorBox.getSelectionModel().getSelectedIndex())
+		switch (circleColorBox.getSelectionModel().getSelectedIndex())
 		{
 			case 0:
 				setCircleColor(white);
@@ -339,7 +338,7 @@ public class SettingsController
 				break;
 		}
 
-		switch(rectangleColorBox.getSelectionModel().getSelectedIndex())
+		switch (rectangleColorBox.getSelectionModel().getSelectedIndex())
 		{
 			case 0:
 				setRectangleColor(white);
@@ -364,7 +363,7 @@ public class SettingsController
 				break;
 		}
 
-		switch(lineColorBox.getSelectionModel().getSelectedIndex())
+		switch (lineColorBox.getSelectionModel().getSelectedIndex())
 		{
 			case 0:
 				setLineColor(black);
