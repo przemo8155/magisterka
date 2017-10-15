@@ -1016,6 +1016,11 @@ public class MainWindowController
 		if (fileOpened)
 		{
 			setMiddleLabelText("File opened...");
+			mainWindowControllerConnectToDatabase();
+			setBackgroundColor();
+			setCircleColor();
+			setArrowColor();
+			setRectangleColor();
 
 		}
 
