@@ -86,6 +86,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -110,6 +111,7 @@ public class MainWindowController
 	String selectedToggle = "";
 	String idObj = "";
 	int circleId = 0;
+	String secondObject = "";
 
 	int mouseBothClicked = 0, mouseRightClicked = 0, mouseLeftClicked = 0;
 	int objectsDeleted = 0, objectsMoved = 0;
@@ -149,6 +151,7 @@ public class MainWindowController
 	Label numberOfObjectsMovedL = new Label("0");
 
 	Button exportToPdf = new Button("Export PDF");
+	Button showStats = new Button("Elo");
 
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
@@ -268,6 +271,7 @@ public class MainWindowController
 	{
 		middleLabel.setDisable(false);
 		middleLabel.setText(text);
+
 
 		FadeTransition ft = new FadeTransition(Duration.millis(1200), middleLabel);
 		ft.setFromValue(1.0);
@@ -673,26 +677,23 @@ public class MainWindowController
 					double x = event.getSceneX();
 					double y = event.getSceneY();
 
-					boolean goIntoRectangle = false;
-					boolean goIntoCircle = false;
-
 					for (Circle myCircle : circleList)
 					{
 						if ((x > myCircle.getCenterX() - circleRay) && (x < myCircle.getCenterX() + circleRay)
 								&& (y > myCircle.getCenterY() - circleRay + minusWidth)
 								&& (y < myCircle.getCenterY() + circleRay + minusWidth))
 						{
-							if (_cFirstPosX == 0 && _cFirstPosY == 0 && !goIntoCircle)
+							if (_cFirstPosX == 0 && _cFirstPosY == 0)
 							{
 								_cFirstPosX = myCircle.getCenterX();
 								_cFirstPosY = myCircle.getCenterY();
 								setMiddleLabelText("First point of line...");
-								goIntoRectangle = true;
+								secondObject = "rectangle";
 								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
 								break;
 							}
 
-							if (_cFirstPosX != 0 && _cFirstPosY != 0)
+							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "circle")
 							{
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
@@ -708,8 +709,13 @@ public class MainWindowController
 								_cFirstPosY = 0;
 								_cSecPosX = 0;
 								_cSecPosY = 0;
-								goIntoRectangle = false;
+								secondObject = "";
 								break;
+							}
+
+							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "rectangle")
+							{
+								setMiddleLabelText("Second object must be rectangle...");
 							}
 						}
 					}
@@ -720,18 +726,17 @@ public class MainWindowController
 								&& (y > myRectangle.getY() + 20 - squareRay + minusWidth)
 								&& (y < myRectangle.getY() + 20 + squareRay + minusWidth))
 						{
-							if (_cFirstPosX == 0 && _cFirstPosY == 0 && !goIntoRectangle)
+							if (_cFirstPosX == 0 && _cFirstPosY == 0)
 							{
 								_cFirstPosX = myRectangle.getX() + 20;
 								_cFirstPosY = myRectangle.getY() + 20;
 								setMiddleLabelText("First point of line...");
-								goIntoCircle = true;
 								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
-
+								secondObject = "circle";
 								break;
 							}
 
-							if (_cFirstPosX != 0 && _cFirstPosY != 0)
+							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "rectangle")
 							{
 								_cSecPosX = myRectangle.getX() + 20;
 								_cSecPosY = myRectangle.getY() + 20;
@@ -748,9 +753,12 @@ public class MainWindowController
 								_cFirstPosY = 0;
 								_cSecPosX = 0;
 								_cSecPosY = 0;
-								goIntoCircle = false;
-
+								secondObject = "";
 								break;
+							}
+							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "circle")
+							{
+								setMiddleLabelText("Second object must be circle...");
 							}
 						}
 					}
@@ -1231,6 +1239,5 @@ public class MainWindowController
 	{
 		return this.mainPane;
 	}
-
 
 }

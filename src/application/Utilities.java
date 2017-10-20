@@ -70,6 +70,11 @@ public class Utilities
 		JOptionPane.showMessageDialog(null, Integer.toString(infoMessage), "InfoBox:", JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	public static void booleanBox(boolean infoMessage)
+	{
+		JOptionPane.showMessageDialog(null, Boolean.toString(infoMessage), "InfoBox:", JOptionPane.INFORMATION_MESSAGE);
+	}
+
 	public static void exitFromApplication()
 	{
 		Platform.exit();

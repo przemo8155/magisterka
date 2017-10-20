@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -43,7 +42,7 @@
       <ToggleButton fx:id="squareToggleButton" layoutX="70.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="moveToggleButton" layoutX="186.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="lineToggleButton" layoutX="127.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
-      <Label fx:id="middleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="490" layoutY="300" mnemonicParsing="false" prefHeight="58.0" prefWidth="425.0">
+      <Label fx:id="middleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="427.0" layoutY="300" mnemonicParsing="false" prefHeight="58.0" prefWidth="551.0">
          <font>
             <Font name="Gabriola" size="44.0" />
          </font></Label>
