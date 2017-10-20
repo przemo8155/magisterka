@@ -30,7 +30,6 @@ public class HeadArrow
 
 		int cwiartka = 0;
 
-		double ourC = Math.sqrt(absY*absY + absX*absX);
 
 		if(ax1 < ax2 && ay1 > ay2)
 		{
@@ -52,30 +51,27 @@ public class HeadArrow
 			cwiartka = 4;
 		}
 
-		double pow = -1.0;
 		switch(cwiartka)
 		{
 			case 1:
 				t = absX / absY;
-				//localAngle = Math.atan(t);
-				localAngle = Math.atan2(absX, absY);
-
-				angle = localAngle;
+				localAngle = Math.atan2(absY, absX);
+				angle = 360.0 - Math.toDegrees(localAngle);
 				break;
 			case 2:
-				t = absY / absX;
-				localAngle = Math.pow(Math.tan(t), (-1));
-				angle = localAngle;
+				t = absX / absY;
+				localAngle = Math.atan2(absY, absX);
+				angle = Math.toDegrees(localAngle);
 				break;
 			case 3:
 				t = absX / absY;
-				localAngle = Math.pow(Math.tan(t), (-1));
-				angle = localAngle;
+				localAngle = Math.atan2(absY, absX);
+				angle = 180.0 - Math.toDegrees(localAngle);
 				break;
 			case 4:
 				t = absX / absY;
-				localAngle = Math.pow(Math.tan(t), (-1));
-				angle = localAngle;
+				localAngle = Math.atan2(absY, absX);
+				angle = 180.0 + Math.toDegrees(localAngle);
 				break;
 		}
 
