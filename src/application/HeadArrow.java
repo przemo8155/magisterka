@@ -14,9 +14,72 @@ public class HeadArrow
 	public Line main;
 	public Line left, right;
 
+	private static int width = 15;
+
 	public HeadArrow()
 	{
 
+	}
+
+	public double returnAngle(double ax1, double ay1, double ax2, double ay2)
+	{
+		double angle = 0;
+		double absX = Math.abs(ax1 - ax2);
+		double absY = Math.abs(ay1 - ay2);
+		double t = 0, localAngle = 0;
+
+		int cwiartka = 0;
+
+		double ourC = Math.sqrt(absY*absY + absX*absX);
+
+		if(ax1 < ax2 && ay1 > ay2)
+		{
+			cwiartka = 1;
+		}
+
+		if(ax1 < ax2 && ay1 < ay2)
+		{
+			cwiartka = 2;
+		}
+
+		if(ax1 > ax2 && ay1 < ay2)
+		{
+			cwiartka = 3;
+		}
+
+		if(ax1 > ax2 && ay1 > ay2)
+		{
+			cwiartka = 4;
+		}
+
+		double pow = -1.0;
+		switch(cwiartka)
+		{
+			case 1:
+				t = absX / absY;
+				//localAngle = Math.atan(t);
+				localAngle = Math.atan2(absX, absY);
+
+				angle = localAngle;
+				break;
+			case 2:
+				t = absY / absX;
+				localAngle = Math.pow(Math.tan(t), (-1));
+				angle = localAngle;
+				break;
+			case 3:
+				t = absX / absY;
+				localAngle = Math.pow(Math.tan(t), (-1));
+				angle = localAngle;
+				break;
+			case 4:
+				t = absX / absY;
+				localAngle = Math.pow(Math.tan(t), (-1));
+				angle = localAngle;
+				break;
+		}
+
+		return angle;
 	}
 
 

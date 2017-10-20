@@ -703,7 +703,7 @@ public class MainWindowController
 								headArrow.setFill(arrowColor);
 								headArrowList.add(headArrow);
 								headArrow.addToMainPane(mainPane);
-
+								Utilities.doubleBox(headArrow.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY));
 								setMiddleLabelText("Second point of line...");
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
@@ -748,7 +748,7 @@ public class MainWindowController
 								headArrow.addToMainPane(mainPane);
 
 								setMiddleLabelText("Second point of line...");
-
+								Utilities.doubleBox(headArrow.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY));
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
 								_cSecPosX = 0;
