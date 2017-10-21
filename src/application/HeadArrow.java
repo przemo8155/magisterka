@@ -23,7 +23,7 @@ public class HeadArrow
 
 	public double calculateX(double angle)
 	{
-		final int ray = 15;
+		final int ray = 30;
 		if(angle >= 0 && angle <= 90)
 		{
 			final double sqAngle = 90.0;
@@ -37,7 +37,7 @@ public class HeadArrow
 			final double sqAngle = 180.0;
 			double finalAngle = sqAngle - angle;
 			double calX = finalAngle/90.0 * ray;
-			return -15+calX;
+			return -30+calX;
 		}
 
 		if(angle > 180 && angle <= 270)
@@ -45,7 +45,7 @@ public class HeadArrow
 			final double sqAngle = 270.0;
 			double finalAngle = angle - 180.0;
 			double calX = finalAngle/90.0 * ray;
-			return -(15-calX);
+			return -(30-calX);
 		}
 
 		if(angle > 270 && angle <= 360)
@@ -53,7 +53,7 @@ public class HeadArrow
 			final double sqAngle = 360.0;
 			double finalAngle = sqAngle - angle;
 			double calX = finalAngle/90.0 * ray;
-			return 15-calX;
+			return 30-calX;
 		}
 
 		else return 0;
@@ -62,13 +62,13 @@ public class HeadArrow
 
 	public double calculateY(double angle)
 	{
-		final int ray = 15;
+		final int ray = 30;
 		if(angle >= 0 && angle <= 90)
 		{
 			final double sqAngle = 90.0;
 			double finalAngle = sqAngle - angle;
 			double calY = finalAngle/sqAngle * ray;
-			return 15-calY;
+			return 30-calY;
 		}
 
 		if(angle > 90 && angle <= 180)
@@ -76,7 +76,7 @@ public class HeadArrow
 			final double sqAngle = 180.0;
 			double finalAngle = sqAngle - angle;
 			double calY = finalAngle/90.0 * ray;
-			return -calY;
+			return calY;
 		}
 
 		if(angle > 180 && angle <= 270)
@@ -84,7 +84,7 @@ public class HeadArrow
 			final double sqAngle = 270.0;
 			double finalAngle = angle - 180.0;
 			double calY = finalAngle/90.0 * ray;
-			return calY;
+			return -calY;
 		}
 
 		if(angle > 270 && angle <= 360)
@@ -186,9 +186,9 @@ public class HeadArrow
 
 		this.main = new Line(ax1 + myX, ay1 + myY, ax2 - myX, ay2 - myY);
 		main.setStrokeWidth(5.0f);
-		this.left = new Line(ax2 - myX, ay2 - myY, x1, y1);
+		this.left = new Line(ax2 - myX, ay2 - myY, x1 - myX, y1 - myY);
 		left.setStrokeWidth(5.0f);
-		this.right = new Line(ax2 - myX, ay2 - myY, x2, y2);
+		this.right = new Line(ax2 - myX, ay2 - myY, x2 - myX, y2 - myY);
 		right.setStrokeWidth(5.0f);
 	}
 
@@ -216,7 +216,10 @@ public class HeadArrow
 	{
 		gc.getChildren().remove(main);
 		this.startPointX = val;
-		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		double angle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(angle);
+		double calY = calculateY(angle);
+		this.main = new Line(startPointX + calX, startPointY + calY, endPointX - calX, endPointY - calY);
 		main.setStrokeWidth(5.0f);
 		gc.getChildren().add(main);
 	}
@@ -225,7 +228,10 @@ public class HeadArrow
 	{
 		gc.getChildren().remove(main);
 		this.startPointY = val;
-		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		double angle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(angle);
+		double calY = calculateY(angle);
+		this.main = new Line(startPointX + calX, startPointY + calY, endPointX - calX, endPointY - calY);
 		main.setStrokeWidth(5.0f);
 		gc.getChildren().add(main);
 	}
@@ -283,7 +289,6 @@ public class HeadArrow
 		double x1 = Math.cos(angle + arrowAngle) * arrowLength + endPointX;
 		double y1 = Math.sin(angle + arrowAngle) * arrowLength + endPointY;
 
-
 		this.left = new Line(endPointX, endPointY, x1, y1);
 		left.setStrokeWidth(5.0f);
 		gc.getChildren().add(left);
@@ -303,7 +308,6 @@ public class HeadArrow
 		double angle = Math.atan2(dy, dx);
 		double x2 = Math.cos(angle - arrowAngle) * arrowLength + endPointX;
 		double y2 = Math.sin(angle - arrowAngle) * arrowLength + endPointY;
-
 
 		this.right = new Line(endPointX, endPointY, x2, y2);
 		right.setStrokeWidth(5.0f);
