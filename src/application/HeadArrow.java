@@ -21,6 +21,84 @@ public class HeadArrow
 
 	}
 
+	public double calculateX(double angle)
+	{
+		final int ray = 15;
+		if(angle >= 0 && angle <= 90)
+		{
+			final double sqAngle = 90.0;
+			double finalAngle = sqAngle - angle;
+			double calX = finalAngle/sqAngle * ray;
+			return calX;
+		}
+
+		if(angle > 90 && angle <= 180)
+		{
+			final double sqAngle = 180.0;
+			double finalAngle = sqAngle - angle;
+			double calX = finalAngle/90.0 * ray;
+			return -15+calX;
+		}
+
+		if(angle > 180 && angle <= 270)
+		{
+			final double sqAngle = 270.0;
+			double finalAngle = angle - 180.0;
+			double calX = finalAngle/90.0 * ray;
+			return -(15-calX);
+		}
+
+		if(angle > 270 && angle <= 360)
+		{
+			final double sqAngle = 360.0;
+			double finalAngle = sqAngle - angle;
+			double calX = finalAngle/90.0 * ray;
+			return 15-calX;
+		}
+
+		else return 0;
+
+	}
+
+	public double calculateY(double angle)
+	{
+		final int ray = 15;
+		if(angle >= 0 && angle <= 90)
+		{
+			final double sqAngle = 90.0;
+			double finalAngle = sqAngle - angle;
+			double calY = finalAngle/sqAngle * ray;
+			return 15-calY;
+		}
+
+		if(angle > 90 && angle <= 180)
+		{
+			final double sqAngle = 180.0;
+			double finalAngle = sqAngle - angle;
+			double calY = finalAngle/90.0 * ray;
+			return -calY;
+		}
+
+		if(angle > 180 && angle <= 270)
+		{
+			final double sqAngle = 270.0;
+			double finalAngle = angle - 180.0;
+			double calY = finalAngle/90.0 * ray;
+			return calY;
+		}
+
+		if(angle > 270 && angle <= 360)
+		{
+			final double sqAngle = 360.0;
+			double finalAngle = sqAngle - angle;
+			double calY = finalAngle/90.0 * ray;
+			return -calY;
+		}
+
+		else return 0;
+	}
+
+
 	public double returnAngle(double ax1, double ay1, double ax2, double ay2)
 	{
 		double angle = 0;
@@ -102,11 +180,15 @@ public class HeadArrow
 		this.y1 = y1;
 		this.y2 = y2;
 
-		this.main = new Line(ax1, ay1, ax2, ay2);
+		double myAngle = returnAngle(ax1, ay1, ax2, ay2);
+		double myX = calculateX(myAngle);
+		double myY = calculateY(myAngle);
+
+		this.main = new Line(ax1 + myX, ay1 + myY, ax2 - myX, ay2 - myY);
 		main.setStrokeWidth(5.0f);
-		this.left = new Line(ax2, ay2, x1, y1);
+		this.left = new Line(ax2 - myX, ay2 - myY, x1, y1);
 		left.setStrokeWidth(5.0f);
-		this.right = new Line(ax2, ay2, x2, y2);
+		this.right = new Line(ax2 - myX, ay2 - myY, x2, y2);
 		right.setStrokeWidth(5.0f);
 	}
 

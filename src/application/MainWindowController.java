@@ -745,7 +745,6 @@ public class MainWindowController
 								headArrow.setFill(arrowColor);
 								headArrowList.add(headArrow);
 								headArrow.addToMainPane(mainPane);
-
 								setMiddleLabelText("Second point of line...");
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
