@@ -704,10 +704,20 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										double controlX = (_cFirstPosX + _cSecPosX)/2 + doubleArrowMove;
-										double controlY = (_cFirstPosY + _cSecPosY)/2 + doubleArrowMove;
+										double angle = ha.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										angle = angle % 90;
+										double eAngle = 90.0 - angle;
+										double mvX = ((angle/90.0) * doubleArrowMove) + ((_cFirstPosX + _cSecPosX)/2);
+										double mvY = ((eAngle/90.0) * doubleArrowMove) + ((_cFirstPosY + _cSecPosY)/2);
+										if(angle > 35 && angle < 55)
+										{
+											mvX = ((_cFirstPosX + _cSecPosX)/2) + 50;
+											mvY = ((_cFirstPosY + _cSecPosY)/2) - 50;
+										}
+
+
 										DoubleArrow da = new DoubleArrow();
-										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, controlX, controlY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
 									}
 								}
 
@@ -758,10 +768,19 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										double controlX = (_cFirstPosX + _cSecPosX)/2 + doubleArrowMove;
-										double controlY = (_cFirstPosY + _cSecPosY)/2 + doubleArrowMove;
+										double angle = ha.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										angle = angle % 90;
+										double eAngle = 90.0 - angle;
+										double mvX = ((angle/90.0) * doubleArrowMove) + ((_cFirstPosX + _cSecPosX)/2);
+										double mvY = ((eAngle/90.0) * doubleArrowMove) + ((_cFirstPosY + _cSecPosY)/2);
+										if(angle > 35 && angle < 55)
+										{
+											mvX = ((_cFirstPosX + _cSecPosX)/2) + 50;
+											mvY = ((_cFirstPosY + _cSecPosY)/2) - 50;
+										}
+
 										DoubleArrow da = new DoubleArrow();
-										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, controlX, controlY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
 									}
 								}
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
