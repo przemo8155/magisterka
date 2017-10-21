@@ -34,7 +34,7 @@ public class HeadArrow
 			return calX;
 		}
 
-		if (angle >= 90 && angle <= 180)
+		if (angle > 90 && angle <= 180)
 		{
 			final double sqAngle = 180.0;
 			double finalAngle = sqAngle - angle;
@@ -42,7 +42,7 @@ public class HeadArrow
 			return -30 + calX;
 		}
 
-		if (angle >= 180 && angle <= 270)
+		if (angle > 180 && angle <= 270)
 		{
 			final double sqAngle = 270.0;
 			double finalAngle = angle - 180.0;
@@ -50,7 +50,7 @@ public class HeadArrow
 			return -(30 - calX);
 		}
 
-		if (angle >= 270 && angle <= 360)
+		if (angle > 270 && angle <= 360)
 		{
 			final double sqAngle = 360.0;
 			double finalAngle = sqAngle - angle;

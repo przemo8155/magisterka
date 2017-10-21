@@ -108,6 +108,8 @@ public class MainWindowController
 	double orgSceneX, orgSceneY;
 	double orgTranslateX, orgTranslateY;
 	static int minusWidth = 95;
+
+	static int doubleArrowMove = 100;
 	String selectedToggle = "";
 	String idObj = "";
 	int circleId = 0;
@@ -271,7 +273,6 @@ public class MainWindowController
 	{
 		middleLabel.setDisable(false);
 		middleLabel.setText(text);
-
 
 		FadeTransition ft = new FadeTransition(Duration.millis(1200), middleLabel);
 		ft.setFromValue(1.0);
@@ -698,12 +699,25 @@ public class MainWindowController
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
 
+								for (HeadArrow ha : headArrowList)
+								{
+									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
+											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
+									{
+										double controlX = (_cFirstPosX + _cSecPosX)/2 + doubleArrowMove;
+										double controlY = (_cFirstPosY + _cSecPosY)/2 + doubleArrowMove;
+										DoubleArrow da = new DoubleArrow();
+										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, controlX, controlY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+									}
+								}
+
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 										mainPane);
 								headArrow.setFill(arrowColor);
 								headArrowList.add(headArrow);
 								headArrow.addToMainPane(mainPane);
 								setMiddleLabelText("Second point of line...");
+
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
 								_cSecPosX = 0;
@@ -739,13 +753,24 @@ public class MainWindowController
 							{
 								_cSecPosX = myRectangle.getX() + 20;
 								_cSecPosY = myRectangle.getY() + 20;
-
+								for (HeadArrow ha : headArrowList)
+								{
+									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
+											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
+									{
+										double controlX = (_cFirstPosX + _cSecPosX)/2 + doubleArrowMove;
+										double controlY = (_cFirstPosY + _cSecPosY)/2 + doubleArrowMove;
+										DoubleArrow da = new DoubleArrow();
+										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, controlX, controlY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+									}
+								}
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 										mainPane);
 								headArrow.setFill(arrowColor);
 								headArrowList.add(headArrow);
 								headArrow.addToMainPane(mainPane);
 								setMiddleLabelText("Second point of line...");
+
 								_cFirstPosX = 0;
 								_cFirstPosY = 0;
 								_cSecPosX = 0;
