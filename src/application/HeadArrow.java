@@ -1,3 +1,4 @@
+
 package application;
 
 import javafx.collections.ObservableList;
@@ -7,6 +8,7 @@ import javafx.scene.shape.Line;
 
 public class HeadArrow
 {
+
 	public double x1, y1, x2, y2;
 
 	public double startPointX, startPointY, endPointX, endPointY;
@@ -24,80 +26,81 @@ public class HeadArrow
 	public double calculateX(double angle)
 	{
 		final int ray = 30;
-		if(angle >= 0 && angle <= 90)
+		if (angle >= 0 && angle <= 90)
 		{
 			final double sqAngle = 90.0;
 			double finalAngle = sqAngle - angle;
-			double calX = finalAngle/sqAngle * ray;
+			double calX = finalAngle / sqAngle * ray;
 			return calX;
 		}
 
-		if(angle > 90 && angle <= 180)
+		if (angle >= 90 && angle <= 180)
 		{
 			final double sqAngle = 180.0;
 			double finalAngle = sqAngle - angle;
-			double calX = finalAngle/90.0 * ray;
-			return -30+calX;
+			double calX = finalAngle / 90.0 * ray;
+			return -30 + calX;
 		}
 
-		if(angle > 180 && angle <= 270)
+		if (angle >= 180 && angle <= 270)
 		{
 			final double sqAngle = 270.0;
 			double finalAngle = angle - 180.0;
-			double calX = finalAngle/90.0 * ray;
-			return -(30-calX);
+			double calX = finalAngle / 90.0 * ray;
+			return -(30 - calX);
 		}
 
-		if(angle > 270 && angle <= 360)
+		if (angle >= 270 && angle <= 360)
 		{
 			final double sqAngle = 360.0;
 			double finalAngle = sqAngle - angle;
-			double calX = finalAngle/90.0 * ray;
-			return 30-calX;
+			double calX = finalAngle / 90.0 * ray;
+			return 30 - calX;
 		}
 
-		else return 0;
+		else
+			return 0;
 
 	}
 
 	public double calculateY(double angle)
 	{
 		final int ray = 30;
-		if(angle >= 0 && angle <= 90)
+		if (angle >= 0 && angle <= 90)
 		{
 			final double sqAngle = 90.0;
 			double finalAngle = sqAngle - angle;
-			double calY = finalAngle/sqAngle * ray;
-			return 30-calY;
+			double calY = finalAngle / sqAngle * ray;
+			return 30 - calY;
 		}
 
-		if(angle > 90 && angle <= 180)
+		if (angle > 90 && angle <= 180)
 		{
 			final double sqAngle = 180.0;
 			double finalAngle = sqAngle - angle;
-			double calY = finalAngle/90.0 * ray;
+			double calY = finalAngle / 90.0 * ray;
 			return calY;
 		}
 
-		if(angle > 180 && angle <= 270)
+		if (angle > 180 && angle <= 270)
 		{
 			final double sqAngle = 270.0;
 			double finalAngle = angle - 180.0;
-			double calY = finalAngle/90.0 * ray;
+			double calY = finalAngle / 90.0 * ray;
 			return -calY;
 		}
 
-		if(angle > 270 && angle <= 360)
+		if (angle > 270 && angle <= 360)
 		{
 			final double sqAngle = 360.0;
 			double finalAngle = sqAngle - angle;
-			double calY = finalAngle/90.0 * ray;
+			double calY = finalAngle / 90.0 * ray;
 			return -calY;
 		}
 
-		else return 0;
+		else
+			return 0;
 	}
-
 
 	public double returnAngle(double ax1, double ay1, double ax2, double ay2)
 	{
@@ -108,28 +111,27 @@ public class HeadArrow
 
 		int cwiartka = 0;
 
-
-		if(ax1 < ax2 && ay1 > ay2)
+		if (ax1 < ax2 && ay1 > ay2)
 		{
 			cwiartka = 1;
 		}
 
-		if(ax1 < ax2 && ay1 < ay2)
+		if (ax1 < ax2 && ay1 < ay2)
 		{
 			cwiartka = 2;
 		}
 
-		if(ax1 > ax2 && ay1 < ay2)
+		if (ax1 > ax2 && ay1 < ay2)
 		{
 			cwiartka = 3;
 		}
 
-		if(ax1 > ax2 && ay1 > ay2)
+		if (ax1 > ax2 && ay1 > ay2)
 		{
 			cwiartka = 4;
 		}
 
-		switch(cwiartka)
+		switch (cwiartka)
 		{
 			case 1:
 				t = absX / absY;
@@ -155,7 +157,6 @@ public class HeadArrow
 
 		return angle;
 	}
-
 
 	public HeadArrow(double ax1, double ay1, double ax2, double ay2, Pane gc)
 	{
@@ -240,7 +241,10 @@ public class HeadArrow
 	{
 		gc.getChildren().remove(main);
 		this.endPointX = val;
-		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		double angle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(angle);
+		double calY = calculateY(angle);
+		this.main = new Line(startPointX + calX, startPointY + calY, endPointX - calX, endPointY - calY);
 		main.setStrokeWidth(5.0f);
 		gc.getChildren().add(main);
 	}
@@ -249,11 +253,13 @@ public class HeadArrow
 	{
 		gc.getChildren().remove(main);
 		this.endPointY = val;
-		this.main = new Line(startPointX, startPointY, endPointX, endPointY);
+		double angle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(angle);
+		double calY = calculateY(angle);
+		this.main = new Line(startPointX + calX, startPointY + calY, endPointX - calX, endPointY - calY);
 		main.setStrokeWidth(5.0f);
 		gc.getChildren().add(main);
 	}
-
 
 	public final double getLeftX()
 	{
@@ -289,7 +295,10 @@ public class HeadArrow
 		double x1 = Math.cos(angle + arrowAngle) * arrowLength + endPointX;
 		double y1 = Math.sin(angle + arrowAngle) * arrowLength + endPointY;
 
-		this.left = new Line(endPointX, endPointY, x1, y1);
+		double myAngle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(myAngle);
+		double calY = calculateY(myAngle);
+		this.left = new Line(endPointX + calX, endPointY + calY, x1 + calX, y1 + calY);
 		left.setStrokeWidth(5.0f);
 		gc.getChildren().add(left);
 	}
@@ -309,7 +318,10 @@ public class HeadArrow
 		double x2 = Math.cos(angle - arrowAngle) * arrowLength + endPointX;
 		double y2 = Math.sin(angle - arrowAngle) * arrowLength + endPointY;
 
-		this.right = new Line(endPointX, endPointY, x2, y2);
+		double myAngle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(myAngle);
+		double calY = calculateY(myAngle);
+		this.right = new Line(endPointX + calX, endPointY + calY, x2 + calX, y2 + calY);
 		right.setStrokeWidth(5.0f);
 		gc.getChildren().add(right);
 	}
@@ -325,19 +337,24 @@ public class HeadArrow
 		double ex = this.endPointX;
 		double sy = this.startPointY;
 		double ey = this.endPointY;
-		 double factor = arrowLength / Math.hypot(sx-ex, sy-ey);
-         double factorO = arrowWidth / Math.hypot(sx-ex, sy-ey);
+		double factor = arrowLength / Math.hypot(sx - ex, sy - ey);
+		double factorO = arrowWidth / Math.hypot(sx - ex, sy - ey);
 
-         // part in direction of main line
-         double dx = (sx - ex) * factor;
-         double dy = (sy - ey) * factor;
+		// part in direction of main line
+		double dx = (sx - ex) * factor;
+		double dy = (sy - ey) * factor;
 
-         // part ortogonal to main line
-         double ox = (sx - ex) * factorO;
-         double oy = (sy - ey) * factorO;
-         this.right = new Line(endPointX, endPointY, ex + dx + oy, ey + dy - ox );
-         right.setStrokeWidth(5.0f);
-         gc.getChildren().add(right);
+		// part ortogonal to main line
+		double ox = (sx - ex) * factorO;
+		double oy = (sy - ey) * factorO;
+
+		double myAngle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(myAngle);
+		double calY = calculateY(myAngle);
+
+		this.right = new Line(endPointX - calX, endPointY - calY, ex + dx + oy - calX, ey + dy - ox - calY);
+		right.setStrokeWidth(5.0f);
+		gc.getChildren().add(right);
 	}
 
 	public final void setLeft(double valX, double valY, Pane gc)
@@ -351,19 +368,24 @@ public class HeadArrow
 		double ex = this.endPointX;
 		double sy = this.startPointY;
 		double ey = this.endPointY;
-		 double factor = arrowLength / Math.hypot(sx-ex, sy-ey);
-         double factorO = arrowWidth / Math.hypot(sx-ex, sy-ey);
+		double factor = arrowLength / Math.hypot(sx - ex, sy - ey);
+		double factorO = arrowWidth / Math.hypot(sx - ex, sy - ey);
 
-         // part in direction of main line
-         double dx = (sx - ex) * factor;
-         double dy = (sy - ey) * factor;
+		// part in direction of main line
+		double dx = (sx - ex) * factor;
+		double dy = (sy - ey) * factor;
 
-         // part ortogonal to main line
-         double ox = (sx - ex) * factorO;
-         double oy = (sy - ey) * factorO;
-         this.left = new Line(endPointX, endPointY, ex + dx - oy, ey + dy + ox);
-         left.setStrokeWidth(5.0f);
-         gc.getChildren().add(left);
+		// part ortogonal to main line
+		double ox = (sx - ex) * factorO;
+		double oy = (sy - ey) * factorO;
+
+		double myAngle = returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = calculateX(myAngle);
+		double calY = calculateY(myAngle);
+
+		this.left = new Line(endPointX - calX, endPointY - calY, ex + dx - oy - calX, ey + dy + ox - calY);
+		left.setStrokeWidth(5.0f);
+		gc.getChildren().add(left);
 	}
 
 	public void removeFromMainPane(Pane gc)
@@ -382,7 +404,7 @@ public class HeadArrow
 
 	public void setFill(ObservableList<HeadArrow> list, String val)
 	{
-		for(HeadArrow ha : list)
+		for (HeadArrow ha : list)
 		{
 			ha.left.setStroke(Paint.valueOf(val));
 			ha.main.setStroke(Paint.valueOf(val));
@@ -393,12 +415,10 @@ public class HeadArrow
 	public void setFill(String val)
 	{
 
-			this.left.setStroke(Paint.valueOf(val));
-			this.right.setStroke(Paint.valueOf(val));
-			this.main.setStroke(Paint.valueOf(val));
+		this.left.setStroke(Paint.valueOf(val));
+		this.right.setStroke(Paint.valueOf(val));
+		this.main.setStroke(Paint.valueOf(val));
 
 	}
-
-
 
 }
