@@ -754,6 +754,8 @@ public class MainWindowController
 					double x = event.getSceneX();
 					double y = event.getSceneY();
 
+					double tempFirstX = 0, tempFirstY = 0, tempSecX = 0, tempSecY = 0;
+
 					for (Circle myCircle : circleList)
 					{
 						if ((x > myCircle.getCenterX() - circleRay) && (x < myCircle.getCenterX() + circleRay)
@@ -783,49 +785,51 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										HeadArrow tempHa = new HeadArrow();
 
-										double oldAngle = tempHa.returnAngle(ha.getEndX(), ha.getEndY(), ha.getStartX(),
-												ha.getStartY());
-										oldAngle = oldAngle % 90;
-										double oldEAngle = 90.0 - oldAngle;
-										double oldMvX = ((ha.getEndX() + ha.getStartX()) / 2)
-												- ((oldAngle / 90.0) * doubleArrowMove);
-										double oldMvY = ((ha.getEndY() + ha.getStartY()) / 2)
-												- ((oldEAngle / 90.0) * doubleArrowMove);
+										_cFirstPosX += 20;
+										_cFirstPosY += 20;
+										_cSecPosX += 20;
+										_cSecPosY += 20;
 
-										DoubleArrow da1 = new DoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY, ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
-										doubleArrowList.add(da1);
-
-										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
-												_cSecPosY);
-										angle = angle % 90;
-										double eAngle = 90.0 - angle;
-										double mvX = ((angle / 90.0) * doubleArrowMove)
-												+ ((_cFirstPosX + _cSecPosX) / 2);
-										double mvY = ((eAngle / 90.0) * doubleArrowMove)
-												+ ((_cFirstPosY + _cSecPosY) / 2);
-										if (angle > 35 && angle < 55)
-										{
-											mvX = ((_cFirstPosX + _cSecPosX) / 2) + 50;
-											mvY = ((_cFirstPosY + _cSecPosY) / 2) - 50;
-										}
-
-										DoubleArrow da2 = new DoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
-										doubleArrowList.add(da2);
+										tempFirstX = ha.getStartX() - 10;
+										tempFirstY = ha.getStartY() - 10;
+										tempSecX = ha.getEndX() - 10;
+										tempSecY = ha.getEndY() - 10;
 
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
+
+
 									}
 								}
 
 								if (_index != -1)
 								{
+									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+											mainPane);
+									headArrow.setFill(arrowColor);
+									headArrowList.add(headArrow);
+									headArrow.addToMainPane(mainPane);
+
+									HeadArrow headArrow2 = new HeadArrow(tempFirstX, tempFirstY, tempSecX, tempSecY,
+											mainPane);
+									headArrow2.setFill(arrowColor);
+									headArrowList.add(headArrow2);
+									headArrow2.addToMainPane(mainPane);
+
+									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
 									_cSecPosX = 0;
 									_cSecPosY = 0;
+
+
+									tempFirstX = 0;
+									tempFirstY = 0;
+									tempSecX = 0;
+									tempSecY = 0;
+
 									secondObject = "";
 									break;
 
@@ -838,12 +842,17 @@ public class MainWindowController
 									headArrow.setFill(arrowColor);
 									headArrowList.add(headArrow);
 									headArrow.addToMainPane(mainPane);
+
+
+
 									setMiddleLabelText("Second point of line...");
 
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
 									_cSecPosX = 0;
 									_cSecPosY = 0;
+
+
 									secondObject = "";
 									break;
 								}
@@ -885,48 +894,50 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										HeadArrow tempHa = new HeadArrow();
 
-										double oldAngle = tempHa.returnAngle(ha.getEndX(), ha.getEndY(), ha.getStartX(),
-												ha.getStartY());
-										oldAngle = oldAngle % 90;
-										double oldEAngle = 90.0 - oldAngle;
-										double oldMvX = ((ha.getEndX() + ha.getStartX()) / 2)
-												- ((oldAngle / 90.0) * doubleArrowMove);
-										double oldMvY = ((ha.getEndY() + ha.getStartY()) / 2)
-												- ((oldEAngle / 90.0) * doubleArrowMove);
+										_cFirstPosX += 10;
+										_cFirstPosY += 10;
+										_cSecPosX += 10;
+										_cSecPosY += 10;
 
-										DoubleArrow da1 = new DoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY, ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
-										doubleArrowList.add(da1);
-
-										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
-												_cSecPosY);
-										angle = angle % 90;
-										double eAngle = 90.0 - angle;
-										double mvX = ((angle / 90.0) * doubleArrowMove)
-												+ ((_cFirstPosX + _cSecPosX) / 2);
-										double mvY = ((eAngle / 90.0) * doubleArrowMove)
-												+ ((_cFirstPosY + _cSecPosY) / 2);
-										if (angle > 35 && angle < 55)
-										{
-											mvX = ((_cFirstPosX + _cSecPosX) / 2) + 50;
-											mvY = ((_cFirstPosY + _cSecPosY) / 2) - 50;
-										}
-
-										DoubleArrow da2 = new DoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
-										doubleArrowList.add(da2);
+										tempFirstX = ha.getStartX() - 10;
+										tempFirstY = ha.getStartY() - 10;
+										tempSecX = ha.getEndX() - 10;
+										tempSecY = ha.getEndY() - 10;
 
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
+
+
 									}
 								}
 								if (_index != -1)
 								{
+									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+											mainPane);
+									headArrow.setFill(arrowColor);
+									headArrowList.add(headArrow);
+									headArrow.addToMainPane(mainPane);
+
+
+									HeadArrow headArrow2 = new HeadArrow(tempFirstX, tempFirstY, tempSecX, tempSecY,
+											mainPane);
+									headArrow2.setFill(arrowColor);
+									headArrowList.add(headArrow2);
+									headArrow2.addToMainPane(mainPane);
+
+
+									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
 									_cSecPosX = 0;
 									_cSecPosY = 0;
+
+									tempFirstX = 0;
+									tempFirstY = 0;
+									tempSecX = 0;
+									tempSecY = 0;
 									secondObject = "";
 									break;
 
