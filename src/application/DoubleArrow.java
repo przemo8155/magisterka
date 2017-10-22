@@ -8,6 +8,10 @@ import javafx.scene.shape.QuadCurveTo;
 
 public class DoubleArrow
 {
+
+	Path path = new Path();
+	MoveTo moveTo = new MoveTo();
+	QuadCurveTo quadTo = new QuadCurveTo();
 	HeadArrow headArrow = new HeadArrow();
 
 	public void createDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc, String paint)
@@ -21,59 +25,57 @@ public class DoubleArrow
 		double angle2 = headArrow.returnAngle(contX, contY, secX, secY);
 		double cutX2 = headArrow.calculateX(angle2);
 		double cutY2 = headArrow.calculateY(angle2);
-		Path path = new Path();
-		MoveTo moveTo = new MoveTo();
-		QuadCurveTo quadTo = new QuadCurveTo();
+
 
 		if(mainAngle >= 0 && mainAngle <= 90)
 		{
-			moveTo.setX(firstX + cutX1);
-			moveTo.setY(firstY + cutY1);
-			quadTo.setControlX(contX);
-			quadTo.setControlY(contY);
-			quadTo.setX(secX - cutX2);
-			quadTo.setY(secY - cutY2);
+			this.moveTo.setX(firstX + cutX1);
+			this.moveTo.setY(firstY + cutY1);
+			this.quadTo.setControlX(contX);
+			this.quadTo.setControlY(contY);
+			this.quadTo.setX(secX - cutX2);
+			this.quadTo.setY(secY - cutY2);
 		}
 
 		if(mainAngle > 90 && mainAngle <= 180)
 		{
-			moveTo.setX(firstX - cutX1);
-			moveTo.setY(firstY + cutY1);
-			quadTo.setControlX(contX);
-			quadTo.setControlY(contY);
-			quadTo.setX(secX - cutX2);
-			quadTo.setY(secY - cutY2);
+			this.moveTo.setX(firstX - cutX1);
+			this.moveTo.setY(firstY + cutY1);
+			this.quadTo.setControlX(contX);
+			this.quadTo.setControlY(contY);
+			this.quadTo.setX(secX - cutX2);
+			this.quadTo.setY(secY - cutY2);
 		}
 
 		if(mainAngle > 180 && mainAngle <= 270)
 		{
-			moveTo.setX(firstX - cutX1);
-			moveTo.setY(firstY + cutY1);
-			quadTo.setControlX(contX);
-			quadTo.setControlY(contY);
-			quadTo.setX(secX - cutX2);
-			quadTo.setY(secY - cutY2);
+			this.moveTo.setX(firstX - cutX1);
+			this.moveTo.setY(firstY + cutY1);
+			this.quadTo.setControlX(contX);
+			this.quadTo.setControlY(contY);
+			this.quadTo.setX(secX - cutX2);
+			this.quadTo.setY(secY - cutY2);
 		}
 
 		if(mainAngle > 270 && mainAngle <= 360)
 		{
-			moveTo.setX(firstX + cutX1);
-			moveTo.setY(firstY + cutY1);
-			quadTo.setControlX(contX);
-			quadTo.setControlY(contY);
-			quadTo.setX(secX - cutX2);
-			quadTo.setY(secY - cutY2);
+			this.moveTo.setX(firstX + cutX1);
+			this.moveTo.setY(firstY + cutY1);
+			this.quadTo.setControlX(contX);
+			this.quadTo.setControlY(contY);
+			this.quadTo.setX(secX - cutX2);
+			this.quadTo.setY(secY - cutY2);
 		}
 
 
 
-		path.getElements().add(moveTo);
-		path.getElements().add(quadTo);
+		this.path.getElements().add(this.moveTo);
+		this.path.getElements().add(this.quadTo);
 
-		path.setStrokeWidth(5.0f);
-		path.setStroke(Paint.valueOf(paint));
+		this.path.setStrokeWidth(5.0f);
+		this.path.setStroke(Paint.valueOf(paint));
 
-		gc.getChildren().add(path);
+		gc.getChildren().add(this.path);
 	}
 
 	public double moveX(double angle)
