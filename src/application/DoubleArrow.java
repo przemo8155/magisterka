@@ -14,7 +14,9 @@ public class DoubleArrow
 	QuadCurveTo quadTo = new QuadCurveTo();
 	HeadArrow headArrow = new HeadArrow();
 
-	public void createDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc, String paint)
+	public double startPointX, startPointY, endPointX, endPointY, controlX, controlY;
+
+	public DoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc, String paint)
 	{
 		double mainAngle = headArrow.returnAngle(firstX, firstY, secX, secY);
 
@@ -25,6 +27,13 @@ public class DoubleArrow
 		double angle2 = headArrow.returnAngle(contX, contY, secX, secY);
 		double cutX2 = headArrow.calculateX(angle2);
 		double cutY2 = headArrow.calculateY(angle2);
+
+		this.startPointX = firstX;
+		this.startPointY = firstY;
+		this.endPointX = secX;
+		this.endPointY = secY;
+		this.controlX = contX;
+		this.controlY = contY;
 
 
 		if(mainAngle >= 0 && mainAngle <= 90)
@@ -78,9 +87,5 @@ public class DoubleArrow
 		gc.getChildren().add(this.path);
 	}
 
-	public double moveX(double angle)
-	{
-		double mX = 0;
-		return mX;
-	}
+
 }

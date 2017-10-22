@@ -718,9 +718,8 @@ public class MainWindowController
 										double oldMvY = ((ha.getEndY() + ha.getStartY()) / 2)
 												- ((oldEAngle / 90.0) * doubleArrowMove);
 
-										DoubleArrow da1 = new DoubleArrow();
-										da1.createDoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY,
-												ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
+										DoubleArrow da1 = new DoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY, ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
+
 
 										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
 												_cSecPosY);
@@ -736,9 +735,7 @@ public class MainWindowController
 											mvY = ((_cFirstPosY + _cSecPosY) / 2) - 50;
 										}
 
-										DoubleArrow da2 = new DoubleArrow();
-										da2.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY,
-												mainPane, arrowColor);
+										DoubleArrow da2 = new DoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
 
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
@@ -822,9 +819,7 @@ public class MainWindowController
 										double oldMvY = ((ha.getEndY() + ha.getStartY()) / 2)
 												- ((oldEAngle / 90.0) * doubleArrowMove);
 
-										DoubleArrow da1 = new DoubleArrow();
-										da1.createDoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY,
-												ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
+										DoubleArrow da1 = new DoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY, ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
 
 										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
 												_cSecPosY);
@@ -840,9 +835,8 @@ public class MainWindowController
 											mvY = ((_cFirstPosY + _cSecPosY) / 2) - 50;
 										}
 
-										DoubleArrow da2 = new DoubleArrow();
-										da2.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY,
-												mainPane, arrowColor);
+										DoubleArrow da2 = new DoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+
 
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
