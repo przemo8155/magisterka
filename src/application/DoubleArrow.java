@@ -113,6 +113,7 @@ public class DoubleArrow
 	{
 		gc.getChildren().remove(this.path);
 		this.startPointX = val;
+		this.path = new Path();
 		double mainAngle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 
 
@@ -186,8 +187,87 @@ public class DoubleArrow
 		this.path.getElements().add(this.quadTo);
 
 		this.path.setStrokeWidth(5.0f);
-
 		gc.getChildren().add(this.path);
+
+
+
+
+/*
+		this.path = new Path();
+		double mainAngle2 = headArrow.returnAngle(endPointX, endPointY, startPointX, startPointY);
+		mainAngle2 = mainAngle % 90;
+		double eAngle2 = 90.0 - mainAngle;
+
+		double mvX2 = ((mainAngle2 / 90.0) * doubleArrowMove)
+				+ ((startPointX + endPointX) / 2);
+
+		double mvY2 = ((eAngle2 / 90.0) * doubleArrowMove)
+				+ ((startPointY + endPointY) / 2);
+
+		if (mainAngle2 > 35 && mainAngle2 < 55)
+		{
+			mvX = ((startPointX + endPointX) / 2) + 50;
+			mvY = ((startPointY + endPointY) / 2) - 50;
+		}
+
+		double angle3 = headArrow.returnAngle(endPointX, endPointY, mvX2, mvY2);
+		double angle4 = headArrow.returnAngle(mvX2, mvY2, startPointX, startPointY);
+
+		double cutX3 = headArrow.calculateX(angle3);
+		double cutY3 = headArrow.calculateY(angle3);
+
+		double cutX4 = headArrow.calculateX(angle4);
+		double cutY4 = headArrow.calculateY(angle4);
+
+		if(mainAngle2 >= 0 && mainAngle2 <= 90)
+		{
+			this.moveTo.setX(endPointX + cutX3);
+			this.moveTo.setY(endPointY + cutY3);
+			this.quadTo.setControlX(mvX2);
+			this.quadTo.setControlY(mvY2);
+			this.quadTo.setX(startPointX - cutX4);
+			this.quadTo.setY(startPointY - cutY4);
+		}
+
+		if(mainAngle2 > 90 && mainAngle2 <= 180)
+		{
+			this.moveTo.setX(endPointX - cutX3);
+			this.moveTo.setY(endPointY + cutY3);
+			this.quadTo.setControlX(mvX2);
+			this.quadTo.setControlY(mvY2);
+			this.quadTo.setX(startPointX - cutX4);
+			this.quadTo.setY(startPointY - cutY4);
+		}
+
+		if(mainAngle > 180 && mainAngle <= 270)
+		{
+			this.moveTo.setX(endPointX - cutX3);
+			this.moveTo.setY(endPointY + cutY3);
+			this.quadTo.setControlX(mvX2);
+			this.quadTo.setControlY(mvY2);
+			this.quadTo.setX(startPointX - cutX4);
+			this.quadTo.setY(startPointY - cutY4);
+		}
+
+		if(mainAngle > 270 && mainAngle <= 360)
+		{
+			this.moveTo.setX(endPointX + cutX3);
+			this.moveTo.setY(endPointY + cutY3);
+			this.quadTo.setControlX(mvX2);
+			this.quadTo.setControlY(mvY2);
+			this.quadTo.setX(startPointX - cutX4);
+			this.quadTo.setY(startPointY - cutY4);
+		}
+
+
+
+		this.path.getElements().add(this.moveTo);
+		this.path.getElements().add(this.quadTo);
+
+		this.path.setStrokeWidth(5.0f);
+
+		gc.getChildren().add(this.path);*/
+
 	}
 
 
@@ -195,6 +275,7 @@ public class DoubleArrow
 	{
 		gc.getChildren().remove(this.path);
 		this.startPointY = val;
+		this.path = new Path();
 		double mainAngle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 
 
@@ -270,6 +351,8 @@ public class DoubleArrow
 		this.path.setStrokeWidth(5.0f);
 
 		gc.getChildren().add(this.path);
+
+
 	}
 
 
@@ -277,6 +360,7 @@ public class DoubleArrow
 	{
 		gc.getChildren().remove(this.path);
 		this.endPointX = val;
+		this.path = new Path();
 		double mainAngle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 
 
@@ -352,12 +436,15 @@ public class DoubleArrow
 		this.path.setStrokeWidth(5.0f);
 
 		gc.getChildren().add(this.path);
+
+
 	}
 
 	public final void setEndY(double val, Pane gc)
 	{
 		gc.getChildren().remove(this.path);
 		this.endPointY = val;
+		this.path = new Path();
 		double mainAngle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 
 
@@ -433,6 +520,8 @@ public class DoubleArrow
 		this.path.setStrokeWidth(5.0f);
 
 		gc.getChildren().add(this.path);
+
+
 	}
 
 
