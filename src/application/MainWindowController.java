@@ -748,22 +748,31 @@ public class MainWindowController
 								if (_index != -1)
 								{
 									headArrowList.remove(_index);
+									_cFirstPosX = 0;
+									_cFirstPosY = 0;
+									_cSecPosX = 0;
+									_cSecPosY = 0;
+									secondObject = "";
+									break;
 
 								}
 
-								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
-										mainPane);
-								headArrow.setFill(arrowColor);
-								headArrowList.add(headArrow);
-								headArrow.addToMainPane(mainPane);
-								setMiddleLabelText("Second point of line...");
+								else
+								{
+									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+											mainPane);
+									headArrow.setFill(arrowColor);
+									headArrowList.add(headArrow);
+									headArrow.addToMainPane(mainPane);
+									setMiddleLabelText("Second point of line...");
 
-								_cFirstPosX = 0;
-								_cFirstPosY = 0;
-								_cSecPosX = 0;
-								_cSecPosY = 0;
-								secondObject = "";
-								break;
+									_cFirstPosX = 0;
+									_cFirstPosY = 0;
+									_cSecPosX = 0;
+									_cSecPosY = 0;
+									secondObject = "";
+									break;
+								}
 							}
 
 							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "rectangle")
@@ -842,21 +851,29 @@ public class MainWindowController
 								if (_index != -1)
 								{
 									headArrowList.remove(_index);
+									_cFirstPosX = 0;
+									_cFirstPosY = 0;
+									_cSecPosX = 0;
+									_cSecPosY = 0;
+									secondObject = "";
+									break;
 
+								} else
+								{
+									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+											mainPane);
+									headArrow.setFill(arrowColor);
+									headArrowList.add(headArrow);
+									headArrow.addToMainPane(mainPane);
+									setMiddleLabelText("Second point of line...");
+
+									_cFirstPosX = 0;
+									_cFirstPosY = 0;
+									_cSecPosX = 0;
+									_cSecPosY = 0;
+									secondObject = "";
+									break;
 								}
-								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
-										mainPane);
-								headArrow.setFill(arrowColor);
-								headArrowList.add(headArrow);
-								headArrow.addToMainPane(mainPane);
-								setMiddleLabelText("Second point of line...");
-
-								_cFirstPosX = 0;
-								_cFirstPosY = 0;
-								_cSecPosX = 0;
-								_cSecPosY = 0;
-								secondObject = "";
-								break;
 							}
 							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "circle")
 							{
