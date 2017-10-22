@@ -696,6 +696,7 @@ public class MainWindowController
 
 							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "circle")
 							{
+
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
 
@@ -704,20 +705,43 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										double angle = ha.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										HeadArrow tempHa = new HeadArrow();
+
+										double oldAngle = tempHa.returnAngle(ha.getEndX(), ha.getEndY(), ha.getStartX(),
+												ha.getStartY());
+										oldAngle = oldAngle % 90;
+										double oldEAngle = 90.0 - oldAngle;
+										double oldMvX = ((ha.getEndX() + ha.getStartX()) / 2)
+												- ((oldAngle / 90.0) * doubleArrowMove);
+										double oldMvY = ((ha.getEndY() + ha.getStartY()) / 2)
+												- ((oldEAngle / 90.0) * doubleArrowMove);
+
+										DoubleArrow da1 = new DoubleArrow();
+										da1.createDoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY,
+												ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
+
+
+
+										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
+												_cSecPosY);
 										angle = angle % 90;
 										double eAngle = 90.0 - angle;
-										double mvX = ((angle/90.0) * doubleArrowMove) + ((_cFirstPosX + _cSecPosX)/2);
-										double mvY = ((eAngle/90.0) * doubleArrowMove) + ((_cFirstPosY + _cSecPosY)/2);
-										if(angle > 35 && angle < 55)
+										double mvX = ((angle / 90.0) * doubleArrowMove)
+												+ ((_cFirstPosX + _cSecPosX) / 2);
+										double mvY = ((eAngle / 90.0) * doubleArrowMove)
+												+ ((_cFirstPosY + _cSecPosY) / 2);
+										if (angle > 35 && angle < 55)
 										{
-											mvX = ((_cFirstPosX + _cSecPosX)/2) + 50;
-											mvY = ((_cFirstPosY + _cSecPosY)/2) - 50;
+											mvX = ((_cFirstPosX + _cSecPosX) / 2) + 50;
+											mvY = ((_cFirstPosY + _cSecPosY) / 2) - 50;
 										}
 
+										DoubleArrow da2 = new DoubleArrow();
+										da2.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY,
+												mainPane, arrowColor);
 
-										DoubleArrow da = new DoubleArrow();
-										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+										//ha.removeFromMainPane(mainPane);
+										//headArrowList.remove(ha);
 									}
 								}
 
@@ -761,6 +785,7 @@ public class MainWindowController
 
 							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "rectangle")
 							{
+
 								_cSecPosX = myRectangle.getX() + 20;
 								_cSecPosY = myRectangle.getY() + 20;
 								for (HeadArrow ha : headArrowList)
@@ -768,19 +793,42 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										double angle = ha.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										HeadArrow tempHa = new HeadArrow();
+
+										double oldAngle = tempHa.returnAngle(ha.getEndX(), ha.getEndY(), ha.getStartX(),
+												ha.getStartY());
+										oldAngle = oldAngle % 90;
+										double oldEAngle = 90.0 - oldAngle;
+										double oldMvX = ((ha.getEndX() + ha.getStartX()) / 2)
+												- ((oldAngle / 90.0) * doubleArrowMove);
+										double oldMvY = ((ha.getEndY() + ha.getStartY()) / 2)
+												- ((oldEAngle / 90.0) * doubleArrowMove);
+
+										DoubleArrow da1 = new DoubleArrow();
+										da1.createDoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY,
+												ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
+
+
+										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
+												_cSecPosY);
 										angle = angle % 90;
 										double eAngle = 90.0 - angle;
-										double mvX = ((angle/90.0) * doubleArrowMove) + ((_cFirstPosX + _cSecPosX)/2);
-										double mvY = ((eAngle/90.0) * doubleArrowMove) + ((_cFirstPosY + _cSecPosY)/2);
-										if(angle > 35 && angle < 55)
+										double mvX = ((angle / 90.0) * doubleArrowMove)
+												+ ((_cFirstPosX + _cSecPosX) / 2);
+										double mvY = ((eAngle / 90.0) * doubleArrowMove)
+												+ ((_cFirstPosY + _cSecPosY) / 2);
+										if (angle > 35 && angle < 55)
 										{
-											mvX = ((_cFirstPosX + _cSecPosX)/2) + 50;
-											mvY = ((_cFirstPosY + _cSecPosY)/2) - 50;
+											mvX = ((_cFirstPosX + _cSecPosX) / 2) + 50;
+											mvY = ((_cFirstPosY + _cSecPosY) / 2) - 50;
 										}
 
-										DoubleArrow da = new DoubleArrow();
-										da.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+										DoubleArrow da2 = new DoubleArrow();
+										da2.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY,
+												mainPane, arrowColor);
+
+										//ha.removeFromMainPane(mainPane);
+										//headArrowList.remove(ha);
 									}
 								}
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,

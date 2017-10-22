@@ -35,11 +35,40 @@ public class DoubleArrow
 			quadTo.setY(secY - cutY2);
 		}
 
-		else
+		if(mainAngle > 90 && mainAngle <= 180)
 		{
-			Utilities.infoBox("inny kat");
+			moveTo.setX(firstX - cutX1);
+			moveTo.setY(firstY + cutY1);
+			quadTo.setControlX(contX);
+			quadTo.setControlY(contY);
+			quadTo.setX(secX - cutX2);
+			quadTo.setY(secY - cutY2);
 		}
 
+		if(mainAngle > 180 && mainAngle <= 270)
+		{
+			moveTo.setX(firstX - cutX1);
+			moveTo.setY(firstY + cutY1);
+			quadTo.setControlX(contX);
+			quadTo.setControlY(contY);
+			quadTo.setX(secX - cutX2);
+			quadTo.setY(secY - cutY2);
+		}
+
+		if(mainAngle > 270 && mainAngle < 360)
+		{
+			moveTo.setX(firstX + cutX1);
+			moveTo.setY(firstY + cutY1);
+			quadTo.setControlX(contX);
+			quadTo.setControlY(contY);
+			quadTo.setX(secX - cutX2);
+			quadTo.setY(secY - cutY2);
+		}
+
+		else
+		{
+			System.err.println("DoubleArrow else error - bad angle");
+		}
 
 
 		path.getElements().add(moveTo);
