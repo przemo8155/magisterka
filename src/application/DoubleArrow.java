@@ -87,5 +87,25 @@ public class DoubleArrow
 		gc.getChildren().add(this.path);
 	}
 
+	public final double getStartX()
+	{
+		return this.startPointX;
+	}
+
+	public final double getStartY()
+	{
+		return this.startPointY;
+	}
+
+	public final double getEndX()
+	{
+		return this.endPointX;
+	}
+
+	public final double getEndY()
+	{
+		return this.endPointY;
+	}
+
 
 }

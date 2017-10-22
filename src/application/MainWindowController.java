@@ -195,6 +195,8 @@ public class MainWindowController
 	ObservableList<HeadArrow> endHeadArrowList = FXCollections.observableArrayList();
 	ObservableList<HeadArrow> moveHeadArrowList = FXCollections.observableArrayList();
 
+	ObservableList<DoubleArrow> doubleArrowList = FXCollections.observableArrayList();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -719,7 +721,7 @@ public class MainWindowController
 												- ((oldEAngle / 90.0) * doubleArrowMove);
 
 										DoubleArrow da1 = new DoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY, ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
-
+										doubleArrowList.add(da1);
 
 										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
 												_cSecPosY);
@@ -736,6 +738,7 @@ public class MainWindowController
 										}
 
 										DoubleArrow da2 = new DoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
+										doubleArrowList.add(da2);
 
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
@@ -820,6 +823,7 @@ public class MainWindowController
 												- ((oldEAngle / 90.0) * doubleArrowMove);
 
 										DoubleArrow da1 = new DoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY, ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
+										doubleArrowList.add(da1);
 
 										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
 												_cSecPosY);
@@ -836,7 +840,7 @@ public class MainWindowController
 										}
 
 										DoubleArrow da2 = new DoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY, mainPane, arrowColor);
-
+										doubleArrowList.add(da2);
 
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
