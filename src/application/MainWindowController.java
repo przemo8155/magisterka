@@ -196,6 +196,9 @@ public class MainWindowController
 	ObservableList<HeadArrow> moveHeadArrowList = FXCollections.observableArrayList();
 
 	ObservableList<DoubleArrow> doubleArrowList = FXCollections.observableArrayList();
+	ObservableList<DoubleArrow> startDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<DoubleArrow> endDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<DoubleArrow> moveDoubleArrowList = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -366,7 +369,16 @@ public class MainWindowController
 					}
 				}
 
+				for(DoubleArrow da : doubleArrowList)
+				{
+					if(da.getStartX() == c.getCenterX() && da.getStartY() == c.getCenterY())
+					{
+						startDoubleArrowList.add(da);
+					}
+				}
+
 				headArrowList.removeAll(startHeadArrowList);
+				doubleArrowList.removeAll(startDoubleArrowList);
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -376,7 +388,18 @@ public class MainWindowController
 					}
 				}
 
+
+				for(DoubleArrow da : doubleArrowList)
+				{
+					if(da.getEndX() == c.getCenterX() && da.getEndY() == c.getCenterY())
+					{
+						endDoubleArrowList.add(da);
+					}
+				}
+
+
 				headArrowList.removeAll(endHeadArrowList);
+				doubleArrowList.removeAll(endDoubleArrowList);
 
 				double offsetX = t.getSceneX();
 				double offsetY = t.getSceneY() - minusWidth;
@@ -398,6 +421,20 @@ public class MainWindowController
 
 				}
 
+				for(DoubleArrow da : endDoubleArrowList)
+				{
+					da.setEndX(c.getCenterX(), mainPane);
+					da.setEndY(c.getCenterY(), mainPane);
+				}
+
+				for(DoubleArrow da : startDoubleArrowList)
+				{
+					da.setStartX(c.getCenterX(), mainPane);
+					da.setStartY(c.getCenterY(), mainPane);
+				}
+
+
+
 				for (HeadArrow ha : startHeadArrowList)
 				{
 					ha.setStartX(c.getCenterX(), mainPane);
@@ -408,8 +445,11 @@ public class MainWindowController
 
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
+				doubleArrowList.addAll(endDoubleArrowList);
+				doubleArrowList.addAll(startDoubleArrowList);
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+				utilities.clearStartAndEndDoubleArrowLists(endDoubleArrowList, startDoubleArrowList);
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -456,7 +496,16 @@ public class MainWindowController
 					}
 				}
 
+				for(DoubleArrow da : doubleArrowList)
+				{
+					if(da.getStartX() - 20 == r.getX() && da.getStartY() - 20 == r.getY())
+					{
+						startDoubleArrowList.add(da);
+					}
+				}
+
 				headArrowList.removeAll(startHeadArrowList);
+				doubleArrowList.removeAll(startDoubleArrowList);
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -466,7 +515,16 @@ public class MainWindowController
 					}
 				}
 
+				for(DoubleArrow da : doubleArrowList)
+				{
+					if(da.getEndX() - 20 == r.getX() && da.getEndY() - 20 == r.getY())
+					{
+						endDoubleArrowList.add(da);
+					}
+				}
+
 				headArrowList.removeAll(endHeadArrowList);
+				doubleArrowList.removeAll(endDoubleArrowList);
 
 				double offsetX = t.getSceneX() - orgSceneX;
 				double offsetY = t.getSceneY() - orgSceneY;
@@ -495,10 +553,26 @@ public class MainWindowController
 					ha.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 				}
 
+				for(DoubleArrow da : startDoubleArrowList)
+				{
+					da.setStartX(r.getX() + 20, mainPane);
+					da.setStartY(r.getY(), mainPane);
+				}
+
+				for(DoubleArrow da : endDoubleArrowList)
+				{
+					da.setStartX(r.getX() + 20, mainPane);
+					da.setStartY(r.getY(), mainPane);
+				}
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
 
+				doubleArrowList.addAll(startDoubleArrowList);
+				doubleArrowList.addAll(endDoubleArrowList);
+
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+				utilities.clearStartAndEndDoubleArrowLists(endDoubleArrowList, startDoubleArrowList);
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -892,7 +966,7 @@ public class MainWindowController
 		{
 			case "move":
 				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList, arrowList))
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList, headArrowList, doubleArrowList))
 				{
 					try
 					{
