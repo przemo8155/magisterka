@@ -700,6 +700,8 @@ public class MainWindowController
 								_cSecPosX = myCircle.getCenterX();
 								_cSecPosY = myCircle.getCenterY();
 
+								int _index = -1;
+
 								for (HeadArrow ha : headArrowList)
 								{
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
@@ -720,8 +722,6 @@ public class MainWindowController
 										da1.createDoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY,
 												ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
 
-
-
 										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
 												_cSecPosY);
 										angle = angle % 90;
@@ -740,9 +740,15 @@ public class MainWindowController
 										da2.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY,
 												mainPane, arrowColor);
 
-										//ha.removeFromMainPane(mainPane);
-										//headArrowList.remove(ha);
+										ha.removeFromMainPane(mainPane);
+										_index = headArrowList.indexOf(ha);
 									}
+								}
+
+								if (_index != -1)
+								{
+									headArrowList.remove(_index);
+
 								}
 
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
@@ -788,6 +794,9 @@ public class MainWindowController
 
 								_cSecPosX = myRectangle.getX() + 20;
 								_cSecPosY = myRectangle.getY() + 20;
+
+								int _index = -1;
+
 								for (HeadArrow ha : headArrowList)
 								{
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
@@ -808,7 +817,6 @@ public class MainWindowController
 										da1.createDoubleArrow(ha.getEndX(), ha.getEndY(), oldMvX, oldMvY,
 												ha.getStartX(), ha.getStartY(), mainPane, arrowColor);
 
-
 										double angle = tempHa.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX,
 												_cSecPosY);
 										angle = angle % 90;
@@ -827,9 +835,14 @@ public class MainWindowController
 										da2.createDoubleArrow(_cFirstPosX, _cFirstPosY, mvX, mvY, _cSecPosX, _cSecPosY,
 												mainPane, arrowColor);
 
-										//ha.removeFromMainPane(mainPane);
-										//headArrowList.remove(ha);
+										ha.removeFromMainPane(mainPane);
+										_index = headArrowList.indexOf(ha);
 									}
+								}
+								if (_index != -1)
+								{
+									headArrowList.remove(_index);
+
 								}
 								HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 										mainPane);

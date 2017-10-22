@@ -55,7 +55,7 @@ public class DoubleArrow
 			quadTo.setY(secY - cutY2);
 		}
 
-		if(mainAngle > 270 && mainAngle < 360)
+		if(mainAngle > 270 && mainAngle <= 360)
 		{
 			moveTo.setX(firstX + cutX1);
 			moveTo.setY(firstY + cutY1);
@@ -65,10 +65,6 @@ public class DoubleArrow
 			quadTo.setY(secY - cutY2);
 		}
 
-		else
-		{
-			System.err.println("DoubleArrow else error - bad angle");
-		}
 
 
 		path.getElements().add(moveTo);
