@@ -17,7 +17,7 @@ public class DoubleArrow
 
 	static int doubleArrowMove = 100;
 
-	static double maxMove = 20.0;
+	static double maxMove = 12.0;
 	static double multiply = 0.01111111111111;
 
 	public double startPointX, startPointY, endPointX, endPointY, controlX, controlY;
@@ -37,18 +37,15 @@ public class DoubleArrow
 
 		double moveX = myMultiply * maxMove;
 
-		if (mainAngle >= 0 && mainAngle <= 90 || mainAngle > 270 && mainAngle <= 360)
-		{
-			return moveX;
-		}
 
-		if (mainAngle > 90 && mainAngle <= 270)
+		if(mainAngle > 270 && mainAngle <= 360)
 		{
-			return -moveX;
+			return maxMove - moveX;
 		}
-
 		else
-			return 0;
+			return moveX;
+
+
 
 	}
 
@@ -62,18 +59,14 @@ public class DoubleArrow
 
 		double moveY = (1 - myMultiply) * maxMove;
 
-		if (mainAngle >= 0 && mainAngle <= 180)
+		if(mainAngle > 270 && mainAngle <= 360)
 		{
-			return moveY;
+			return maxMove - moveY;
 		}
-
-		if (mainAngle > 180 && mainAngle <= 360)
-		{
-			return -moveY;
-		}
-
 		else
-			return 0;
+			return moveY;
+
+
 
 	}
 
