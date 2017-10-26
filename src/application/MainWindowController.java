@@ -109,6 +109,8 @@ public class MainWindowController
 	double orgTranslateX, orgTranslateY;
 	static int minusWidth = 95;
 
+	static double ll = 20;
+
 	static double moveArrowWithoutHead = 5.0f;
 
 	static int doubleArrowMove = 100;
@@ -164,6 +166,7 @@ public class MainWindowController
 	Counters counters = new Counters();
 	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
 	ExportPDF exportPdf = new ExportPDF();
+	DoubleArrow doubleArrow = new DoubleArrow();
 
 	private String backgroundColor;
 	private String circleColor;
@@ -197,10 +200,12 @@ public class MainWindowController
 	ObservableList<HeadArrow> endHeadArrowList = FXCollections.observableArrayList();
 	ObservableList<HeadArrow> moveHeadArrowList = FXCollections.observableArrayList();
 
-	ObservableList<DoubleArrow> doubleArrowList = FXCollections.observableArrayList();
-	ObservableList<DoubleArrow> startDoubleArrowList = FXCollections.observableArrayList();
-	ObservableList<DoubleArrow> endDoubleArrowList = FXCollections.observableArrayList();
-	ObservableList<DoubleArrow> moveDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<HeadArrow> doubleArrowList = FXCollections.observableArrayList();
+	ObservableList<HeadArrow> endDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<HeadArrow> startDoubleArrowList = FXCollections.observableArrayList();
+
+
+
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -365,29 +370,42 @@ public class MainWindowController
 
 				for (HeadArrow ha : headArrowList)
 				{
+					boolean check = true;
 					if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
 					{
 						startHeadArrowList.add(ha);
+						check = false;
+					}
+
+					else if(ha.getStartX() + ll > c.getCenterX() && ha.getStartX() - ll < c.getCenterX() && ha.getStartY() + ll > c.getCenterY() && ha.getStartY() - ll < c.getCenterY() && check)
+					{
+						startDoubleArrowList.add(ha);
 					}
 				}
+
+				for (HeadArrow ha : headArrowList)
+				{
+					boolean check = true;
+					if (ha.getEndX() == c.getCenterX() && ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY() && ha.getEndY() == c.getCenterY())
+					{
+						endHeadArrowList.add(ha);
+						check = false;
+					}
+					else if (ha.getEndX() + ll > c.getCenterX() && ha.getEndX() - ll < c.getCenterX() && ha.getEndY() + ll > c.getCenterY() && ha.getEndY() - ll < c.getCenterY() && check)
+					{
+						endDoubleArrowList.add(ha);
+					}
+				}
+
+
 
 
 
 				headArrowList.removeAll(startHeadArrowList);
-
-				for (HeadArrow ha : headArrowList)
-				{
-					if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
-					{
-						endHeadArrowList.add(ha);
-					}
-				}
-
-
-
-
-
 				headArrowList.removeAll(endHeadArrowList);
+
+				headArrowList.removeAll(startDoubleArrowList);
+				headArrowList.removeAll(endDoubleArrowList);
 
 				double offsetX = t.getSceneX();
 				double offsetY = t.getSceneY() - minusWidth;
@@ -409,10 +427,6 @@ public class MainWindowController
 
 				}
 
-
-
-
-
 				for (HeadArrow ha : startHeadArrowList)
 				{
 					ha.setStartX(c.getCenterX(), mainPane);
@@ -421,10 +435,40 @@ public class MainWindowController
 					ha.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 				}
 
+
+				for (HeadArrow ha : endDoubleArrowList)
+				{
+					double angle = ha.returnAngle(ha.endPointX, ha.endPointY, ha.startPointX, ha.startPointY);
+					double mvX = doubleArrow.calculateDoubleArrowX(angle, ha.endPointX, ha.endPointY, ha.startPointX, ha.startPointY);
+					double mvY = doubleArrow.calculateDoubleArrowY(angle, ha.endPointX, ha.endPointY, ha.startPointX, ha.startPointY);
+
+					ha.setEndX(c.getCenterX() + mvX, mainPane);
+					ha.setEndY(c.getCenterY() + mvY, mainPane);
+					ha.setLeft(c.getCenterX() + mvX, c.getCenterY() + mvY, mainPane);
+					ha.setRight(c.getCenterX() + mvX, c.getCenterY() + mvY, mainPane);
+
+				}
+
+				for (HeadArrow ha : startDoubleArrowList)
+				{
+					double angle = ha.returnAngle(ha.startPointX, ha.startPointY, ha.endPointX, ha.endPointY);
+					double mvX = doubleArrow.calculateDoubleArrowX(angle, ha.startPointX, ha.startPointY, ha.endPointX, ha.endPointY);
+					double mvY = doubleArrow.calculateDoubleArrowY(angle, ha.startPointX, ha.startPointY, ha.endPointX, ha.endPointY);
+
+					ha.setStartX(c.getCenterX() - mvX, mainPane);
+					ha.setStartY(c.getCenterY() - mvY, mainPane);
+					ha.setLeft(c.getCenterX() - mvX, c.getCenterY() - mvY, mainPane);
+					ha.setRight(c.getCenterX() - mvX, c.getCenterY() - mvY, mainPane);
+				}
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
 
+				headArrowList.addAll(startDoubleArrowList);
+				headArrowList.addAll(endDoubleArrowList);
+
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+				utilities.clearStartAndEndHeadArrowLists(startDoubleArrowList, endDoubleArrowList);
 
 				for (HeadArrow ha : headArrowList)
 				{
