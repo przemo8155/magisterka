@@ -38,7 +38,7 @@ public class DoubleArrow
 		double moveX = myMultiply * maxMove;
 
 
-		if(mainAngle > 270 && mainAngle <= 360)
+		if(mainAngle > 180 && mainAngle <= 360)
 		{
 			return maxMove - moveX;
 		}
@@ -59,7 +59,7 @@ public class DoubleArrow
 
 		double moveY = (1 - myMultiply) * maxMove;
 
-		if(mainAngle > 270 && mainAngle <= 360)
+		if(mainAngle > 180 && mainAngle <= 360)
 		{
 			return maxMove - moveY;
 		}

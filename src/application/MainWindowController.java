@@ -109,7 +109,7 @@ public class MainWindowController
 	double orgTranslateX, orgTranslateY;
 	static int minusWidth = 95;
 
-	static double ll = 20;
+	static double ll = 15;
 
 	static double moveArrowWithoutHead = 5.0f;
 
@@ -457,8 +457,8 @@ public class MainWindowController
 
 					ha.setStartX(c.getCenterX() - mvX, mainPane);
 					ha.setStartY(c.getCenterY() - mvY, mainPane);
-					ha.setLeft(c.getCenterX() - mvX, c.getCenterY() - mvY, mainPane);
-					ha.setRight(c.getCenterX() - mvX, c.getCenterY() - mvY, mainPane);
+					ha.setLeft(c.getCenterX() + mvX, c.getCenterY() + mvY, mainPane);
+					ha.setRight(c.getCenterX() + mvX, c.getCenterY() + mvY, mainPane);
 				}
 
 				headArrowList.addAll(startHeadArrowList);
@@ -509,25 +509,42 @@ public class MainWindowController
 
 				for (HeadArrow ha : headArrowList)
 				{
+					boolean check = true;
 					if (ha.getStartX() - 20 == r.getX() && ha.getStartY() - 20 == r.getY())
 					{
 						startHeadArrowList.add(ha);
+						check = false;
+					}
+
+					else if (ha.getStartX() - 20 + ll > r.getX() && ha.getStartX() - 20 - ll < r.getX() && ha.getStartY() - 20 + ll > r.getY() && ha.getStartY() - 20 - ll < r.getY() && check)
+					{
+						startDoubleArrowList.add(ha);
 					}
 				}
 
 
-				headArrowList.removeAll(startHeadArrowList);
+
 
 				for (HeadArrow ha : headArrowList)
 				{
+					boolean check = true;
 					if (ha.getEndX() - 20 == r.getX() && ha.getEndY() - 20 == r.getY())
 					{
 						endHeadArrowList.add(ha);
+						check = false;
+					}
+
+					else if (ha.getEndX() - 20 + ll > r.getX() && ha.getEndX() - 20 - ll < r.getX() && ha.getEndY() - 20 + ll > r.getY() && ha.getEndY() - 20 - ll < r.getY() && check)
+					{
+						endDoubleArrowList.add(ha);
 					}
 				}
 
-
+				headArrowList.removeAll(startHeadArrowList);
 				headArrowList.removeAll(endHeadArrowList);
+
+				headArrowList.removeAll(startDoubleArrowList);
+				headArrowList.removeAll(endDoubleArrowList);
 
 				double offsetX = t.getSceneX() - orgSceneX;
 				double offsetY = t.getSceneY() - orgSceneY;
@@ -557,11 +574,42 @@ public class MainWindowController
 				}
 
 
+				for (HeadArrow ha : endDoubleArrowList)
+				{
+					double angle = ha.returnAngle(ha.endPointX, ha.endPointY, ha.startPointX, ha.startPointY);
+					double mvX = doubleArrow.calculateDoubleArrowX(angle, ha.endPointX, ha.endPointY, ha.startPointX, ha.startPointY);
+					double mvY = doubleArrow.calculateDoubleArrowY(angle, ha.endPointX, ha.endPointY, ha.startPointX, ha.startPointY);
+
+
+					ha.setEndX(r.getX() + 20 - mvX, mainPane);
+					ha.setEndY(r.getY() + 20 - mvY, mainPane);
+					ha.setLeft(r.getX() + 20 - mvX, r.getY() + 20 - mvY, mainPane);
+					ha.setRight(r.getX() + 20 - mvX, r.getY() + 20 - mvY, mainPane);
+
+				}
+
+				for (HeadArrow ha : startDoubleArrowList)
+				{
+					double angle = ha.returnAngle(ha.startPointX, ha.startPointY, ha.endPointX, ha.endPointY);
+					double mvX = doubleArrow.calculateDoubleArrowX(angle, ha.startPointX, ha.startPointY, ha.endPointX, ha.endPointY);
+					double mvY = doubleArrow.calculateDoubleArrowY(angle, ha.startPointX, ha.startPointY, ha.endPointX, ha.endPointY);
+
+					ha.setStartX(r.getX() + 20 + mvX, mainPane);
+					ha.setStartY(r.getY() + 20 + mvY, mainPane);
+					ha.setLeft(r.getX() + 20 + mvX, r.getY() + 20 + mvY, mainPane);
+					ha.setRight(r.getX() + 20 + mvX, r.getY() + 20 + mvY, mainPane);
+				}
+
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
 
+				headArrowList.addAll(startDoubleArrowList);
+				headArrowList.addAll(endDoubleArrowList);
+
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+				utilities.clearStartAndEndHeadArrowLists(startDoubleArrowList, endDoubleArrowList);
 
 				for (HeadArrow ha : headArrowList)
 				{
