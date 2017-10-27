@@ -56,6 +56,10 @@ public class RightDoubleArrow
 
 	public RightDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc)
 	{
+		double angle = headArrow.returnAngle(firstX, firstY, secX, secY);
+		double myX = headArrow.calculateX(angle);
+		double myY = headArrow.calculateY(angle);
+
 		this.startPointX = firstX;
 		this.startPointY = firstY;
 		this.endPointX = secX;
@@ -63,12 +67,12 @@ public class RightDoubleArrow
 		this.controlX = contX;
 		this.controlY = contY;
 
-		this.moveTo.setX(startPointX);
-		this.moveTo.setY(startPointY);
+		this.moveTo.setX(startPointX + myX);
+		this.moveTo.setY(startPointY + myY);
 		this.quadTo.setControlX(contX);
 		this.quadTo.setControlY(contY);
-		this.quadTo.setX(endPointX);
-		this.quadTo.setY(endPointY);
+		this.quadTo.setX(endPointX - myX);
+		this.quadTo.setY(endPointY - myY);
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -224,6 +228,10 @@ public class RightDoubleArrow
 		this.startPointX = val;
 		this.path = new Path();
 
+		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double myX = headArrow.calculateX(angle);
+		double myY = headArrow.calculateY(angle);
+
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
@@ -235,12 +243,12 @@ public class RightDoubleArrow
 		this.controlX = midX - moveX;
 		this.controlY = midY - moveY;
 
-		this.moveTo.setX(startPointX);
-		this.moveTo.setY(startPointY);
+		this.moveTo.setX(startPointX + myX);
+		this.moveTo.setY(startPointY + myY);
 		this.quadTo.setControlX(controlX);
 		this.quadTo.setControlY(controlY);
-		this.quadTo.setX(endPointX);
-		this.quadTo.setY(endPointY);
+		this.quadTo.setX(endPointX - myX);
+		this.quadTo.setY(endPointY - myY);
 
 
 
@@ -259,6 +267,10 @@ public class RightDoubleArrow
 		this.startPointY = val;
 		this.path = new Path();
 
+		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double myX = headArrow.calculateX(angle);
+		double myY = headArrow.calculateY(angle);
+
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
@@ -270,12 +282,12 @@ public class RightDoubleArrow
 		this.controlX = midX - moveX;
 		this.controlY = midY - moveY;
 
-		this.moveTo.setX(startPointX);
-		this.moveTo.setY(startPointY);
+		this.moveTo.setX(startPointX + myX);
+		this.moveTo.setY(startPointY + myY);
 		this.quadTo.setControlX(controlX);
 		this.quadTo.setControlY(controlY);
-		this.quadTo.setX(endPointX);
-		this.quadTo.setY(endPointY);
+		this.quadTo.setX(endPointX - myX);
+		this.quadTo.setY(endPointY - myY);
 
 
 		this.path.getElements().add(this.moveTo);
@@ -293,6 +305,10 @@ public class RightDoubleArrow
 		this.endPointX = val;
 		this.path = new Path();
 
+		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double myX = headArrow.calculateX(angle);
+		double myY = headArrow.calculateY(angle);
+
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
@@ -304,12 +320,12 @@ public class RightDoubleArrow
 		this.controlX = midX - moveX;
 		this.controlY = midY - moveY;
 
-		this.moveTo.setX(startPointX);
-		this.moveTo.setY(startPointY);
+		this.moveTo.setX(startPointX + myX);
+		this.moveTo.setY(startPointY + myY);
 		this.quadTo.setControlX(controlX);
 		this.quadTo.setControlY(controlY);
-		this.quadTo.setX(endPointX);
-		this.quadTo.setY(endPointY);
+		this.quadTo.setX(endPointX - myX);
+		this.quadTo.setY(endPointY - myY);
 
 
 		this.path.getElements().add(this.moveTo);
@@ -327,6 +343,10 @@ public class RightDoubleArrow
 		this.endPointY = val;
 		this.path = new Path();
 
+		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double myX = headArrow.calculateX(angle);
+		double myY = headArrow.calculateY(angle);
+
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
@@ -338,12 +358,12 @@ public class RightDoubleArrow
 		this.controlX = midX - moveX;
 		this.controlY = midY - moveY;
 
-		this.moveTo.setX(startPointX);
-		this.moveTo.setY(startPointY);
+		this.moveTo.setX(startPointX + myX);
+		this.moveTo.setY(startPointY + myY);
 		this.quadTo.setControlX(controlX);
 		this.quadTo.setControlY(controlY);
-		this.quadTo.setX(endPointX);
-		this.quadTo.setY(endPointY);
+		this.quadTo.setX(endPointX - myX);
+		this.quadTo.setY(endPointY - myY);
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
