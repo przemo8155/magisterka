@@ -82,10 +82,10 @@ public class Utilities
 	}
 
 	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle,
-			ObservableList<HeadArrow> arrow, ObservableList<HeadArrow> da)
+			ObservableList<HeadArrow> arrow, ObservableList<LeftDoubleArrow> da, ObservableList<RightDoubleArrow> da2)
 	{
 		int w = 0;
-		w = circle.size() + rectangle.size() + arrow.size() + da.size();
+		w = circle.size() + rectangle.size() + arrow.size() + da.size() + da2.size();
 		return w;
 	}
 
@@ -131,7 +131,13 @@ public class Utilities
 		lin2.clear();
 	}
 
-	public void clearStartAndEndDoubleArrowLists(ObservableList<DoubleArrow> lin1, ObservableList<DoubleArrow> lin2)
+	public void clearStartAndEndLeftDoubleArrowLists(ObservableList<LeftDoubleArrow> lin1, ObservableList<LeftDoubleArrow> lin2)
+	{
+		lin1.clear();
+		lin2.clear();
+	}
+
+	public void clearStartAndEndRightDoubleArrowLists(ObservableList<RightDoubleArrow> lin1, ObservableList<RightDoubleArrow> lin2)
 	{
 		lin1.clear();
 		lin2.clear();

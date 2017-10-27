@@ -167,7 +167,7 @@ public class MainWindowController
 	Counters counters = new Counters();
 	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
 	ExportPDF exportPdf = new ExportPDF();
-	DoubleArrow doubleArrow = new DoubleArrow();
+	LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
 
 	private String backgroundColor;
 	private String circleColor;
@@ -201,9 +201,13 @@ public class MainWindowController
 	ObservableList<HeadArrow> endHeadArrowList = FXCollections.observableArrayList();
 	ObservableList<HeadArrow> moveHeadArrowList = FXCollections.observableArrayList();
 
-	ObservableList<HeadArrow> doubleArrowList = FXCollections.observableArrayList();
-	ObservableList<HeadArrow> endDoubleArrowList = FXCollections.observableArrayList();
-	ObservableList<HeadArrow> startDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<LeftDoubleArrow> leftDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<LeftDoubleArrow> leftEndDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<LeftDoubleArrow> leftStartDoubleArrowList = FXCollections.observableArrayList();
+
+	ObservableList<RightDoubleArrow> rightDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<RightDoubleArrow> rightEndDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<RightDoubleArrow> rightStartDoubleArrowList = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -377,16 +381,53 @@ public class MainWindowController
 
 				for (HeadArrow ha : headArrowList)
 				{
-					if (ha.getEndX() == c.getCenterX() && ha.getEndX() == c.getCenterX()
-							&& ha.getEndY() == c.getCenterY() && ha.getEndY() == c.getCenterY())
+					if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
 					{
 						endHeadArrowList.add(ha);
 					}
 
 				}
 
+				for (LeftDoubleArrow da : leftDoubleArrowList)
+				{
+					if (da.getStartX() == c.getCenterX() && da.getStartY() == c.getCenterY())
+					{
+						leftStartDoubleArrowList.add(da);
+					}
+				}
+
+				for (LeftDoubleArrow da : leftDoubleArrowList)
+				{
+					if (da.getEndX() == c.getCenterX() && da.getEndY() == c.getCenterY())
+					{
+						leftEndDoubleArrowList.add(da);
+					}
+				}
+
+				for (RightDoubleArrow da : rightDoubleArrowList)
+				{
+					if (da.getStartX() == c.getCenterX() && da.getStartY() == c.getCenterY())
+					{
+						rightStartDoubleArrowList.add(da);
+					}
+				}
+
+				for (RightDoubleArrow da : rightDoubleArrowList)
+				{
+					if (da.getEndX() == c.getCenterX() && da.getEndY() == c.getCenterY())
+					{
+						rightEndDoubleArrowList.add(da);
+					}
+				}
+
 				headArrowList.removeAll(startHeadArrowList);
 				headArrowList.removeAll(endHeadArrowList);
+
+				leftDoubleArrowList.removeAll(leftStartDoubleArrowList);
+				leftDoubleArrowList.removeAll(leftEndDoubleArrowList);
+
+				rightDoubleArrowList.removeAll(rightStartDoubleArrowList);
+				rightDoubleArrowList.removeAll(rightEndDoubleArrowList);
 
 				double offsetX = t.getSceneX();
 				double offsetY = t.getSceneY() - minusWidth;
@@ -416,10 +457,42 @@ public class MainWindowController
 					ha.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 				}
 
+				for(LeftDoubleArrow da : leftStartDoubleArrowList)
+				{
+					da.setLeftArrowStartX(c.getCenterX(), mainPane);
+					da.setLeftArrowStartY(c.getCenterY(), mainPane);
+				}
+
+				for(LeftDoubleArrow da : leftEndDoubleArrowList)
+				{
+					da.setLeftArrowEndX(c.getCenterX(), mainPane);
+					da.setLeftArrowEndY(c.getCenterY(), mainPane);
+				}
+
+				for(RightDoubleArrow da : rightStartDoubleArrowList)
+				{
+					da.setRightArrowStartX(c.getCenterX(), mainPane);
+					da.setRightArrowStartY(c.getCenterY(), mainPane);
+				}
+
+				for(RightDoubleArrow da : rightEndDoubleArrowList)
+				{
+					da.setRightArrowEndX(c.getCenterX(), mainPane);
+					da.setRightArrowEndY(c.getCenterY(), mainPane);
+				}
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
 
+				leftDoubleArrowList.addAll(leftStartDoubleArrowList);
+				leftDoubleArrowList.addAll(leftEndDoubleArrowList);
+
+				rightDoubleArrowList.addAll(rightStartDoubleArrowList);
+				rightDoubleArrowList.addAll(rightEndDoubleArrowList);
+
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+				utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
+				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -686,7 +759,7 @@ public class MainWindowController
 			case "line":
 				if (event.getSceneY() > minusWidth + 10)
 				{
-					DoubleArrow doubleArrow = new DoubleArrow();
+					LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
 					double x = event.getSceneX();
 					double y = event.getSceneY();
 
@@ -748,14 +821,18 @@ public class MainWindowController
 
 								if (_index != -1)
 								{
-									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
+									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
 											_cSecPosX, _cSecPosY, mainPane);
 
-									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
+									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
 											_cFirstPosX, _cFirstPosY, mainPane);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
+
+									leftDoubleArrowList.add(path1);
+									rightDoubleArrowList.add(path2);
+
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
 									_cSecPosX = 0;
@@ -845,14 +922,18 @@ public class MainWindowController
 								}
 								if (_index != -1)
 								{
-									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
+									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
 											_cSecPosX, _cSecPosY, mainPane);
 
-									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
+									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
 											_cFirstPosX, _cFirstPosY, mainPane);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
+
+									leftDoubleArrowList.add(path1);
+									rightDoubleArrowList.add(path2);
+
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
 									_cSecPosX = 0;
@@ -898,7 +979,7 @@ public class MainWindowController
 		{
 			case "move":
 				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList, headArrowList, doubleArrowList))
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList))
 				{
 					try
 					{
