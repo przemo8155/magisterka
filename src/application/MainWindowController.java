@@ -205,9 +205,6 @@ public class MainWindowController
 	ObservableList<HeadArrow> endDoubleArrowList = FXCollections.observableArrayList();
 	ObservableList<HeadArrow> startDoubleArrowList = FXCollections.observableArrayList();
 
-
-
-
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -380,16 +377,13 @@ public class MainWindowController
 
 				for (HeadArrow ha : headArrowList)
 				{
-					if (ha.getEndX() == c.getCenterX() && ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY() && ha.getEndY() == c.getCenterY())
+					if (ha.getEndX() == c.getCenterX() && ha.getEndX() == c.getCenterX()
+							&& ha.getEndY() == c.getCenterY() && ha.getEndY() == c.getCenterY())
 					{
 						endHeadArrowList.add(ha);
 					}
 
 				}
-
-
-
-
 
 				headArrowList.removeAll(startHeadArrowList);
 				headArrowList.removeAll(endHeadArrowList);
@@ -422,12 +416,8 @@ public class MainWindowController
 					ha.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 				}
 
-
-
-
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
-
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 
@@ -476,9 +466,6 @@ public class MainWindowController
 					}
 				}
 
-
-
-
 				for (HeadArrow ha : headArrowList)
 				{
 					if (ha.getEndX() - 20 == r.getX() && ha.getEndY() - 20 == r.getY())
@@ -517,11 +504,8 @@ public class MainWindowController
 					ha.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 				}
 
-
-
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
-
 
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 
@@ -741,12 +725,13 @@ public class MainWindowController
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
 
-
-										Pair<Double,Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX,
+												_cFirstPosY, _cSecPosX, _cSecPosY);
 										double midX = pair.getKey();
 										double midY = pair.getValue();
 
-										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX,
+												_cFirstPosY, _cSecPosX, _cSecPosY);
 										double moveX = pair2.getKey();
 										double moveY = pair2.getValue();
 
@@ -755,22 +740,19 @@ public class MainWindowController
 										control1Y = midY + moveY;
 										control2Y = midY - moveY;
 
-
-
-
-
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
-
 
 									}
 								}
 
 								if (_index != -1)
 								{
-									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y, _cSecPosX, _cSecPosY, mainPane);
+									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
+											_cSecPosX, _cSecPosY, mainPane);
 
-									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y, _cFirstPosX, _cFirstPosY, mainPane);
+									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
+											_cFirstPosX, _cFirstPosY, mainPane);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
@@ -778,8 +760,6 @@ public class MainWindowController
 									_cFirstPosY = 0;
 									_cSecPosX = 0;
 									_cSecPosY = 0;
-
-
 
 									secondObject = "";
 									break;
@@ -794,20 +774,12 @@ public class MainWindowController
 									headArrowList.add(headArrow);
 									headArrow.addToMainPane(mainPane);
 
-
-
 									setMiddleLabelText("Second point of line...");
-
-
-
-
-
 
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
 									_cSecPosX = 0;
 									_cSecPosY = 0;
-
 
 									secondObject = "";
 									break;
@@ -851,11 +823,13 @@ public class MainWindowController
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
 
-										Pair<Double,Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX,
+												_cFirstPosY, _cSecPosX, _cSecPosY);
 										double midX = pair.getKey();
 										double midY = pair.getValue();
 
-										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX,
+												_cFirstPosY, _cSecPosX, _cSecPosY);
 										double moveX = pair2.getKey();
 										double moveY = pair2.getValue();
 
@@ -864,20 +838,18 @@ public class MainWindowController
 										control1Y = midY + moveY;
 										control2Y = midY - moveY;
 
-
 										ha.removeFromMainPane(mainPane);
 										_index = headArrowList.indexOf(ha);
-
 
 									}
 								}
 								if (_index != -1)
 								{
-									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y, _cSecPosX, _cSecPosY, mainPane);
+									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
+											_cSecPosX, _cSecPosY, mainPane);
 
-									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y, _cFirstPosX, _cFirstPosY, mainPane);
-
-
+									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
+											_cFirstPosX, _cFirstPosY, mainPane);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
@@ -892,16 +864,12 @@ public class MainWindowController
 								} else
 								{
 
-
 									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 											mainPane);
 									headArrow.setFill(arrowColor);
 									headArrowList.add(headArrow);
 									headArrow.addToMainPane(mainPane);
 									setMiddleLabelText("Second point of line...");
-
-
-
 
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
