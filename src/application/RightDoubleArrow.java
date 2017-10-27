@@ -510,5 +510,10 @@ public class RightDoubleArrow
 
 	}
 
+	public void removeFromMainPane(Pane gc)
+	{
+		gc.getChildren().remove(this.path);
+	}
+
 
 }

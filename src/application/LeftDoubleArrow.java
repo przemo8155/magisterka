@@ -132,7 +132,7 @@ public class LeftDoubleArrow
 		gc.getChildren().remove(this.path);
 		this.startPointY = val;
 		this.path = new Path();
-		
+
 		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
@@ -171,7 +171,7 @@ public class LeftDoubleArrow
 		gc.getChildren().remove(this.path);
 		this.endPointX = val;
 		this.path = new Path();
-		
+
 		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
@@ -210,7 +210,7 @@ public class LeftDoubleArrow
 		gc.getChildren().remove(this.path);
 		this.endPointY = val;
 		this.path = new Path();
-		
+
 		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
@@ -517,6 +517,11 @@ public class LeftDoubleArrow
 		} else
 			return moveY;
 
+	}
+
+	public void removeFromMainPane(Pane gc)
+	{
+		gc.getChildren().remove(this.path);
 	}
 
 

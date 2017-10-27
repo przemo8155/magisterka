@@ -714,6 +714,40 @@ public class MainWindowController
 								}
 							}
 
+
+							for (LeftDoubleArrow da : leftDoubleArrowList)
+							{
+								if (da.getStartX() == myCircle.getCenterX() && da.getStartY() == myCircle.getCenterY())
+								{
+									leftStartDoubleArrowList.add(da);
+								}
+							}
+
+							for (LeftDoubleArrow da : leftDoubleArrowList)
+							{
+								if (da.getEndX() == myCircle.getCenterX() && da.getEndY() == myCircle.getCenterY())
+								{
+									leftEndDoubleArrowList.add(da);
+								}
+							}
+
+							for (RightDoubleArrow da : rightDoubleArrowList)
+							{
+								if (da.getStartX() == myCircle.getCenterX() && da.getStartY() == myCircle.getCenterY())
+								{
+									rightStartDoubleArrowList.add(da);
+								}
+							}
+
+							for (RightDoubleArrow da : rightDoubleArrowList)
+							{
+								if (da.getEndX() == myCircle.getCenterX() && da.getEndY() == myCircle.getCenterY())
+								{
+									rightEndDoubleArrowList.add(da);
+								}
+							}
+
+
 							if (!startHeadArrowList.isEmpty())
 							{
 								headArrowList.removeAll(startHeadArrowList);
@@ -729,6 +763,46 @@ public class MainWindowController
 								headArrowList.removeAll(endHeadArrowList);
 
 								for (HeadArrow ha : endHeadArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!leftStartDoubleArrowList.isEmpty())
+							{
+								leftDoubleArrowList.removeAll(leftStartDoubleArrowList);
+
+								for (LeftDoubleArrow ha : leftStartDoubleArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!leftEndDoubleArrowList.isEmpty())
+							{
+								leftDoubleArrowList.removeAll(leftEndDoubleArrowList);
+
+								for (LeftDoubleArrow ha : leftEndDoubleArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!rightEndDoubleArrowList.isEmpty())
+							{
+								rightDoubleArrowList.removeAll(rightEndDoubleArrowList);
+
+								for (RightDoubleArrow ha : rightEndDoubleArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!rightStartDoubleArrowList.isEmpty())
+							{
+								rightDoubleArrowList.removeAll(rightStartDoubleArrowList);
+
+								for (RightDoubleArrow ha : rightStartDoubleArrowList)
 								{
 									ha.removeFromMainPane(mainPane);
 								}
@@ -767,6 +841,38 @@ public class MainWindowController
 								}
 							}
 
+							for(LeftDoubleArrow da : leftDoubleArrowList)
+							{
+								if(da.getStartX() == myRectangle.getX() + 20 && da.getStartY() == myRectangle.getY() + 20)
+								{
+									leftStartDoubleArrowList.add(da);
+								}
+							}
+
+							for(LeftDoubleArrow da : leftDoubleArrowList)
+							{
+								if(da.getEndX() == myRectangle.getX() + 20 && da.getEndY() == myRectangle.getY() + 20)
+								{
+									leftEndDoubleArrowList.add(da);
+								}
+							}
+
+							for(RightDoubleArrow da : rightDoubleArrowList)
+							{
+								if(da.getStartX() == myRectangle.getX() + 20 && da.getStartY() == myRectangle.getY() + 20)
+								{
+									rightStartDoubleArrowList.add(da);
+								}
+							}
+
+							for(RightDoubleArrow da : rightDoubleArrowList)
+							{
+								if(da.getEndX() == myRectangle.getX() + 20 && da.getEndY() == myRectangle.getY() + 20)
+								{
+									rightEndDoubleArrowList.add(da);
+								}
+							}
+
 							if (!startHeadArrowList.isEmpty())
 							{
 								headArrowList.removeAll(startHeadArrowList);
@@ -782,6 +888,46 @@ public class MainWindowController
 								headArrowList.removeAll(endHeadArrowList);
 
 								for (HeadArrow ha : endHeadArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!leftStartDoubleArrowList.isEmpty())
+							{
+								leftDoubleArrowList.removeAll(leftStartDoubleArrowList);
+
+								for (LeftDoubleArrow ha : leftStartDoubleArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!leftEndDoubleArrowList.isEmpty())
+							{
+								leftDoubleArrowList.removeAll(leftEndDoubleArrowList);
+
+								for (LeftDoubleArrow ha : leftEndDoubleArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!rightEndDoubleArrowList.isEmpty())
+							{
+								rightDoubleArrowList.removeAll(rightEndDoubleArrowList);
+
+								for (RightDoubleArrow ha : rightEndDoubleArrowList)
+								{
+									ha.removeFromMainPane(mainPane);
+								}
+							}
+
+							if (!rightStartDoubleArrowList.isEmpty())
+							{
+								rightDoubleArrowList.removeAll(rightStartDoubleArrowList);
+
+								for (RightDoubleArrow ha : rightStartDoubleArrowList)
 								{
 									ha.removeFromMainPane(mainPane);
 								}
