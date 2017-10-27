@@ -6,6 +6,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
+import javafx.util.Pair;
 
 public class DoubleArrow
 {
@@ -20,11 +21,35 @@ public class DoubleArrow
 	static double maxMove = 12.0;
 	static double multiply = 0.01111111111111;
 
+	public static double moveInDoubleLine = 50.0f;
+
 	public double startPointX, startPointY, endPointX, endPointY, controlX, controlY;
 
 	public DoubleArrow()
 	{
 
+	}
+
+	public Pair<Double, Double> returnMiddlePoint(double firstX, double firstY, double secX, double secY)
+	{
+		double midX = (firstX + secX) / 2;
+		double midY = (firstY + secY) / 2;
+		return new Pair<>(midX, midY);
+	}
+
+	public Pair<Double, Double> returnMoveXandY(double firstX, double firstY, double secX, double secY)
+	{
+		double angle = headArrow.returnAngle(firstX, firstY, secX, secY);
+		double calcAngle = angle % 90;
+		double mvX = ((90 - calcAngle) * multiply)  * moveInDoubleLine;
+		double mvY = calcAngle * multiply * moveInDoubleLine;
+		if(angle >= 0 && angle <= 90 || angle > 180 && angle <= 270)
+		{
+			return new Pair<>(moveInDoubleLine-mvX,moveInDoubleLine-mvY);
+
+		}
+		else
+			return new Pair<>(mvX,mvY);
 	}
 
 	public double calculateDoubleArrowX(double angle, double firstX, double firstY, double secX, double secY)
@@ -37,15 +62,11 @@ public class DoubleArrow
 
 		double moveX = myMultiply * maxMove;
 
-
-		if(mainAngle > 180 && mainAngle <= 360)
+		if (mainAngle > 180 && mainAngle <= 360)
 		{
 			return maxMove - moveX;
-		}
-		else
+		} else
 			return moveX;
-
-
 
 	}
 
@@ -59,17 +80,37 @@ public class DoubleArrow
 
 		double moveY = (1 - myMultiply) * maxMove;
 
-		if(mainAngle > 180 && mainAngle <= 360)
+		if (mainAngle > 180 && mainAngle <= 360)
 		{
 			return maxMove - moveY;
-		}
-		else
+		} else
 			return moveY;
-
-
 
 	}
 
+	public DoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc)
+	{
+		this.startPointX = firstX;
+		this.startPointY = firstY;
+		this.endPointX = secX;
+		this.endPointY = secY;
+		this.controlX = contX;
+		this.controlY = contY;
+
+		this.moveTo.setX(startPointX);
+		this.moveTo.setY(startPointY);
+		this.quadTo.setControlX(contX);
+		this.quadTo.setControlY(contY);
+		this.quadTo.setX(endPointX);
+		this.quadTo.setY(endPointY);
+
+		this.path.getElements().add(this.moveTo);
+		this.path.getElements().add(this.quadTo);
+
+		this.path.setStrokeWidth(5.0f);
+
+		gc.getChildren().add(this.path);
+	}
 	public DoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc,
 			String paint)
 	{

@@ -90,6 +90,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import javafx.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
@@ -792,7 +793,10 @@ public class MainWindowController
 					double x = event.getSceneX();
 					double y = event.getSceneY();
 
-					double tempFirstX = 0, tempFirstY = 0, tempSecX = 0, tempSecY = 0;
+					double control1X = 0;
+					double control2X = 0;
+					double control1Y = 0;
+					double control2Y = 0;
 
 					for (Circle myCircle : circleList)
 					{
@@ -823,33 +827,23 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										double angle = ha.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-										double mvX = doubleArrow.calculateDoubleArrowX(angle, _cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-										double mvY = doubleArrow.calculateDoubleArrowY(angle, _cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
 
-										if(Math.abs(mvX-mvY) < 2)
-										{
-											if(mvX > mvY)
-											{
-												mvX = mvX + 2;
-												mvY = mvY - 2;
-											}
-											if(mvY > mvX)
-											{
-												mvY = mvY + 2;
-												mvX = mvX - 2;
-											}
-										}
 
-										_cFirstPosX += mvX;
-										_cFirstPosY += mvY;
-										_cSecPosX += mvX;
-										_cSecPosY += mvY;
+										Pair<Double,Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										double midX = pair.getKey();
+										double midY = pair.getValue();
 
-										tempFirstX = ha.getStartX() - mvX;
-										tempFirstY = ha.getStartY() - mvY;
-										tempSecX = ha.getEndX() - mvX;
-										tempSecY = ha.getEndY() - mvY;
+										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										double moveX = pair2.getKey();
+										double moveY = pair2.getValue();
+
+										control1X = midX + moveX;
+										control2X = midX - moveX;
+										control1Y = midY + moveY;
+										control2Y = midY - moveY;
+
+										
+
 
 
 										ha.removeFromMainPane(mainPane);
@@ -861,17 +855,9 @@ public class MainWindowController
 
 								if (_index != -1)
 								{
-									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
-											mainPane);
-									headArrow.setFill(arrowColor);
-									headArrowList.add(headArrow);
-									headArrow.addToMainPane(mainPane);
+									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y, _cSecPosX, _cSecPosY, mainPane);
 
-									HeadArrow headArrow2 = new HeadArrow(tempFirstX, tempFirstY, tempSecX, tempSecY,
-											mainPane);
-									headArrow2.setFill(arrowColor);
-									headArrowList.add(headArrow2);
-									headArrow2.addToMainPane(mainPane);
+									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y, _cFirstPosX, _cFirstPosY, mainPane);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
@@ -881,10 +867,6 @@ public class MainWindowController
 									_cSecPosY = 0;
 
 
-									tempFirstX = 0;
-									tempFirstY = 0;
-									tempSecX = 0;
-									tempSecY = 0;
 
 									secondObject = "";
 									break;
@@ -902,6 +884,11 @@ public class MainWindowController
 
 
 									setMiddleLabelText("Second point of line...");
+
+
+
+
+
 
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
@@ -950,33 +937,19 @@ public class MainWindowController
 									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
 											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
 									{
-										double angle = ha.returnAngle(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-										double mvX = doubleArrow.calculateDoubleArrowX(angle, _cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
-										double mvY = doubleArrow.calculateDoubleArrowY(angle, _cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
 
-										if(Math.abs(mvX-mvY) < 2)
-										{
-											if(mvX > mvY)
-											{
-												mvX = mvX + 2;
-												mvY = mvY - 2;
-											}
-											if(mvY > mvX)
-											{
-												mvY = mvY + 2;
-												mvX = mvX - 2;
-											}
-										}
+										Pair<Double,Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										double midX = pair.getKey();
+										double midY = pair.getValue();
 
-										_cFirstPosX += mvX;
-										_cFirstPosY += mvY;
-										_cSecPosX += mvX;
-										_cSecPosY += mvY;
+										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY);
+										double moveX = pair2.getKey();
+										double moveY = pair2.getValue();
 
-										tempFirstX = ha.getStartX() - mvX;
-										tempFirstY = ha.getStartY() - mvY;
-										tempSecX = ha.getEndX() - mvX;
-										tempSecY = ha.getEndY() - mvY;
+										control1X = midX + moveX;
+										control2X = midX - moveX;
+										control1Y = midY + moveY;
+										control2Y = midY - moveY;
 
 
 										ha.removeFromMainPane(mainPane);
@@ -987,18 +960,10 @@ public class MainWindowController
 								}
 								if (_index != -1)
 								{
-									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
-											mainPane);
-									headArrow.setFill(arrowColor);
-									headArrowList.add(headArrow);
-									headArrow.addToMainPane(mainPane);
+									DoubleArrow path1 = new DoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y, _cSecPosX, _cSecPosY, mainPane);
 
+									DoubleArrow path2 = new DoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y, _cFirstPosX, _cFirstPosY, mainPane);
 
-									HeadArrow headArrow2 = new HeadArrow(tempFirstX, tempFirstY, tempSecX, tempSecY,
-											mainPane);
-									headArrow2.setFill(arrowColor);
-									headArrowList.add(headArrow2);
-									headArrow2.addToMainPane(mainPane);
 
 
 									setMiddleLabelText("Second point of line...");
@@ -1008,21 +973,22 @@ public class MainWindowController
 									_cSecPosX = 0;
 									_cSecPosY = 0;
 
-									tempFirstX = 0;
-									tempFirstY = 0;
-									tempSecX = 0;
-									tempSecY = 0;
 									secondObject = "";
 									break;
 
 								} else
 								{
+
+
 									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
 											mainPane);
 									headArrow.setFill(arrowColor);
 									headArrowList.add(headArrow);
 									headArrow.addToMainPane(mainPane);
 									setMiddleLabelText("Second point of line...");
+
+
+
 
 									_cFirstPosX = 0;
 									_cFirstPosY = 0;
