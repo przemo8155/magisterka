@@ -547,8 +547,48 @@ public class MainWindowController
 					}
 				}
 
+				for (LeftDoubleArrow da : leftDoubleArrowList)
+				{
+					if (da.getStartX() - 20 == r.getX() && da.getStartY() - 20 == r.getY())
+					{
+						leftStartDoubleArrowList.add(da);
+					}
+				}
+
+				for (LeftDoubleArrow da : leftDoubleArrowList)
+				{
+					if (da.getEndX() - 20 == r.getX() && da.getEndY() - 20 == r.getY())
+					{
+						leftEndDoubleArrowList.add(da);
+					}
+				}
+
+				for (RightDoubleArrow da : rightDoubleArrowList)
+				{
+					if (da.getStartX() - 20 == r.getX() && da.getStartY() - 20 == r.getY())
+					{
+						rightStartDoubleArrowList.add(da);
+					}
+				}
+
+				for (RightDoubleArrow da : rightDoubleArrowList)
+				{
+					if (da.getEndX() - 20 == r.getX() && da.getEndY() - 20 == r.getY())
+					{
+						rightEndDoubleArrowList.add(da);
+					}
+				}
+
+
+
 				headArrowList.removeAll(startHeadArrowList);
 				headArrowList.removeAll(endHeadArrowList);
+
+				leftDoubleArrowList.removeAll(leftStartDoubleArrowList);
+				leftDoubleArrowList.removeAll(leftEndDoubleArrowList);
+
+				rightDoubleArrowList.removeAll(rightStartDoubleArrowList);
+				rightDoubleArrowList.removeAll(rightEndDoubleArrowList);
 
 				double offsetX = t.getSceneX() - orgSceneX;
 				double offsetY = t.getSceneY() - orgSceneY;
@@ -577,10 +617,43 @@ public class MainWindowController
 					ha.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 				}
 
+				for(LeftDoubleArrow da : leftStartDoubleArrowList)
+				{
+					da.setLeftArrowStartX(r.getX() + 20, mainPane);
+					da.setLeftArrowStartY(r.getY() + 20, mainPane);
+				}
+
+				for(LeftDoubleArrow da : leftEndDoubleArrowList)
+				{
+					da.setLeftArrowEndX(r.getX() + 20, mainPane);
+					da.setLeftArrowEndY(r.getY() + 20, mainPane);
+				}
+
+				for(RightDoubleArrow da : rightStartDoubleArrowList)
+				{
+					da.setRightArrowStartX(r.getX() + 20, mainPane);
+					da.setRightArrowStartY(r.getY() + 20, mainPane);
+				}
+
+				for(RightDoubleArrow da : rightEndDoubleArrowList)
+				{
+					da.setRightArrowEndX(r.getX() + 20, mainPane);
+					da.setRightArrowEndY(r.getY() + 20, mainPane);
+				}
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
 
+				leftDoubleArrowList.addAll(leftStartDoubleArrowList);
+				leftDoubleArrowList.addAll(leftEndDoubleArrowList);
+
+				rightDoubleArrowList.addAll(rightStartDoubleArrowList);
+				rightDoubleArrowList.addAll(rightEndDoubleArrowList);
+
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+				utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
+				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
+
 
 				for (HeadArrow ha : headArrowList)
 				{
