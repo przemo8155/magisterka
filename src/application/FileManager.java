@@ -363,33 +363,33 @@ public class FileManager
 					while (scanner.hasNext())
 					{
 						t = scanner.next();
-						if(t.equals("leftDouble"))
+						if (t.equals("leftDouble"))
 						{
 							break;
 						}
 
-							switch (faze)
-							{
-								case 1:
-									ls1 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 2:
-									ls2 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 3:
-									le1 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 4:
-									le2 = Double.parseDouble(t);
-									faze = 1;
-									HeadArrow ha = new HeadArrow(ls1, ls2, le1, le2, gc);
-									arrows.add(ha);
-									break;
+						switch (faze)
+						{
+							case 1:
+								ls1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 2:
+								ls2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 3:
+								le1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 4:
+								le2 = Double.parseDouble(t);
+								faze = 1;
+								HeadArrow ha = new HeadArrow(ls1, ls2, le1, le2, gc);
+								arrows.add(ha);
+								break;
 
-							}
+						}
 
 					}
 				}
@@ -416,41 +416,41 @@ public class FileManager
 					while (scanner.hasNext())
 					{
 						t = scanner.next();
-						if(t.equals("rightDouble"))
+						if (t.equals("rightDouble"))
 						{
 							break;
 						}
 
-							switch (faze)
-							{
-								case 1:
-									as1 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 2:
-									as2 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 3:
-									ac1 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 4:
-									ac2 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 5:
-									ae1 = Double.parseDouble(t);
-									faze += 1;
-									break;
-								case 6:
-									ae2 = Double.parseDouble(t);
-									faze = 1;
-									LeftDoubleArrow lda = new LeftDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
-									leftDoubleArrows.add(lda);
-									break;
+						switch (faze)
+						{
+							case 1:
+								as1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 2:
+								as2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 3:
+								ac1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 4:
+								ac2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 5:
+								ae1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 6:
+								ae2 = Double.parseDouble(t);
+								faze = 1;
+								LeftDoubleArrow lda = new LeftDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
+								leftDoubleArrows.add(lda);
+								break;
 
-							}
+						}
 
 					}
 				}

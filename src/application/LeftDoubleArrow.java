@@ -49,15 +49,14 @@ public class LeftDoubleArrow
 	{
 		double angle = headArrow.returnAngle(firstX, firstY, secX, secY);
 		double calcAngle = angle % 90;
-		double mvX = ((90 - calcAngle) * multiply)  * moveInDoubleLine;
+		double mvX = ((90 - calcAngle) * multiply) * moveInDoubleLine;
 		double mvY = calcAngle * multiply * moveInDoubleLine;
-		if(angle >= 0 && angle <= 90 || angle > 180 && angle <= 270)
+		if (angle >= 0 && angle <= 90 || angle > 180 && angle <= 270)
 		{
-			return new Pair<>(moveInDoubleLine-mvX,moveInDoubleLine-mvY);
+			return new Pair<>(moveInDoubleLine - mvX, moveInDoubleLine - mvY);
 
-		}
-		else
-			return new Pair<>(mvX,mvY);
+		} else
+			return new Pair<>(mvX, mvY);
 	}
 
 	public final void setRight(double valX, double valY, Pane gc)
@@ -122,8 +121,6 @@ public class LeftDoubleArrow
 		gc.getChildren().add(left);
 	}
 
-
-
 	public LeftDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY)
 	{
 		double angle = headArrow.returnAngle(firstX, firstY, secX, secY);
@@ -145,8 +142,6 @@ public class LeftDoubleArrow
 		this.endPointY = secY;
 		this.controlX = contX;
 		this.controlY = contY;
-
-
 
 		this.moveTo.setX(startPointX + myX);
 		this.moveTo.setY(startPointY + myY);
@@ -174,23 +169,15 @@ public class LeftDoubleArrow
 		gc.getChildren().add(this.right);
 	}
 
-
-
-
 	public final void setLeftArrowStartX(double val, Pane gc)
 	{
 		gc.getChildren().remove(this.path);
 		this.startPointX = val;
 		this.path = new Path();
 
-
-
 		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
-
-
-
 
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
@@ -210,14 +197,11 @@ public class LeftDoubleArrow
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
 
-
-
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
 
 		this.path.setStrokeWidth(5.0f);
 		gc.getChildren().add(this.path);
-
 
 	}
 
@@ -231,8 +215,6 @@ public class LeftDoubleArrow
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
 
-
-
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
@@ -250,7 +232,6 @@ public class LeftDoubleArrow
 		this.quadTo.setControlY(controlY);
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
-
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -271,8 +252,6 @@ public class LeftDoubleArrow
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
 
-
-
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
@@ -290,7 +269,6 @@ public class LeftDoubleArrow
 		this.quadTo.setControlY(controlY);
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
-
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -311,7 +289,6 @@ public class LeftDoubleArrow
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
 
-
 		Pair<Double, Double> pair = returnMiddlePoint(startPointX, startPointY, endPointX, endPointY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
@@ -330,7 +307,6 @@ public class LeftDoubleArrow
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
 
-
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
 
@@ -339,8 +315,6 @@ public class LeftDoubleArrow
 		gc.getChildren().add(this.path);
 
 	}
-
-
 
 	public final void setRightArrowStartX(double val, Pane gc)
 	{
@@ -366,14 +340,11 @@ public class LeftDoubleArrow
 		this.quadTo.setX(endPointX);
 		this.quadTo.setY(endPointY);
 
-
-
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
 
 		this.path.setStrokeWidth(5.0f);
 		gc.getChildren().add(this.path);
-
 
 	}
 
@@ -401,7 +372,6 @@ public class LeftDoubleArrow
 		this.quadTo.setX(endPointX);
 		this.quadTo.setY(endPointY);
 
-
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
 
@@ -428,15 +398,12 @@ public class LeftDoubleArrow
 		this.controlX = midX - moveX;
 		this.controlY = midY - moveY;
 
-
-
 		this.moveTo.setX(startPointX);
 		this.moveTo.setY(startPointY);
 		this.quadTo.setControlX(controlX);
 		this.quadTo.setControlY(controlY);
 		this.quadTo.setX(endPointX);
 		this.quadTo.setY(endPointY);
-
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -479,16 +446,6 @@ public class LeftDoubleArrow
 		gc.getChildren().add(this.path);
 
 	}
-
-
-
-
-
-
-
-
-
-
 
 	public LeftDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc,
 			String paint)
@@ -648,6 +605,5 @@ public class LeftDoubleArrow
 		this.left.setStroke(Paint.valueOf(val));
 		this.right.setStroke(Paint.valueOf(val));
 	}
-
 
 }

@@ -461,7 +461,7 @@ public class MainWindowController
 					ha.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 				}
 
-				for(LeftDoubleArrow da : leftStartDoubleArrowList)
+				for (LeftDoubleArrow da : leftStartDoubleArrowList)
 				{
 					da.setLeftArrowStartX(c.getCenterX(), mainPane);
 					da.setLeftArrowStartY(c.getCenterY(), mainPane);
@@ -470,7 +470,7 @@ public class MainWindowController
 					da.setFill(arrowColor);
 				}
 
-				for(LeftDoubleArrow da : leftEndDoubleArrowList)
+				for (LeftDoubleArrow da : leftEndDoubleArrowList)
 				{
 					da.setLeftArrowEndX(c.getCenterX(), mainPane);
 					da.setLeftArrowEndY(c.getCenterY(), mainPane);
@@ -479,7 +479,7 @@ public class MainWindowController
 					da.setFill(arrowColor);
 				}
 
-				for(RightDoubleArrow da : rightStartDoubleArrowList)
+				for (RightDoubleArrow da : rightStartDoubleArrowList)
 				{
 					da.setRightArrowStartX(c.getCenterX(), mainPane);
 					da.setRightArrowStartY(c.getCenterY(), mainPane);
@@ -488,7 +488,7 @@ public class MainWindowController
 					da.setFill(arrowColor);
 				}
 
-				for(RightDoubleArrow da : rightEndDoubleArrowList)
+				for (RightDoubleArrow da : rightEndDoubleArrowList)
 				{
 					da.setRightArrowEndX(c.getCenterX(), mainPane);
 					da.setRightArrowEndY(c.getCenterY(), mainPane);
@@ -599,8 +599,6 @@ public class MainWindowController
 					}
 				}
 
-
-
 				headArrowList.removeAll(startHeadArrowList);
 				headArrowList.removeAll(endHeadArrowList);
 
@@ -637,28 +635,28 @@ public class MainWindowController
 					ha.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 				}
 
-				for(LeftDoubleArrow da : leftStartDoubleArrowList)
+				for (LeftDoubleArrow da : leftStartDoubleArrowList)
 				{
 					da.setLeftArrowStartX(r.getX() + 20, mainPane);
 					da.setLeftArrowStartY(r.getY() + 20, mainPane);
 					da.setFill(arrowColor);
 				}
 
-				for(LeftDoubleArrow da : leftEndDoubleArrowList)
+				for (LeftDoubleArrow da : leftEndDoubleArrowList)
 				{
 					da.setLeftArrowEndX(r.getX() + 20, mainPane);
 					da.setLeftArrowEndY(r.getY() + 20, mainPane);
 					da.setFill(arrowColor);
 				}
 
-				for(RightDoubleArrow da : rightStartDoubleArrowList)
+				for (RightDoubleArrow da : rightStartDoubleArrowList)
 				{
 					da.setRightArrowStartX(r.getX() + 20, mainPane);
 					da.setRightArrowStartY(r.getY() + 20, mainPane);
 					da.setFill(arrowColor);
 				}
 
-				for(RightDoubleArrow da : rightEndDoubleArrowList)
+				for (RightDoubleArrow da : rightEndDoubleArrowList)
 				{
 					da.setRightArrowEndX(r.getX() + 20, mainPane);
 					da.setRightArrowEndY(r.getY() + 20, mainPane);
@@ -677,7 +675,6 @@ public class MainWindowController
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 				utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
 				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
-
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -738,7 +735,6 @@ public class MainWindowController
 								}
 							}
 
-
 							for (LeftDoubleArrow da : leftDoubleArrowList)
 							{
 								if (da.getStartX() == myCircle.getCenterX() && da.getStartY() == myCircle.getCenterY())
@@ -770,7 +766,6 @@ public class MainWindowController
 									rightEndDoubleArrowList.add(da);
 								}
 							}
-
 
 							if (!startHeadArrowList.isEmpty())
 							{
@@ -865,33 +860,35 @@ public class MainWindowController
 								}
 							}
 
-							for(LeftDoubleArrow da : leftDoubleArrowList)
+							for (LeftDoubleArrow da : leftDoubleArrowList)
 							{
-								if(da.getStartX() == myRectangle.getX() + 20 && da.getStartY() == myRectangle.getY() + 20)
+								if (da.getStartX() == myRectangle.getX() + 20
+										&& da.getStartY() == myRectangle.getY() + 20)
 								{
 									leftStartDoubleArrowList.add(da);
 								}
 							}
 
-							for(LeftDoubleArrow da : leftDoubleArrowList)
+							for (LeftDoubleArrow da : leftDoubleArrowList)
 							{
-								if(da.getEndX() == myRectangle.getX() + 20 && da.getEndY() == myRectangle.getY() + 20)
+								if (da.getEndX() == myRectangle.getX() + 20 && da.getEndY() == myRectangle.getY() + 20)
 								{
 									leftEndDoubleArrowList.add(da);
 								}
 							}
 
-							for(RightDoubleArrow da : rightDoubleArrowList)
+							for (RightDoubleArrow da : rightDoubleArrowList)
 							{
-								if(da.getStartX() == myRectangle.getX() + 20 && da.getStartY() == myRectangle.getY() + 20)
+								if (da.getStartX() == myRectangle.getX() + 20
+										&& da.getStartY() == myRectangle.getY() + 20)
 								{
 									rightStartDoubleArrowList.add(da);
 								}
 							}
 
-							for(RightDoubleArrow da : rightDoubleArrowList)
+							for (RightDoubleArrow da : rightDoubleArrowList)
 							{
-								if(da.getEndX() == myRectangle.getX() + 20 && da.getEndY() == myRectangle.getY() + 20)
+								if (da.getEndX() == myRectangle.getX() + 20 && da.getEndY() == myRectangle.getY() + 20)
 								{
 									rightEndDoubleArrowList.add(da);
 								}
@@ -1063,11 +1060,11 @@ public class MainWindowController
 
 								if (_index != -1)
 								{
-									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
-											_cSecPosX, _cSecPosY);
+									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X,
+											control1Y, _cSecPosX, _cSecPosY);
 
-									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
-											_cFirstPosX, _cFirstPosY);
+									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X,
+											control2Y, _cFirstPosX, _cFirstPosY);
 
 									path1.addToMainPane(mainPane);
 									path2.addToMainPane(mainPane);
@@ -1170,11 +1167,11 @@ public class MainWindowController
 								}
 								if (_index != -1)
 								{
-									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
-											_cSecPosX, _cSecPosY);
+									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X,
+											control1Y, _cSecPosX, _cSecPosY);
 
-									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
-											_cFirstPosX, _cFirstPosY);
+									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X,
+											control2Y, _cFirstPosX, _cFirstPosY);
 
 									path1.addToMainPane(mainPane);
 									path2.addToMainPane(mainPane);
@@ -1233,7 +1230,8 @@ public class MainWindowController
 		{
 			case "move":
 				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList))
+				while (_it < utilities.takeMaximumFromLists(circleList, squareList, headArrowList, leftDoubleArrowList,
+						rightDoubleArrowList))
 				{
 					try
 					{
@@ -1368,7 +1366,6 @@ public class MainWindowController
 		}
 	};
 
-
 	@FXML
 	void saveFileMenuItem_OnAction(ActionEvent event)
 	{
@@ -1401,12 +1398,12 @@ public class MainWindowController
 			ha.removeFromMainPane(mainPane);
 		}
 
-		for(LeftDoubleArrow lda : leftDoubleArrowList)
+		for (LeftDoubleArrow lda : leftDoubleArrowList)
 		{
 			lda.removeFromMainPane(mainPane);
 		}
 
-		for(RightDoubleArrow rda : rightDoubleArrowList)
+		for (RightDoubleArrow rda : rightDoubleArrowList)
 		{
 			rda.removeFromMainPane(mainPane);
 		}
@@ -1416,7 +1413,8 @@ public class MainWindowController
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		squareList.clear();
-		fileManager.OpenFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList, mainPane);
+		fileManager.OpenFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+				mainPane);
 
 		for (Circle c : circleList)
 		{
@@ -1437,12 +1435,12 @@ public class MainWindowController
 			ha.addToMainPane(mainPane);
 		}
 
-		for(LeftDoubleArrow lda : leftDoubleArrowList)
+		for (LeftDoubleArrow lda : leftDoubleArrowList)
 		{
 			lda.addToMainPane(mainPane);
 		}
 
-		for(RightDoubleArrow rda : rightDoubleArrowList)
+		for (RightDoubleArrow rda : rightDoubleArrowList)
 		{
 			rda.addToMainPane(mainPane);
 		}
@@ -1656,12 +1654,12 @@ public class MainWindowController
 			ha.setFill(headArrowList, arrowColor);
 		}
 
-		for(LeftDoubleArrow lda : leftDoubleArrowList)
+		for (LeftDoubleArrow lda : leftDoubleArrowList)
 		{
 			lda.setFill(leftDoubleArrowList, arrowColor);
 		}
 
-		for(RightDoubleArrow rda : rightDoubleArrowList)
+		for (RightDoubleArrow rda : rightDoubleArrowList)
 		{
 			rda.setFill(rightDoubleArrowList, arrowColor);
 		}

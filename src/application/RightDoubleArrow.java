@@ -49,15 +49,14 @@ public class RightDoubleArrow
 	{
 		double angle = headArrow.returnAngle(firstX, firstY, secX, secY);
 		double calcAngle = angle % 90;
-		double mvX = ((90 - calcAngle) * multiply)  * moveInDoubleLine;
+		double mvX = ((90 - calcAngle) * multiply) * moveInDoubleLine;
 		double mvY = calcAngle * multiply * moveInDoubleLine;
-		if(angle >= 0 && angle <= 90 || angle > 180 && angle <= 270)
+		if (angle >= 0 && angle <= 90 || angle > 180 && angle <= 270)
 		{
-			return new Pair<>(moveInDoubleLine-mvX,moveInDoubleLine-mvY);
+			return new Pair<>(moveInDoubleLine - mvX, moveInDoubleLine - mvY);
 
-		}
-		else
-			return new Pair<>(mvX,mvY);
+		} else
+			return new Pair<>(mvX, mvY);
 	}
 
 	public final void setRight(double valX, double valY, Pane gc)
@@ -122,10 +121,6 @@ public class RightDoubleArrow
 		gc.getChildren().add(left);
 	}
 
-
-
-
-
 	public RightDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY)
 	{
 		double angle = headArrow.returnAngle(firstX, firstY, secX, secY);
@@ -174,7 +169,6 @@ public class RightDoubleArrow
 		gc.getChildren().add(this.right);
 	}
 
-
 	public final void setLeftArrowStartX(double val, Pane gc)
 	{
 		gc.getChildren().remove(this.path);
@@ -199,14 +193,11 @@ public class RightDoubleArrow
 		this.quadTo.setX(endPointX);
 		this.quadTo.setY(endPointY);
 
-
-
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
 
 		this.path.setStrokeWidth(5.0f);
 		gc.getChildren().add(this.path);
-
 
 	}
 
@@ -233,7 +224,6 @@ public class RightDoubleArrow
 		this.quadTo.setControlY(controlY);
 		this.quadTo.setX(endPointX);
 		this.quadTo.setY(endPointY);
-
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -267,7 +257,6 @@ public class RightDoubleArrow
 		this.quadTo.setControlY(controlY);
 		this.quadTo.setX(endPointX);
 		this.quadTo.setY(endPointY);
-
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -311,8 +300,6 @@ public class RightDoubleArrow
 
 	}
 
-
-
 	public final void setRightArrowStartX(double val, Pane gc)
 	{
 		gc.getChildren().remove(this.path);
@@ -341,14 +328,11 @@ public class RightDoubleArrow
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
 
-
-
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
 
 		this.path.setStrokeWidth(5.0f);
 		gc.getChildren().add(this.path);
-
 
 	}
 
@@ -379,7 +363,6 @@ public class RightDoubleArrow
 		this.quadTo.setControlY(controlY);
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
-
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -417,7 +400,6 @@ public class RightDoubleArrow
 		this.quadTo.setControlY(controlY);
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
-
 
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
@@ -464,16 +446,6 @@ public class RightDoubleArrow
 		gc.getChildren().add(this.path);
 
 	}
-
-
-
-
-
-
-
-
-
-
 
 	public RightDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc,
 			String paint)
@@ -553,7 +525,6 @@ public class RightDoubleArrow
 	{
 		return this.controlY;
 	}
-
 
 	public final double getStartX()
 	{
