@@ -13,11 +13,16 @@ import javafx.util.Pair;
 public class RightDoubleArrow
 {
 
+	public double x1, y1, x2, y2;
+
 	public Path path = new Path();
 	public MoveTo moveTo = new MoveTo();
 	public QuadCurveTo quadTo = new QuadCurveTo();
 	public HeadArrow headArrow = new HeadArrow();
 	public Line left, right;
+
+	private static double arrowLength = 30.0;
+	private static double arrowAngle = Math.toRadians(8.0);
 
 	static int doubleArrowMove = 100;
 
@@ -55,6 +60,70 @@ public class RightDoubleArrow
 			return new Pair<>(mvX,mvY);
 	}
 
+	public final void setRight(double valX, double valY, Pane gc)
+	{
+		gc.getChildren().remove(right);
+		this.x1 = valX;
+		this.y1 = valY;
+		double arrowLength = 30;
+		double arrowWidth = 5;
+		double sx = this.controlX;
+		double ex = this.endPointX;
+		double sy = this.controlY;
+		double ey = this.endPointY;
+		double factor = arrowLength / Math.hypot(sx - ex, sy - ey);
+		double factorO = arrowWidth / Math.hypot(sx - ex, sy - ey);
+
+		// part in direction of main line
+		double dx = (sx - ex) * factor;
+		double dy = (sy - ey) * factor;
+
+		// part ortogonal to main line
+		double ox = (sx - ex) * factorO;
+		double oy = (sy - ey) * factorO;
+
+		double myAngle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = headArrow.calculateX(myAngle);
+		double calY = headArrow.calculateY(myAngle);
+
+		this.right = new Line(endPointX - calX, endPointY - calY, ex + dx + oy - calX, ey + dy - ox - calY);
+		right.setStrokeWidth(5.0f);
+		gc.getChildren().add(right);
+	}
+
+	public final void setLeft(double valX, double valY, Pane gc)
+	{
+		gc.getChildren().remove(left);
+		this.x1 = valX;
+		this.y1 = valY;
+		double arrowLength = 30;
+		double arrowWidth = 5;
+		double sx = this.controlX;
+		double ex = this.endPointX;
+		double sy = this.controlY;
+		double ey = this.endPointY;
+		double factor = arrowLength / Math.hypot(sx - ex, sy - ey);
+		double factorO = arrowWidth / Math.hypot(sx - ex, sy - ey);
+
+		// part in direction of main line
+		double dx = (sx - ex) * factor;
+		double dy = (sy - ey) * factor;
+
+		// part ortogonal to main line
+		double ox = (sx - ex) * factorO;
+		double oy = (sy - ey) * factorO;
+
+		double myAngle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
+		double calX = headArrow.calculateX(myAngle);
+		double calY = headArrow.calculateY(myAngle);
+
+		this.left = new Line(endPointX - calX, endPointY - calY, ex + dx - oy - calX, ey + dy + ox - calY);
+		left.setStrokeWidth(5.0f);
+		gc.getChildren().add(left);
+	}
+
+
+
 
 
 	public RightDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY)
@@ -63,8 +132,6 @@ public class RightDoubleArrow
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
 
-		double arrowAngle = Math.toRadians(8.0);
-		double arrowLength = 30.0;
 		double dx = contX - secX;
 		double dy = contY - secY;
 		double angle2 = Math.atan2(dy, dx);

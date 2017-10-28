@@ -465,6 +465,8 @@ public class MainWindowController
 				{
 					da.setLeftArrowStartX(c.getCenterX(), mainPane);
 					da.setLeftArrowStartY(c.getCenterY(), mainPane);
+					da.setLeft(c.getCenterX(), c.getCenterY(), mainPane);
+					da.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 					da.setFill(arrowColor);
 				}
 
@@ -472,6 +474,8 @@ public class MainWindowController
 				{
 					da.setLeftArrowEndX(c.getCenterX(), mainPane);
 					da.setLeftArrowEndY(c.getCenterY(), mainPane);
+					da.setLeft(c.getCenterX(), c.getCenterY(), mainPane);
+					da.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 					da.setFill(arrowColor);
 				}
 
@@ -479,6 +483,8 @@ public class MainWindowController
 				{
 					da.setRightArrowStartX(c.getCenterX(), mainPane);
 					da.setRightArrowStartY(c.getCenterY(), mainPane);
+					da.setLeft(c.getCenterX(), c.getCenterY(), mainPane);
+					da.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 					da.setFill(arrowColor);
 				}
 
@@ -486,6 +492,8 @@ public class MainWindowController
 				{
 					da.setRightArrowEndX(c.getCenterX(), mainPane);
 					da.setRightArrowEndY(c.getCenterY(), mainPane);
+					da.setLeft(c.getCenterX(), c.getCenterY(), mainPane);
+					da.setRight(c.getCenterX(), c.getCenterY(), mainPane);
 					da.setFill(arrowColor);
 				}
 
