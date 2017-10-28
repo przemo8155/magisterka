@@ -240,7 +240,8 @@ public class MainWindowController
 	public Pane mainPane;
 
 	@FXML
-	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton;
+	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton,
+			removeTokenToggleButton, addTokenToggleButton;
 
 	@FXML
 	private Label middleLabel;
