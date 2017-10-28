@@ -100,7 +100,7 @@ public class FileManager
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
 
-			final String _leftDoubleArrows = "leftDoubleArrows";
+			final String _leftDoubleArrows = "leftDouble";
 			stringBuilder.append(_leftDoubleArrows);
 			stringBuilder.append(System.getProperty("line.separator"));
 			for (LeftDoubleArrow lda : leftDoubleArrows)
@@ -131,7 +131,7 @@ public class FileManager
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
 
-			final String _rightDoubleArrows = "rightDoubleArrows";
+			final String _rightDoubleArrows = "rightDouble";
 			stringBuilder.append(_rightDoubleArrows);
 			stringBuilder.append(System.getProperty("line.separator"));
 			for (RightDoubleArrow lda : rightDoubleArrows)
@@ -363,9 +363,10 @@ public class FileManager
 					while (scanner.hasNext())
 					{
 						t = scanner.next();
-
-						while (!(t = scanner.next()).equals("leftDoubleArrows"))
+						if(t.equals("leftDouble"))
 						{
+							break;
+						}
 
 							switch (faze)
 							{
@@ -389,7 +390,6 @@ public class FileManager
 									break;
 
 							}
-						}
 
 					}
 				}
@@ -410,46 +410,47 @@ public class FileManager
 			{
 				String tmp = scanner.next();
 
-				if (tmp.equals("leftDoubleArrows"))
+				if (tmp.equals("leftDouble"))
 				{
 					String t;
 					while (scanner.hasNext())
 					{
 						t = scanner.next();
-						while (!(t = scanner.next()).equals("rightDoubleArrows"))
+						if(t.equals("rightDouble"))
 						{
-
-						switch (faze)
-						{
-							case 1:
-								as1 = Double.parseDouble(t);
-								faze += 1;
-								break;
-							case 2:
-								as2 = Double.parseDouble(t);
-								faze += 1;
-								break;
-							case 3:
-								ac1 = Double.parseDouble(t);
-								faze += 1;
-								break;
-							case 4:
-								ac2 = Double.parseDouble(t);
-								faze += 1;
-								break;
-							case 5:
-								ae1 = Double.parseDouble(t);
-								faze += 1;
-								break;
-							case 6:
-								ae2 = Double.parseDouble(t);
-								faze = 1;
-								LeftDoubleArrow lda = new LeftDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
-								leftDoubleArrows.add(lda);
-								break;
-
+							break;
 						}
-						}
+
+							switch (faze)
+							{
+								case 1:
+									as1 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 2:
+									as2 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 3:
+									ac1 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 4:
+									ac2 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 5:
+									ae1 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 6:
+									ae2 = Double.parseDouble(t);
+									faze = 1;
+									LeftDoubleArrow lda = new LeftDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
+									leftDoubleArrows.add(lda);
+									break;
+
+							}
 
 					}
 				}
@@ -470,7 +471,7 @@ public class FileManager
 			{
 				String tmp = scanner.next();
 
-				if (tmp.equals("rightDoubleArrows"))
+				if (tmp.equals("rightDouble"))
 				{
 					String t;
 					while (scanner.hasNext())
