@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.lang.model.element.Element;
@@ -208,6 +210,9 @@ public class MainWindowController
 	ObservableList<RightDoubleArrow> rightDoubleArrowList = FXCollections.observableArrayList();
 	ObservableList<RightDoubleArrow> rightEndDoubleArrowList = FXCollections.observableArrayList();
 	ObservableList<RightDoubleArrow> rightStartDoubleArrowList = FXCollections.observableArrayList();
+
+	Map<Circle, Integer> circleTokensMap = new HashMap<Circle, Integer>();
+	Map<Rectangle, Integer> rectangleTokensMap = new HashMap<Rectangle, Integer>();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -707,6 +712,20 @@ public class MainWindowController
 
 		switch (selectedToggle)
 		{
+			case "addToken":
+				for (Circle c : circleList)
+				{
+					if (event.getSceneX() - circleRay < c.getCenterX() && event.getSceneX() + circleRay > c.getCenterX()
+							&& event.getSceneY() - circleRay - minusWidth < c.getCenterY()
+							&& event.getSceneY() + circleRay - minusWidth > c.getCenterY())
+					{
+						Utilities.infoBox("token");
+					}
+				}
+				break;
+
+			case "removeToken":
+				break;
 
 			case "remove":
 				if (event.getSceneY() > minusWidth + 10)
@@ -1289,12 +1308,16 @@ public class MainWindowController
 		moveToggleButton.setToggleGroup(toggleButtonsGroup);
 		lineToggleButton.setToggleGroup(toggleButtonsGroup);
 		removeToggleButton.setToggleGroup(toggleButtonsGroup);
+		addTokenToggleButton.setToggleGroup(toggleButtonsGroup);
+		removeTokenToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
 		moveToggleButton.setUserData("move");
 		lineToggleButton.setUserData("line");
 		removeToggleButton.setUserData("remove");
+		addTokenToggleButton.setUserData("addToken");
+		removeTokenToggleButton.setUserData("removeToken");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
 		{
@@ -1316,6 +1339,10 @@ public class MainWindowController
 						setMiddleLabelText("Moving objects...");
 					else if (selectedToggle == "remove")
 						setMiddleLabelText("Removing objects...");
+					else if (selectedToggle == "addToken")
+						setMiddleLabelText("Adding tokens...");
+					else if (selectedToggle == "removeToken")
+						setMiddleLabelText("Removing tokens...");
 				}
 
 			}

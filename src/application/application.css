@@ -1,14 +1,14 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 #clearAllButton {
     -fx-background-image: url('resources/clean.png');
-    -fx-background-size: 40px;
+    -fx-background-size: 40.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
 
 #circleToggleButton {
     -fx-background-image: url('resources/circleNoChecked.png');
-    -fx-background-size: 50px;
+    -fx-background-size: 50.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
@@ -20,7 +20,7 @@
 
 #squareToggleButton {
     -fx-background-image: url('resources/squareNoChecked.png');
-    -fx-background-size: 50px;
+    -fx-background-size: 50.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
@@ -31,7 +31,7 @@
 
 #moveToggleButton {
     -fx-background-image: url('resources/moveNoClicked.png');
-    -fx-background-size: 50px;
+    -fx-background-size: 50.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
@@ -42,7 +42,7 @@
 
 #lineToggleButton {
     -fx-background-image: url('resources/lineNoChecked.png');
-    -fx-background-size: 50px;
+    -fx-background-size: 50.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
@@ -53,10 +53,41 @@
 
 #removeToggleButton {
     -fx-background-image: url('resources/remove.png');
-    -fx-background-size: 40px;
+    -fx-background-size: 40.0px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
+
+#removeToggleButton:selected {
+	-fx-background-color: darkgray;
+}
+
+
+
+
+
+#addTokenToggleButton {
+	-fx-background-image: url('resources/addToken.png');
+    -fx-background-size: 40.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#addTokenToggleButton:selected{
+	-fx-background-color: darkgray;
+}
+
+#removeTokenToggleButton {
+	-fx-background-image: url('resources/removeToken.png');
+    -fx-background-size: 40.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#removeTokenToggleButton:selected{
+	-fx-background-color: darkgray;
+}
+
 
 #removeToggleButton:focused {
 	 -fx-background-color: darkgray;
@@ -68,12 +99,12 @@
 
 .menu-item .label {
     -fx-text-fill: black;
-    -fx-font-size: 12
+    -fx-font-size: 12.0
 }
 
 .menu .label {
      -fx-text-fill: black;
-     -fx-font-size: 14
+     -fx-font-size: 14.0
 
 }
 
