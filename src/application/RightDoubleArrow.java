@@ -1,6 +1,7 @@
 
 package application;
 
+import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.MoveTo;
@@ -527,6 +528,19 @@ public class RightDoubleArrow
 	public void removeFromMainPane(Pane gc)
 	{
 		gc.getChildren().remove(this.path);
+	}
+
+	public void setFill(ObservableList<RightDoubleArrow> list, String val)
+	{
+		for (RightDoubleArrow ha : list)
+		{
+			ha.path.setStroke(Paint.valueOf(val));
+		}
+	}
+
+	public void setFill(String val)
+	{
+		this.path.setStroke(Paint.valueOf(val));
 	}
 
 

@@ -393,6 +393,7 @@ public class MainWindowController
 					if (da.getStartX() == c.getCenterX() && da.getStartY() == c.getCenterY())
 					{
 						leftStartDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -401,6 +402,7 @@ public class MainWindowController
 					if (da.getEndX() == c.getCenterX() && da.getEndY() == c.getCenterY())
 					{
 						leftEndDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -409,6 +411,7 @@ public class MainWindowController
 					if (da.getStartX() == c.getCenterX() && da.getStartY() == c.getCenterY())
 					{
 						rightStartDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -417,6 +420,7 @@ public class MainWindowController
 					if (da.getEndX() == c.getCenterX() && da.getEndY() == c.getCenterY())
 					{
 						rightEndDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -461,24 +465,28 @@ public class MainWindowController
 				{
 					da.setLeftArrowStartX(c.getCenterX(), mainPane);
 					da.setLeftArrowStartY(c.getCenterY(), mainPane);
+					da.setFill(arrowColor);
 				}
 
 				for(LeftDoubleArrow da : leftEndDoubleArrowList)
 				{
 					da.setLeftArrowEndX(c.getCenterX(), mainPane);
 					da.setLeftArrowEndY(c.getCenterY(), mainPane);
+					da.setFill(arrowColor);
 				}
 
 				for(RightDoubleArrow da : rightStartDoubleArrowList)
 				{
 					da.setRightArrowStartX(c.getCenterX(), mainPane);
 					da.setRightArrowStartY(c.getCenterY(), mainPane);
+					da.setFill(arrowColor);
 				}
 
 				for(RightDoubleArrow da : rightEndDoubleArrowList)
 				{
 					da.setRightArrowEndX(c.getCenterX(), mainPane);
 					da.setRightArrowEndY(c.getCenterY(), mainPane);
+					da.setFill(arrowColor);
 				}
 
 				headArrowList.addAll(startHeadArrowList);
@@ -552,6 +560,7 @@ public class MainWindowController
 					if (da.getStartX() - 20 == r.getX() && da.getStartY() - 20 == r.getY())
 					{
 						leftStartDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -560,6 +569,7 @@ public class MainWindowController
 					if (da.getEndX() - 20 == r.getX() && da.getEndY() - 20 == r.getY())
 					{
 						leftEndDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -568,6 +578,7 @@ public class MainWindowController
 					if (da.getStartX() - 20 == r.getX() && da.getStartY() - 20 == r.getY())
 					{
 						rightStartDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -576,6 +587,7 @@ public class MainWindowController
 					if (da.getEndX() - 20 == r.getX() && da.getEndY() - 20 == r.getY())
 					{
 						rightEndDoubleArrowList.add(da);
+						da.setFill(arrowColor);
 					}
 				}
 
@@ -621,24 +633,28 @@ public class MainWindowController
 				{
 					da.setLeftArrowStartX(r.getX() + 20, mainPane);
 					da.setLeftArrowStartY(r.getY() + 20, mainPane);
+					da.setFill(arrowColor);
 				}
 
 				for(LeftDoubleArrow da : leftEndDoubleArrowList)
 				{
 					da.setLeftArrowEndX(r.getX() + 20, mainPane);
 					da.setLeftArrowEndY(r.getY() + 20, mainPane);
+					da.setFill(arrowColor);
 				}
 
 				for(RightDoubleArrow da : rightStartDoubleArrowList)
 				{
 					da.setRightArrowStartX(r.getX() + 20, mainPane);
 					da.setRightArrowStartY(r.getY() + 20, mainPane);
+					da.setFill(arrowColor);
 				}
 
 				for(RightDoubleArrow da : rightEndDoubleArrowList)
 				{
 					da.setRightArrowEndX(r.getX() + 20, mainPane);
 					da.setRightArrowEndY(r.getY() + 20, mainPane);
+					da.setFill(arrowColor);
 				}
 
 				headArrowList.addAll(startHeadArrowList);
@@ -965,7 +981,6 @@ public class MainWindowController
 					Rectangle r = new Rectangle(event.getSceneX() - 20, event.getSceneY() - minusWidth - 20, 40.0f,
 							40.0f);
 					r.setFill(Paint.valueOf(rectangleColor));
-					// r.setFill(Paint.valueOf("#ABCDEF"));
 					r.setStroke(Paint.valueOf("#555555"));
 					r.setStrokeWidth(5.0f);
 					mainPane.getChildren().add(r);
@@ -1048,6 +1063,9 @@ public class MainWindowController
 
 									path1.addToMainPane(mainPane);
 									path2.addToMainPane(mainPane);
+
+									path1.setFill(arrowColor);
+									path2.setFill(arrowColor);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
@@ -1152,6 +1170,9 @@ public class MainWindowController
 
 									path1.addToMainPane(mainPane);
 									path2.addToMainPane(mainPane);
+
+									path1.setFill(arrowColor);
+									path2.setFill(arrowColor);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
@@ -1339,58 +1360,6 @@ public class MainWindowController
 		}
 	};
 
-	public enum StageFactory
-	{
-		INSTANCE;
-
-		private final ObservableList<Stage> openStages = FXCollections.observableArrayList();
-
-		public ObservableList<Stage> getOpenStages()
-		{
-			return openStages;
-		}
-
-		private final ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
-
-		public final ObjectProperty<Stage> currentStageProperty()
-		{
-			return this.currentStage;
-		}
-
-		public final javafx.stage.Stage getCurrentStage()
-		{
-			return this.currentStageProperty().get();
-		}
-
-		public final void setCurrentStage(final javafx.stage.Stage currentStage)
-		{
-			this.currentStageProperty().set(currentStage);
-		}
-
-		public void registerStage(Stage stage)
-		{
-			stage.addEventHandler(WindowEvent.WINDOW_SHOWN, e -> openStages.add(stage));
-			stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> openStages.remove(stage));
-			stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) ->
-			{
-				if (isNowFocused)
-				{
-					currentStage.set(stage);
-				} else
-				{
-					currentStage.set(null);
-				}
-			});
-		}
-
-		public Stage createStage()
-		{
-			Stage stage = new Stage();
-			registerStage(stage);
-			return stage;
-		}
-
-	}
 
 	@FXML
 	void saveFileMenuItem_OnAction(ActionEvent event)
@@ -1677,6 +1646,16 @@ public class MainWindowController
 		for (HeadArrow ha : headArrowList)
 		{
 			ha.setFill(headArrowList, arrowColor);
+		}
+
+		for(LeftDoubleArrow lda : leftDoubleArrowList)
+		{
+			lda.setFill(leftDoubleArrowList, arrowColor);
+		}
+
+		for(RightDoubleArrow rda : rightDoubleArrowList)
+		{
+			rda.setFill(rightDoubleArrowList, arrowColor);
 		}
 	}
 
