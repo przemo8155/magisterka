@@ -89,11 +89,13 @@ public class Utilities
 		return w;
 	}
 
-	public void clearAllLists(ObservableList<Circle> circ, ObservableList<Rectangle> rect, ObservableList<HeadArrow> arr)
+	public void clearAllLists(ObservableList<Circle> circ, ObservableList<Rectangle> rect, ObservableList<HeadArrow> arr, ObservableList<LeftDoubleArrow> lda, ObservableList<RightDoubleArrow> rda)
 	{
 		circ.clear();
 		rect.clear();
 		arr.clear();
+		lda.clear();
+		rda.clear();
 	}
 
 	public void clearStartAndEndLineLists(ObservableList<Line> lin1, ObservableList<Line> lin2)

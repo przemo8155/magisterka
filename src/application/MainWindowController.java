@@ -1041,10 +1041,13 @@ public class MainWindowController
 								if (_index != -1)
 								{
 									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
-											_cSecPosX, _cSecPosY, mainPane);
+											_cSecPosX, _cSecPosY);
 
 									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
-											_cFirstPosX, _cFirstPosY, mainPane);
+											_cFirstPosX, _cFirstPosY);
+
+									path1.addToMainPane(mainPane);
+									path2.addToMainPane(mainPane);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
@@ -1142,10 +1145,13 @@ public class MainWindowController
 								if (_index != -1)
 								{
 									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X, control1Y,
-											_cSecPosX, _cSecPosY, mainPane);
+											_cSecPosX, _cSecPosY);
 
 									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X, control2Y,
-											_cFirstPosX, _cFirstPosY, mainPane);
+											_cFirstPosX, _cFirstPosY);
+
+									path1.addToMainPane(mainPane);
+									path2.addToMainPane(mainPane);
 
 									setMiddleLabelText("Second point of line...");
 									headArrowList.remove(_index);
@@ -1247,7 +1253,7 @@ public class MainWindowController
 
 		exportToPdf.setOnAction(exportPdf.exportToPdfEventHandler);
 
-		utilities.clearAllLists(circleList, squareList, headArrowList);
+		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList);
 
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -1390,7 +1396,7 @@ public class MainWindowController
 	void saveFileMenuItem_OnAction(ActionEvent event)
 	{
 		Stage s = Main.getPrimaryStage();
-		fileManager.SaveFile(s, circleList, squareList, headArrowList);
+		fileManager.SaveFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList);
 		Boolean fileSaved = fileManager.getSomethingSaved();
 		if (fileSaved)
 		{
@@ -1417,12 +1423,23 @@ public class MainWindowController
 		{
 			ha.removeFromMainPane(mainPane);
 		}
-		utilities.clearAllLists(circleList, squareList, headArrowList);
+
+		for(LeftDoubleArrow lda : leftDoubleArrowList)
+		{
+			lda.removeFromMainPane(mainPane);
+		}
+
+		for(RightDoubleArrow rda : rightDoubleArrowList)
+		{
+			rda.removeFromMainPane(mainPane);
+		}
+
+		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		squareList.clear();
-		fileManager.OpenFile(s, circleList, squareList, headArrowList, mainPane);
+		fileManager.OpenFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList, mainPane);
 
 		for (Circle c : circleList)
 		{
@@ -1441,6 +1458,16 @@ public class MainWindowController
 		for (HeadArrow ha : headArrowList)
 		{
 			ha.addToMainPane(mainPane);
+		}
+
+		for(LeftDoubleArrow lda : leftDoubleArrowList)
+		{
+			lda.addToMainPane(mainPane);
+		}
+
+		for(RightDoubleArrow rda : rightDoubleArrowList)
+		{
+			rda.addToMainPane(mainPane);
 		}
 
 		Boolean fileOpened = fileManager.getSomethingOpened();

@@ -54,7 +54,7 @@ public class LeftDoubleArrow
 
 
 
-	public LeftDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY, Pane gc)
+	public LeftDoubleArrow(double firstX, double firstY, double contX, double contY, double secX, double secY)
 	{
 		double angle = headArrow.returnAngle(firstX, firstY, secX, secY);
 		double myX = headArrow.calculateX(angle);
@@ -81,8 +81,13 @@ public class LeftDoubleArrow
 
 		this.path.setStrokeWidth(5.0f);
 
+	}
+
+	public void addToMainPane(Pane gc)
+	{
 		gc.getChildren().add(this.path);
 	}
+
 
 
 
@@ -462,6 +467,15 @@ public class LeftDoubleArrow
 		gc.getChildren().add(this.path);
 	}
 
+	public final double getControlX()
+	{
+		return this.controlX;
+	}
+
+	public final double getControlY()
+	{
+		return this.controlY;
+	}
 
 	public final double getStartX()
 	{

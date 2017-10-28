@@ -37,11 +37,11 @@ public class FileManager
 	public Boolean somethingOpened = false;
 	public Boolean somethingSaved = false;
 
-
 	String key = "przemkeb123123zx";
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<HeadArrow> arrows)
+			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
+			ObservableList<RightDoubleArrow> rightDoubleArrows)
 	{
 		try
 		{
@@ -100,6 +100,68 @@ public class FileManager
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
 
+			final String _leftDoubleArrows = "leftDoubleArrows";
+			stringBuilder.append(_leftDoubleArrows);
+			stringBuilder.append(System.getProperty("line.separator"));
+			for (LeftDoubleArrow lda : leftDoubleArrows)
+			{
+				Double _d1 = lda.getStartX();
+				Double _d2 = lda.getStartY();
+				Double _d3 = lda.getControlX();
+				Double _d4 = lda.getControlY();
+				Double _d5 = lda.getEndX();
+				Double _d6 = lda.getEndY();
+				Integer _i1 = _d1.intValue();
+				Integer _i2 = _d2.intValue();
+				Integer _i3 = _d3.intValue();
+				Integer _i4 = _d4.intValue();
+				Integer _i5 = _d5.intValue();
+				Integer _i6 = _d6.intValue();
+				stringBuilder.append(_i1);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i2);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i3);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i4);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i5);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i6);
+				stringBuilder.append(System.getProperty("line.separator"));
+			}
+
+			final String _rightDoubleArrows = "rightDoubleArrows";
+			stringBuilder.append(_rightDoubleArrows);
+			stringBuilder.append(System.getProperty("line.separator"));
+			for (RightDoubleArrow lda : rightDoubleArrows)
+			{
+				Double _d1 = lda.getStartX();
+				Double _d2 = lda.getStartY();
+				Double _d3 = lda.getControlX();
+				Double _d4 = lda.getControlY();
+				Double _d5 = lda.getEndX();
+				Double _d6 = lda.getEndY();
+				Integer _i1 = _d1.intValue();
+				Integer _i2 = _d2.intValue();
+				Integer _i3 = _d3.intValue();
+				Integer _i4 = _d4.intValue();
+				Integer _i5 = _d5.intValue();
+				Integer _i6 = _d6.intValue();
+				stringBuilder.append(_i1);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i2);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i3);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i4);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i5);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i6);
+				stringBuilder.append(System.getProperty("line.separator"));
+			}
+
 			final String stringToFile = stringBuilder.toString();
 			FileChooser fileChooser = new FileChooser();
 			File file;
@@ -154,7 +216,8 @@ public class FileManager
 	}
 
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<HeadArrow> arrows, Pane gc)
+			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
+			ObservableList<RightDoubleArrow> rightDoubleArrows, Pane gc)
 	{
 		try
 		{
@@ -184,7 +247,7 @@ public class FileManager
 				ex.printStackTrace();
 			}
 
-			Reader(decryptedFile, circles, squares, arrows, gc);
+			Reader(decryptedFile, circles, squares, arrows, leftDoubleArrows, rightDoubleArrows, gc);
 			decryptedFile.delete();
 
 		} catch (NullPointerException | IOException ex)
@@ -195,7 +258,8 @@ public class FileManager
 	}
 
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
-			ObservableList<HeadArrow> arrows, Pane gc)
+			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
+			ObservableList<RightDoubleArrow> rightDoubleArrows, Pane gc)
 	{
 		Scanner scanner;
 
@@ -207,6 +271,8 @@ public class FileManager
 		Double g1 = 0.0, g2 = 0.0;
 		Double s1 = 0.0, s2 = 0.0;
 		Double ls1 = 0.0, ls2 = 0.0, le1 = 0.0, le2 = 0.0;
+
+		Double as1 = 0.0, as2 = 0.0, ac1 = 0.0, ac2 = 0.0, ae1 = 0.0, ae2 = 0.0;
 		try
 		{
 			scanner = new Scanner(file);
@@ -298,25 +364,146 @@ public class FileManager
 					{
 						t = scanner.next();
 
+						while (!(t = scanner.next()).equals("leftDoubleArrows"))
+						{
+
+							switch (faze)
+							{
+								case 1:
+									ls1 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 2:
+									ls2 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 3:
+									le1 = Double.parseDouble(t);
+									faze += 1;
+									break;
+								case 4:
+									le2 = Double.parseDouble(t);
+									faze = 1;
+									HeadArrow ha = new HeadArrow(ls1, ls2, le1, le2, gc);
+									arrows.add(ha);
+									break;
+
+							}
+						}
+
+					}
+				}
+
+			}
+
+			scanner.close();
+		} catch (FileNotFoundException e1)
+		{
+			e1.printStackTrace();
+		}
+
+		try
+		{
+			scanner = new Scanner(file);
+
+			while (scanner.hasNext())
+			{
+				String tmp = scanner.next();
+
+				if (tmp.equals("leftDoubleArrows"))
+				{
+					String t;
+					while (scanner.hasNext())
+					{
+						t = scanner.next();
+						while (!(t = scanner.next()).equals("rightDoubleArrows"))
+						{
+
 						switch (faze)
 						{
 							case 1:
-								ls1 = Double.parseDouble(t);
+								as1 = Double.parseDouble(t);
 								faze += 1;
 								break;
 							case 2:
-								ls2 = Double.parseDouble(t);
+								as2 = Double.parseDouble(t);
 								faze += 1;
 								break;
 							case 3:
-								le1 = Double.parseDouble(t);
+								ac1 = Double.parseDouble(t);
 								faze += 1;
 								break;
 							case 4:
-								le2 = Double.parseDouble(t);
+								ac2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 5:
+								ae1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 6:
+								ae2 = Double.parseDouble(t);
 								faze = 1;
-								HeadArrow ha = new HeadArrow(ls1, ls2, le1, le2, gc);
-								arrows.add(ha);
+								LeftDoubleArrow lda = new LeftDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
+								leftDoubleArrows.add(lda);
+								break;
+
+						}
+						}
+
+					}
+				}
+
+			}
+
+			scanner.close();
+		} catch (FileNotFoundException e1)
+		{
+			e1.printStackTrace();
+		}
+
+		try
+		{
+			scanner = new Scanner(file);
+
+			while (scanner.hasNext())
+			{
+				String tmp = scanner.next();
+
+				if (tmp.equals("rightDoubleArrows"))
+				{
+					String t;
+					while (scanner.hasNext())
+					{
+						t = scanner.next();
+
+						switch (faze)
+						{
+							case 1:
+								as1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 2:
+								as2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 3:
+								ac1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 4:
+								ac2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 5:
+								ae1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 6:
+								ae2 = Double.parseDouble(t);
+								faze = 1;
+								RightDoubleArrow rda = new RightDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
+								rightDoubleArrows.add(rda);
 								break;
 
 						}
