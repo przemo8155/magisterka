@@ -4,6 +4,7 @@ package application;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
@@ -12,10 +13,11 @@ import javafx.util.Pair;
 public class LeftDoubleArrow
 {
 
-	Path path = new Path();
-	MoveTo moveTo = new MoveTo();
-	QuadCurveTo quadTo = new QuadCurveTo();
-	HeadArrow headArrow = new HeadArrow();
+	public Path path = new Path();
+	public MoveTo moveTo = new MoveTo();
+	public QuadCurveTo quadTo = new QuadCurveTo();
+	public HeadArrow headArrow = new HeadArrow();
+	public Line left, right;
 
 	static int doubleArrowMove = 100;
 
@@ -61,6 +63,17 @@ public class LeftDoubleArrow
 		double myX = headArrow.calculateX(angle);
 		double myY = headArrow.calculateY(angle);
 
+		double arrowAngle = Math.toRadians(8.0);
+		double arrowLength = 30.0;
+		double dx = contX - secX;
+		double dy = contY - secY;
+		double angle2 = Math.atan2(dy, dx);
+		double x1 = Math.cos(angle2 + arrowAngle) * arrowLength + secX;
+		double y1 = Math.sin(angle2 + arrowAngle) * arrowLength + secY;
+
+		double x2 = Math.cos(angle2 - arrowAngle) * arrowLength + secX;
+		double y2 = Math.sin(angle2 - arrowAngle) * arrowLength + secY;
+
 		this.startPointX = firstX;
 		this.startPointY = firstY;
 		this.endPointX = secX;
@@ -77,6 +90,11 @@ public class LeftDoubleArrow
 		this.quadTo.setX(endPointX - myX);
 		this.quadTo.setY(endPointY - myY);
 
+		this.left = new Line(secX - myX, secY - myY, x1 - myX, y1 - myY);
+		left.setStrokeWidth(5.0f);
+		this.right = new Line(secX - myX, secY - myY, x2 - myX, y2 - myY);
+		right.setStrokeWidth(5.0f);
+
 		this.path.getElements().add(this.moveTo);
 		this.path.getElements().add(this.quadTo);
 
@@ -87,6 +105,8 @@ public class LeftDoubleArrow
 	public void addToMainPane(Pane gc)
 	{
 		gc.getChildren().add(this.path);
+		gc.getChildren().add(this.left);
+		gc.getChildren().add(this.right);
 	}
 
 
@@ -97,6 +117,8 @@ public class LeftDoubleArrow
 		gc.getChildren().remove(this.path);
 		this.startPointX = val;
 		this.path = new Path();
+
+
 
 		double angle = headArrow.returnAngle(startPointX, startPointY, endPointX, endPointY);
 		double myX = headArrow.calculateX(angle);
@@ -537,6 +559,8 @@ public class LeftDoubleArrow
 	public void removeFromMainPane(Pane gc)
 	{
 		gc.getChildren().remove(this.path);
+		gc.getChildren().remove(this.left);
+		gc.getChildren().remove(this.right);
 	}
 
 	public void setFill(ObservableList<LeftDoubleArrow> list, String val)
@@ -544,12 +568,16 @@ public class LeftDoubleArrow
 		for (LeftDoubleArrow ha : list)
 		{
 			ha.path.setStroke(Paint.valueOf(val));
+			ha.left.setStroke(Paint.valueOf(val));
+			ha.right.setStroke(Paint.valueOf(val));
 		}
 	}
 
 	public void setFill(String val)
 	{
 		this.path.setStroke(Paint.valueOf(val));
+		this.left.setStroke(Paint.valueOf(val));
+		this.right.setStroke(Paint.valueOf(val));
 	}
 
 
