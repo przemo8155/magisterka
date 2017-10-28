@@ -71,6 +71,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -719,7 +720,13 @@ public class MainWindowController
 							&& event.getSceneY() - circleRay - minusWidth < c.getCenterY()
 							&& event.getSceneY() + circleRay - minusWidth > c.getCenterY())
 					{
-						Utilities.infoBox("token");
+						Image image1 = new Image("tokens/token_1.png");
+						ImageView iv1 = new ImageView(image1);
+						iv1.setFitHeight(40.0f);
+						iv1.setFitWidth(40.0f);
+						iv1.setLayoutX(c.getCenterX() - 20);
+						iv1.setLayoutY(c.getCenterY() - 20);
+						mainPane.getChildren().add(iv1);
 					}
 				}
 				break;
