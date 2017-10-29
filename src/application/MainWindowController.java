@@ -257,8 +257,7 @@ public class MainWindowController
 	@FXML
 	Parent root;
 
-
-	//tokens
+	// tokens
 	Image imageToken1 = new Image("tokens/token_1.png");
 	Image imageToken2 = new Image("tokens/token_2.png");
 	Image imageToken3 = new Image("tokens/token_3.png");
@@ -728,30 +727,69 @@ public class MainWindowController
 		switch (selectedToggle)
 		{
 			case "addToken":
+				boolean foundCircle1 = false;
+
 				for (Circle c : circleList)
 				{
 					if (event.getSceneX() - circleRay < c.getCenterX() && event.getSceneX() + circleRay > c.getCenterX()
 							&& event.getSceneY() - circleRay - minusWidth < c.getCenterY()
 							&& event.getSceneY() + circleRay - minusWidth > c.getCenterY())
 					{
-							int i = checkBitmapToken(c.getCenterX() - 20, c.getCenterY() - 20);
-							if(i != 0)
-							{
-									deleteBitmapToken(c.getCenterX() - 20, c.getCenterY() - 20);
-									setBitmapToken(c, i+1);
+						foundCircle1 = true;
+						double positionX = c.getCenterX() - 20;
+						double positionY = c.getCenterY() - 20;
+						int i = checkBitmapToken(positionX, positionY);
+						if (i != 0)
+						{
+							deleteBitmapToken(positionX, positionY);
+							setBitmapToken(c, i + 1);
 
-							}
+						}
 
-							else
-							{
-								setBitmapToken(c, 1);
-							}
+						else
+						{
+							setBitmapToken(c, 1);
+						}
 
 					}
+				}
+
+				if(!foundCircle1)
+				{
+					setMiddleLabelText("Click on circle...");
 				}
 				break;
 
 			case "removeToken":
+				boolean foundCircle2 = false;
+				for (Circle c : circleList)
+				{
+					if (event.getSceneX() - circleRay < c.getCenterX() && event.getSceneX() + circleRay > c.getCenterX()
+							&& event.getSceneY() - circleRay - minusWidth < c.getCenterY()
+							&& event.getSceneY() + circleRay - minusWidth > c.getCenterY())
+					{
+						foundCircle2 = true;
+						double positionX = c.getCenterX() - 20;
+						double positionY = c.getCenterY() - 20;
+						int i = checkBitmapToken(positionX, positionY);
+						if (i > 1)
+						{
+							deleteBitmapToken(positionX, positionY);
+							setBitmapToken(c, i - 1);
+
+						}
+
+						else
+						{
+							deleteBitmapToken(positionX, positionY);
+						}
+
+					}
+				}
+				if(!foundCircle2)
+				{
+					setMiddleLabelText("Click on circle...");
+				}
 				break;
 
 			case "remove":
@@ -1733,47 +1771,38 @@ public class MainWindowController
 	private int checkBitmapToken(double x, double y)
 	{
 		int whatToReturn = 0;
-		for(ImageView iv : existingImageViews)
+		for (ImageView iv : existingImageViews)
 		{
-			if(iv.getLayoutX() == x && iv.getLayoutY() == y)
+			if (iv.getLayoutX() == x && iv.getLayoutY() == y)
 			{
-				if(iv.getImage() == imageToken1)
+				if (iv.getImage() == imageToken1)
 				{
 					whatToReturn = 1;
-				}
-				else if(iv.getImage() == imageToken2)
+				} else if (iv.getImage() == imageToken2)
 				{
 					whatToReturn = 2;
-				}
-				else if(iv.getImage() == imageToken3)
+				} else if (iv.getImage() == imageToken3)
 				{
 					whatToReturn = 3;
-				}
-				else if(iv.getImage() == imageToken4)
+				} else if (iv.getImage() == imageToken4)
 				{
 					whatToReturn = 4;
-				}
-				else if(iv.getImage() == imageToken5)
+				} else if (iv.getImage() == imageToken5)
 				{
 					whatToReturn = 5;
-				}
-				else if(iv.getImage() == imageToken6)
+				} else if (iv.getImage() == imageToken6)
 				{
 					whatToReturn = 6;
-				}
-				else if(iv.getImage() == imageToken7)
+				} else if (iv.getImage() == imageToken7)
 				{
 					whatToReturn = 7;
-				}
-				else if(iv.getImage() == imageToken8)
+				} else if (iv.getImage() == imageToken8)
 				{
 					whatToReturn = 8;
-				}
-				else if(iv.getImage() == imageToken9)
+				} else if (iv.getImage() == imageToken9)
 				{
 					whatToReturn = 9;
 				}
-
 
 			}
 		}
@@ -1781,27 +1810,26 @@ public class MainWindowController
 		return whatToReturn;
 	}
 
-
 	private void deleteBitmapToken(double x, double y)
 	{
 		int _index = -1;
 		try
 		{
-			for(ImageView iv : existingImageViews)
+			for (ImageView iv : existingImageViews)
 			{
-				if(iv.getLayoutX() == x && iv.getLayoutY() == y)
+				if (iv.getLayoutX() == x && iv.getLayoutY() == y)
 				{
 					_index = existingImageViews.indexOf(iv);
 					mainPane.getChildren().remove(iv);
 				}
 			}
 
-			if(_index != -1)
+			if (_index != -1)
 			{
 				existingImageViews.remove(_index);
 			}
 
-		}catch(Exception e)
+		} catch (Exception e)
 		{
 			e.fillInStackTrace();
 		}
@@ -1809,11 +1837,10 @@ public class MainWindowController
 
 	public void setBitmapToken(Circle c, int tokens)
 	{
-		if(tokens > 9)
+		if (tokens > 9)
 		{
 			Utilities.infoBox("wiecej niz 9");
-		}
-		else
+		} else
 		{
 			deleteBitmapToken(c.getCenterX() - 20, c.getCenterY() - 20);
 
@@ -1823,7 +1850,7 @@ public class MainWindowController
 			imageView.setLayoutX(c.getCenterX() - 20);
 			imageView.setLayoutY(c.getCenterY() - 20);
 
-			switch(tokens)
+			switch (tokens)
 			{
 				case 1:
 					imageView.setImage(imageToken1);
@@ -1872,8 +1899,6 @@ public class MainWindowController
 					break;
 
 			}
-
-
 
 		}
 
