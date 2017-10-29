@@ -734,7 +734,18 @@ public class MainWindowController
 							&& event.getSceneY() - circleRay - minusWidth < c.getCenterY()
 							&& event.getSceneY() + circleRay - minusWidth > c.getCenterY())
 					{
-							setBitmapToken(c, 1);
+							int i = checkBitmapToken(c.getCenterX() - 20, c.getCenterY() - 20);
+							if(i != 0)
+							{
+									deleteBitmapToken(c.getCenterX() - 20, c.getCenterY() - 20);
+									setBitmapToken(c, i+1);
+
+							}
+
+							else
+							{
+								setBitmapToken(c, 1);
+							}
 
 					}
 				}
@@ -1719,9 +1730,81 @@ public class MainWindowController
 		return this.mainPane;
 	}
 
-	private void checkExistingBitmapTokenOnObject(Object o)
+	private int checkBitmapToken(double x, double y)
 	{
-		//sprawdza czy w takim miejscu znajduje sie bitmapa jak tak to usuwa
+		int whatToReturn = 0;
+		for(ImageView iv : existingImageViews)
+		{
+			if(iv.getLayoutX() == x && iv.getLayoutY() == y)
+			{
+				if(iv.getImage() == imageToken1)
+				{
+					whatToReturn = 1;
+				}
+				else if(iv.getImage() == imageToken2)
+				{
+					whatToReturn = 2;
+				}
+				else if(iv.getImage() == imageToken3)
+				{
+					whatToReturn = 3;
+				}
+				else if(iv.getImage() == imageToken4)
+				{
+					whatToReturn = 4;
+				}
+				else if(iv.getImage() == imageToken5)
+				{
+					whatToReturn = 5;
+				}
+				else if(iv.getImage() == imageToken6)
+				{
+					whatToReturn = 6;
+				}
+				else if(iv.getImage() == imageToken7)
+				{
+					whatToReturn = 7;
+				}
+				else if(iv.getImage() == imageToken8)
+				{
+					whatToReturn = 8;
+				}
+				else if(iv.getImage() == imageToken9)
+				{
+					whatToReturn = 9;
+				}
+
+
+			}
+		}
+
+		return whatToReturn;
+	}
+
+
+	private void deleteBitmapToken(double x, double y)
+	{
+		int _index = -1;
+		try
+		{
+			for(ImageView iv : existingImageViews)
+			{
+				if(iv.getLayoutX() == x && iv.getLayoutY() == y)
+				{
+					_index = existingImageViews.indexOf(iv);
+					mainPane.getChildren().remove(iv);
+				}
+			}
+
+			if(_index != -1)
+			{
+				existingImageViews.remove(_index);
+			}
+
+		}catch(Exception e)
+		{
+			e.fillInStackTrace();
+		}
 	}
 
 	public void setBitmapToken(Circle c, int tokens)
@@ -1732,6 +1815,7 @@ public class MainWindowController
 		}
 		else
 		{
+			deleteBitmapToken(c.getCenterX() - 20, c.getCenterY() - 20);
 
 			ImageView imageView = new ImageView();
 			imageView.setFitHeight(40.0f);
@@ -1744,42 +1828,53 @@ public class MainWindowController
 				case 1:
 					imageView.setImage(imageToken1);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 2:
 					imageView.setImage(imageToken2);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 3:
 					imageView.setImage(imageToken3);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 4:
 					imageView.setImage(imageToken4);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 5:
 					imageView.setImage(imageToken5);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 6:
 					imageView.setImage(imageToken6);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 7:
 					imageView.setImage(imageToken7);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 8:
 					imageView.setImage(imageToken8);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 				case 9:
 					imageView.setImage(imageToken9);
 					mainPane.getChildren().add(imageView);
+					existingImageViews.add(imageView);
 					break;
 
 			}
-			existingImageViews.add(imageView);
+
+
+
 		}
 
 	}
