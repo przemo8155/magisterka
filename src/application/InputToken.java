@@ -24,6 +24,6 @@ public class InputToken
 
 	public void inputTokenIntoCircle(Circle circle, Pane gc, int tokens)
 	{
-		gc.getChildren().add(new ImageView(image));
+		
 	}
 }

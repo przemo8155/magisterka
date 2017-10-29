@@ -215,6 +215,8 @@ public class MainWindowController
 	Map<Circle, Integer> circleTokensMap = new HashMap<Circle, Integer>();
 	Map<Rectangle, Integer> rectangleTokensMap = new HashMap<Rectangle, Integer>();
 
+	ObservableList<ImageView> existingImageViews = FXCollections.observableArrayList();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -254,6 +256,18 @@ public class MainWindowController
 
 	@FXML
 	Parent root;
+
+
+	//tokens
+	Image imageToken1 = new Image("tokens/token_1.png");
+	Image imageToken2 = new Image("tokens/token_2.png");
+	Image imageToken3 = new Image("tokens/token_3.png");
+	Image imageToken4 = new Image("tokens/token_4.png");
+	Image imageToken5 = new Image("tokens/token_5.png");
+	Image imageToken6 = new Image("tokens/token_6.png");
+	Image imageToken7 = new Image("tokens/token_7.png");
+	Image imageToken8 = new Image("tokens/token_8.png");
+	Image imageToken9 = new Image("tokens/token_9.png");
 
 	Task<Void> task = new Task<Void>()
 	{
@@ -720,13 +734,8 @@ public class MainWindowController
 							&& event.getSceneY() - circleRay - minusWidth < c.getCenterY()
 							&& event.getSceneY() + circleRay - minusWidth > c.getCenterY())
 					{
-						Image image1 = new Image("tokens/token_1.png");
-						ImageView iv1 = new ImageView(image1);
-						iv1.setFitHeight(40.0f);
-						iv1.setFitWidth(40.0f);
-						iv1.setLayoutX(c.getCenterX() - 20);
-						iv1.setLayoutY(c.getCenterY() - 20);
-						mainPane.getChildren().add(iv1);
+							setBitmapToken(c, 1);
+
 					}
 				}
 				break;
@@ -1708,6 +1717,71 @@ public class MainWindowController
 	public final Pane pane()
 	{
 		return this.mainPane;
+	}
+
+	private void checkExistingBitmapTokenOnObject(Object o)
+	{
+		//sprawdza czy w takim miejscu znajduje sie bitmapa jak tak to usuwa
+	}
+
+	public void setBitmapToken(Circle c, int tokens)
+	{
+		if(tokens > 9)
+		{
+			Utilities.infoBox("wiecej niz 9");
+		}
+		else
+		{
+
+			ImageView imageView = new ImageView();
+			imageView.setFitHeight(40.0f);
+			imageView.setFitWidth(40.0f);
+			imageView.setLayoutX(c.getCenterX() - 20);
+			imageView.setLayoutY(c.getCenterY() - 20);
+
+			switch(tokens)
+			{
+				case 1:
+					imageView.setImage(imageToken1);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 2:
+					imageView.setImage(imageToken2);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 3:
+					imageView.setImage(imageToken3);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 4:
+					imageView.setImage(imageToken4);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 5:
+					imageView.setImage(imageToken5);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 6:
+					imageView.setImage(imageToken6);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 7:
+					imageView.setImage(imageToken7);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 8:
+					imageView.setImage(imageToken8);
+					mainPane.getChildren().add(imageView);
+					break;
+				case 9:
+					imageView.setImage(imageToken9);
+					mainPane.getChildren().add(imageView);
+					break;
+
+			}
+			existingImageViews.add(imageView);
+		}
+
 	}
 
 }
