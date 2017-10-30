@@ -390,6 +390,17 @@ public class MainWindowController
 				Circle c = ((Circle) t.getSource());
 				int index = circleList.indexOf(c);
 
+				ImageView selectedImageView = null;
+
+				for(ImageView iv : existingImageViews)
+				{
+					if(iv.getLayoutX() == c.getCenterX() - 20 && iv.getLayoutY() == c.getCenterY() - 20)
+					{
+						selectedImageView = iv;
+						break;
+					}
+				}
+
 				for (HeadArrow ha : headArrowList)
 				{
 					if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
@@ -535,6 +546,10 @@ public class MainWindowController
 					ha.setFill(arrowColor);
 				}
 
+				selectedImageView.setLayoutX(c.getCenterX() - 20);
+				selectedImageView.setLayoutY(c.getCenterY() - 20);
+
+
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -659,6 +674,8 @@ public class MainWindowController
 				{
 					da.setLeftArrowStartX(r.getX() + 20, mainPane);
 					da.setLeftArrowStartY(r.getY() + 20, mainPane);
+					da.setLeft(r.getX() + 20, r.getY() + 20, mainPane);
+					da.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 					da.setFill(arrowColor);
 				}
 
@@ -666,6 +683,8 @@ public class MainWindowController
 				{
 					da.setLeftArrowEndX(r.getX() + 20, mainPane);
 					da.setLeftArrowEndY(r.getY() + 20, mainPane);
+					da.setLeft(r.getX() + 20, r.getY() + 20, mainPane);
+					da.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 					da.setFill(arrowColor);
 				}
 
@@ -673,6 +692,8 @@ public class MainWindowController
 				{
 					da.setRightArrowStartX(r.getX() + 20, mainPane);
 					da.setRightArrowStartY(r.getY() + 20, mainPane);
+					da.setLeft(r.getX() + 20, r.getY() + 20, mainPane);
+					da.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 					da.setFill(arrowColor);
 				}
 
@@ -680,6 +701,8 @@ public class MainWindowController
 				{
 					da.setRightArrowEndX(r.getX() + 20, mainPane);
 					da.setRightArrowEndY(r.getY() + 20, mainPane);
+					da.setLeft(r.getX() + 20, r.getY() + 20, mainPane);
+					da.setRight(r.getX() + 20, r.getY() + 20, mainPane);
 					da.setFill(arrowColor);
 				}
 
@@ -1899,6 +1922,7 @@ public class MainWindowController
 					break;
 
 			}
+
 
 		}
 
