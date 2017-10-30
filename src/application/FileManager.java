@@ -23,6 +23,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -39,9 +41,20 @@ public class FileManager
 
 	String key = "przemkeb123123zx";
 
+	Image imageToken1 = new Image("tokens/token_1.png");
+	Image imageToken2 = new Image("tokens/token_2.png");
+	Image imageToken3 = new Image("tokens/token_3.png");
+	Image imageToken4 = new Image("tokens/token_4.png");
+	Image imageToken5 = new Image("tokens/token_5.png");
+	Image imageToken6 = new Image("tokens/token_6.png");
+	Image imageToken7 = new Image("tokens/token_7.png");
+	Image imageToken8 = new Image("tokens/token_8.png");
+	Image imageToken9 = new Image("tokens/token_9.png");
+
+
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
-			ObservableList<RightDoubleArrow> rightDoubleArrows)
+			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews)
 	{
 		try
 		{
@@ -162,6 +175,61 @@ public class FileManager
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
 
+			final String _imageViewsString = "views";
+			stringBuilder.append(_imageViewsString);
+			stringBuilder.append(System.getProperty("line.separator"));
+			for(ImageView iv : imageViews)
+			{
+				Double _d1 = iv.getLayoutX();
+				Double _d2 = iv.getLayoutY();
+				Integer _i1 = _d1.intValue();
+				Integer _i2 = _d2.intValue();
+				Integer imageToken = 0;
+				Image image = iv.getImage();
+				if(image.equals(MainWindowController.imageToken1))
+				{
+					imageToken = 1;
+				}
+				else if(image.equals(MainWindowController.imageToken2))
+				{
+					imageToken = 2;
+				}
+				else if(image.equals(MainWindowController.imageToken3))
+				{
+					imageToken = 3;
+				}
+				else if(image.equals(MainWindowController.imageToken4))
+				{
+					imageToken = 4;
+				}
+				else if(image.equals(MainWindowController.imageToken5))
+				{
+					imageToken = 5;
+				}
+				else if(image.equals(MainWindowController.imageToken6))
+				{
+					imageToken = 6;
+				}
+				else if(image.equals(MainWindowController.imageToken7))
+				{
+					imageToken = 7;
+				}
+				else if(image.equals(MainWindowController.imageToken8))
+				{
+					imageToken = 8;
+				}
+				else if(image.equals(MainWindowController.imageToken9))
+				{
+					imageToken = 9;
+				}
+				stringBuilder.append(_i1);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i2);
+				stringBuilder.append(" ");
+				stringBuilder.append(imageToken);
+				stringBuilder.append(System.getProperty("line.separator"));
+			}
+
 			final String stringToFile = stringBuilder.toString();
 			FileChooser fileChooser = new FileChooser();
 			File file;
@@ -217,7 +285,7 @@ public class FileManager
 
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
-			ObservableList<RightDoubleArrow> rightDoubleArrows, Pane gc)
+			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews, Pane gc)
 	{
 		try
 		{
@@ -247,7 +315,7 @@ public class FileManager
 				ex.printStackTrace();
 			}
 
-			Reader(decryptedFile, circles, squares, arrows, leftDoubleArrows, rightDoubleArrows, gc);
+			Reader(decryptedFile, circles, squares, arrows, leftDoubleArrows, rightDoubleArrows, imageViews, gc);
 			decryptedFile.delete();
 
 		} catch (NullPointerException | IOException ex)
@@ -259,18 +327,21 @@ public class FileManager
 
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
-			ObservableList<RightDoubleArrow> rightDoubleArrows, Pane gc)
+			ObservableList<RightDoubleArrow> rightDoubleArrows,  ObservableList<ImageView> imageViews, Pane gc)
 	{
 		Scanner scanner;
 
 		Boolean fullCircle = false;
 		Boolean fullSquare = false;
+		Boolean fullView = false;
 
 		int faze = 1;
 
 		Double g1 = 0.0, g2 = 0.0;
 		Double s1 = 0.0, s2 = 0.0;
 		Double ls1 = 0.0, ls2 = 0.0, le1 = 0.0, le2 = 0.0;
+		Double iv1 = 0.0, iv2 = 0.0;
+		Integer imageType = 0;
 
 		Double as1 = 0.0, as2 = 0.0, ac1 = 0.0, ac2 = 0.0, ae1 = 0.0, ae2 = 0.0;
 		try
@@ -478,6 +549,11 @@ public class FileManager
 					{
 						t = scanner.next();
 
+						if (t.equals("views"))
+						{
+							break;
+						}
+
 						switch (faze)
 						{
 							case 1:
@@ -507,6 +583,90 @@ public class FileManager
 								rightDoubleArrows.add(rda);
 								break;
 
+						}
+
+					}
+				}
+
+			}
+
+			scanner.close();
+		} catch (FileNotFoundException e1)
+		{
+			e1.printStackTrace();
+		}
+
+		try
+		{
+			scanner = new Scanner(file);
+
+			while (scanner.hasNext())
+			{
+				String tmp = scanner.next();
+
+				if (tmp.equals("views"))
+				{
+					String t;
+					while (scanner.hasNext())
+					{
+						t = scanner.next();
+
+						switch(faze)
+						{
+							case 1:
+								iv1 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 2:
+								iv2 = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 3:
+								imageType = Integer.parseInt(t);
+								ImageView imageView = new ImageView();
+								imageView.setLayoutX(iv1);
+								imageView.setLayoutY(iv2);
+								imageView.setFitHeight(40.0f);
+								imageView.setFitWidth(40.0f);
+								if(imageType == 1)
+								{
+									imageView.setImage(MainWindowController.imageToken1);
+								}
+								else if(imageType == 2)
+								{
+									imageView.setImage(MainWindowController.imageToken2);
+								}
+								else if(imageType == 3)
+								{
+									imageView.setImage(MainWindowController.imageToken3);
+								}
+								else if(imageType == 4)
+								{
+									imageView.setImage(MainWindowController.imageToken4);
+								}
+								else if(imageType == 5)
+								{
+									imageView.setImage(MainWindowController.imageToken5);
+								}
+								else if(imageType == 6)
+								{
+									imageView.setImage(MainWindowController.imageToken6);
+								}
+								else if(imageType == 7)
+								{
+									imageView.setImage(MainWindowController.imageToken7);
+								}
+								else if(imageType == 8)
+								{
+									imageView.setImage(MainWindowController.imageToken8);
+								}
+								else if(imageType == 9)
+								{
+									imageView.setImage(MainWindowController.imageToken9);
+								}
+								imageViews.add(imageView);
+								faze = 1;
+								break;
 						}
 
 					}

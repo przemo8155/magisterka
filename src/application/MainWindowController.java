@@ -258,15 +258,15 @@ public class MainWindowController
 	Parent root;
 
 	// tokens
-	Image imageToken1 = new Image("tokens/token_1.png");
-	Image imageToken2 = new Image("tokens/token_2.png");
-	Image imageToken3 = new Image("tokens/token_3.png");
-	Image imageToken4 = new Image("tokens/token_4.png");
-	Image imageToken5 = new Image("tokens/token_5.png");
-	Image imageToken6 = new Image("tokens/token_6.png");
-	Image imageToken7 = new Image("tokens/token_7.png");
-	Image imageToken8 = new Image("tokens/token_8.png");
-	Image imageToken9 = new Image("tokens/token_9.png");
+	public static Image imageToken1 = new Image("tokens/token_1.png");
+	public static Image imageToken2 = new Image("tokens/token_2.png");
+	public static Image imageToken3 = new Image("tokens/token_3.png");
+	public static Image imageToken4 = new Image("tokens/token_4.png");
+	public static Image imageToken5 = new Image("tokens/token_5.png");
+	public static Image imageToken6 = new Image("tokens/token_6.png");
+	public static Image imageToken7 = new Image("tokens/token_7.png");
+	public static Image imageToken8 = new Image("tokens/token_8.png");
+	public static Image imageToken9 = new Image("tokens/token_9.png");
 
 	Task<Void> task = new Task<Void>()
 	{
@@ -392,9 +392,9 @@ public class MainWindowController
 
 				ImageView selectedImageView = null;
 
-				for(ImageView iv : existingImageViews)
+				for (ImageView iv : existingImageViews)
 				{
-					if(iv.getLayoutX() == c.getCenterX() - 20 && iv.getLayoutY() == c.getCenterY() - 20)
+					if (iv.getLayoutX() == c.getCenterX() - 20 && iv.getLayoutY() == c.getCenterY() - 20)
 					{
 						selectedImageView = iv;
 						break;
@@ -548,7 +548,6 @@ public class MainWindowController
 
 				selectedImageView.setLayoutX(c.getCenterX() - 20);
 				selectedImageView.setLayoutY(c.getCenterY() - 20);
-
 
 			} catch (Exception e)
 			{
@@ -777,7 +776,7 @@ public class MainWindowController
 					}
 				}
 
-				if(!foundCircle1)
+				if (!foundCircle1)
 				{
 					setMiddleLabelText("Click on circle...");
 				}
@@ -809,7 +808,7 @@ public class MainWindowController
 
 					}
 				}
-				if(!foundCircle2)
+				if (!foundCircle2)
 				{
 					setMiddleLabelText("Click on circle...");
 				}
@@ -1486,7 +1485,8 @@ public class MainWindowController
 	void saveFileMenuItem_OnAction(ActionEvent event)
 	{
 		Stage s = Main.getPrimaryStage();
-		fileManager.SaveFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList);
+		fileManager.SaveFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+				existingImageViews);
 		Boolean fileSaved = fileManager.getSomethingSaved();
 		if (fileSaved)
 		{
@@ -1530,7 +1530,7 @@ public class MainWindowController
 		circleList.clear();
 		squareList.clear();
 		fileManager.OpenFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				mainPane);
+				existingImageViews, mainPane);
 
 		for (Circle c : circleList)
 		{
@@ -1559,6 +1559,11 @@ public class MainWindowController
 		for (RightDoubleArrow rda : rightDoubleArrowList)
 		{
 			rda.addToMainPane(mainPane);
+		}
+
+		for(ImageView iv : existingImageViews)
+		{
+			mainPane.getChildren().add(iv);
 		}
 
 		Boolean fileOpened = fileManager.getSomethingOpened();
@@ -1858,6 +1863,11 @@ public class MainWindowController
 		}
 	}
 
+	public Image getImageToken1()
+	{
+		return this.imageToken1;
+	}
+
 	public void setBitmapToken(Circle c, int tokens)
 	{
 		if (tokens > 9)
@@ -1922,7 +1932,6 @@ public class MainWindowController
 					break;
 
 			}
-
 
 		}
 
