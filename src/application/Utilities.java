@@ -29,6 +29,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 
 public class Utilities
 {
@@ -38,7 +39,8 @@ public class Utilities
 	public Boolean checkCleared = false;
 
 	public void clearUpMessage(Pane pane, String title, String header, String content, ObservableList<Circle> circ,
-			ObservableList<Rectangle> rect, ObservableList<HeadArrow> lin)
+			ObservableList<Rectangle> rect, ObservableList<HeadArrow> lin, ObservableList<LeftDoubleArrow> leftDoubleArrows,
+			ObservableList<RightDoubleArrow> rightDoubleArrows,  ObservableList<ImageView> imageViews)
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);
@@ -52,6 +54,9 @@ public class Utilities
 			circ.clear();
 			rect.clear();
 			lin.clear();
+			leftDoubleArrows.clear();
+			rightDoubleArrows.clear();
+			imageViews.clear();
 			checkCleared = true;
 		} else
 		{

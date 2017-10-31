@@ -216,6 +216,7 @@ public class MainWindowController
 	Map<Rectangle, Integer> rectangleTokensMap = new HashMap<Rectangle, Integer>();
 
 	ObservableList<ImageView> existingImageViews = FXCollections.observableArrayList();
+	ObservableList<ImageView> imageViewsToRemove = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -826,6 +827,14 @@ public class MainWindowController
 								&& (y < myCircle.getCenterY() + circleRay + minusWidth))
 						{
 
+							for(ImageView iv : existingImageViews)
+							{
+								if(iv.getLayoutX() == myCircle.getCenterX() - 20 && iv.getLayoutY() == myCircle.getCenterY() - 20)
+								{
+									imageViewsToRemove.add(iv);
+								}
+							}
+
 							for (HeadArrow ha : headArrowList)
 							{
 								if (ha.getStartX() == myCircle.getCenterX() && ha.getStartY() == myCircle.getCenterY())
@@ -871,6 +880,15 @@ public class MainWindowController
 								if (da.getEndX() == myCircle.getCenterX() && da.getEndY() == myCircle.getCenterY())
 								{
 									rightEndDoubleArrowList.add(da);
+								}
+							}
+
+							if(!imageViewsToRemove.isEmpty())
+							{
+								existingImageViews.removeAll(imageViewsToRemove);
+								for(ImageView iv : imageViewsToRemove)
+								{
+									mainPane.getChildren().remove(iv);
 								}
 							}
 
@@ -1584,7 +1602,7 @@ public class MainWindowController
 	void clearAllButton_OnMouseClicked(MouseEvent event)
 	{
 		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, squareList,
-				headArrowList);
+				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews);
 		if (utilities.checkCleared)
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);
