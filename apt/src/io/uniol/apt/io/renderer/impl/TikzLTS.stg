@@ -1,0 +1,78 @@
+/*-
+ * APT - Analysis of Petri Nets and labeled Transition systems
+ * Copyright (C) 2015  vsp
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+/**
+ * Stringtemplate template group file for rendering transitions systems as Tikz pictures.
+ * @author: vsp
+ */
+
+import "uniol/apt/io/renderer/impl/Tikz.stg"
+
+/**
+ * Main template, the TikzLTSRenderer uses this.
+ * @param ts The transition system
+ */
+ts(ts) ::= <<
+<preamble()>
+
+\\begin{document}
+	% other graph drawing layouts: layered layout, tree layout, simple necklace layout
+	<tspicture(ts,"auto,label position=left,node distance=2cm and 2cm,spring layout")>
+\\end{document}
+>>
+
+/**
+ * Template for a tikzpicture showing a transition system
+ * @param ts The transition system
+ * @param options optional options for the tikzpicture environment
+ */
+tspicture(ts, options) ::= <<
+\\begin{tikzpicture}<if(options)>[<options>]<endif>
+	<ts.nodes:state();separator="\n">
+	<ts.nodes:edges();separator="\n">
+\\end{tikzpicture}
+>>
+
+/**
+ * Template for a single state
+ * @param s Object describing the state
+ */
+state(s) ::= <<
+\\node[state](<s.id>){<s.id>};
+>>
+
+/**
+ * Template for all edges going out from a state
+ * @param s Object describing the state (Needed properties: id and postsetEdges)
+ */
+edges(s) ::= <<
+\\draw (<s.id>)
+	<s.postsetEdges:edge();separator="\n">
+;
+>>
+
+/**
+ * Template for an edge
+ * @param a Object describing the arc (Needed properties: place and weight)
+ */
+edge(a) ::= <<
+edge[->]<\t>node {<a.label>}<\t>(<a.target.id>)
+>>
+
+// vim: ft=java:noet:sw=8:sts=8:ts=8:tw=120

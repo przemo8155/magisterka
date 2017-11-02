@@ -1,0 +1,119 @@
+/*-
+ * APT - Analysis of Petri Nets and labeled Transition systems
+ * Copyright (C) 2012-2013  Members of the project group APT
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+/**
+ * Stringtemplate template group file for the APT PN file format.
+ * @author: vsp
+ */
+
+/**
+ * Main template, the APTRenderer uses this.
+ * @param name The name of the net
+ * @param description The description of the net
+ * @param extensions The extensions of the net
+ * @param places A list of all places in the net (Entries must have an id property)
+ * @param marking A list representing the initial marking (Entries are given to place_weight(pw))
+ * @param transitions A list of transitions of the net (Entries are given to transition(t))
+ * @param have_flow_with_extension True if at least one flow has an extension
+ */
+pn(name,description,extensions,places,marking,transitions,have_flow_with_extension) ::= <<
+.name "<name>"
+<if(description)>.description "<description>"<endif>
+.type LPN
+<if(first(extensions))>.options
+<extensions:extension();separator=",\n"><endif>
+
+
+.places
+<places:{p|<p.id><extensions(p)>};separator="\n">
+
+.transitions
+<transitions:{t|<t.id><if(t.label)>[label="<t.label>"<if(first(t.writeToFileExtensions))>, <t.writeToFileExtensions:extension();separator=", "><endif>]<else><if(first(t.writeToFileExtensions))>[<t.writeToFileExtensions:extension();separator=", ">]<endif><endif>};separator="\n">
+
+.flows
+<if(have_flow_with_extension)>
+<transitions:transition_flows()>
+<else>
+<transitions:transition()>
+<endif>
+
+.initial_marking {<marking:place_weight();separator=", ">}
+>>
+
+/**
+ * Template for all extensions.
+ * @param extensible an extensible object
+ */
+extensions(ext) ::= <<
+<if(first(ext.writeToFileExtensions))>[<ext.writeToFileExtensions:extension();separator=", ">]<endif>
+>>
+
+/**
+ * Template for a extension.
+ * @param ext the extension as a pair of string and object.
+ */
+extension(ext) ::= <<
+<ext.first>="<ext.second>"
+>>
+
+/**
+ * Template for a single transition
+ * @param t Object describing the transition (Needed properties: id, presetEdges and postsetEdges)
+ */
+transition(t) ::= <<
+
+<t.id>: {<t.presetEdges:place_weight();separator=", ">} -> {<t.postsetEdges:place_weight();separator=", ">}
+>>
+
+/**
+ * Template for a single transition when extensions are present
+ * @param f Object describing the transition (Needed properties: transition_id, presetEdges, postsetEdges, extensions)
+ */
+transition_flows(t) ::= <<
+<t.presetEdges:preset_flow();separator="\n">
+<t.postsetEdges:postset_flow();separator="\n">
+
+>>
+
+/**
+ * Template for a single flow from place to transition
+ * @param f Object describing the flow
+ */
+preset_flow(f) ::= <<
+<f.transition.id>: {<f.weight>*<f.place.id>} -> {}<extensions(f)>
+>>
+
+/**
+ * Template for a single flow from place to transition
+ * @param f Object describing the flow
+ */
+postset_flow(f) ::= <<
+<f.transition.id>: {} -> {<f.weight>*<f.place.id>}<extensions(f)>
+>>
+
+/**
+ * Template for a weighted place.
+ * This is used for markings and pre- and postsets of transitions.
+ * @param pw an Object holding an place (As place property, it must hav an id property) and a weight (as weight property)
+ */
+place_weight(pw) ::= <<
+<pw.weight>*<pw.place.id>
+>>
+
+// vim: ft=java:noet:sw=8:sts=8:ts=8:tw=120

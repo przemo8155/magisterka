@@ -1,0 +1,6 @@
+Too few arguments
+
+Usage: apt deterministic <lts>
+  lts        The LTS that should be examined
+
+Check if a LTS is deterministic

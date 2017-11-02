@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="apt" default="javac" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+	<path id="lib.class.path">
+		<pathelement location="lib/commons-collections4-4.0/commons-collections4-4.0.jar" />
+		<pathelement location="lib/smtinterpol-2.1-335-g4c543a5/smtinterpol.jar"/>
+		<pathelement location="classes/lib" />
+	</path>
+
+	<path id="glue.class.path">
+		<pathelement location="classes/glue" />
+	</path>
+
+	<path id="io.class.path">
+		<pathelement location="lib/commons-io-2.4/commons-io-2.4.jar" />
+		<pathelement location="lib/antlr-4.5.1/antlr-runtime-4.5.1.jar" />
+		<pathelement location="lib/stringtemplate-4.0.8/ST-4.0.8.jar" />
+		<path refid="lib.class.path" />
+		<path refid="glue.class.path" />
+		<!-- Needed so that the annotation processor is run -->
+		<pathelement location="classes/compiler" />
+		<pathelement location="classes/io" />
+	</path>
+
+	<path id="module.class.path">
+		<path refid="lib.class.path" />
+		<path refid="io.class.path" />
+		<path refid="glue.class.path" />
+		<pathelement location="lib/sat4j-2.3.2/org.sat4j.core.jar"/>
+		<!-- Needed so that the annotation processor is run -->
+		<pathelement location="classes/compiler" />
+		<pathelement location="classes/module" />
+	</path>
+
+	<path id="main.class.path">
+		<path refid="lib.class.path" />
+		<path refid="io.class.path" />
+		<path refid="glue.class.path" />
+		<path refid="module.class.path" />
+		<!-- Needed so that the annotation processor is run -->
+		<pathelement location="classes/compiler" />
+		<pathelement location="classes/main" />
+	</path>
+
+	<path id="json.class.path">
+		<pathelement location="lib/json-20160810/json.jar"/>
+		<path refid="lib.class.path" />
+		<path refid="glue.class.path" />
+		<path refid="module.class.path" />
+		<path refid="main.class.path" />
+		<pathelement location="classes/json" />
+	</path>
+
+	<path id="test.class.path">
+		<path refid="glue.class.path" />
+		<path refid="io.class.path" />
+		<path refid="lib.class.path" />
+		<path refid="module.class.path" />
+		<path refid="main.class.path" />
+		<path refid="json.class.path" />
+		<pathelement location="lib/mockito-1.9.5-rc1/mockito-core-1.9.5-rc1.jar" />
+		<pathelement location="lib/objenesis-1.2/objenesis-1.2.jar" />
+		<pathelement location="lib/testng-6.9.9/testng-6.9.9.jar" />
+		<pathelement location="lib/testng-6.9.9/jcommander-1.48.jar" />
+		<pathelement location="lib/hamcrest-1.3/hamcrest-core-1.3.jar" />
+		<pathelement location="lib/hamcrest-1.3/hamcrest-library-1.3.jar" />
+		<pathelement location="classes/test" />
+	</path>
+
+	<path id="ant.class.path">
+		<path refid="lib.class.path" />
+		<path refid="io.class.path" />
+		<pathelement location="lib/asm-4.1/asm-4.1.jar" />
+		<pathelement location="classes/ant" />
+	</path>
+
+	<path id="compiler.class.path">
+		<pathelement location="lib/commons-io-2.4/commons-io-2.4.jar" />
+		<pathelement location="classes/glue" />
+	</path>
+
+	<path id="antlr.class.path">
+		<pathelement location="lib/antlr-4.5.1/antlr-4.5.1-complete.jar" />
+	</path>
+
+	<taskdef name="testng" classname="org.testng.TestNGAntTask" classpathref="test.class.path" />
+	<taskdef name="checkstyle" classname="com.puppycrawl.tools.checkstyle.CheckStyleTask"
+		classpath="lib/checkstyle-6.1.1/checkstyle-6.1.1-all.jar" />
+
+	<!-- Only run the antlr target if some .g file is newer than generated-src/antlr.stamp (which the antlr target touches) -->
+	<target name="antlr.checkforchanges">
+		<uptodate property="antlr.nochanges" targetfile="generated-src/antlr.stamp">
+			<srcfiles dir="src/io/uniol/apt/io/parser/" includes="**/*.g4"/>
+		</uptodate>
+	</target>
+
+	<!-- Antlr4 is called here -->
+	<target name="antlr" depends="antlr.checkforchanges" unless="antlr.nochanges">
+		<macrodef name="call-antlr">
+			<attribute name="name" />
+			<sequential>
+				<java classpathref="antlr.class.path" classname="org.antlr.v4.Tool" fork="true" failonerror="true">
+					<arg value="-o"/>
+					<arg path="generated-src/io/uniol/apt/io/parser/impl/"/>
+					<arg value="-package"/>
+					<arg value="uniol.apt.io.parser.impl"/>
+					<arg line="${basedir}/src/io/uniol/apt/io/parser/impl/@{name}"/>
+				</java>
+			</sequential>
+		</macrodef>
+		<call-antlr name="AptLTSFormat.g4" />
+		<call-antlr name="AptPNFormat.g4" />
+		<call-antlr name="LoLAPNFormat.g4" />
+		<call-antlr name="PetrifyLTSFormatLexer.g4" />
+		<call-antlr name="PetrifyLTSFormatParser.g4" />
+		<call-antlr name="PetrifyPNFormatLexer.g4" />
+		<call-antlr name="PetrifyPNFormatParser.g4" />
+		<call-antlr name="RegexFormatLexer.g4" />
+		<call-antlr name="RegexFormatParser.g4" />
+		<call-antlr name="SynetLTSFormat.g4" />
+		<call-antlr name="SynetPNFormat.g4" />
+		<!-- Touch the time stamp file which antlr.checkforchanges checks for -->
+		<touch file="generated-src/antlr.stamp" mkdirs="true"/>
+	</target>
+
+	<macrodef name="javac-part">
+		<attribute name="name" />
+		<attribute name="src" default="src/@{name}" />
+		<attribute name="generated-src-with-colon" default="" />
+		<element name="extra-javac-args" optional="true" implicit="true" />
+		<sequential>
+			<mkdir dir="classes/@{name}"/>
+			<depend srcdir="@{src}@{generated-src-with-colon}" destdir="classes/@{name}">
+				<classpath>
+					<dirset dir="classes/" includes="*" />
+				</classpath>
+			</depend>
+			<javac includes="**" encoding="utf-8" destdir="classes/@{name}" source="1.7" target="1.7"
+					debug="true" debuglevel="lines,vars,source"
+					includeantruntime="false">
+				<src path="@{src}" />
+				<extra-javac-args/>
+				<classpath refid="@{name}.class.path"/>
+				<compilerarg value="-Xlint:all"/>
+			</javac>
+		</sequential>
+	</macrodef>
+
+	<target name="javac" description="Compile java source to bytecode" depends="javac.test,javac.ant" />
+
+	<target name="javac.module" depends="javac.compiler,javac.io">
+		<javac-part name="module" />
+	</target>
+
+	<target name="javac.lib">
+		<javac-part name="lib" />
+	</target>
+
+	<target name="javac.main" depends="javac.module,javac.compiler">
+		<javac-part name="main" />
+		<exec executable="git" outputproperty="git.version" failifexecutionfails="false" errorproperty="">
+			<arg value="describe" />
+			<arg value="--always" />
+			<arg value="--dirty" />
+		</exec>
+		<tstamp>
+			<format property="timestamp" pattern="yyyy-MM-dd" />
+		</tstamp>
+		<propertyfile file="classes/main/uniol/apt/APT.properties">
+			<entry key="git-version" value="${git.version}" />
+			<entry key="timestamp" value="${timestamp}" />
+		</propertyfile>
+	</target>
+
+	<target name="javac.io" depends="antlr,javac.compiler,javac.lib">
+		<javac-part name="io" generated-src-with-colon=":generated-src/io">
+			<src path="generated-src/io" />
+		</javac-part>
+		<copy todir="classes/io">
+			<fileset dir="src/io">
+				<include name="**/*.stg" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="javac.glue">
+		<javac-part name="glue" />
+	</target>
+
+	<target name="javac.ant" depends="javac.io">
+		<javac-part name="ant"/>
+	</target>
+
+	<target name="javac.compiler" depends="javac.glue">
+		<delete dir="classes/compiler/META-INF" failonerror="false" />
+		<javac-part name="compiler" />
+		<copy todir="classes/compiler">
+			<fileset dir="src/compiler">
+				<include name="META-INF/**" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="javac.json" depends="javac.main">
+		<javac-part name="json" />
+	</target>
+
+	<target name="javac.test" depends="javac.main,javac.json">
+		<javac-part name="test" src="src/test" />
+	</target>
+
+	<target name="verify-parsers" depends="javac.ant" description="Verify all of the net collection is parsable.">
+		<java classname="uniol.apt.tasks.ParsableTask" failonerror="true">
+			<classpath refid="ant.class.path" />
+
+			<arg path="reports/parsers"/>
+			<arg path="nets"/>
+			<arg value="!*.pdf" />
+			<arg value="!*.png" />
+			<arg value="!*.dot" />
+			<arg value="!*_unparsable" />
+		</java>
+	</target>
+
+	<target name="verify-modules" depends="javac" description="Verify the use of parameters in modules.">
+		<java classname="uniol.apt.tasks.ModuleParameterVerifyTask" failonerror="true">
+			<classpath refid="ant.class.path" />
+
+			<arg path="classes/module"/>
+			<arg value="*Module.class"/>
+
+			<arg path="classes/main"/>
+			<arg value="*Module.class"/>
+		</java>
+	</target>
+
+	<target name="test" depends="test.unit,test.integration" description="Run tests" />
+
+	<macrodef name="invoke-integration">
+		<attribute name="jvmarg" default="" />
+		<sequential>
+			<java classname="uniol.apt.tasks.IntegrationTestTask" failonerror="true">
+				<classpath refid="ant.class.path" />
+
+				<arg value="java @{jvmarg} -jar apt.jar"/>
+				<arg path="src/test/integration"/>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="test.integration" depends="jar,javac.ant" description="Run integration tests">
+		<invoke-integration/>
+	</target>
+
+	<target name="xml.test" depends="javac.ant,javac.test">
+		<java classname="uniol.apt.tasks.WriteTestsXML" failonerror="true">
+			<classpath refid="ant.class.path" />
+			<arg path="testng.xml" />
+			<arg path="classes/test" />
+			<arg value="*Test.class" />
+		</java>
+	</target>
+
+	<macrodef name="invoke-testng">
+		<attribute name="outputdir"/>
+		<sequential>
+			<testng outputdir="reports/@{outputdir}" verbose="2" haltonfailure="true">
+				<!-- enable assertions -->
+				<jvmarg value="-ea" />
+				<classpath refid="test.class.path" />
+				<xmlfileset file="testng.xml" />
+			</testng>
+		</sequential>
+	</macrodef>
+
+	<target name="test.unit" depends="javac.test,xml.test" description="Run unit tests">
+		<invoke-testng outputdir="testng"/>
+	</target>
+
+	<target name="test-class" depends="javac.test"
+		description="run a specific test class. Requires class.name property set to fully qualified name of test class">
+		<condition property="propsSpecified">
+			<and>
+				<isset property="class.name" />
+			</and>
+		</condition>
+		<tstamp />
+		<fail unless="propsSpecified"
+			message="class.name property not specified; try calling ant with -Dclass.name=uniol.apt...."/>
+		<copy file="testng.single-class.xml" tofile="testng.xml" overwrite="true">
+			<filterset>
+				<filter token="CLASS" value="${class.name}"/>
+			</filterset>
+		</copy>
+		<invoke-testng outputdir="testng-single-class-${class.name}" />
+	</target>
+
+	<target name="test-method" depends="javac.test"
+		description="run a specific test method. Requires class.name property set to fully qualified name of test class and test.name property set to method name">
+		<condition property="propsSpecified">
+			<and>
+				<isset property="class.name" />
+				<isset property="test.name" />
+			</and>
+		</condition>
+		<tstamp />
+		<fail unless="propsSpecified"
+			message="class.name and/or test.name property not specified; try calling ant with -Dclass.name=uniol.apt... -Dtest.name=myTestMethod"/>
+		<copy file="testng.single-method.xml" tofile="testng.xml" overwrite="true">
+			<filterset>
+				<filter token="CLASS" value="${class.name}"/>
+				<filter token="TEST" value="${test.name}"/>
+			</filterset>
+		</copy>
+		<invoke-testng outputdir="testng-single-class-${class.name}-${test.name}" />
+	</target>
+
+	<target name="javadoc" depends="antlr" description="Generate documentation from java source">
+		<mkdir dir="./doc/javadoc"/>
+		<javadoc encoding="utf-8" destdir="./doc/javadoc" author="true"
+				version="true" use="true" charset="UTF-8"
+				docencoding="UTF-8" failonerror="true"
+				classpathref="test.class.path"
+				additionalparam="-notimestamp">
+			<packageset dir="src/module"/>
+			<packageset dir="src/lib"/>
+			<packageset dir="src/main"/>
+			<packageset dir="src/io"/>
+			<packageset dir="src/compiler"/>
+			<packageset dir="src/glue"/>
+			<packageset dir="src/json"/>
+			<!-- Not included: test, ant -->
+			<packageset dir="generated-src/io"/>
+		</javadoc>
+	</target>
+
+	<target name="checkstyle" depends="javac">
+		<mkdir dir="reports" />
+		<checkstyle config="checkstyle.xml" failOnViolation="false">
+			<formatter type="xml" tofile="reports/checkstyle.xml"/>
+			<formatter type="plain" tofile="reports/checkstyle.txt"/>
+			<fileset dir="src/ant" includes="**/*"/>
+			<fileset dir="src/module" includes="**/*"/>
+			<fileset dir="src/lib" includes="**/*"/>
+			<fileset dir="src/main" includes="**/*"/>
+			<fileset dir="src/io" includes="**/*"/>
+			<fileset dir="src/compiler" includes="**/*"/>
+			<fileset dir="src/glue" includes="**/*"/>
+			<fileset dir="src/json" includes="**/*"/>
+			<fileset dir="src/test" includes="**/*"/>
+			<classpath refid="test.class.path" />
+		</checkstyle>
+	</target>
+
+	<!-- Findbugs -->
+	<target name="findbugs" depends="javac" description="Run FindBugs on the source code">
+		<ivy:cachepath pathid="findbugs.classpath" conf="findbugs"/>
+		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
+			classpathref="findbugs.classpath" />
+		<mkdir dir="reports" />
+		<findbugs output="xml:withMessages" outputFile="reports/findbugs.xml" >
+			<classpath refid="findbugs.classpath"/>
+			<auxClasspath>
+				<path refid="ant.class.path" />
+				<path refid="test.class.path" />
+			</auxClasspath>
+			<sourcePath>
+				<pathelement location="src/ant" />
+				<pathelement location="src/compiler" />
+				<pathelement location="src/glue" />
+				<pathelement location="src/json" />
+				<pathelement location="src/module" />
+				<pathelement location="src/lib" />
+				<pathelement location="src/main" />
+				<pathelement location="src/io" />
+				<pathelement location="src/test" />
+			</sourcePath>
+			<fileset dir="classes/ant">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="classes/module">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="classes/lib">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="classes/main">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="classes/io">
+				<include name="**/*.class" />
+				<exclude name="uniol/apt/io/parser/impl/AptLTSFormat*.class" />
+				<exclude name="uniol/apt/io/parser/impl/AptPNFormat*.class" />
+				<exclude name="uniol/apt/io/parser/impl/LoLAPNFormat*.class" />
+				<exclude name="uniol/apt/io/parser/impl/RegexFormat*.class" />
+				<exclude name="uniol/apt/io/parser/impl/SynetPNFormat*.class" />
+				<exclude name="uniol/apt/io/parser/impl/SynetLTSFormat*.class" />
+				<exclude name="uniol/apt/io/parser/impl/PetrifyPNFormat*.class" />
+				<exclude name="uniol/apt/io/parser/impl/PetrifyLTSFormat*.class" />
+			</fileset>
+			<fileset dir="classes/compiler">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="classes/glue">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="classes/json">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="classes/test">
+				<include name="**/*.class" />
+			</fileset>
+		</findbugs>
+	</target>
+
+	<!-- JaCoCo -->
+	<target name="jacoco" depends="javac,jar,xml.test" description="Run tests under JaCoCo">
+		<ivy:cachepath pathid="jacoco.classpath" conf="jacoco"/>
+		<taskdef resource="org/jacoco/ant/antlib.xml" classpathref="jacoco.classpath"/>
+
+		<delete file="reports/jacoco/jacoco.exec"/>
+		<coverage destfile="reports/jacoco/jacoco.exec">
+			<testng outputdir="reports/testng" verbose="1">
+				<classpath refid="test.class.path" />
+				<xmlfileset file="testng.xml" />
+			</testng>
+		</coverage>
+		<agent property="agentvmparam" destfile="reports/jacoco/jacoco.exec" />
+		<invoke-integration jvmarg="${agentvmparam}"/>
+
+		<report>
+			<executiondata>
+				<file file="reports/jacoco/jacoco.exec"/>
+			</executiondata>
+
+			<structure name="APT">
+				<classfiles>
+					<fileset dir="classes/glue/"/>
+					<fileset dir="classes/json/"/>
+					<fileset dir="classes/module/"/>
+					<fileset dir="classes/lib/"/>
+					<fileset dir="classes/main/"/>
+					<fileset dir="classes/io/"/>
+				</classfiles>
+				<sourcefiles>
+					<fileset dir="src/glue/"/>
+					<fileset dir="src/json/"/>
+					<fileset dir="src/module/"/>
+					<fileset dir="src/lib/"/>
+					<fileset dir="src/main/"/>
+					<fileset dir="src/io/"/>
+				</sourcefiles>
+			</structure>
+
+			<html destdir="reports/jacoco/"/>
+			<xml destfile="reports/jacoco/jacoco.xml"/>
+		</report>
+	</target>
+
+	<target name="clean" description="Cleans this project">
+		<delete dir="classes" failonerror="false" />
+		<delete dir="reports" failonerror="false" />
+		<delete dir="./doc/javadoc" failonerror="false" />
+		<delete dir="generated-src" failonerror="false" />
+		<delete dir="artifacts" failonerror="false" />
+		<delete file="apt.jar" failonerror="false" />
+		<delete file="apt-lib.jar" failonerror="false" />
+		<delete file="apt-io.jar" failonerror="false" />
+		<delete file="apt-json.jar" failonerror="false" />
+		<delete file="apt-module.jar" failonerror="false" />
+		<delete file="testng.xml" failonerror="false" />
+	</target>
+
+	<target name="jar" depends="verify-modules"
+		description="Build a jar file containing all the needed stuff to run the apt tool.">
+		<mkdir dir="artifacts"/>
+		<!-- Our annotation processing creates files under META-INF that
+		     needs to be merged, do so.
+		  -->
+		<concat destfile="classes/META-INF/services/uniol.apt.module.Module">
+			<fileset dir="classes">
+				<include name="io/META-INF/services/uniol.apt.module.Module"/>
+				<include name="lib/META-INF/services/uniol.apt.module.Module"/>
+				<include name="main/META-INF/services/uniol.apt.module.Module"/>
+				<include name="module/META-INF/services/uniol.apt.module.Module"/>
+			</fileset>
+		</concat>
+		<jar destfile="artifacts/apt-lib.jar" duplicate="fail">
+			<fileset dir="classes/glue/" />
+			<fileset dir="classes/lib/" />
+		</jar>
+		<jar destfile="artifacts/apt-io.jar" duplicate="fail">
+			<fileset dir="classes/io/" />
+		</jar>
+		<jar destfile="artifacts/apt-module.jar" duplicate="fail">
+			<fileset dir="classes/module/" />
+		</jar>
+		<jar destfile="artifacts/apt.jar" duplicate="fail">
+			<fileset dir="classes">
+				<include name="META-INF/services/uniol.apt.module.Module"/>
+			</fileset>
+			<zipfileset src="artifacts/apt-lib.jar" />
+			<zipfileset src="artifacts/apt-io.jar" />
+			<zipfileset src="artifacts/apt-module.jar">
+				<exclude name="META-INF/services/uniol.apt.module.Module"/>
+			</zipfileset>
+			<fileset dir="classes/main/">
+				<exclude name="META-INF/services/uniol.apt.module.Module"/>
+			</fileset>
+			<fileset dir="classes/compiler/" />
+			<zipfileset includes="**/*.class" src="lib/commons-io-2.4/commons-io-2.4.jar" />
+			<zipfileset includes="**/*.class" src="lib/commons-collections4-4.0/commons-collections4-4.0.jar" />
+			<zipfileset includes="**/*.class" src="lib/antlr-4.5.1/antlr-runtime-4.5.1.jar" />
+			<zipfileset includes="**/*.class" src="lib/stringtemplate-4.0.8/ST-4.0.8.jar" />
+			<zipfileset includes="**/*.class" src="lib/sat4j-2.3.2/org.sat4j.core.jar" />
+			<zipfileset includes="**/*.class" src="lib/smtinterpol-2.1-335-g4c543a5/smtinterpol.jar"/>
+			<manifest>
+				<attribute name="Main-Class" value="uniol.apt.APT" />
+			</manifest>
+		</jar>
+		<jar destfile="artifacts/apt-json.jar" duplicate="fail">
+			<zipfileset src="artifacts/apt.jar"/>
+			<fileset dir="classes/json/"/>
+			<zipfileset includes="**/*.class" src="lib/json-20160810/json.jar"/>
+			<manifest>
+				<attribute name="Main-Class" value="uniol.apt.json.Main" />
+			</manifest>
+		</jar>
+
+		<macrodef name="service-verify">
+			<attribute name="jar" />
+			<attribute name="class" />
+			<attribute name="member" />
+			<sequential>
+				<java classname="uniol.apt.tasks.ServiceVerifyTask" failonerror="true">
+					<classpath path="classes/ant" />
+					<arg path="@{jar}"/>
+					<arg value="@{class}"/>
+					<arg value="@{member}"/>
+				</java>
+			</sequential>
+		</macrodef>
+
+		<service-verify jar="artifacts/apt.jar" class="uniol.apt.io.parser.PNParsers" member="INSTANCE" />
+		<service-verify jar="artifacts/apt.jar" class="uniol.apt.io.parser.LTSParsers" member="INSTANCE" />
+		<service-verify jar="artifacts/apt.jar" class="uniol.apt.io.renderer.PNRenderers" member="INSTANCE" />
+		<service-verify jar="artifacts/apt.jar" class="uniol.apt.io.renderer.LTSRenderers" member="INSTANCE" />
+		<service-verify jar="artifacts/apt.jar" class="uniol.apt.ui.impl.AptParametersTransformer" member="INSTANCE" />
+		<service-verify jar="artifacts/apt.jar" class="uniol.apt.ui.impl.AptReturnValuesTransformer" member="INSTANCE" />
+		<service-verify jar="artifacts/apt.jar" class="uniol.apt.module.AptModuleRegistry" member="INSTANCE" />
+		<copy file="artifacts/apt.jar" tofile="apt.jar"/>
+		<copy file="artifacts/apt-json.jar" tofile="apt-json.jar"/>
+	</target>
+	<import file="build.local.xml" optional="true"/>
+</project>
