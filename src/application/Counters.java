@@ -30,6 +30,14 @@ public class Counters
 		return text;
 	}
 
+	public String doubleArrowsCounter(ObservableList<LeftDoubleArrow> list, Label label)
+	{
+		final int number = list.size();
+		String text = Integer.toString(number);
+		label.setText(text);
+		return text;
+	}
+
 	public String lineCounter(ObservableList<Line> list, Label label)
 	{
 		final int number = list.size();

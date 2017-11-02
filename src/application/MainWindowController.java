@@ -145,6 +145,9 @@ public class MainWindowController
 	Label arrowsCreatedL = new Label("Arrows created: ");
 	Label numberOfArrowsCreatedL = new Label("0");
 
+	Label doubleArrowsCreatedL = new Label("Double arrows created: ");
+	Label numberOfDoubleArrowsCreatedL = new Label("0");
+
 	Label mouseBothClickL = new Label("Mouse both clicked: ");
 	Label numberOfMouseBothClickL = new Label("0");
 
@@ -547,8 +550,12 @@ public class MainWindowController
 					ha.setFill(arrowColor);
 				}
 
-				selectedImageView.setLayoutX(c.getCenterX() - 20);
-				selectedImageView.setLayoutY(c.getCenterY() - 20);
+				if(selectedImageView != null)
+				{
+					selectedImageView.setLayoutX(c.getCenterX() - 20);
+					selectedImageView.setLayoutY(c.getCenterY() - 20);
+
+				}
 
 			} catch (Exception e)
 			{
@@ -739,6 +746,7 @@ public class MainWindowController
 		counters.mouseClickerCounter(mouseBothClicked, numberOfMouseBothClickL);
 		counters.mouseClickerCounter(mouseRightClicked, numberOfMouseRightClickL);
 		counters.mouseClickerCounter(mouseLeftClicked, numberOfMouseLeftClickL);
+		counters.doubleArrowsCounter(leftDoubleArrowList, numberOfDoubleArrowsCreatedL);
 		counters.objDeleted(objectsDeleted, numberOfObjectsDeletedL);
 		counters.objDeleted(objectsMoved, numberOfObjectsMovedL);
 	}
@@ -1680,6 +1688,7 @@ public class MainWindowController
 		GridPane.setHalignment(interactions, HPos.RIGHT);
 		GridPane.setHalignment(circlesCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(rectanglesCreatedL, HPos.RIGHT);
+		GridPane.setHalignment(doubleArrowsCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(arrowsCreatedL, HPos.RIGHT);
 		GridPane.setHalignment(mouseBothClickL, HPos.RIGHT);
 		GridPane.setHalignment(mouseLeftClickL, HPos.RIGHT);
@@ -1699,25 +1708,28 @@ public class MainWindowController
 		grid.add(arrowsCreatedL, 0, 3);
 		grid.add(numberOfArrowsCreatedL, 1, 3);
 
-		grid.add(separator1, 0, 4);
-		grid.add(separator2, 1, 4);
+		grid.add(doubleArrowsCreatedL, 0,4);
+		grid.add(numberOfDoubleArrowsCreatedL, 1,4);
 
-		grid.add(interactions, 0, 5);
+		grid.add(separator1, 0, 5);
+		grid.add(separator2, 1, 5);
 
-		grid.add(mouseBothClickL, 0, 6);
-		grid.add(numberOfMouseBothClickL, 1, 6);
+		grid.add(interactions, 0, 6);
 
-		grid.add(mouseRightClickL, 0, 7);
-		grid.add(numberOfMouseRightClickL, 1, 7);
+		grid.add(mouseBothClickL, 0, 7);
+		grid.add(numberOfMouseBothClickL, 1, 7);
 
-		grid.add(mouseLeftClickL, 0, 8);
-		grid.add(numberOfMouseLeftClickL, 1, 8);
+		grid.add(mouseRightClickL, 0, 8);
+		grid.add(numberOfMouseRightClickL, 1, 8);
 
-		grid.add(objectsDeletedL, 0, 9);
-		grid.add(numberOfObjectsDeletedL, 1, 9);
+		grid.add(mouseLeftClickL, 0, 9);
+		grid.add(numberOfMouseLeftClickL, 1, 9);
 
-		grid.add(objectsMovedL, 0, 10);
-		grid.add(numberOfObjectsMovedL, 1, 10);
+		grid.add(objectsDeletedL, 0, 10);
+		grid.add(numberOfObjectsDeletedL, 1, 10);
+
+		grid.add(objectsMovedL, 0, 11);
+		grid.add(numberOfObjectsMovedL, 1, 11);
 
 		grid.add(exportToPdf, 0, 11);
 
