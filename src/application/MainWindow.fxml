@@ -21,8 +21,9 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="openFileMenuItem" mnemonicParsing="false" onAction="#openFileMenuItem_OnAction" text="Open File" />
-                  <MenuItem fx:id="saveFileMenuItem" mnemonicParsing="false" onAction="#saveFileMenuItem_OnAction" text="Save File" />
+                  <MenuItem fx:id="openFileMenuItem" mnemonicParsing="false" onAction="#openFileMenuItem_OnAction" text="Open .pb File" />
+                  <MenuItem fx:id="saveFileMenuItem" mnemonicParsing="false" onAction="#saveFileMenuItem_OnAction" text="Save .pb File" />
+                  <MenuItem fx:id="openAPTFileMenuItem" mnemonicParsing="false" onAction="#openAPTFileMenuItem_OnAction" text="Open APT File" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="settingsMenuItem" mnemonicParsing="false" onAction="#settingsMenuItem_OnAction" text="Settings" />
               	  <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitMenuItem_OnAction" text="Exit" />

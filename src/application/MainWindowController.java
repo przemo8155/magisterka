@@ -1,10 +1,12 @@
 
 package application;
 
+
 //tix
 
 import java.awt.Color;
 import java.awt.List;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -174,6 +176,7 @@ public class MainWindowController
 	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
 	ExportPDF exportPdf = new ExportPDF();
 	LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
+	UsingAPT usingApt = new UsingAPT();
 
 	private String backgroundColor;
 	private String circleColor;
@@ -242,6 +245,9 @@ public class MainWindowController
 
 	@FXML
 	private MenuItem aboutMenuItem;
+
+	@FXML
+	private MenuItem openAPTFileMenuItem;
 
 	@FXML
 	private Button clearAllButton;
@@ -2004,6 +2010,19 @@ public class MainWindowController
 
 		}
 
+	}
+
+	@FXML
+	void openAPTFileMenuItem_OnAction(ActionEvent event)
+	{
+		try
+		{
+			usingApt.run();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
