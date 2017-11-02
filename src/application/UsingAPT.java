@@ -16,21 +16,13 @@ public class UsingAPT
 
 	public void run() throws IOException
 	{
-		// ProcessBuilder pb = new ProcessBuilder("java", "-jar", "apt.jar");
-		// pb.directory(new File("TEMP"));
-		// Process p = pb.start();
-		try
-		{
-			ProcessBuilder builder = new ProcessBuilder("java -jar apt.jar");
-			builder.redirectErrorStream(true);
-			Process process = builder.start();
-			Scanner scanner = null;
+
+			 ProcessBuilder pb = new ProcessBuilder("java", "-jar", "/MagisterkaBudzich/apt/apt.jar");
+			 Process p = pb.start();
+			 System.out.println(p.isAlive());
 
 
-		} catch (IOException e)
-		{
-			e.fillInStackTrace();
-		}
+
 	}
 
 }
