@@ -220,6 +220,7 @@ public class MainWindowController
 
 	ObservableList<ImageView> existingImageViews = FXCollections.observableArrayList();
 	ObservableList<ImageView> imageViewsToRemove = FXCollections.observableArrayList();
+	ObservableList<Label> tokensBiggerThanTen = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -770,11 +771,16 @@ public class MainWindowController
 						double positionX = c.getCenterX() - 20;
 						double positionY = c.getCenterY() - 20;
 						int i = checkBitmapToken(positionX, positionY);
-						if (i != 0)
+						if (i != 0 && i < 10)
 						{
 							deleteBitmapToken(positionX, positionY);
 							setBitmapToken(c, i + 1);
 
+						}
+						else if(i!=0 && i >= 10)
+						{
+							deleteTokenBiggerThanTen(positionX, positionY);
+							setBitmapToken(c, i+1);
 						}
 
 						else
@@ -1893,6 +1899,31 @@ public class MainWindowController
 		}
 	}
 
+	private void deleteTokenBiggerThanTen(double x, double y)
+	{
+		int _index = -1;
+		try
+		{
+			for (Label l : tokensBiggerThanTen)
+			{
+				if (l.getLayoutX() == x && l.getLayoutY() == y)
+				{
+					_index = tokensBiggerThanTen.indexOf(l);
+					mainPane.getChildren().remove(l);
+				}
+			}
+
+			if (_index != -1)
+			{
+				tokensBiggerThanTen.remove(_index);
+			}
+
+		} catch (Exception e)
+		{
+			e.fillInStackTrace();
+		}
+	}
+
 	public Image getImageToken1()
 	{
 		return this.imageToken1;
@@ -1902,7 +1933,15 @@ public class MainWindowController
 	{
 		if (tokens > 9)
 		{
-			Utilities.infoBox("wiecej niz 9");
+			deleteTokenBiggerThanTen(c.getCenterX(), c.getCenterY());
+
+			Label numberOfTokens = new Label();
+			numberOfTokens.setText(String.valueOf(tokens));
+			numberOfTokens.setLayoutX(c.getCenterX());
+			numberOfTokens.setLayoutY(c.getCenterY());
+			mainPane.getChildren().add(numberOfTokens);
+			tokensBiggerThanTen.add(numberOfTokens);
+
 		} else
 		{
 			deleteBitmapToken(c.getCenterX() - 20, c.getCenterY() - 20);
