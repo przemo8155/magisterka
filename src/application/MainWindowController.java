@@ -818,20 +818,27 @@ public class MainWindowController
 						double positionX = c.getCenterX() - 20;
 						double positionY = c.getCenterY() - 20;
 						int i = checkBitmapToken(positionX, positionY);
-						if (i > 1 && i <= 10)
+						if (i > 1 && i < 11)
 						{
 							deleteBitmapToken(positionX, positionY);
 							setBitmapToken(c, i - 1);
 
 						}
 
-						else if(i > 10)
+						else if(i > 11)
 						{
 							i-=1;
 							deleteTokenBiggerThanTen(positionX, positionY);
 							setBitmapToken(c, i - 1);
 						}
 
+						else if(i == 11)
+						{
+							i-=1;
+							Utilities.intBox(i);
+							deleteTokenBiggerThanTen(positionX, positionY);
+
+						}
 						else
 						{
 							deleteBitmapToken(positionX, positionY);
