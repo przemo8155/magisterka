@@ -786,7 +786,8 @@ public class MainWindowController
 						else if(i!=0 && i >= 10)
 						{
 							deleteTokenBiggerThanTen(positionX, positionY);
-							setBitmapToken(c, i+1);
+							setBitmapToken(c, i);
+							i+=1;
 						}
 
 						else
@@ -1848,35 +1849,54 @@ public class MainWindowController
 				if (iv.getImage() == imageToken1)
 				{
 					whatToReturn = 1;
-				} else if (iv.getImage() == imageToken2)
+					break;
+				} if (iv.getImage() == imageToken2)
 				{
 					whatToReturn = 2;
-				} else if (iv.getImage() == imageToken3)
+					break;
+				} if (iv.getImage() == imageToken3)
 				{
 					whatToReturn = 3;
-				} else if (iv.getImage() == imageToken4)
+					break;
+				} if (iv.getImage() == imageToken4)
 				{
 					whatToReturn = 4;
-				} else if (iv.getImage() == imageToken5)
+					break;
+				} if (iv.getImage() == imageToken5)
 				{
 					whatToReturn = 5;
-				} else if (iv.getImage() == imageToken6)
+					break;
+				} if (iv.getImage() == imageToken6)
 				{
 					whatToReturn = 6;
-				} else if (iv.getImage() == imageToken7)
+					break;
+				} if (iv.getImage() == imageToken7)
 				{
 					whatToReturn = 7;
-				} else if (iv.getImage() == imageToken8)
+					break;
+				} if (iv.getImage() == imageToken8)
 				{
 					whatToReturn = 8;
-				} else if (iv.getImage() == imageToken9)
+					break;
+				} if (iv.getImage() == imageToken9)
 				{
 					whatToReturn = 9;
+					break;
 				}
 
 			}
 		}
+		for(Label l : tokensBiggerThanTen)
+		{
 
+			if(l.getLayoutX() == x && l.getLayoutY() == y)
+			{
+				String t = l.getText();
+				whatToReturn = Integer.parseInt(t) + 1;
+				break;
+			}
+
+		}
 		return whatToReturn;
 	}
 
@@ -1939,14 +1959,14 @@ public class MainWindowController
 	{
 		if (tokens > 9)
 		{
-			deleteTokenBiggerThanTen(c.getCenterX(), c.getCenterY());
+			deleteTokenBiggerThanTen(c.getCenterX() - 20, c.getCenterY() - 20);
 
 			Label numberOfTokens = new Label();
 			numberOfTokens.setText(String.valueOf(tokens));
-			numberOfTokens.setLayoutX(c.getCenterX());
-			numberOfTokens.setLayoutY(c.getCenterY());
-			mainPane.getChildren().add(numberOfTokens);
+			numberOfTokens.setLayoutX(c.getCenterX() - 20);
+			numberOfTokens.setLayoutY(c.getCenterY() - 20);
 			tokensBiggerThanTen.add(numberOfTokens);
+			mainPane.getChildren().add(numberOfTokens);
 
 		} else
 		{
