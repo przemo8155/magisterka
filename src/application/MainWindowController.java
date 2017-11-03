@@ -115,6 +115,8 @@ public class MainWindowController
 	double orgTranslateX, orgTranslateY;
 	static int minusWidth = 95;
 
+	private static int labelInTokensRay = 15;
+
 	static double ll = 15;
 
 	static double moveArrowWithoutHead = 5.0f;
@@ -1889,7 +1891,7 @@ public class MainWindowController
 		for(Label l : tokensBiggerThanTen)
 		{
 
-			if(l.getLayoutX() == x && l.getLayoutY() == y)
+			if(l.getLayoutX() - (20-labelInTokensRay) == x && l.getLayoutY() - (20-labelInTokensRay) == y)
 			{
 				String t = l.getText();
 				whatToReturn = Integer.parseInt(t) + 1;
@@ -1959,12 +1961,14 @@ public class MainWindowController
 	{
 		if (tokens > 9)
 		{
-			deleteTokenBiggerThanTen(c.getCenterX() - 20, c.getCenterY() - 20);
+			deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay, c.getCenterY() - labelInTokensRay);
 
 			Label numberOfTokens = new Label();
 			numberOfTokens.setText(String.valueOf(tokens));
-			numberOfTokens.setLayoutX(c.getCenterX() - 20);
-			numberOfTokens.setLayoutY(c.getCenterY() - 20);
+			numberOfTokens.setFont(new Font("Arial", 24));
+			numberOfTokens.setLayoutX(c.getCenterX() - labelInTokensRay);
+			numberOfTokens.setLayoutY(c.getCenterY() - labelInTokensRay);
+			numberOfTokens.setTextFill(Paint.valueOf("#222222"));
 			tokensBiggerThanTen.add(numberOfTokens);
 			mainPane.getChildren().add(numberOfTokens);
 
