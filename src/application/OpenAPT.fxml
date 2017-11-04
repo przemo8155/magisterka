@@ -22,6 +22,8 @@
             <Label fx:id="fileLabel" layoutX="64.0" layoutY="103.0" text="File:" />
             <Button fx:id="selectFileButton" layoutX="414.0" layoutY="99.0" mnemonicParsing="false" onAction="#selectFileButton_OnAction" text="Select" />
             <TextField fx:id="fileTextField" layoutX="154.0" layoutY="99.0" />
+            <Button fx:id="openButton" layoutX="154.0" layoutY="458.0" mnemonicParsing="false" onAction="#openButton_OnAction" text="Open" />
+            <Button fx:id="closeButton" layoutX="303.0" layoutY="446.0" mnemonicParsing="false" onAction="#closeButton_OnAction" text="Close" />
          </children>
       </Pane>
    </children>

@@ -1,3 +1,4 @@
+
 package application;
 
 import java.io.File;
@@ -13,17 +14,16 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-
-
 public class OpenAPTController
 {
+
 	Stage stage = MainWindowController.aptStage;
 
 	@FXML
 	private Label headLabel, typeLabel, fileLabel;
 
 	@FXML
-	private Button selectFileButton;
+	private Button selectFileButton, openButton, closeButton;
 
 	@FXML
 	private TextField fileTextField;
@@ -42,11 +42,35 @@ public class OpenAPTController
 	@FXML
 	void selectFileButton_OnAction(ActionEvent event)
 	{
-		FileChooser fileChooser = new FileChooser();
+		String startDir = System.getProperty("user.dir");
+		File directory = new File(startDir);
 		File file;
-		fileChooser.setTitle("Open File");
+
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open APT File");
+		fileChooser.setInitialDirectory(directory);
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("APT files (*.apt)", "*.apt");
 		fileChooser.getExtensionFilters().add(extFilter);
+
 		file = fileChooser.showOpenDialog(stage);
+
+		if (file != null)
+		{
+			fileTextField.setText(file.getAbsolutePath());
+		}
+	}
+
+	@FXML
+	void closeButton_OnAction(ActionEvent event)
+	{
+		Stage closeStage = (Stage) closeButton.getScene().getWindow();
+		closeStage.close();
+	}
+
+	@FXML
+	void openButton_OnAction(ActionEvent event)
+	{
+
 	}
 }
