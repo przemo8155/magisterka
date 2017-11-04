@@ -17,9 +17,19 @@ public class UsingAPT
 	public void run() throws IOException
 	{
 
-			 ProcessBuilder pb = new ProcessBuilder("java", "-jar", "/MagisterkaBudzich/apt/apt.jar");
+			 ProcessBuilder pb = new ProcessBuilder("java", "-jar", "apt/apt.jar", "bounded", "apt/nets/eb-nets/basic/pn3-net.apt");
+
 			 Process p = pb.start();
-			 System.out.println(p.isAlive());
+			 BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+			 byte[] contents = new byte[1024];
+
+			 int bytesRead = 0;
+			 String strFileContents = "";
+			 while((bytesRead = in.read(contents)) != -1) {
+			     strFileContents += new String(contents, 0, bytesRead);
+			 }
+
+			 System.out.print(strFileContents);
 
 
 
