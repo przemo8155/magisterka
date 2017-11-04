@@ -1441,6 +1441,7 @@ public class MainWindowController
 
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+		openAPTFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
 
 		exportToPdf.setOnAction(exportPdf.exportToPdfEventHandler);
 
@@ -2060,7 +2061,7 @@ public class MainWindowController
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("OpenAPT.fxml"));
 
-			Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+			Scene scene = new Scene(fxmlLoader.load(), 320, 320);
 			scene.getStylesheets().add(getClass().getResource("openapt.css").toExternalForm());
 			aptStage = new Stage();
 			aptStage.setTitle("Open APT");

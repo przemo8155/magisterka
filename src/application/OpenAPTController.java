@@ -1,7 +1,9 @@
 
 package application;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.IOException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +19,13 @@ import javafx.stage.Stage;
 public class OpenAPTController
 {
 
+	public String typeOfNet = "";
+	final String startDir = System.getProperty("user.dir");
+	final String eee = startDir + "\\apt\\apt.jar";
+	final String aptJarPath = eee.replaceAll("\\\\", "/");
+	String sep = System.getProperty("file.separator");
 	Stage stage = MainWindowController.aptStage;
+	File file;
 
 	@FXML
 	private Label headLabel, typeLabel, fileLabel;
@@ -42,11 +50,8 @@ public class OpenAPTController
 	@FXML
 	void selectFileButton_OnAction(ActionEvent event)
 	{
-		String startDir = System.getProperty("user.dir");
+
 		File directory = new File(startDir);
-		File file;
-
-
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open APT File");
 		fileChooser.setInitialDirectory(directory);
@@ -71,6 +76,46 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
+		if (typeChoiceBox.getSelectionModel().isSelected(0))
+		{
+			typeOfNet = "bounded";
+		} else if (typeChoiceBox.getSelectionModel().isSelected(1))
+		{
+			typeOfNet = "coverab";
+		} else if (typeChoiceBox.getSelectionModel().isSelected(2))
+		{
+			typeOfNet = "weakly_live";
+		} else
+		{
+			typeOfNet = "";
+		}
+
+		JarProcess(file);
+	}
+
+	void JarProcess(File file)
+	{
+
+		try
+		{
+			ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar", typeOfNet,
+					file.getAbsolutePath());
+
+			Process p = pb.start();
+			BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+			byte[] contents = new byte[1024];
+
+			int bytesRead = 0;
+			String strFileContents = "";
+			while ((bytesRead = in.read(contents)) != -1)
+			{
+				strFileContents += new String(contents, 0, bytesRead);
+			}
+			System.out.println(strFileContents);
+		} catch (IOException e)
+		{
+			System.out.print(e.getMessage());
+		}
 
 	}
 }

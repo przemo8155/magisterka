@@ -31,8 +31,7 @@ public class UsingAPT
 
 			 System.out.print(strFileContents);
 
-
-
 	}
+	
 
 }
