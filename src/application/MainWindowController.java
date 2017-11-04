@@ -835,8 +835,8 @@ public class MainWindowController
 						else if(i == 11)
 						{
 							i-=1;
-							Utilities.intBox(i);
-							deleteTokenBiggerThanTen(positionX, positionY);
+							deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay, c.getCenterY() - labelInTokensRay);
+							setBitmapToken(c, i - 1);
 
 						}
 						else
