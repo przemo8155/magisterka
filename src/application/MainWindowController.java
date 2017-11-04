@@ -119,6 +119,8 @@ public class MainWindowController
 
 	static double ll = 15;
 
+	public static Stage aptStage;
+
 	static double moveArrowWithoutHead = 5.0f;
 
 	static int doubleArrowMove = 100;
@@ -2060,17 +2062,22 @@ public class MainWindowController
 
 			Scene scene = new Scene(fxmlLoader.load(), 600, 600);
 			scene.getStylesheets().add(getClass().getResource("openapt.css").toExternalForm());
-			Stage stage = new Stage();
-			stage.setTitle("Open APT");
-			stage.setScene(scene);
-			stage.getIcons()
+			aptStage = new Stage();
+			aptStage.setTitle("Open APT");
+			aptStage.setScene(scene);
+			aptStage.getIcons()
 					.add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
-			stage.show();
-			stage.setOnHiding(closeWindow);
+			aptStage.show();
+			aptStage.setOnHiding(closeWindow);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public Stage getAptStage()
+	{
+		return this.aptStage;
 	}
 
 }
