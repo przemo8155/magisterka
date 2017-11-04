@@ -2055,10 +2055,20 @@ public class MainWindowController
 	{
 		try
 		{
-			usingApt.run();
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("OpenAPT.fxml"));
+
+			Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+			scene.getStylesheets().add(getClass().getResource("openapt.css").toExternalForm());
+			Stage stage = new Stage();
+			stage.setTitle("Open APT");
+			stage.setScene(scene);
+			stage.getIcons()
+					.add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
+			stage.show();
+			stage.setOnHiding(closeWindow);
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
