@@ -23,6 +23,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -30,6 +31,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -54,7 +56,7 @@ public class FileManager
 
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
-			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews)
+			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews, ObservableList<Label> labelTokens)
 	{
 		try
 		{
@@ -230,6 +232,25 @@ public class FileManager
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
 
+			final String _labelTokens = "labelTokens";
+			stringBuilder.append(_labelTokens);
+			stringBuilder.append(System.getProperty("line.separator"));
+			for (Label l : labelTokens)
+			{
+				Double _d1 = l.getLayoutX();
+				Double _d2 = l.getLayoutY();
+				String _d3 = l.getText();
+				Integer _i1 = _d1.intValue();
+				Integer _i2 = _d2.intValue();
+				Integer _i3 = Integer.valueOf(_d3);
+				stringBuilder.append(_i1);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i2);
+				stringBuilder.append(" ");
+				stringBuilder.append(_i3);
+				stringBuilder.append(System.getProperty("line.separator"));
+			}
+
 			final String stringToFile = stringBuilder.toString();
 			FileChooser fileChooser = new FileChooser();
 			File file;
@@ -285,7 +306,7 @@ public class FileManager
 
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
-			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews, Pane gc)
+			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews, ObservableList<Label> labelTokens, Pane gc)
 	{
 		try
 		{
@@ -315,7 +336,7 @@ public class FileManager
 				ex.printStackTrace();
 			}
 
-			Reader(decryptedFile, circles, squares, arrows, leftDoubleArrows, rightDoubleArrows, imageViews, gc);
+			Reader(decryptedFile, circles, squares, arrows, leftDoubleArrows, rightDoubleArrows, imageViews, labelTokens, gc);
 			decryptedFile.delete();
 
 		} catch (NullPointerException | IOException ex)
@@ -327,7 +348,7 @@ public class FileManager
 
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
-			ObservableList<RightDoubleArrow> rightDoubleArrows,  ObservableList<ImageView> imageViews, Pane gc)
+			ObservableList<RightDoubleArrow> rightDoubleArrows,  ObservableList<ImageView> imageViews, ObservableList<Label> labelTokens, Pane gc)
 	{
 		Scanner scanner;
 
@@ -342,6 +363,10 @@ public class FileManager
 		Double ls1 = 0.0, ls2 = 0.0, le1 = 0.0, le2 = 0.0;
 		Double iv1 = 0.0, iv2 = 0.0;
 		Integer imageType = 0;
+
+		Double labelX = 0.0, labelY = 0.0;
+		Integer labelInt = 0;
+		String labelStr = "";
 
 		Double as1 = 0.0, as2 = 0.0, ac1 = 0.0, ac2 = 0.0, ae1 = 0.0, ae2 = 0.0;
 		try
@@ -611,6 +636,11 @@ public class FileManager
 					{
 						t = scanner.next();
 
+						if (t.equals("labelTokens"))
+						{
+							break;
+						}
+
 						switch(faze)
 						{
 							case 1:
@@ -679,6 +709,57 @@ public class FileManager
 		{
 			e1.printStackTrace();
 		}
+
+
+		try
+		{
+			scanner = new Scanner(file);
+
+			while (scanner.hasNext())
+			{
+				String tmp = scanner.next();
+
+				if (tmp.equals("labelTokens"))
+				{
+					String t;
+					while (scanner.hasNext())
+					{
+						t = scanner.next();
+
+						switch (faze)
+						{
+							case 1:
+								labelX = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 2:
+								labelY = Double.parseDouble(t);
+								faze += 1;
+								break;
+							case 3:
+								labelInt = Integer.valueOf(t);
+								Label l = new Label();
+								l.setText(labelInt.toString());
+								l.setFont(new Font("Arial", 24));
+								l.setLayoutX(labelX);
+								l.setLayoutY(labelY);
+								labelTokens.add(l);
+								faze = 1;
+								break;
+
+						}
+
+					}
+				}
+
+			}
+
+			scanner.close();
+		} catch (FileNotFoundException e1)
+		{
+			e1.printStackTrace();
+		}
+
 
 	}
 

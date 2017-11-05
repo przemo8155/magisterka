@@ -1,7 +1,6 @@
 
 package application;
 
-
 //tix
 
 import java.awt.Color;
@@ -560,7 +559,7 @@ public class MainWindowController
 					ha.setFill(arrowColor);
 				}
 
-				if(selectedImageView != null)
+				if (selectedImageView != null)
 				{
 					selectedImageView.setLayoutX(c.getCenterX() - 20);
 					selectedImageView.setLayoutY(c.getCenterY() - 20);
@@ -785,12 +784,11 @@ public class MainWindowController
 							deleteBitmapToken(positionX, positionY);
 							setBitmapToken(c, i + 1);
 
-						}
-						else if(i!=0 && i >= 10)
+						} else if (i != 0 && i >= 10)
 						{
 							deleteTokenBiggerThanTen(positionX, positionY);
 							setBitmapToken(c, i);
-							i+=1;
+							i += 1;
 						}
 
 						else
@@ -826,21 +824,21 @@ public class MainWindowController
 
 						}
 
-						else if(i > 11)
+						else if (i > 11)
 						{
-							i-=1;
+							i -= 1;
 							deleteTokenBiggerThanTen(positionX, positionY);
 							setBitmapToken(c, i - 1);
 						}
 
-						else if(i == 11)
+						else if (i == 11)
 						{
-							i-=1;
-							deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay, c.getCenterY() - labelInTokensRay);
+							i -= 1;
+							deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
+									c.getCenterY() - labelInTokensRay);
 							setBitmapToken(c, i - 1);
 
-						}
-						else
+						} else
 						{
 							deleteBitmapToken(positionX, positionY);
 						}
@@ -865,9 +863,10 @@ public class MainWindowController
 								&& (y < myCircle.getCenterY() + circleRay + minusWidth))
 						{
 
-							for(ImageView iv : existingImageViews)
+							for (ImageView iv : existingImageViews)
 							{
-								if(iv.getLayoutX() == myCircle.getCenterX() - 20 && iv.getLayoutY() == myCircle.getCenterY() - 20)
+								if (iv.getLayoutX() == myCircle.getCenterX() - 20
+										&& iv.getLayoutY() == myCircle.getCenterY() - 20)
 								{
 									imageViewsToRemove.add(iv);
 								}
@@ -921,10 +920,10 @@ public class MainWindowController
 								}
 							}
 
-							if(!imageViewsToRemove.isEmpty())
+							if (!imageViewsToRemove.isEmpty())
 							{
 								existingImageViews.removeAll(imageViewsToRemove);
-								for(ImageView iv : imageViewsToRemove)
+								for (ImageView iv : imageViewsToRemove)
 								{
 									mainPane.getChildren().remove(iv);
 								}
@@ -1444,7 +1443,7 @@ public class MainWindowController
 
 		exportToPdf.setOnAction(exportPdf.exportToPdfEventHandler);
 
-		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList);
+		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen);
 
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -1543,7 +1542,7 @@ public class MainWindowController
 	{
 		Stage s = Main.getPrimaryStage();
 		fileManager.SaveFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews);
+				existingImageViews, tokensBiggerThanTen);
 		Boolean fileSaved = fileManager.getSomethingSaved();
 		if (fileSaved)
 		{
@@ -1581,13 +1580,13 @@ public class MainWindowController
 			rda.removeFromMainPane(mainPane);
 		}
 
-		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList);
+		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		squareList.clear();
 		fileManager.OpenFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, mainPane);
+				existingImageViews, tokensBiggerThanTen, mainPane);
 
 		for (Circle c : circleList)
 		{
@@ -1618,9 +1617,14 @@ public class MainWindowController
 			rda.addToMainPane(mainPane);
 		}
 
-		for(ImageView iv : existingImageViews)
+		for (ImageView iv : existingImageViews)
 		{
 			mainPane.getChildren().add(iv);
+		}
+
+		for(Label l : tokensBiggerThanTen)
+		{
+			mainPane.getChildren().add(l);
 		}
 
 		Boolean fileOpened = fileManager.getSomethingOpened();
@@ -1641,7 +1645,7 @@ public class MainWindowController
 	void clearAllButton_OnMouseClicked(MouseEvent event)
 	{
 		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, squareList,
-				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews);
+				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen);
 		if (utilities.checkCleared)
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);
@@ -1739,8 +1743,8 @@ public class MainWindowController
 		grid.add(arrowsCreatedL, 0, 3);
 		grid.add(numberOfArrowsCreatedL, 1, 3);
 
-		grid.add(doubleArrowsCreatedL, 0,4);
-		grid.add(numberOfDoubleArrowsCreatedL, 1,4);
+		grid.add(doubleArrowsCreatedL, 0, 4);
+		grid.add(numberOfDoubleArrowsCreatedL, 1, 4);
 
 		grid.add(separator1, 0, 5);
 		grid.add(separator2, 1, 5);
@@ -1868,35 +1872,43 @@ public class MainWindowController
 				{
 					whatToReturn = 1;
 					break;
-				} if (iv.getImage() == imageToken2)
+				}
+				if (iv.getImage() == imageToken2)
 				{
 					whatToReturn = 2;
 					break;
-				} if (iv.getImage() == imageToken3)
+				}
+				if (iv.getImage() == imageToken3)
 				{
 					whatToReturn = 3;
 					break;
-				} if (iv.getImage() == imageToken4)
+				}
+				if (iv.getImage() == imageToken4)
 				{
 					whatToReturn = 4;
 					break;
-				} if (iv.getImage() == imageToken5)
+				}
+				if (iv.getImage() == imageToken5)
 				{
 					whatToReturn = 5;
 					break;
-				} if (iv.getImage() == imageToken6)
+				}
+				if (iv.getImage() == imageToken6)
 				{
 					whatToReturn = 6;
 					break;
-				} if (iv.getImage() == imageToken7)
+				}
+				if (iv.getImage() == imageToken7)
 				{
 					whatToReturn = 7;
 					break;
-				} if (iv.getImage() == imageToken8)
+				}
+				if (iv.getImage() == imageToken8)
 				{
 					whatToReturn = 8;
 					break;
-				} if (iv.getImage() == imageToken9)
+				}
+				if (iv.getImage() == imageToken9)
 				{
 					whatToReturn = 9;
 					break;
@@ -1904,10 +1916,10 @@ public class MainWindowController
 
 			}
 		}
-		for(Label l : tokensBiggerThanTen)
+		for (Label l : tokensBiggerThanTen)
 		{
 
-			if(l.getLayoutX() - (20-labelInTokensRay) == x && l.getLayoutY() - (20-labelInTokensRay) == y)
+			if (l.getLayoutX() - (20 - labelInTokensRay) == x && l.getLayoutY() - (20 - labelInTokensRay) == y)
 			{
 				String t = l.getText();
 				whatToReturn = Integer.parseInt(t) + 1;

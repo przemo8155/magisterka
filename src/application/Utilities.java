@@ -40,7 +40,7 @@ public class Utilities
 
 	public void clearUpMessage(Pane pane, String title, String header, String content, ObservableList<Circle> circ,
 			ObservableList<Rectangle> rect, ObservableList<HeadArrow> lin, ObservableList<LeftDoubleArrow> leftDoubleArrows,
-			ObservableList<RightDoubleArrow> rightDoubleArrows,  ObservableList<ImageView> imageViews)
+			ObservableList<RightDoubleArrow> rightDoubleArrows,  ObservableList<ImageView> imageViews, ObservableList<Label> labelList)
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);
@@ -57,6 +57,7 @@ public class Utilities
 			leftDoubleArrows.clear();
 			rightDoubleArrows.clear();
 			imageViews.clear();
+			labelList.clear();
 			checkCleared = true;
 		} else
 		{
@@ -98,13 +99,15 @@ public class Utilities
 		return w;
 	}
 
-	public void clearAllLists(ObservableList<Circle> circ, ObservableList<Rectangle> rect, ObservableList<HeadArrow> arr, ObservableList<LeftDoubleArrow> lda, ObservableList<RightDoubleArrow> rda)
+	public void clearAllLists(ObservableList<Circle> circ, ObservableList<Rectangle> rect, ObservableList<HeadArrow> arr, ObservableList<LeftDoubleArrow> lda, ObservableList<RightDoubleArrow> rda, ObservableList<ImageView> images, ObservableList<Label> labelList)
 	{
 		circ.clear();
 		rect.clear();
 		arr.clear();
 		lda.clear();
 		rda.clear();
+		images.clear();
+		labelList.clear();
 	}
 
 	public void clearStartAndEndLineLists(ObservableList<Line> lin1, ObservableList<Line> lin2)

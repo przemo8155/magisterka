@@ -31,7 +31,6 @@ public class OpenAPTController
 
 	File jarFile;
 
-
 	@FXML
 	private Label headLabel, typeLabel, fileLabel, infoLabel;
 
@@ -85,12 +84,10 @@ public class OpenAPTController
 		if (typeChoiceBox.getSelectionModel().isSelected(1))
 		{
 
-		}
-		else
+		} else
 		{
 			Alert alert = new Alert(AlertType.WARNING,
-                    "You need to set type of net as 'coverab' to open net in program.",
-                    ButtonType.OK);
+					"You need to set type of net as 'coverab' to open net in program.", ButtonType.OK);
 			alert.showAndWait();
 
 		}
@@ -114,16 +111,13 @@ public class OpenAPTController
 			typeOfNet = "";
 		}
 
-		if(!fileTextField.getText().trim().isEmpty())
+		if (!fileTextField.getText().trim().isEmpty())
 		{
 			JarProcess(jarFile);
 
-		}
-		else
+		} else
 		{
-			Alert alert = new Alert(AlertType.WARNING,
-                    "Select file.",
-                    ButtonType.OK);
+			Alert alert = new Alert(AlertType.WARNING, "Select file.", ButtonType.OK);
 			alert.showAndWait();
 		}
 	}
