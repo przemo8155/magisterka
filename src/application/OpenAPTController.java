@@ -9,7 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -25,13 +28,15 @@ public class OpenAPTController
 	final String aptJarPath = eee.replaceAll("\\\\", "/");
 	String sep = System.getProperty("file.separator");
 	Stage stage = MainWindowController.aptStage;
-	File file;
+
+	File jarFile;
+
 
 	@FXML
-	private Label headLabel, typeLabel, fileLabel;
+	private Label headLabel, typeLabel, fileLabel, infoLabel;
 
 	@FXML
-	private Button selectFileButton, openButton, closeButton;
+	private Button selectFileButton, openButton, closeButton, infoAboutNetButton;
 
 	@FXML
 	private TextField fileTextField;
@@ -50,7 +55,7 @@ public class OpenAPTController
 	@FXML
 	void selectFileButton_OnAction(ActionEvent event)
 	{
-
+		File file;
 		File directory = new File(startDir);
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open APT File");
@@ -63,6 +68,7 @@ public class OpenAPTController
 		if (file != null)
 		{
 			fileTextField.setText(file.getAbsolutePath());
+			setJarFile(file);
 		}
 	}
 
@@ -75,6 +81,24 @@ public class OpenAPTController
 
 	@FXML
 	void openButton_OnAction(ActionEvent event)
+	{
+		if (typeChoiceBox.getSelectionModel().isSelected(1))
+		{
+
+		}
+		else
+		{
+			Alert alert = new Alert(AlertType.WARNING,
+                    "You need to set type of net as 'coverab' to open net in program.",
+                    ButtonType.OK);
+			alert.showAndWait();
+
+		}
+
+	}
+
+	@FXML
+	void infoAboutNetButton_OnAction(ActionEvent event)
 	{
 		if (typeChoiceBox.getSelectionModel().isSelected(0))
 		{
@@ -90,7 +114,28 @@ public class OpenAPTController
 			typeOfNet = "";
 		}
 
-		JarProcess(file);
+		if(!fileTextField.getText().trim().isEmpty())
+		{
+			JarProcess(jarFile);
+
+		}
+		else
+		{
+			Alert alert = new Alert(AlertType.WARNING,
+                    "Select file.",
+                    ButtonType.OK);
+			alert.showAndWait();
+		}
+	}
+
+	public void setJarFile(File file)
+	{
+		this.jarFile = file;
+	}
+
+	public File getJarFile()
+	{
+		return this.jarFile;
 	}
 
 	void JarProcess(File file)
@@ -111,6 +156,7 @@ public class OpenAPTController
 			{
 				strFileContents += new String(contents, 0, bytesRead);
 			}
+			Utilities.infoBox(strFileContents);
 			System.out.println(strFileContents);
 		} catch (IOException e)
 		{

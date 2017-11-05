@@ -2061,7 +2061,7 @@ public class MainWindowController
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("OpenAPT.fxml"));
 
-			Scene scene = new Scene(fxmlLoader.load(), 320, 320);
+			Scene scene = new Scene(fxmlLoader.load(), 320, 350);
 			scene.getStylesheets().add(getClass().getResource("openapt.css").toExternalForm());
 			aptStage = new Stage();
 			aptStage.setTitle("Open APT");

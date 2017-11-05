@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="320.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OpenAPTController">
+<AnchorPane prefHeight="350.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OpenAPTController">
    <children>
-      <Pane prefHeight="320.0" prefWidth="320.0">
+      <Pane prefHeight="350.0" prefWidth="320.0">
          <children>
             <Label fx:id="headLabel" layoutX="14.0" layoutY="14.0" text="Modify this pane to open APT file">
                <font>
@@ -35,8 +35,14 @@
                </effect></Label>
             <Button fx:id="selectFileButton" layoutX="109.0" layoutY="102.0" mnemonicParsing="false" onAction="#selectFileButton_OnAction" prefHeight="25.0" prefWidth="90.0" text="Select" />
             <TextField fx:id="fileTextField" layoutX="14.0" layoutY="71.0" prefHeight="25.0" prefWidth="295.0" />
-            <Button fx:id="openButton" layoutX="86.0" layoutY="243.0" mnemonicParsing="false" onAction="#openButton_OnAction" text="Open" />
-            <Button fx:id="closeButton" layoutX="177.0" layoutY="243.0" mnemonicParsing="false" onAction="#closeButton_OnAction" text="Close" />
+            <Button fx:id="openButton" layoutX="70.0" layoutY="247.0" mnemonicParsing="false" onAction="#openButton_OnAction" prefHeight="40.0" prefWidth="70.0" text="Open" />
+            <Button fx:id="closeButton" layoutX="164.0" layoutY="247.0" mnemonicParsing="false" onAction="#closeButton_OnAction" prefHeight="40.0" prefWidth="70.0" text="Close" />
+            <Button fx:id="infoAboutNetButton" layoutX="75.0" layoutY="311.0" mnemonicParsing="false" onAction="#infoAboutNetButton_OnAction" prefHeight="25.0" prefWidth="157.0" text="Check info about net" />
+            <Label fx:id="infoLabel" alignment="CENTER" layoutX="12.0" layoutY="214.0" prefHeight="15.0" prefWidth="295.0" text="You need to set type of net as 'coverab' to open net in program." textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
