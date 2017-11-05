@@ -180,7 +180,6 @@ public class MainWindowController
 	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
 	ExportPDF exportPdf = new ExportPDF();
 	LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
-	UsingAPT usingApt = new UsingAPT();
 
 	private String backgroundColor;
 	private String circleColor;
@@ -1969,11 +1968,6 @@ public class MainWindowController
 		}
 	}
 
-	public Image getImageToken1()
-	{
-		return this.imageToken1;
-	}
-
 	public void setBitmapToken(Circle c, int tokens)
 	{
 		if (tokens > 9)
@@ -2076,6 +2070,7 @@ public class MainWindowController
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public Stage getAptStage()
 	{
 		return this.aptStage;
