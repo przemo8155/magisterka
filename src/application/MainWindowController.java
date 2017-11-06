@@ -404,12 +404,22 @@ public class MainWindowController
 				int index = circleList.indexOf(c);
 
 				ImageView selectedImageView = null;
+				Label selectedLabel = null;
 
 				for (ImageView iv : existingImageViews)
 				{
 					if (iv.getLayoutX() == c.getCenterX() - 20 && iv.getLayoutY() == c.getCenterY() - 20)
 					{
 						selectedImageView = iv;
+						break;
+					}
+				}
+
+				for(Label l : tokensBiggerThanTen)
+				{
+					if(l.getLayoutX() == c.getCenterX() - 15 && l.getLayoutY() == c.getCenterY() - 15)
+					{
+						selectedLabel = l;
 						break;
 					}
 				}
@@ -564,6 +574,12 @@ public class MainWindowController
 					selectedImageView.setLayoutX(c.getCenterX() - 20);
 					selectedImageView.setLayoutY(c.getCenterY() - 20);
 
+				}
+
+				if(selectedLabel != null)
+				{
+					selectedLabel.setLayoutX(c.getCenterX() - 15);
+					selectedLabel.setLayoutY(c.getCenterY() - 15);
 				}
 
 			} catch (Exception e)
