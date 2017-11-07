@@ -227,6 +227,8 @@ public class MainWindowController
 	ObservableList<ImageView> imageViewsToRemove = FXCollections.observableArrayList();
 	ObservableList<Label> tokensBiggerThanTen = FXCollections.observableArrayList();
 
+	ObservableList<Label> tags = FXCollections.observableArrayList();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -783,6 +785,8 @@ public class MainWindowController
 		switch (selectedToggle)
 		{
 			case "addTag":
+				String tag = "";
+
 				for (LeftDoubleArrow lda : leftDoubleArrowList)
 				{
 					if (lda.getControlX() < event.getSceneX() + arrowRay
@@ -790,8 +794,9 @@ public class MainWindowController
 							&& lda.getControlY() < event.getSceneY() + arrowRay - minusWidth
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
+						tag = utilities.tagDialog();
+						break;
 					}
-
 
 				}
 
@@ -802,18 +807,22 @@ public class MainWindowController
 							&& lda.getControlY() < event.getSceneY() + arrowRay - minusWidth
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
+						tag = utilities.tagDialog();
+						break;
 					}
-
 
 				}
 
-				for(HeadArrow ha : headArrowList)
+				for (HeadArrow ha : headArrowList)
 				{
-					if (ha.getStartX() < event.getSceneX() + arrowRay
-							&& ha.getStartX() > event.getSceneX() - arrowRay
-							&& ha.getStartY() < event.getSceneY() + arrowRay - minusWidth
-							&& ha.getStartY() > event.getSceneY() - arrowRay - minusWidth)
+					double middleX = (ha.getStartX() + ha.getEndX()) / 2;
+					double middleY = (ha.getStartY() + ha.getEndY()) / 2;
+					if (middleX < event.getSceneX() + arrowRay && middleX > event.getSceneX() - arrowRay
+							&& middleY < event.getSceneY() + arrowRay - minusWidth
+							&& middleY > event.getSceneY() - arrowRay - minusWidth)
 					{
+						tag = utilities.tagDialog();
+						break;
 					}
 				}
 				break;

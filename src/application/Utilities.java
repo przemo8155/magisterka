@@ -15,6 +15,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -262,6 +263,23 @@ public class Utilities
 				return stage;
 			}
 
+		}
+
+		public String tagDialog()
+		{
+			TextInputDialog dialog = new TextInputDialog("");
+			dialog.setTitle("Enter tag");
+			dialog.setContentText("Please enter tag name:");
+
+			Optional<String> result = dialog.showAndWait();
+			if (result.isPresent()){
+			    return result.get();
+
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 
