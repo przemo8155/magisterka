@@ -786,7 +786,8 @@ public class MainWindowController
 		{
 			case "addTag":
 				String tag = "";
-
+				LeftDoubleArrow left = new LeftDoubleArrow();
+				RightDoubleArrow right = new RightDoubleArrow();
 				for (LeftDoubleArrow lda : leftDoubleArrowList)
 				{
 					if (lda.getControlX() < event.getSceneX() + arrowRay
@@ -795,6 +796,14 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
+						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						double midX = pair.getKey();
+						double midY = pair.getValue();
+						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						double mvX = pair2.getKey();
+						double mvY = pair2.getValue();
+						insertTag(tag, midX + mvX, midY + mvY);
+
 						break;
 					}
 
@@ -808,6 +817,13 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
+						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						double midX = pair.getKey();
+						double midY = pair.getValue();
+						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						double mvX = pair2.getKey();
+						double mvY = pair2.getValue();
+						insertTag(tag, midX - mvX, midY - mvY);
 						break;
 					}
 
@@ -822,6 +838,13 @@ public class MainWindowController
 							&& middleY > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
+						Pair<Double, Double> pair = left.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(), ha.getEndY());
+						double midX = pair.getKey();
+						double midY = pair.getValue();
+						Pair<Double, Double> pair2 = left.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(), ha.getEndY());
+						double mvX = pair2.getKey();
+						double mvY = pair2.getValue();
+						insertTag(tag, midX + mvX, midY + mvY);
 						break;
 					}
 				}
@@ -2171,6 +2194,16 @@ public class MainWindowController
 	void removeTagToggleButton_OnAction(ActionEvent event)
 	{
 
+	}
+
+	void insertTag(String text, double posX, double posY)
+	{
+		Label l = new Label();
+		l.setText(text);
+		l.setLayoutX(posX);
+		l.setLayoutY(posY);
+		mainPane.getChildren().add(l);
+		tags.add(l);
 	}
 
 }
