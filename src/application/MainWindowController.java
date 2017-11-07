@@ -858,7 +858,7 @@ public class MainWindowController
 				}
 				break;
 			case "removeTag":
-
+				int _localIndex = -1;
 				for(Label l : tags)
 				{
 					if (l.getLayoutX() < event.getSceneX() + arrowRay
@@ -866,9 +866,17 @@ public class MainWindowController
 							&& l.getLayoutY() < event.getSceneY() + arrowRay - minusWidth
 							&& l.getLayoutY() > event.getSceneY() - arrowRay - minusWidth)
 					{
-						Utilities.infoBox("remove");
+						_localIndex = tags.indexOf(l);
+						mainPane.getChildren().remove(l);
+						break;
 					}
 				}
+
+				if(_localIndex != -1)
+				{
+					tags.remove(_localIndex);
+				}
+
 				break;
 
 			case "addToken":
