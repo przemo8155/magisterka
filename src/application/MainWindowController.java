@@ -180,6 +180,7 @@ public class MainWindowController
 	ExportPDF exportPdf = new ExportPDF();
 	LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
 
+
 	private String backgroundColor;
 	private String circleColor;
 	private String rectangleColor;
@@ -407,6 +408,8 @@ public class MainWindowController
 
 				ImageView selectedImageView = null;
 				Label selectedLabel = null;
+
+
 
 				for (ImageView iv : existingImageViews)
 				{
@@ -787,7 +790,6 @@ public class MainWindowController
 			case "addTag":
 				String tag = "";
 				LeftDoubleArrow left = new LeftDoubleArrow();
-				RightDoubleArrow right = new RightDoubleArrow();
 				for (LeftDoubleArrow lda : leftDoubleArrowList)
 				{
 					if (lda.getControlX() < event.getSceneX() + arrowRay
@@ -796,10 +798,12 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
+								lda.getEndX(), lda.getEndY());
 						double midX = pair.getKey();
 						double midY = pair.getValue();
-						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(),
+								lda.getEndX(), lda.getEndY());
 						double mvX = pair2.getKey();
 						double mvY = pair2.getValue();
 						insertTag(tag, midX + mvX, midY + mvY);
@@ -817,10 +821,12 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
+								lda.getEndX(), lda.getEndY());
 						double midX = pair.getKey();
 						double midY = pair.getValue();
-						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(), lda.getEndX(), lda.getEndY());
+						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(),
+								lda.getEndX(), lda.getEndY());
 						double mvX = pair2.getKey();
 						double mvY = pair2.getValue();
 						insertTag(tag, midX - mvX, midY - mvY);
@@ -838,18 +844,31 @@ public class MainWindowController
 							&& middleY > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						Pair<Double, Double> pair = left.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(), ha.getEndY());
+						Pair<Double, Double> pair = left.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+								ha.getEndY());
 						double midX = pair.getKey();
 						double midY = pair.getValue();
-						Pair<Double, Double> pair2 = left.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(), ha.getEndY());
-						double mvX = pair2.getKey();
-						double mvY = pair2.getValue();
+						Pair<Double, Double> pair2 = left.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+								ha.getEndY());
+						double mvX = pair2.getKey() / 5;
+						double mvY = pair2.getValue() / 5;
 						insertTag(tag, midX + mvX, midY + mvY);
 						break;
 					}
 				}
 				break;
 			case "removeTag":
+
+				for(Label l : tags)
+				{
+					if (l.getLayoutX() < event.getSceneX() + arrowRay
+							&& l.getLayoutX() > event.getSceneX() - arrowRay
+							&& l.getLayoutY() < event.getSceneY() + arrowRay - minusWidth
+							&& l.getLayoutY() > event.getSceneY() - arrowRay - minusWidth)
+					{
+						Utilities.infoBox("remove");
+					}
+				}
 				break;
 
 			case "addToken":
@@ -2202,6 +2221,8 @@ public class MainWindowController
 		l.setText(text);
 		l.setLayoutX(posX);
 		l.setLayoutY(posY);
+		l.setFont(new Font("Arial", 16));
+		l.setId("fancytext");
 		mainPane.getChildren().add(l);
 		tags.add(l);
 	}
