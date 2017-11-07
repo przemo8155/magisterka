@@ -21,6 +21,8 @@ public class RightDoubleArrow
 	public HeadArrow headArrow = new HeadArrow();
 	public Line left, right;
 
+	public double tagX = 0, tagY = 0;
+
 	private static double arrowLength = 30.0;
 	private static double arrowAngle = Math.toRadians(8.0);
 
@@ -37,6 +39,23 @@ public class RightDoubleArrow
 	{
 
 	}
+
+	public Pair<Double, Double> getTag(double firstX, double firstY, double contX, double contY, double secX, double secY)
+	{
+		Pair<Double, Double> pair = returnMiddlePoint(firstX, firstY, secX, secY);
+		double midX = pair.getKey();
+		double midY = pair.getValue();
+
+		Pair<Double, Double> pair2 = returnMoveXandY(firstX, firstY, secX, secY);
+		double moveX = pair2.getKey();
+		double moveY = pair2.getValue();
+
+		double control1X = midX - moveX;
+		double control1Y = midY - moveY;
+
+		return new Pair<>(control1X, control1Y);
+	}
+
 
 	public Pair<Double, Double> returnMiddlePoint(double firstX, double firstY, double secX, double secY)
 	{

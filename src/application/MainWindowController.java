@@ -134,7 +134,7 @@ public class MainWindowController
 	Scale scaleTransform;
 	Group zoomGroup;
 
-	static int circleRay = 30, squareRay = 40, lineRay = 10;
+	static int circleRay = 30, squareRay = 40, arrowRay = 30;
 
 	double _cSecPosX = 0, _cSecPosY = 0, _cFirstPosX = 0, _cFirstPosY = 0;
 	double _rFirstPosX, _rFirstPosY, _rSecPosX, _rSecPosY;
@@ -415,9 +415,9 @@ public class MainWindowController
 					}
 				}
 
-				for(Label l : tokensBiggerThanTen)
+				for (Label l : tokensBiggerThanTen)
 				{
-					if(l.getLayoutX() == c.getCenterX() - 15 && l.getLayoutY() == c.getCenterY() - 15)
+					if (l.getLayoutX() == c.getCenterX() - 15 && l.getLayoutY() == c.getCenterY() - 15)
 					{
 						selectedLabel = l;
 						break;
@@ -576,7 +576,7 @@ public class MainWindowController
 
 				}
 
-				if(selectedLabel != null)
+				if (selectedLabel != null)
 				{
 					selectedLabel.setLayoutX(c.getCenterX() - 15);
 					selectedLabel.setLayoutY(c.getCenterY() - 15);
@@ -782,6 +782,44 @@ public class MainWindowController
 
 		switch (selectedToggle)
 		{
+			case "addTag":
+				for (LeftDoubleArrow lda : leftDoubleArrowList)
+				{
+					if (lda.getControlX() < event.getSceneX() + arrowRay
+							&& lda.getControlX() > event.getSceneX() - arrowRay
+							&& lda.getControlY() < event.getSceneY() + arrowRay - minusWidth
+							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
+					{
+					}
+
+
+				}
+
+				for (RightDoubleArrow lda : rightDoubleArrowList)
+				{
+					if (lda.getControlX() < event.getSceneX() + arrowRay
+							&& lda.getControlX() > event.getSceneX() - arrowRay
+							&& lda.getControlY() < event.getSceneY() + arrowRay - minusWidth
+							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
+					{
+					}
+
+
+				}
+
+				for(HeadArrow ha : headArrowList)
+				{
+					if (ha.getStartX() < event.getSceneX() + arrowRay
+							&& ha.getStartX() > event.getSceneX() - arrowRay
+							&& ha.getStartY() < event.getSceneY() + arrowRay - minusWidth
+							&& ha.getStartY() > event.getSceneY() - arrowRay - minusWidth)
+					{
+					}
+				}
+				break;
+			case "removeTag":
+				break;
+
 			case "addToken":
 				boolean foundCircle1 = false;
 
@@ -1459,7 +1497,8 @@ public class MainWindowController
 
 		exportToPdf.setOnAction(exportPdf.exportToPdfEventHandler);
 
-		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen);
+		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+				existingImageViews, tokensBiggerThanTen);
 
 		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -1604,7 +1643,8 @@ public class MainWindowController
 			rda.removeFromMainPane(mainPane);
 		}
 
-		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen);
+		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+				existingImageViews, tokensBiggerThanTen);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
@@ -1646,7 +1686,7 @@ public class MainWindowController
 			mainPane.getChildren().add(iv);
 		}
 
-		for(Label l : tokensBiggerThanTen)
+		for (Label l : tokensBiggerThanTen)
 		{
 			mainPane.getChildren().add(l);
 		}
