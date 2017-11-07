@@ -83,10 +83,32 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
 }
-
 #removeTokenToggleButton:selected{
 	-fx-background-color: darkgray;
 }
+
+#addTagToggleButton {
+	-fx-background-image: url('resources/addTag.png');
+    -fx-background-size: 40.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#addTagToggleButton:selected{
+	-fx-background-color: darkgray;
+}
+
+#removeTagToggleButton {
+	-fx-background-image: url('resources/removeTag.png');
+    -fx-background-size: 40.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+#removeTagToggleButton:selected{
+	-fx-background-color: darkgray;
+}
+
+
 
 
 #removeToggleButton:focused {

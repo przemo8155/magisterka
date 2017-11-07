@@ -17,6 +17,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#anchorPane_OnMouseClicked" prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
    <children>
+      <ToggleButton fx:id="addTagToggleButton" layoutX="427.0" layoutY="36.0" mnemonicParsing="false" onAction="#addTagToggleButton_OnAction" prefHeight="50.0" prefWidth="50.0" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="1366.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -38,7 +39,7 @@
       </MenuBar>
       <Separator layoutY="90.0" prefHeight="10.0" prefWidth="1366.0" />
       <Pane fx:id="mainPane" layoutY="95.0" onDragDropped="#mainPane_OnDragDropped" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" onMouseMoved="#mainPane_OnMouseMoved" onMouseReleased="#mainPane_OnMouseReseased" prefHeight="608.0" prefWidth="1366.0" />
-      <Button fx:id="clearAllButton" layoutX="524.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
+      <Button fx:id="clearAllButton" layoutX="653.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="circleToggleButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="squareToggleButton" layoutX="70.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="moveToggleButton" layoutX="186.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
@@ -49,7 +50,7 @@
          <font>
             <Font name="Gabriola" size="44.0" />
          </font></Label>
-      <ToggleButton fx:id="removeToggleButton" layoutX="460.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
+      <ToggleButton fx:id="removeToggleButton" layoutX="593.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <Accordion fx:id="accordionStats" layoutX="1100.0" layoutY="29.0" prefHeight="300.0" prefWidth="265.0">
         <panes>
           <TitledPane fx:id="titledPaneStats" animated="false" prefHeight="300.0" prefWidth="202.0" text="Statistics">
@@ -59,6 +60,7 @@
           </TitledPane>
         </panes>
       </Accordion>
+      <ToggleButton fx:id="removeTagToggleButton" layoutX="490.0" layoutY="36.0" mnemonicParsing="false" onAction="#removeTagToggleButton_OnAction" prefHeight="50.0" prefWidth="50.0" />
 
    </children>
    <opaqueInsets>

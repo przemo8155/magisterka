@@ -82,9 +82,19 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/token_9.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/addTag.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/addTag.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/addToken.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/addToken.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/removeTag.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/removeTag.png</location>
 		</link>
 		<link>
 			<name>src/application/resources/removeToken.png</name>

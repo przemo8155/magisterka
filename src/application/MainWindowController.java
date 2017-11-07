@@ -262,7 +262,7 @@ public class MainWindowController
 
 	@FXML
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton,
-			removeTokenToggleButton, addTokenToggleButton;
+			removeTokenToggleButton, addTokenToggleButton, addTagToggleButton, removeTagToggleButton;
 
 	@FXML
 	private Label middleLabel;
@@ -1469,6 +1469,8 @@ public class MainWindowController
 		removeToggleButton.setToggleGroup(toggleButtonsGroup);
 		addTokenToggleButton.setToggleGroup(toggleButtonsGroup);
 		removeTokenToggleButton.setToggleGroup(toggleButtonsGroup);
+		addTagToggleButton.setToggleGroup(toggleButtonsGroup);
+		removeTagToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
@@ -1477,6 +1479,8 @@ public class MainWindowController
 		removeToggleButton.setUserData("remove");
 		addTokenToggleButton.setUserData("addToken");
 		removeTokenToggleButton.setUserData("removeToken");
+		addTagToggleButton.setUserData("addTag");
+		removeTagToggleButton.setUserData("removeTag");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
 		{
@@ -1502,6 +1506,10 @@ public class MainWindowController
 						setMiddleLabelText("Adding tokens...");
 					else if (selectedToggle == "removeToken")
 						setMiddleLabelText("Removing tokens...");
+					else if (selectedToggle == "addTag")
+						setMiddleLabelText("Adding tags...");
+					else if (selectedToggle == "removeTag")
+						setMiddleLabelText("Removing tags...");
 				}
 
 			}
@@ -2102,6 +2110,18 @@ public class MainWindowController
 	public Stage getAptStage()
 	{
 		return this.aptStage;
+	}
+
+	@FXML
+	void addTagToggleButton_OnAction(ActionEvent event)
+	{
+
+	}
+
+	@FXML
+	void removeTagToggleButton_OnAction(ActionEvent event)
+	{
+
 	}
 
 }
