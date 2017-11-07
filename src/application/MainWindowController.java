@@ -229,6 +229,8 @@ public class MainWindowController
 	ObservableList<Label> tokensBiggerThanTen = FXCollections.observableArrayList();
 
 	ObservableList<Label> tags = FXCollections.observableArrayList();
+	ObservableList<Label> endTags = FXCollections.observableArrayList();
+	ObservableList<Label> startTags = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -483,8 +485,55 @@ public class MainWindowController
 					}
 				}
 
+
+
+
+
+				for(HeadArrow ha : startHeadArrowList)
+				{
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double mvX = pair2.getKey() / 5;
+					double mvY = pair2.getValue() / 5;
+
+					for(Label l : tags)
+					{
+						if(l.getLayoutX() == midX + mvX && l.getLayoutY() == midY + mvY)
+						{
+							startTags.add(l);
+						}
+					}
+				}
+
+				for(HeadArrow ha : endHeadArrowList)
+				{
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double mvX = pair2.getKey() / 5;
+					double mvY = pair2.getValue() / 5;
+
+					for(Label l : tags)
+					{
+						if(l.getLayoutX() == midX + mvX && l.getLayoutY() == midY + mvY)
+						{
+							endTags.add(l);
+						}
+					}
+				}
+
 				headArrowList.removeAll(startHeadArrowList);
 				headArrowList.removeAll(endHeadArrowList);
+
+				tags.removeAll(startTags);
+				tags.removeAll(endTags);
 
 				leftDoubleArrowList.removeAll(leftStartDoubleArrowList);
 				leftDoubleArrowList.removeAll(leftEndDoubleArrowList);
@@ -556,8 +605,49 @@ public class MainWindowController
 					da.setFill(arrowColor);
 				}
 
+
+				for(HeadArrow ha : startHeadArrowList)
+				{
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double mvX = pair2.getKey() / 5;
+					double mvY = pair2.getValue() / 5;
+
+					for(Label l : startTags)
+					{
+						l.setLayoutX(midX + mvX);
+						l.setLayoutY(midY + mvY);
+					}
+				}
+
+				for(HeadArrow ha : endHeadArrowList)
+				{
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(),
+							ha.getEndY());
+					double mvX = pair2.getKey() / 5;
+					double mvY = pair2.getValue() / 5;
+
+					for(Label l : endTags)
+					{
+						l.setLayoutX(midX + mvX);
+						l.setLayoutY(midY + mvY);
+					}
+				}
+
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
+
+				tags.addAll(startTags);
+				tags.addAll(endTags);
 
 				leftDoubleArrowList.addAll(leftStartDoubleArrowList);
 				leftDoubleArrowList.addAll(leftEndDoubleArrowList);
@@ -568,6 +658,7 @@ public class MainWindowController
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 				utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
 				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
+				utilities.clearStartAndEndTagsLists(startTags, endTags);
 
 				for (HeadArrow ha : headArrowList)
 				{
