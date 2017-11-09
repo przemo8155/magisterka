@@ -229,18 +229,11 @@ public class MainWindowController
 	ObservableList<Label> tokensBiggerThanTen = FXCollections.observableArrayList();
 
 	ObservableList<Label> tags = FXCollections.observableArrayList();
-	ObservableList<Label> entryTags = FXCollections.observableArrayList();
-	Map<Integer, Label> indexHeadArrowTags = new HashMap<Integer, Label>();
-	Map<Integer, Label> indexLeftDoubleArrowTags = new HashMap<Integer, Label>();
-	Map<Integer, Label> indexRightDoubleArrowTags = new HashMap<Integer, Label>();
-	ObservableList<HeadArrow> allEntryHeadArrowList = FXCollections.observableArrayList();
-	ObservableList<HeadArrow> allQuitHeadArrowList = FXCollections.observableArrayList();
 
-	ObservableList<LeftDoubleArrow> allLeftEntryDoubleArrowList = FXCollections.observableArrayList();
-	ObservableList<LeftDoubleArrow> allLeftQuitDoubleArrowList = FXCollections.observableArrayList();
+	Map<HeadArrow, Label> headArrowTags = new HashMap<HeadArrow, Label>();
+	Map<LeftDoubleArrow, Label> leftDoubleArrowTags = new HashMap<LeftDoubleArrow, Label>();
+	Map<RightDoubleArrow, Label> rightDoubleArrowTags = new HashMap<RightDoubleArrow, Label>();
 
-	ObservableList<RightDoubleArrow> allRightEntryDoubleArrowList = FXCollections.observableArrayList();
-	ObservableList<RightDoubleArrow> allRightQuitDoubleArrowList = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -829,7 +822,16 @@ public class MainWindowController
 								lda.getEndX(), lda.getEndY());
 						double mvX = pair2.getKey();
 						double mvY = pair2.getValue();
-						insertTag(tag, midX + mvX, midY + mvY);
+						Label l = new Label();
+						l.setText(tag);
+						l.setLayoutX(midX + mvX);
+						l.setLayoutY(midY + mvY);
+						l.setFont(new Font("Arial", 16));
+						l.setId("fancytext");
+						mainPane.getChildren().add(l);
+						tags.add(l);
+						leftDoubleArrowTags.put(lda, l);
+
 
 						break;
 					}
@@ -852,7 +854,15 @@ public class MainWindowController
 								lda.getEndX(), lda.getEndY());
 						double mvX = pair2.getKey();
 						double mvY = pair2.getValue();
-						insertTag(tag, midX - mvX, midY - mvY);
+						Label l = new Label();
+						l.setText(tag);
+						l.setLayoutX(midX + mvX);
+						l.setLayoutY(midY + mvY);
+						l.setFont(new Font("Arial", 16));
+						l.setId("fancytext");
+						mainPane.getChildren().add(l);
+						tags.add(l);
+						rightDoubleArrowTags.put(lda, l);
 						break;
 					}
 
@@ -875,7 +885,15 @@ public class MainWindowController
 								ha.getEndY());
 						double mvX = pair2.getKey() / 5;
 						double mvY = pair2.getValue() / 5;
-						insertTag(tag, midX + mvX, midY + mvY);
+						Label l = new Label();
+						l.setText(tag);
+						l.setLayoutX(midX + mvX);
+						l.setLayoutY(midY + mvY);
+						l.setFont(new Font("Arial", 16));
+						l.setId("fancytext");
+						mainPane.getChildren().add(l);
+						tags.add(l);
+						headArrowTags.put(ha, l);
 						break;
 					}
 				}

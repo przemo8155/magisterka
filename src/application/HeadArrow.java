@@ -23,6 +23,29 @@ public class HeadArrow
 
 	}
 
+	@Override
+	public int hashCode()
+	{
+		int result = 17;
+		result = 31 * result + main.hashCode();
+		result = 31 * result + left.hashCode();
+		result = 31 * result + right.hashCode();
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof HeadArrow))
+			return false;
+		if (obj == this)
+			return true;
+
+		HeadArrow ha = (HeadArrow) obj;
+		return ha.startPointX == startPointX && ha.startPointY == startPointY && ha.endPointX == endPointX
+				&& ha.endPointY == endPointY;
+	}
+
 	public double calculateX(double angle)
 	{
 		final int ray = 30;
