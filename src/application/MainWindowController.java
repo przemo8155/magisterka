@@ -230,9 +230,17 @@ public class MainWindowController
 
 	ObservableList<Label> tags = FXCollections.observableArrayList();
 	ObservableList<Label> entryTags = FXCollections.observableArrayList();
-	Map<Integer, Label> indexTags = new HashMap<Integer, Label>();
+	Map<Integer, Label> indexHeadArrowTags = new HashMap<Integer, Label>();
+	Map<Integer, Label> indexLeftDoubleArrowTags = new HashMap<Integer, Label>();
+	Map<Integer, Label> indexRightDoubleArrowTags = new HashMap<Integer, Label>();
 	ObservableList<HeadArrow> allEntryHeadArrowList = FXCollections.observableArrayList();
 	ObservableList<HeadArrow> allQuitHeadArrowList = FXCollections.observableArrayList();
+
+	ObservableList<LeftDoubleArrow> allLeftEntryDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<LeftDoubleArrow> allLeftQuitDoubleArrowList = FXCollections.observableArrayList();
+
+	ObservableList<RightDoubleArrow> allRightEntryDoubleArrowList = FXCollections.observableArrayList();
+	ObservableList<RightDoubleArrow> allRightQuitDoubleArrowList = FXCollections.observableArrayList();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -492,6 +500,13 @@ public class MainWindowController
 				allEntryHeadArrowList.addAll(startHeadArrowList);
 				allEntryHeadArrowList.addAll(endHeadArrowList);
 
+				allLeftEntryDoubleArrowList.addAll(leftStartDoubleArrowList);
+				allLeftEntryDoubleArrowList.addAll(leftEndDoubleArrowList);
+
+				//allRightEntryDoubleArrowList.addAll(rightStartDoubleArrowList);
+				//allRightEntryDoubleArrowList.addAll(rightEndDoubleArrowList);
+
+
 				for(HeadArrow ha : allEntryHeadArrowList)
 				{
 					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(),
@@ -507,8 +522,51 @@ public class MainWindowController
 					{
 						if(l.getLayoutX() == midX + mvX && l.getLayoutY() == midY + mvY)
 						{
-							Integer i = allEntryHeadArrowList.indexOf(ha);
-							indexTags.put(i, l);
+							Integer i1 = allEntryHeadArrowList.indexOf(ha);
+							indexHeadArrowTags.put(i1, l);
+
+						}
+					}
+				}
+
+
+				for(LeftDoubleArrow lda : allLeftEntryDoubleArrowList)
+				{
+					Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
+							lda.getEndX(), lda.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(),
+							lda.getEndX(), lda.getEndY());
+					double mvX = pair2.getKey();
+					double mvY = pair2.getValue();
+					for(Label l : tags)
+					{
+						if(l.getLayoutX() == midX + mvX && l.getLayoutY() == midY + mvY)
+						{
+							Integer i2 = allLeftEntryDoubleArrowList.indexOf(lda);
+							indexLeftDoubleArrowTags.put(i2, l);
+
+						}
+					}
+				}
+
+				for(RightDoubleArrow rda : allRightEntryDoubleArrowList)
+				{
+					Pair<Double, Double> pair = rda.returnMiddlePoint(rda.getStartX(), rda.getStartY(),
+							rda.getEndX(), rda.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = rda.returnMoveXandY(rda.getStartX(), rda.getStartY(),
+							rda.getEndX(), rda.getEndY());
+					double mvX = pair2.getKey();
+					double mvY = pair2.getValue();
+					for(Label l : tags)
+					{
+						if(l.getLayoutX() == midX - mvX && l.getLayoutY() == midY - mvY)
+						{
+							Integer i3 = allRightEntryDoubleArrowList.indexOf(rda);
+							indexRightDoubleArrowTags.put(i3, l);
 
 						}
 					}
@@ -593,6 +651,12 @@ public class MainWindowController
 				allQuitHeadArrowList.addAll(startHeadArrowList);
 				allQuitHeadArrowList.addAll(endHeadArrowList);
 
+				allLeftQuitDoubleArrowList.addAll(leftStartDoubleArrowList);
+				allLeftQuitDoubleArrowList.addAll(leftEndDoubleArrowList);
+
+				allRightQuitDoubleArrowList.addAll(rightStartDoubleArrowList);
+				allRightQuitDoubleArrowList.addAll(rightEndDoubleArrowList);
+
 
 				for(HeadArrow ha : allQuitHeadArrowList)
 				{
@@ -605,16 +669,17 @@ public class MainWindowController
 					double mvX = pair2.getKey() / 5;
 					double mvY = pair2.getValue() / 5;
 
-					int in = allQuitHeadArrowList.indexOf(ha);
+					int in1 = allQuitHeadArrowList.indexOf(ha);
 
-					if(in >= 0)
+					if(in1 >= 0)
 					{
-						Label l = indexTags.get(in);
+						Label l = indexHeadArrowTags.get(in1);
 						l.setLayoutX(midX + mvX);
 						l.setLayoutY(midY + mvY);
 
 					}
 				}
+
 
 
 				headArrowList.addAll(startHeadArrowList);
@@ -631,7 +696,12 @@ public class MainWindowController
 				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
 				utilities.clearStartAndEndHeadArrowLists(allEntryHeadArrowList, allQuitHeadArrowList);
 
-				indexTags.clear();
+				utilities.clearStartAndEndLeftDoubleArrowLists(allLeftEntryDoubleArrowList, allLeftQuitDoubleArrowList);
+				utilities.clearStartAndEndRightDoubleArrowLists(allRightEntryDoubleArrowList, allRightQuitDoubleArrowList);
+
+				indexHeadArrowTags.clear();
+				indexLeftDoubleArrowTags.clear();
+				indexRightDoubleArrowTags.clear();
 
 				for (HeadArrow ha : headArrowList)
 				{
