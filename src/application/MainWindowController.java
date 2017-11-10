@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -230,9 +231,12 @@ public class MainWindowController
 
 	ObservableList<Label> tags = FXCollections.observableArrayList();
 
-	Map<HeadArrow, Label> headArrowTags = new HashMap<HeadArrow, Label>();
-	Map<LeftDoubleArrow, Label> leftDoubleArrowTags = new HashMap<LeftDoubleArrow, Label>();
-	Map<RightDoubleArrow, Label> rightDoubleArrowTags = new HashMap<RightDoubleArrow, Label>();
+	Map<Label, HeadArrow> headArrowTags = new LinkedHashMap<Label, HeadArrow>();
+	Map<Label, HeadArrow> moveHeadArrowTags = new LinkedHashMap<Label, HeadArrow>();
+
+
+	Map<Label, LeftDoubleArrow> leftDoubleArrowTags = new LinkedHashMap<Label, LeftDoubleArrow>();
+	Map<Label, RightDoubleArrow> rightDoubleArrowTags = new LinkedHashMap<Label, RightDoubleArrow>();
 
 
 	@FXML
@@ -411,6 +415,7 @@ public class MainWindowController
 				Circle c = ((Circle) t.getSource());
 				int index = circleList.indexOf(c);
 
+
 				ImageView selectedImageView = null;
 				Label selectedLabel = null;
 
@@ -439,6 +444,13 @@ public class MainWindowController
 					if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
 					{
 						startHeadArrowList.add(ha);
+						for(int i = 0; i < headArrowTags.size(); i++)
+						{
+							if(headArrowTags.keySet().equals(ha))
+							{
+								Utilities.intBox(i);
+							}
+						}
 					}
 
 				}
@@ -448,6 +460,7 @@ public class MainWindowController
 					if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
 					{
 						endHeadArrowList.add(ha);
+
 					}
 
 				}
@@ -830,7 +843,7 @@ public class MainWindowController
 						l.setId("fancytext");
 						mainPane.getChildren().add(l);
 						tags.add(l);
-						leftDoubleArrowTags.put(lda, l);
+						leftDoubleArrowTags.put(l, lda);
 
 
 						break;
@@ -856,13 +869,13 @@ public class MainWindowController
 						double mvY = pair2.getValue();
 						Label l = new Label();
 						l.setText(tag);
-						l.setLayoutX(midX + mvX);
-						l.setLayoutY(midY + mvY);
+						l.setLayoutX(midX - mvX);
+						l.setLayoutY(midY - mvY);
 						l.setFont(new Font("Arial", 16));
 						l.setId("fancytext");
 						mainPane.getChildren().add(l);
 						tags.add(l);
-						rightDoubleArrowTags.put(lda, l);
+						rightDoubleArrowTags.put(l, lda);
 						break;
 					}
 
@@ -893,7 +906,7 @@ public class MainWindowController
 						l.setId("fancytext");
 						mainPane.getChildren().add(l);
 						tags.add(l);
-						headArrowTags.put(ha, l);
+						headArrowTags.put(l, ha);
 						break;
 					}
 				}
