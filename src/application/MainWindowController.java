@@ -181,7 +181,6 @@ public class MainWindowController
 	ExportPDF exportPdf = new ExportPDF();
 	LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
 
-
 	private String backgroundColor;
 	private String circleColor;
 	private String rectangleColor;
@@ -234,10 +233,8 @@ public class MainWindowController
 	Map<Label, HeadArrow> headArrowTags = new LinkedHashMap<Label, HeadArrow>();
 	Map<Label, HeadArrow> moveHeadArrowTags = new LinkedHashMap<Label, HeadArrow>();
 
-
 	Map<Label, LeftDoubleArrow> leftDoubleArrowTags = new LinkedHashMap<Label, LeftDoubleArrow>();
 	Map<Label, RightDoubleArrow> rightDoubleArrowTags = new LinkedHashMap<Label, RightDoubleArrow>();
-
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -415,11 +412,8 @@ public class MainWindowController
 				Circle c = ((Circle) t.getSource());
 				int index = circleList.indexOf(c);
 
-
 				ImageView selectedImageView = null;
 				Label selectedLabel = null;
-
-
 
 				for (ImageView iv : existingImageViews)
 				{
@@ -444,11 +438,11 @@ public class MainWindowController
 					if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
 					{
 						startHeadArrowList.add(ha);
-						for(int i = 0; i < headArrowTags.size(); i++)
+						for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 						{
-							if(headArrowTags.keySet().equals(ha))
+							if (ha.equals(entry.getValue()))
 							{
-								Utilities.intBox(i);
+								moveHeadArrowTags.put(entry.getKey(), ha);
 							}
 						}
 					}
@@ -460,6 +454,13 @@ public class MainWindowController
 					if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
 					{
 						endHeadArrowList.add(ha);
+						for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+						{
+							if (ha.equals(entry.getValue()))
+							{
+								moveHeadArrowTags.put(entry.getKey(), ha);
+							}
+						}
 
 					}
 
@@ -500,11 +501,6 @@ public class MainWindowController
 						da.setFill(arrowColor);
 					}
 				}
-
-
-
-
-
 
 				headArrowList.removeAll(startHeadArrowList);
 				headArrowList.removeAll(endHeadArrowList);
@@ -579,10 +575,21 @@ public class MainWindowController
 					da.setFill(arrowColor);
 				}
 
-
-
-
-
+				for (Map.Entry<Label, HeadArrow> entry : moveHeadArrowTags.entrySet())
+				{
+					Label l = entry.getKey();
+					HeadArrow ha = entry.getValue();
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double mvX = pair2.getKey() / 5;
+					double mvY = pair2.getValue() / 5;
+					l.setLayoutX(midX + mvX);
+					l.setLayoutY(midY + mvY);
+				}
 
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
@@ -597,6 +604,7 @@ public class MainWindowController
 				utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
 				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
 
+				moveHeadArrowTags.clear();
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -845,7 +853,6 @@ public class MainWindowController
 						tags.add(l);
 						leftDoubleArrowTags.put(l, lda);
 
-
 						break;
 					}
 
@@ -913,10 +920,9 @@ public class MainWindowController
 				break;
 			case "removeTag":
 				int _localIndex = -1;
-				for(Label l : tags)
+				for (Label l : tags)
 				{
-					if (l.getLayoutX() < event.getSceneX() + arrowRay
-							&& l.getLayoutX() > event.getSceneX() - arrowRay
+					if (l.getLayoutX() < event.getSceneX() + arrowRay && l.getLayoutX() > event.getSceneX() - arrowRay
 							&& l.getLayoutY() < event.getSceneY() + arrowRay - minusWidth
 							&& l.getLayoutY() > event.getSceneY() - arrowRay - minusWidth)
 					{
@@ -926,7 +932,7 @@ public class MainWindowController
 					}
 				}
 
-				if(_localIndex != -1)
+				if (_localIndex != -1)
 				{
 					tags.remove(_localIndex);
 				}
