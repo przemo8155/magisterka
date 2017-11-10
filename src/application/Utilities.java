@@ -290,6 +290,26 @@ public class Utilities
 		}
 
 
+		public Boolean checkNameTag(String tagText)
+		{
+			if(!tagText.matches("[0-9]+"))
+			{
+				modernInfoMessage("Only digits are allowed!");
+				return false;
+			}
+			else return true;
+		}
+
+		public void modernInfoMessage(String text)
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setContentText(text);
+
+			alert.showAndWait();
+		}
+
+
 
 
 }

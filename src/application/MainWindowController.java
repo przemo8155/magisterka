@@ -72,6 +72,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -637,7 +638,6 @@ public class MainWindowController
 					l.setLayoutY(midY + mvY);
 				}
 
-
 				for (Map.Entry<Label, RightDoubleArrow> entry : moveRightDoubleArrowTags.entrySet())
 				{
 					Label l = entry.getKey();
@@ -887,7 +887,6 @@ public class MainWindowController
 					da.setFill(arrowColor);
 				}
 
-
 				for (Map.Entry<Label, HeadArrow> entry : moveHeadArrowTags.entrySet())
 				{
 					Label l = entry.getKey();
@@ -920,7 +919,6 @@ public class MainWindowController
 					l.setLayoutY(midY + mvY);
 				}
 
-
 				for (Map.Entry<Label, RightDoubleArrow> entry : moveRightDoubleArrowTags.entrySet())
 				{
 					Label l = entry.getKey();
@@ -949,7 +947,6 @@ public class MainWindowController
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 				utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
 				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
-
 
 				moveHeadArrowTags.clear();
 				moveLeftDoubleArrowTags.clear();
@@ -997,25 +994,31 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
-								lda.getEndX(), lda.getEndY());
-						double midX = pair.getKey();
-						double midY = pair.getValue();
-						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(),
-								lda.getEndX(), lda.getEndY());
-						double mvX = pair2.getKey();
-						double mvY = pair2.getValue();
-						Label l = new Label();
-						l.setText(tag);
-						l.setLayoutX(midX + mvX);
-						l.setLayoutY(midY + mvY);
-						l.setFont(new Font("Arial", 16));
-						l.setId("fancytext");
-						mainPane.getChildren().add(l);
-						tags.add(l);
-						leftDoubleArrowTags.put(l, lda);
+						if (utilities.checkNameTag(tag))
+						{
+							Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
+									lda.getEndX(), lda.getEndY());
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+							Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(),
+									lda.getEndX(), lda.getEndY());
+							double mvX = pair2.getKey();
+							double mvY = pair2.getValue();
+							Label l = new Label();
+							l.setText(tag);
+							l.setLayoutX(midX + mvX);
+							l.setLayoutY(midY + mvY);
+							l.setFont(new Font("Arial", 16));
+							l.setId("fancytext");
+							mainPane.getChildren().add(l);
+							tags.add(l);
+							leftDoubleArrowTags.put(l, lda);
 
-						break;
+							break;
+						} else
+						{
+							break;
+						}
 					}
 
 				}
@@ -1028,24 +1031,30 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
-								lda.getEndX(), lda.getEndY());
-						double midX = pair.getKey();
-						double midY = pair.getValue();
-						Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(),
-								lda.getEndX(), lda.getEndY());
-						double mvX = pair2.getKey();
-						double mvY = pair2.getValue();
-						Label l = new Label();
-						l.setText(tag);
-						l.setLayoutX(midX - mvX);
-						l.setLayoutY(midY - mvY);
-						l.setFont(new Font("Arial", 16));
-						l.setId("fancytext");
-						mainPane.getChildren().add(l);
-						tags.add(l);
-						rightDoubleArrowTags.put(l, lda);
-						break;
+						if (utilities.checkNameTag(tag))
+						{
+							Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
+									lda.getEndX(), lda.getEndY());
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+							Pair<Double, Double> pair2 = lda.returnMoveXandY(lda.getStartX(), lda.getStartY(),
+									lda.getEndX(), lda.getEndY());
+							double mvX = pair2.getKey();
+							double mvY = pair2.getValue();
+							Label l = new Label();
+							l.setText(tag);
+							l.setLayoutX(midX - mvX);
+							l.setLayoutY(midY - mvY);
+							l.setFont(new Font("Arial", 16));
+							l.setId("fancytext");
+							mainPane.getChildren().add(l);
+							tags.add(l);
+							rightDoubleArrowTags.put(l, lda);
+							break;
+						} else
+						{
+							break;
+						}
 					}
 
 				}
@@ -1059,24 +1068,31 @@ public class MainWindowController
 							&& middleY > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						Pair<Double, Double> pair = left.returnMiddlePoint(ha.getStartX(), ha.getStartY(), ha.getEndX(),
-								ha.getEndY());
-						double midX = pair.getKey();
-						double midY = pair.getValue();
-						Pair<Double, Double> pair2 = left.returnMoveXandY(ha.getStartX(), ha.getStartY(), ha.getEndX(),
-								ha.getEndY());
-						double mvX = pair2.getKey() / 5;
-						double mvY = pair2.getValue() / 5;
-						Label l = new Label();
-						l.setText(tag);
-						l.setLayoutX(midX + mvX);
-						l.setLayoutY(midY + mvY);
-						l.setFont(new Font("Arial", 16));
-						l.setId("fancytext");
-						mainPane.getChildren().add(l);
-						tags.add(l);
-						headArrowTags.put(l, ha);
-						break;
+						if (utilities.checkNameTag(tag))
+						{
+							Pair<Double, Double> pair = left.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+							Pair<Double, Double> pair2 = left.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double mvX = pair2.getKey() / 5;
+							double mvY = pair2.getValue() / 5;
+							Label l = new Label();
+							l.setText(tag);
+							l.setLayoutX(midX + mvX);
+							l.setLayoutY(midY + mvY);
+							l.setFont(new Font("Arial", 16));
+							l.setId("fancytext");
+							mainPane.getChildren().add(l);
+							tags.add(l);
+							headArrowTags.put(l, ha);
+							break;
+						} else
+						{
+							break;
+						}
+
 					}
 				}
 				break;
