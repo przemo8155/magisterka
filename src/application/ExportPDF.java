@@ -54,4 +54,25 @@ public class ExportPDF
 
 		}
 	};
+
+	public void exportToPDF()
+	{
+		try
+		{
+			PdfWriter pdfWriter = new PdfWriter("fileprzemek.pdf");
+			PdfDocument pdf = new PdfDocument(pdfWriter);
+			Document document = new Document(pdf, PageSize.A4.rotate());
+			document.setMargins(20, 20, 20, 20);
+			PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+
+			Paragraph p1 = new Paragraph(title)
+					.setFont(font)
+		            .setFontSize(14);
+			document.add(p1);
+			document.close();
+		} catch (java.io.IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 }

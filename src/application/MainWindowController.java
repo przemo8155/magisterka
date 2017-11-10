@@ -170,7 +170,6 @@ public class MainWindowController
 	Label objectsMovedL = new Label("Objects moved: ");
 	Label numberOfObjectsMovedL = new Label("0");
 
-	Button exportToPdf = new Button("Export PDF");
 	Button showStats = new Button("Elo");
 
 	Utilities utilities = new Utilities();
@@ -188,6 +187,8 @@ public class MainWindowController
 	private String arrowColor;
 
 	private Boolean deleteSecondOfEndLine = false;
+
+	Alert statisticsAlert = new Alert(Alert.AlertType.INFORMATION);
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
 	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
@@ -244,6 +245,12 @@ public class MainWindowController
 
 	@FXML
 	private Accordion accordionStats;
+
+	@FXML
+	private MenuItem exportPdfMenuItem;
+
+	@FXML
+	private MenuItem showStatisticsMenuItem;
 
 	@FXML
 	private MenuItem openFileMenuItem;
@@ -1792,7 +1799,6 @@ public class MainWindowController
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 		openAPTFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
 
-		exportToPdf.setOnAction(exportPdf.exportToPdfEventHandler);
 
 		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
 				existingImageViews, tokensBiggerThanTen);
@@ -2127,9 +2133,7 @@ public class MainWindowController
 		grid.add(objectsMovedL, 0, 11);
 		grid.add(numberOfObjectsMovedL, 1, 11);
 
-		grid.add(exportToPdf, 0, 11);
-
-		titledPaneStats.setContent(grid);
+		statisticsAlert.getDialogPane().setContent(grid);
 
 	}
 
@@ -2471,6 +2475,18 @@ public class MainWindowController
 		l.setId("fancytext");
 		mainPane.getChildren().add(l);
 		tags.add(l);
+	}
+
+	@FXML
+	void showStatisticsMenuItem_OnAction(ActionEvent event)
+	{
+		statisticsAlert.showAndWait();
+	}
+
+	@FXML
+	void exportPdfMenuItem_OnAction(ActionEvent event)
+	{
+		exportPdf.exportToPDF();
 	}
 
 }
