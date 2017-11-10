@@ -235,6 +235,8 @@ public class MainWindowController
 
 	Map<Label, LeftDoubleArrow> leftDoubleArrowTags = new LinkedHashMap<Label, LeftDoubleArrow>();
 	Map<Label, RightDoubleArrow> rightDoubleArrowTags = new LinkedHashMap<Label, RightDoubleArrow>();
+	Map<Label, LeftDoubleArrow> moveLeftDoubleArrowTags = new LinkedHashMap<Label, LeftDoubleArrow>();
+	Map<Label, RightDoubleArrow> moveRightDoubleArrowTags = new LinkedHashMap<Label, RightDoubleArrow>();
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -472,6 +474,13 @@ public class MainWindowController
 					{
 						leftStartDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveLeftDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -481,6 +490,13 @@ public class MainWindowController
 					{
 						leftEndDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveLeftDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -490,6 +506,13 @@ public class MainWindowController
 					{
 						rightStartDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveRightDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -499,6 +522,13 @@ public class MainWindowController
 					{
 						rightEndDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveRightDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -591,6 +621,39 @@ public class MainWindowController
 					l.setLayoutY(midY + mvY);
 				}
 
+				for (Map.Entry<Label, LeftDoubleArrow> entry : moveLeftDoubleArrowTags.entrySet())
+				{
+					Label l = entry.getKey();
+					LeftDoubleArrow ha = entry.getValue();
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double mvX = pair2.getKey();
+					double mvY = pair2.getValue();
+					l.setLayoutX(midX + mvX);
+					l.setLayoutY(midY + mvY);
+				}
+
+
+				for (Map.Entry<Label, RightDoubleArrow> entry : moveRightDoubleArrowTags.entrySet())
+				{
+					Label l = entry.getKey();
+					RightDoubleArrow ha = entry.getValue();
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double mvX = pair2.getKey();
+					double mvY = pair2.getValue();
+					l.setLayoutX(midX - mvX);
+					l.setLayoutY(midY - mvY);
+				}
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
 
@@ -605,6 +668,8 @@ public class MainWindowController
 				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
 
 				moveHeadArrowTags.clear();
+				moveLeftDoubleArrowTags.clear();
+				moveRightDoubleArrowTags.clear();
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -661,6 +726,13 @@ public class MainWindowController
 					if (ha.getStartX() - 20 == r.getX() && ha.getStartY() - 20 == r.getY())
 					{
 						startHeadArrowList.add(ha);
+						for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+						{
+							if (ha.equals(entry.getValue()))
+							{
+								moveHeadArrowTags.put(entry.getKey(), ha);
+							}
+						}
 					}
 				}
 
@@ -669,6 +741,13 @@ public class MainWindowController
 					if (ha.getEndX() - 20 == r.getX() && ha.getEndY() - 20 == r.getY())
 					{
 						endHeadArrowList.add(ha);
+						for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+						{
+							if (ha.equals(entry.getValue()))
+							{
+								moveHeadArrowTags.put(entry.getKey(), ha);
+							}
+						}
 					}
 				}
 
@@ -678,6 +757,13 @@ public class MainWindowController
 					{
 						leftStartDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveLeftDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -687,6 +773,13 @@ public class MainWindowController
 					{
 						leftEndDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveLeftDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -696,6 +789,13 @@ public class MainWindowController
 					{
 						rightStartDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveRightDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -705,6 +805,13 @@ public class MainWindowController
 					{
 						rightEndDoubleArrowList.add(da);
 						da.setFill(arrowColor);
+						for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+						{
+							if (da.equals(entry.getValue()))
+							{
+								moveRightDoubleArrowTags.put(entry.getKey(), da);
+							}
+						}
 					}
 				}
 
@@ -780,6 +887,56 @@ public class MainWindowController
 					da.setFill(arrowColor);
 				}
 
+
+				for (Map.Entry<Label, HeadArrow> entry : moveHeadArrowTags.entrySet())
+				{
+					Label l = entry.getKey();
+					HeadArrow ha = entry.getValue();
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double mvX = pair2.getKey() / 5;
+					double mvY = pair2.getValue() / 5;
+					l.setLayoutX(midX + mvX);
+					l.setLayoutY(midY + mvY);
+				}
+
+				for (Map.Entry<Label, LeftDoubleArrow> entry : moveLeftDoubleArrowTags.entrySet())
+				{
+					Label l = entry.getKey();
+					LeftDoubleArrow ha = entry.getValue();
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double mvX = pair2.getKey();
+					double mvY = pair2.getValue();
+					l.setLayoutX(midX + mvX);
+					l.setLayoutY(midY + mvY);
+				}
+
+
+				for (Map.Entry<Label, RightDoubleArrow> entry : moveRightDoubleArrowTags.entrySet())
+				{
+					Label l = entry.getKey();
+					RightDoubleArrow ha = entry.getValue();
+					Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+							ha.getEndX(), ha.getEndY());
+					double mvX = pair2.getKey();
+					double mvY = pair2.getValue();
+					l.setLayoutX(midX - mvX);
+					l.setLayoutY(midY - mvY);
+				}
+
 				headArrowList.addAll(startHeadArrowList);
 				headArrowList.addAll(endHeadArrowList);
 
@@ -792,6 +949,11 @@ public class MainWindowController
 				utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
 				utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
 				utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
+
+
+				moveHeadArrowTags.clear();
+				moveLeftDoubleArrowTags.clear();
+				moveRightDoubleArrowTags.clear();
 
 				for (HeadArrow ha : headArrowList)
 				{
