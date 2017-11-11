@@ -2,6 +2,7 @@
 package application;
 
 import javafx.collections.ObservableList;
+import javafx.scene.effect.Effect;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
@@ -623,6 +624,13 @@ public class RightDoubleArrow
 		this.path.setStroke(Paint.valueOf(val));
 		this.left.setStroke(Paint.valueOf(val));
 		this.right.setStroke(Paint.valueOf(val));
+	}
+
+	public void setEffect(Effect effect)
+	{
+		this.path.setEffect(effect);
+		this.left.setEffect(effect);
+		this.right.setEffect(effect);
 	}
 
 }

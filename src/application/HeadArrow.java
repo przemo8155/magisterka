@@ -2,6 +2,7 @@
 package application;
 
 import javafx.collections.ObservableList;
+import javafx.scene.effect.Effect;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
@@ -442,6 +443,13 @@ public class HeadArrow
 		this.right.setStroke(Paint.valueOf(val));
 		this.main.setStroke(Paint.valueOf(val));
 
+	}
+
+	public void setEffect(Effect effect)
+	{
+		this.main.setEffect(effect);
+		this.left.setEffect(effect);
+		this.right.setEffect(effect);
 	}
 
 }

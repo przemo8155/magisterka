@@ -136,3 +136,38 @@
 .menu-bar:focused {
 	 -fx-background-color: darkgray;
 }
+
+#startAnimationToggleButton {
+    -fx-background-image: url('resources/play.png');
+    -fx-background-size: 50.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#startAnimationToggleButton:selected {
+  -fx-background-color: darkgray;
+}
+
+#pauseAnimationToggleButton {
+    -fx-background-image: url('resources/pause.png');
+    -fx-background-size: 50.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#pauseAnimationToggleButton:selected {
+  -fx-background-color: darkgray;
+}
+
+
+#stopAnimationButton {
+    -fx-background-image: url('resources/stop.png');
+    -fx-background-size: 50.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#stopAnimationButton:selected {
+  -fx-background-color: darkgray;
+}
+

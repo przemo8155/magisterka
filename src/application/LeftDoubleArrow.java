@@ -2,6 +2,7 @@
 package application;
 
 import javafx.collections.ObservableList;
+import javafx.scene.effect.Effect;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
@@ -38,20 +39,20 @@ public class LeftDoubleArrow
 	{
 
 	}
-	
+
 	public Pair<Double, Double> getTag(double firstX, double firstY, double contX, double contY, double secX, double secY)
 	{
 		Pair<Double, Double> pair = returnMiddlePoint(firstX, firstY, secX, secY);
 		double midX = pair.getKey();
 		double midY = pair.getValue();
-		
+
 		Pair<Double, Double> pair2 = returnMoveXandY(firstX, firstY, secX, secY);
 		double moveX = pair2.getKey();
 		double moveY = pair2.getValue();
 
 		double control1X = midX + moveX;
 		double control1Y = midY + moveY;
-		
+
 		return new Pair<>(control1X, control1Y);
 	}
 
@@ -621,6 +622,13 @@ public class LeftDoubleArrow
 		this.path.setStroke(Paint.valueOf(val));
 		this.left.setStroke(Paint.valueOf(val));
 		this.right.setStroke(Paint.valueOf(val));
+	}
+
+	public void setEffect(Effect effect)
+	{
+		this.path.setEffect(effect);
+		this.left.setEffect(effect);
+		this.right.setEffect(effect);
 	}
 
 }

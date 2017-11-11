@@ -73,7 +73,12 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.Glow;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Light.Distant;
+import javafx.scene.effect.Lighting;
+import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -116,6 +121,7 @@ public class MainWindowController
 	double orgSceneX, orgSceneY;
 	double orgTranslateX, orgTranslateY;
 	static int minusWidth = 95;
+	protected int startingFaze = 0;
 
 	private static int labelInTokensRay = 15;
 
@@ -173,7 +179,7 @@ public class MainWindowController
 
 	ObservableList<Label> allStatsLabels = FXCollections.observableArrayList();
 
-	Button showStats = new Button("Elo");
+	final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 
 	Utilities utilities = new Utilities();
 	FileManager fileManager = new FileManager();
@@ -285,6 +291,15 @@ public class MainWindowController
 	@FXML
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton,
 			removeTokenToggleButton, addTokenToggleButton, addTagToggleButton, removeTagToggleButton;
+
+	@FXML
+	private ToggleButton startAnimationToggleButton, pauseAnimationToggleButton;
+
+	@FXML
+	private Button stopAnimationButton;
+
+	@FXML
+	private Separator toggleButtonSeparator1, toggleButtonSeparator2, toggleButtonSeparator3, toggleButtonSeparator4;
 
 	@FXML
 	private Label middleLabel;
@@ -993,6 +1008,190 @@ public class MainWindowController
 
 		switch (selectedToggle)
 		{
+			case "play":
+
+
+				//Colors
+				javafx.scene.paint.Color active = javafx.scene.paint.Color.INDIANRED;
+				javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
+
+				if(event.getSceneY() > minusWidth)
+				{
+					if (event.getButton() == MouseButton.PRIMARY)
+					{
+						startingFaze += 1;
+					} else if (event.getButton() == MouseButton.SECONDARY)
+					{
+						if (startingFaze > 0)
+						{
+							startingFaze -= 1;
+						}
+					}
+
+					switch (startingFaze)
+					{
+
+						case 0:
+							for (Circle c : circleList)
+							{
+								c.setEffect(null);
+							}
+
+							break;
+						case 1:
+							for (Circle c : circleList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(active);
+								c.setEffect(s);
+							}
+							for (HeadArrow ha : headArrowList)
+							{
+								ha.setEffect(null);
+							}
+
+							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							{
+								lda.setEffect(null);
+							}
+
+							for(RightDoubleArrow rda : rightDoubleArrowList)
+							{
+								rda.setEffect(null);
+							}
+
+
+							break;
+						case 2:
+							for (Circle c : circleList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								c.setEffect(s);
+							}
+							for (HeadArrow ha : headArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(active);
+								ha.setEffect(s);
+							}
+
+							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(active);
+								lda.setEffect(s);
+							}
+
+							for(RightDoubleArrow rda : rightDoubleArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(active);
+								rda.setEffect(s);
+							}
+
+
+							for(Rectangle r : squareList)
+							{
+								r.setEffect(null);
+							}
+							break;
+						case 3:
+							for (Circle c : circleList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								c.setEffect(s);
+							}
+							for (HeadArrow ha : headArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								ha.setEffect(s);
+							}
+
+							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								lda.setEffect(s);
+							}
+
+							for(RightDoubleArrow rda : rightDoubleArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								rda.setEffect(s);
+							}
+
+
+							for(Rectangle r : squareList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(active);
+								r.setEffect(s);
+							}
+							 break;
+						case 4:
+							for (Circle c : circleList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								c.setEffect(s);
+							}
+							for (HeadArrow ha : headArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								ha.setEffect(s);
+							}
+
+							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								lda.setEffect(s);
+							}
+
+							for(RightDoubleArrow rda : rightDoubleArrowList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								rda.setEffect(s);
+							}
+
+
+							for(Rectangle r : squareList)
+							{
+								Shadow s = new Shadow();
+								s.setRadius(10.0f);
+								s.setColor(done);
+								r.setEffect(s);
+							}
+							break;
+
+					}
+				}
+
+
+				break;
+			case "pause":
+				break;
+
 			case "addTag":
 				String tag = "";
 				LeftDoubleArrow left = new LeftDoubleArrow();
@@ -1802,11 +2001,9 @@ public class MainWindowController
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 		openAPTFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
 
-
 		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
 				existingImageViews, tokensBiggerThanTen);
 
-		final ToggleGroup toggleButtonsGroup = new ToggleGroup();
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
 		squareToggleButton.setToggleGroup(toggleButtonsGroup);
 		moveToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -1816,6 +2013,8 @@ public class MainWindowController
 		removeTokenToggleButton.setToggleGroup(toggleButtonsGroup);
 		addTagToggleButton.setToggleGroup(toggleButtonsGroup);
 		removeTagToggleButton.setToggleGroup(toggleButtonsGroup);
+		startAnimationToggleButton.setToggleGroup(toggleButtonsGroup);
+		pauseAnimationToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
@@ -1826,6 +2025,8 @@ public class MainWindowController
 		removeTokenToggleButton.setUserData("removeToken");
 		addTagToggleButton.setUserData("addTag");
 		removeTagToggleButton.setUserData("removeTag");
+		pauseAnimationToggleButton.setUserData("pause");
+		startAnimationToggleButton.setUserData("play");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
 		{
@@ -1855,6 +2056,10 @@ public class MainWindowController
 						setMiddleLabelText("Adding tags...");
 					else if (selectedToggle == "removeTag")
 						setMiddleLabelText("Removing tags...");
+					else if (selectedToggle == "play")
+						setMiddleLabelText("Starting animation...");
+					else if (selectedToggle == "pause")
+						setMiddleLabelText("Pause...");
 				}
 
 			}
@@ -2157,19 +2362,21 @@ public class MainWindowController
 		allStatsLabels.add(numberOfObjectsMovedL);
 		allStatsLabels.add(numberOfRectanglesCreatedL);
 
-		for(Label l : allStatsLabels)
+		for (Label l : allStatsLabels)
 		{
 			l.setFont(fontToUse);
 		}
 
-		/*circlesCreatedL.setFont(fontToUse);
-		numberOfCirclesCreatedL.setFont(fontToUse);
-		rectanglesCreatedL.setFont(fontToUse);
-		numberOfRectanglesCreatedL.setFont(fontToUse);
-		arrowsCreatedL.setFont(fontToUse);
-		numberOfArrowsCreatedL.setFont(fontToUse);
-		doubleArrowsCreatedL.setFont(fontToUse);
-		numberOfDoubleArrowsCreatedL.setFont(fontToUse);*/
+		/*
+		 * circlesCreatedL.setFont(fontToUse);
+		 * numberOfCirclesCreatedL.setFont(fontToUse);
+		 * rectanglesCreatedL.setFont(fontToUse);
+		 * numberOfRectanglesCreatedL.setFont(fontToUse);
+		 * arrowsCreatedL.setFont(fontToUse);
+		 * numberOfArrowsCreatedL.setFont(fontToUse);
+		 * doubleArrowsCreatedL.setFont(fontToUse);
+		 * numberOfDoubleArrowsCreatedL.setFont(fontToUse);
+		 */
 
 		statisticsAlert.getDialogPane().setContent(grid);
 
@@ -2521,12 +2728,10 @@ public class MainWindowController
 		statisticsAlert.setTitle("Statistics");
 		statisticsAlert.setHeaderText(null);
 		DialogPane dialogPane = statisticsAlert.getDialogPane();
-		dialogPane.getStylesheets().add(
-		   getClass().getResource("statisticsAlert.css").toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("statisticsAlert.css").toExternalForm());
 		dialogPane.getStyleClass().add("statDialog");
 		Stage myStage = (Stage) statisticsAlert.getDialogPane().getScene().getWindow();
-		myStage.getIcons().add(
-			    new Image(this.getClass().getResource("resources/statIcon.png").toString()));
+		myStage.getIcons().add(new Image(this.getClass().getResource("resources/statIcon.png").toString()));
 		statisticsAlert.showAndWait();
 	}
 
@@ -2534,6 +2739,21 @@ public class MainWindowController
 	void exportPdfMenuItem_OnAction(ActionEvent event)
 	{
 		exportPdf.exportToPDF();
+	}
+
+	@FXML
+	void stopAnimationButton_OnAction(ActionEvent event)
+	{
+		ObservableList<Toggle> list = toggleButtonsGroup.getToggles();
+		for (Toggle t : list)
+		{
+			if (t.isSelected())
+			{
+				t.setSelected(false);
+			}
+		}
+		setMiddleLabelText("Stopped...");
+		toggleButtonsGroup.setUserData("");
 	}
 
 }

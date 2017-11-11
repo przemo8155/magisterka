@@ -92,6 +92,16 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/addToken.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/pause.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/pause.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/play.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/play.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/removeTag.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/removeTag.png</location>
@@ -110,6 +120,11 @@
 			<name>src/application/resources/statIcon.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/statIcon.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/stop.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/stop.png</location>
 		</link>
 		<link>
 			<name>src/application/resources/token_1.png</name>
