@@ -1019,7 +1019,10 @@ public class MainWindowController
 				{
 					if (event.getButton() == MouseButton.PRIMARY)
 					{
-						startingFaze += 1;
+						if(startingFaze < 4)
+						{
+							startingFaze += 1;
+						}
 					} else if (event.getButton() == MouseButton.SECONDARY)
 					{
 						if (startingFaze > 0)
