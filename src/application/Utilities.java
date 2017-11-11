@@ -300,6 +300,16 @@ public class Utilities
 			else return true;
 		}
 
+		public Boolean checkNameTagOfCircleOrRectangle(String tagText)
+		{
+			if(!tagText.matches(".*[a-z].*"))
+			{
+				modernInfoMessage("Only letters are allowed!");
+				return false;
+			}
+			else return true;
+		}
+
 		public void modernInfoMessage(String text)
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -308,6 +318,8 @@ public class Utilities
 
 			alert.showAndWait();
 		}
+
+
 
 
 

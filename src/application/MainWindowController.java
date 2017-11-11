@@ -1010,16 +1010,15 @@ public class MainWindowController
 		{
 			case "play":
 
-
-				//Colors
+				// Colors
 				javafx.scene.paint.Color active = javafx.scene.paint.Color.INDIANRED;
 				javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
 
-				if(event.getSceneY() > minusWidth)
+				if (event.getSceneY() > minusWidth)
 				{
 					if (event.getButton() == MouseButton.PRIMARY)
 					{
-						if(startingFaze < 4)
+						if (startingFaze < 4)
 						{
 							startingFaze += 1;
 						}
@@ -1054,16 +1053,15 @@ public class MainWindowController
 								ha.setEffect(null);
 							}
 
-							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							for (LeftDoubleArrow lda : leftDoubleArrowList)
 							{
 								lda.setEffect(null);
 							}
 
-							for(RightDoubleArrow rda : rightDoubleArrowList)
+							for (RightDoubleArrow rda : rightDoubleArrowList)
 							{
 								rda.setEffect(null);
 							}
-
 
 							break;
 						case 2:
@@ -1082,7 +1080,7 @@ public class MainWindowController
 								ha.setEffect(s);
 							}
 
-							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							for (LeftDoubleArrow lda : leftDoubleArrowList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1090,7 +1088,7 @@ public class MainWindowController
 								lda.setEffect(s);
 							}
 
-							for(RightDoubleArrow rda : rightDoubleArrowList)
+							for (RightDoubleArrow rda : rightDoubleArrowList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1098,8 +1096,7 @@ public class MainWindowController
 								rda.setEffect(s);
 							}
 
-
-							for(Rectangle r : squareList)
+							for (Rectangle r : squareList)
 							{
 								r.setEffect(null);
 							}
@@ -1120,7 +1117,7 @@ public class MainWindowController
 								ha.setEffect(s);
 							}
 
-							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							for (LeftDoubleArrow lda : leftDoubleArrowList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1128,7 +1125,7 @@ public class MainWindowController
 								lda.setEffect(s);
 							}
 
-							for(RightDoubleArrow rda : rightDoubleArrowList)
+							for (RightDoubleArrow rda : rightDoubleArrowList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1136,15 +1133,14 @@ public class MainWindowController
 								rda.setEffect(s);
 							}
 
-
-							for(Rectangle r : squareList)
+							for (Rectangle r : squareList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
 								s.setColor(active);
 								r.setEffect(s);
 							}
-							 break;
+							break;
 						case 4:
 							for (Circle c : circleList)
 							{
@@ -1161,7 +1157,7 @@ public class MainWindowController
 								ha.setEffect(s);
 							}
 
-							for(LeftDoubleArrow lda : leftDoubleArrowList)
+							for (LeftDoubleArrow lda : leftDoubleArrowList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1169,7 +1165,7 @@ public class MainWindowController
 								lda.setEffect(s);
 							}
 
-							for(RightDoubleArrow rda : rightDoubleArrowList)
+							for (RightDoubleArrow rda : rightDoubleArrowList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1177,8 +1173,7 @@ public class MainWindowController
 								rda.setEffect(s);
 							}
 
-
-							for(Rectangle r : squareList)
+							for (Rectangle r : squareList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1190,13 +1185,38 @@ public class MainWindowController
 					}
 				}
 
-
-				break;
-			case "pause":
 				break;
 
 			case "addTag":
 				String tag = "";
+				for (Circle c : circleList)
+				{
+					if (c.getCenterX() < event.getSceneX() + circleRay && c.getCenterX() > event.getSceneX() - circleRay
+							&& c.getCenterY() < event.getSceneY() + circleRay - minusWidth
+							&& c.getCenterY() > event.getSceneY() - circleRay - minusWidth)
+					{
+						tag = utilities.tagDialog();
+						if(utilities.checkNameTagOfCircleOrRectangle(tag))
+						{
+							Utilities.infoBox("circlee");
+						}
+					}
+				}
+
+				for (Rectangle myRectangle : squareList)
+				{
+					if ((event.getSceneX() + squareRay > myRectangle.getX() + 20) && (event.getSceneX() - squareRay < myRectangle.getX() + 20)
+							&& (event.getSceneY() + squareRay - minusWidth > myRectangle.getY() + 20)
+							&& (event.getSceneY() - squareRay - minusWidth < myRectangle.getY() + 20))
+					{
+						tag = utilities.tagDialog();
+						if(utilities.checkNameTagOfCircleOrRectangle(tag))
+						{
+							Utilities.infoBox("rect");
+						}
+					}
+				}
+
 				LeftDoubleArrow left = new LeftDoubleArrow();
 				for (LeftDoubleArrow lda : leftDoubleArrowList)
 				{
@@ -2017,7 +2037,6 @@ public class MainWindowController
 		addTagToggleButton.setToggleGroup(toggleButtonsGroup);
 		removeTagToggleButton.setToggleGroup(toggleButtonsGroup);
 		startAnimationToggleButton.setToggleGroup(toggleButtonsGroup);
-		pauseAnimationToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
@@ -2028,7 +2047,6 @@ public class MainWindowController
 		removeTokenToggleButton.setUserData("removeToken");
 		addTagToggleButton.setUserData("addTag");
 		removeTagToggleButton.setUserData("removeTag");
-		pauseAnimationToggleButton.setUserData("pause");
 		startAnimationToggleButton.setUserData("play");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
@@ -2061,8 +2079,6 @@ public class MainWindowController
 						setMiddleLabelText("Removing tags...");
 					else if (selectedToggle == "play")
 						setMiddleLabelText("Starting animation...");
-					else if (selectedToggle == "pause")
-						setMiddleLabelText("Pause...");
 				}
 
 			}
@@ -2742,21 +2758,6 @@ public class MainWindowController
 	void exportPdfMenuItem_OnAction(ActionEvent event)
 	{
 		exportPdf.exportToPDF();
-	}
-
-	@FXML
-	void stopAnimationButton_OnAction(ActionEvent event)
-	{
-		ObservableList<Toggle> list = toggleButtonsGroup.getToggles();
-		for (Toggle t : list)
-		{
-			if (t.isSelected())
-			{
-				t.setSelected(false);
-			}
-		}
-		setMiddleLabelText("Stopped...");
-		toggleButtonsGroup.setUserData("");
 	}
 
 }
