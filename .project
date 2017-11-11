@@ -102,6 +102,16 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/removeToken.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/statBackground.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/statBackground.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/statIcon.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/statIcon.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/token_1.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/token_1.png</location>

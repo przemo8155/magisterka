@@ -63,6 +63,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
@@ -169,6 +170,8 @@ public class MainWindowController
 
 	Label objectsMovedL = new Label("Objects moved: ");
 	Label numberOfObjectsMovedL = new Label("0");
+
+	ObservableList<Label> allStatsLabels = FXCollections.observableArrayList();
 
 	Button showStats = new Button("Elo");
 
@@ -2068,6 +2071,8 @@ public class MainWindowController
 
 	protected void initializeStats()
 	{
+		Font fontToUse = Font.font("Arial", 18);
+
 		Label objects = new Label("Objects");
 		objects.setFont(Font.font("Arial", 30));
 		objects.setAlignment(Pos.CENTER);
@@ -2078,13 +2083,13 @@ public class MainWindowController
 
 		Separator separator1 = new Separator();
 		separator1.setOrientation(Orientation.HORIZONTAL);
-		separator1.setMinWidth(100.0);
+		separator1.setMinWidth(150.0);
 		Separator separator2 = new Separator();
 		separator2.setOrientation(Orientation.HORIZONTAL);
-		separator2.setMinWidth(100.0);
+		separator2.setMinWidth(150.0);
 
 		GridPane grid = new GridPane();
-		grid.getColumnConstraints().add(new ColumnConstraints(180));
+		grid.getColumnConstraints().add(new ColumnConstraints(240));
 		grid.setVgap(5);
 		GridPane.setHalignment(objects, HPos.RIGHT);
 		GridPane.setHalignment(interactions, HPos.RIGHT);
@@ -2132,6 +2137,39 @@ public class MainWindowController
 
 		grid.add(objectsMovedL, 0, 11);
 		grid.add(numberOfObjectsMovedL, 1, 11);
+
+		allStatsLabels.add(arrowsCreatedL);
+		allStatsLabels.add(circlesCreatedL);
+		allStatsLabels.add(doubleArrowsCreatedL);
+		allStatsLabels.add(rectanglesCreatedL);
+		allStatsLabels.add(mouseBothClickL);
+		allStatsLabels.add(mouseLeftClickL);
+		allStatsLabels.add(mouseRightClickL);
+		allStatsLabels.add(objectsDeletedL);
+		allStatsLabels.add(objectsMovedL);
+		allStatsLabels.add(numberOfArrowsCreatedL);
+		allStatsLabels.add(numberOfCirclesCreatedL);
+		allStatsLabels.add(numberOfDoubleArrowsCreatedL);
+		allStatsLabels.add(numberOfMouseBothClickL);
+		allStatsLabels.add(numberOfMouseLeftClickL);
+		allStatsLabels.add(numberOfMouseRightClickL);
+		allStatsLabels.add(numberOfObjectsDeletedL);
+		allStatsLabels.add(numberOfObjectsMovedL);
+		allStatsLabels.add(numberOfRectanglesCreatedL);
+
+		for(Label l : allStatsLabels)
+		{
+			l.setFont(fontToUse);
+		}
+
+		/*circlesCreatedL.setFont(fontToUse);
+		numberOfCirclesCreatedL.setFont(fontToUse);
+		rectanglesCreatedL.setFont(fontToUse);
+		numberOfRectanglesCreatedL.setFont(fontToUse);
+		arrowsCreatedL.setFont(fontToUse);
+		numberOfArrowsCreatedL.setFont(fontToUse);
+		doubleArrowsCreatedL.setFont(fontToUse);
+		numberOfDoubleArrowsCreatedL.setFont(fontToUse);*/
 
 		statisticsAlert.getDialogPane().setContent(grid);
 
@@ -2480,6 +2518,15 @@ public class MainWindowController
 	@FXML
 	void showStatisticsMenuItem_OnAction(ActionEvent event)
 	{
+		statisticsAlert.setTitle("Statistics");
+		statisticsAlert.setHeaderText(null);
+		DialogPane dialogPane = statisticsAlert.getDialogPane();
+		dialogPane.getStylesheets().add(
+		   getClass().getResource("statisticsAlert.css").toExternalForm());
+		dialogPane.getStyleClass().add("statDialog");
+		Stage myStage = (Stage) statisticsAlert.getDialogPane().getScene().getWindow();
+		myStage.getIcons().add(
+			    new Image(this.getClass().getResource("resources/statIcon.png").toString()));
 		statisticsAlert.showAndWait();
 	}
 

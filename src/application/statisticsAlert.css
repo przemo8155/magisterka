@@ -1,0 +1,9 @@
+.statDialog
+{
+    -fx-background-image: url("resources/statBackground.png");
+ 	-fx-background-color: rgba(100,0,0,0.2);
+ 	-fx-background-fills: rgba(0,0,0,0.2);
+ 	-fx-background-position: center;
+ 	-fx-background-size: cover, auto;
+ 	-fx-background-repeat: no-repeat;
+}
