@@ -1198,7 +1198,15 @@ public class MainWindowController
 						tag = utilities.tagDialog();
 						if(utilities.checkNameTagOfCircleOrRectangle(tag))
 						{
-							Utilities.infoBox("circlee");
+							Pair<Double, Double> pair = utilities.returnCircleTagPosition(c, headArrowList);
+							Label l = new Label();
+							l.setText(tag);
+							l.setLayoutX(c.getCenterX() + pair.getKey());
+							l.setLayoutY(c.getCenterY() + pair.getValue());
+							l.setFont(new Font("Arial", 16));
+							l.setId("fancytext");
+							mainPane.getChildren().add(l);
+							tags.add(l);
 						}
 					}
 				}
