@@ -338,12 +338,21 @@ public class Utilities
 		ObservableList<Double> angles = FXCollections.observableArrayList();
 		for (HeadArrow ha : haList)
 		{
-			double angle = ha.returnAngle(cPosX, cPosY, ha.getStartX(), ha.getStartY());
-			angles.add(angle);
+			if(Math.abs(ha.getStartX() - cPosX) > 30 && Math.abs(ha.getStartY() - cPosY) > 30)
+			{
+				double angle = ha.returnAngle(cPosX, cPosY, ha.getEndX(), ha.getEndY());
+				angles.add(angle);
+			}
+			else
+			{
+				double angle = ha.returnAngle(cPosX, cPosY, ha.getStartX(), ha.getStartY());
+				angles.add(angle);
+
+			}
 		}
 
 		final int _ray = 30;
-		SortedList<Double> sortedAngles = new SortedList(angles);
+		SortedList<Double> sortedAngles = new SortedList<Double>(angles);
 		double max = 0;
 		double a1 = 0, a2 = 0;
 		if(sortedAngles.size() > 1)
