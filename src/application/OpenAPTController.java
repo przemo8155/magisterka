@@ -4,11 +4,16 @@ package application;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -17,11 +22,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class OpenAPTController
 {
+	BigInfoAPTList bial = new BigInfoAPTList();
 
 	public String typeOfNet = "";
 	final String startDir = System.getProperty("user.dir");
@@ -32,8 +40,12 @@ public class OpenAPTController
 
 	File jarFile;
 
+
 	@FXML
-	private Label headLabel, typeLabel, fileLabel, infoLabel;
+	private Label headLabel, typeLabel, fileLabel;
+
+	@FXML
+	private Label label1;
 
 	@FXML
 	private Button selectFileButton, openButton, closeButton, infoAboutNetButton;
@@ -42,37 +54,34 @@ public class OpenAPTController
 	private TextField fileTextField;
 
 	@FXML
-	private ListView<String> filesListView;
-
-	@FXML
 	private ChoiceBox<String> typeChoiceBox;
 
-	private ObservableList<String> list = FXCollections.observableArrayList("Bounded", "Coverab", "Weakly live");
-
-	private ObservableList<String> allFiles = FXCollections.observableArrayList();
-
-	private void getAllFiles(File curDir) {
-
-        File[] filesList = curDir.listFiles();
-        for(File f : filesList){
-            if(f.isDirectory())
-                allFiles.add((f.getName()));
-            if(f.isFile()){
-                allFiles.add((f.getName()));
-            }
-        }
-
-    }
+	final Tooltip tooltip = new Tooltip();
 
 	public void initialize()
 	{
-		typeChoiceBox.setItems(list);
+		HashMap<String, String> myList = bial.getBigList();
+		ArrayList<String> tempList = new ArrayList<String>(myList.keySet());
+		ObservableList<String> allTypes= FXCollections.observableArrayList(tempList);
+		typeChoiceBox.setItems(allTypes);
 		typeChoiceBox.getSelectionModel().selectFirst();
-		filesListView.setEditable(true);
-		File curDir = new File(".");
-        getAllFiles(curDir);
-		filesListView.setItems(allFiles);
+		typeChoiceBox.setOnMouseMoved(mouseHandler);
+
 	}
+
+	 EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+
+	        @Override
+	        public void handle(MouseEvent mouseEvent) {
+
+	        	Node node = (Node) mouseEvent.getSource();
+	        	tooltip.setText(startDir);
+	        	tooltip.show(node, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
+
+	        }
+
+	    };
 
 	@FXML
 	void selectFileButton_OnAction(ActionEvent event)
