@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,14 +42,36 @@ public class OpenAPTController
 	private TextField fileTextField;
 
 	@FXML
+	private ListView<String> filesListView;
+
+	@FXML
 	private ChoiceBox<String> typeChoiceBox;
 
 	private ObservableList<String> list = FXCollections.observableArrayList("Bounded", "Coverab", "Weakly live");
+
+	private ObservableList<String> allFiles = FXCollections.observableArrayList();
+
+	private void getAllFiles(File curDir) {
+
+        File[] filesList = curDir.listFiles();
+        for(File f : filesList){
+            if(f.isDirectory())
+                allFiles.add((f.getName()));
+            if(f.isFile()){
+                allFiles.add((f.getName()));
+            }
+        }
+
+    }
 
 	public void initialize()
 	{
 		typeChoiceBox.setItems(list);
 		typeChoiceBox.getSelectionModel().selectFirst();
+		filesListView.setEditable(true);
+		File curDir = new File(".");
+        getAllFiles(curDir);
+		filesListView.setItems(allFiles);
 	}
 
 	@FXML
