@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,10 +44,7 @@ public class OpenAPTController
 
 
 	@FXML
-	private Label headLabel, typeLabel, fileLabel;
-
-	@FXML
-	private Label label1;
+	private Label headLabel, typeLabel, fileLabel, descriptionLabel;
 
 	@FXML
 	private Button selectFileButton, openButton, closeButton, infoAboutNetButton;
@@ -56,32 +55,27 @@ public class OpenAPTController
 	@FXML
 	private ChoiceBox<String> typeChoiceBox;
 
-	final Tooltip tooltip = new Tooltip();
+	Tooltip tooltip = new Tooltip();
 
 	public void initialize()
 	{
 		HashMap<String, String> myList = bial.getBigList();
 		ArrayList<String> tempList = new ArrayList<String>(myList.keySet());
+		ArrayList<String> tempList2 = new ArrayList<String>(myList.values());
 		ObservableList<String> allTypes= FXCollections.observableArrayList(tempList);
+		ObservableList<String> allDesc= FXCollections.observableArrayList(tempList2);
 		typeChoiceBox.setItems(allTypes);
 		typeChoiceBox.getSelectionModel().selectFirst();
-		typeChoiceBox.setOnMouseMoved(mouseHandler);
+		typeChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new
+	            ChangeListener<Number>() {
+            public void changed(ObservableValue ov,
+                Number value, Number new_value) {
+            	descriptionLabel.setText(allDesc.get(typeChoiceBox.getSelectionModel().getSelectedIndex()));
+        }
+    });
 
 	}
 
-	 EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
-
-	        @Override
-	        public void handle(MouseEvent mouseEvent) {
-
-	        	Node node = (Node) mouseEvent.getSource();
-	        	tooltip.setText(startDir);
-	        	tooltip.show(node, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-
-
-	        }
-
-	    };
 
 	@FXML
 	void selectFileButton_OnAction(ActionEvent event)

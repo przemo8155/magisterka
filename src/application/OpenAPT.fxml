@@ -38,7 +38,7 @@
             <Button fx:id="openButton" layoutX="229.0" layoutY="504.0" mnemonicParsing="false" onAction="#openButton_OnAction" prefHeight="40.0" prefWidth="70.0" text="Open" />
             <Button fx:id="closeButton" layoutX="326.0" layoutY="504.0" mnemonicParsing="false" onAction="#closeButton_OnAction" prefHeight="40.0" prefWidth="70.0" text="Close" />
             <Button fx:id="infoAboutNetButton" layoutX="231.0" layoutY="561.0" mnemonicParsing="false" onAction="#infoAboutNetButton_OnAction" prefHeight="25.0" prefWidth="157.0" text="Check info about net" />
-            <Label fx:id="label1" layoutX="44.0" layoutY="215.0" text="Convert a Petri net or LTS to the Dot format used by Graphviz" />
+            <Label fx:id="descriptionLabel" layoutX="111.0" layoutY="313.0" prefHeight="17.0" prefWidth="251.0" />
          </children>
       </Pane>
    </children>
