@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 
 public class OpenAPTController
 {
+
 	BigInfoAPTList bial = new BigInfoAPTList();
 
 	public String typeOfNet = "";
@@ -42,9 +43,8 @@ public class OpenAPTController
 
 	File jarFile;
 
-
 	@FXML
-	private Label headLabel, typeLabel, fileLabel, descriptionLabel;
+	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel;
 
 	@FXML
 	private Button selectFileButton, openButton, closeButton, infoAboutNetButton;
@@ -62,20 +62,27 @@ public class OpenAPTController
 		HashMap<String, String> myList = bial.getBigList();
 		ArrayList<String> tempList = new ArrayList<String>(myList.keySet());
 		ArrayList<String> tempList2 = new ArrayList<String>(myList.values());
-		ObservableList<String> allTypes= FXCollections.observableArrayList(tempList);
-		ObservableList<String> allDesc= FXCollections.observableArrayList(tempList2);
+		ObservableList<String> allTypes = FXCollections.observableArrayList(tempList);
+		ObservableList<String> allDesc = FXCollections.observableArrayList(tempList2);
 		typeChoiceBox.setItems(allTypes);
-		typeChoiceBox.getSelectionModel().selectFirst();
-		typeChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new
-	            ChangeListener<Number>() {
-            public void changed(ObservableValue ov,
-                Number value, Number new_value) {
-            	descriptionLabel.setText(allDesc.get(typeChoiceBox.getSelectionModel().getSelectedIndex()));
-        }
-    });
+		typeChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
+		{
 
+			public void changed(ObservableValue ov, Number value, Number new_value)
+			{
+				descriptionLabel.setText(allDesc.get(typeChoiceBox.getSelectionModel().getSelectedIndex()));
+			}
+		});
+
+		if(descriptionLabel.equals(""))
+		{
+			descTextLabel.setVisible(false);
+		}
+		else
+		{
+			descriptionLabel.setVisible(true);
+		}
 	}
-
 
 	@FXML
 	void selectFileButton_OnAction(ActionEvent event)
