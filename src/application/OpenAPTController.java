@@ -53,26 +53,18 @@ public class OpenAPTController
 	private TextField fileTextField;
 
 	@FXML
-	private ChoiceBox<String> typeChoiceBox;
+	private ListView<String> options1ListView;
 
 	Tooltip tooltip = new Tooltip();
 
 	public void initialize()
 	{
 		HashMap<String, String> myList = bial.getBigList();
-		ArrayList<String> tempList = new ArrayList<String>(myList.keySet());
-		ArrayList<String> tempList2 = new ArrayList<String>(myList.values());
-		ObservableList<String> allTypes = FXCollections.observableArrayList(tempList);
-		ObservableList<String> allDesc = FXCollections.observableArrayList(tempList2);
-		typeChoiceBox.setItems(allTypes);
-		typeChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
-		{
+		ObservableList<String> allTypes = FXCollections.observableArrayList(myList.keySet());
+		ObservableList<String> allDesc = FXCollections.observableArrayList(myList.values());
 
-			public void changed(ObservableValue ov, Number value, Number new_value)
-			{
-				descriptionLabel.setText(allDesc.get(typeChoiceBox.getSelectionModel().getSelectedIndex()));
-			}
-		});
+
+		options1ListView.setItems(allTypes);
 
 		if(descriptionLabel.equals(""))
 		{
@@ -114,35 +106,14 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
-		if (typeChoiceBox.getSelectionModel().isSelected(1))
-		{
 
-		} else
-		{
-			Alert alert = new Alert(AlertType.WARNING,
-					"You need to set type of net as 'coverab' to open net in program.", ButtonType.OK);
-			alert.showAndWait();
-
-		}
 
 	}
 
 	@FXML
 	void infoAboutNetButton_OnAction(ActionEvent event)
 	{
-		if (typeChoiceBox.getSelectionModel().isSelected(0))
-		{
-			typeOfNet = "bounded";
-		} else if (typeChoiceBox.getSelectionModel().isSelected(1))
-		{
-			typeOfNet = "coverab";
-		} else if (typeChoiceBox.getSelectionModel().isSelected(2))
-		{
-			typeOfNet = "weakly_live";
-		} else
-		{
-			typeOfNet = "";
-		}
+
 
 		if (!fileTextField.getText().trim().isEmpty())
 		{
