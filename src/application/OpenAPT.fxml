@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
@@ -47,6 +46,7 @@
                   <DropShadow />
                </effect></Label>
             <ListView fx:id="options1ListView" layoutX="14.0" layoutY="183.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="options2ListView" layoutX="383.0" layoutY="183.0" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </Pane>
    </children>

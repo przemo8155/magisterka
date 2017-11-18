@@ -1,13 +1,17 @@
 
 package application;
 
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import APTOptionsFolder.Draw;
+import APTOptionsFolder.Help;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,6 +39,8 @@ public class OpenAPTController
 {
 
 	BigInfoAPTList bial = new BigInfoAPTList();
+	Help helpObj = new Help();
+	Draw drawObj = new Draw();
 
 	public String typeOfNet = "";
 	final String startDir = System.getProperty("user.dir");
@@ -55,7 +61,7 @@ public class OpenAPTController
 	private TextField fileTextField;
 
 	@FXML
-	private ListView<String> options1ListView;
+	private ListView<String> options1ListView, options2ListView;
 
 	Tooltip tooltip = new Tooltip();
 
@@ -73,7 +79,8 @@ public class OpenAPTController
 	                @Override
 	                protected void updateItem(String item, boolean empty) {
 	                    super.updateItem(item, empty);
-	                    if (bial.getMiscHeader().equals(item)) {
+	                    if (bial.getMiscHeader().equals(item) ||
+	                    	bial.getPetriNetsHeader().equals(item) 	) {
 	                        setDisable(true);
 	                    } else {
 	                        setDisable(false);
@@ -84,6 +91,39 @@ public class OpenAPTController
 	            };
 	        }
 	    });
+
+
+
+
+		options1ListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		        String desc = "";
+		        for(Map.Entry<String, String> entry : bial.getBigList().entrySet())
+		        {
+		        	if(entry.getKey().equals(newValue))
+		        	{
+		        		desc = entry.getValue();
+		        		break;
+		        	}
+		        }
+
+		        descriptionLabel.setText(desc);
+
+		        if(newValue.equals(bial.getHelp()))
+		        {
+		        	options2ListView.setItems(helpObj.getHelpClassList());
+		        }
+		        else if(newValue.equals(bial.getDraw()))
+		        {
+		        	options2ListView.setItems(drawObj.getDrawClassList());
+		        }
+		        else
+		        {
+		        	options2ListView.setItems(null);
+		        }
+		    }
+		});
 
 	}
 
