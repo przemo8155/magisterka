@@ -22,12 +22,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class OpenAPTController
 {
@@ -59,21 +61,30 @@ public class OpenAPTController
 
 	public void initialize()
 	{
-		HashMap<String, String> myList = bial.getBigList();
-		ObservableList<String> allTypes = FXCollections.observableArrayList(myList.keySet());
-		ObservableList<String> allDesc = FXCollections.observableArrayList(myList.values());
+		ObservableList<String> allTypes = bial.getTypesList();
 
 
 		options1ListView.setItems(allTypes);
 
-		if(descriptionLabel.equals(""))
-		{
-			descTextLabel.setVisible(false);
-		}
-		else
-		{
-			descriptionLabel.setVisible(true);
-		}
+		options1ListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+	        @Override
+	        public ListCell<String> call(ListView<String> param) {
+	            return new ListCell<String>() {
+	                @Override
+	                protected void updateItem(String item, boolean empty) {
+	                    super.updateItem(item, empty);
+	                    if (bial.getMiscHeader().equals(item)) {
+	                        setDisable(true);
+	                    } else {
+	                        setDisable(false);
+	                    }
+	                    setText(item);
+	                }
+
+	            };
+	        }
+	    });
+
 	}
 
 	@FXML
