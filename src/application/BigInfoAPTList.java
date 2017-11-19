@@ -95,7 +95,19 @@ public class BigInfoAPTList
 		typesList.add(petri_net);
 		typesList.add(ac);
 		typesList.add(backward_persistent);
-
+		typesList.add(bcf);
+		typesList.add(bicf);
+		typesList.add(bisimulation);
+		typesList.add(check);
+		typesList.add(check_all_cycle_prop);
+		typesList.add(compute_pvs);
+		typesList.add(concurrent_coverability_graph);
+		typesList.add(conpres);
+		typesList.add(coverability_graph);
+		typesList.add(covered_by_invariant);
+		typesList.add(cycles_same_disjoint_pv);
+		typesList.add(cycles_same_pv);
+		typesList.add(cf);
 
 		//bigInfo
 		//misc
@@ -107,6 +119,21 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(ac, "Check if a Petri net is asymmetric-choice");
 		bigInfoAPTList.put(backward_persistent, "Check if a Petri net or LTS is backward persistent");
 		bigInfoAPTList.put(bcf, "Check if a Petri net is behaviourally conflict free (BCF)");
+		bigInfoAPTList.put(bicf, "Check if a Petri net is binary conflict free (BiCF)");
+		bigInfoAPTList.put(bisimulation, "Check if the reachability graphs of two bounded labeled Petri nets or of two LTS or a combination of both are bisimilar");
+		bigInfoAPTList.put(bounded, "Check if a Petri net is bounded or k-bounded");
+		bigInfoAPTList.put(cf, "Check if a plain Petri net is conflict-free");
+		bigInfoAPTList.put(check, "Search for a Petri net which fulfills the given attributes");
+		bigInfoAPTList.put(check_all_cycle_prop, "Check all cycle properties of a Petri net");
+		bigInfoAPTList.put(compute_pvs, "Compute parikh vectors of smallest cycles of a Petri net or LTS");
+		bigInfoAPTList.put(concurrent_coverability_graph, "Calculate the concurrent coverability graph of a Petri net in the step semantics");
+		bigInfoAPTList.put(conpres, "Check if a Petri net is concurrency-preserving");
+		bigInfoAPTList.put(coverability_graph, "Compute a Petri net's coverability graph");
+		bigInfoAPTList.put(covered_by_invariant, "Check if a Petri net is covered by an S-invariant or a T-invariant");
+		bigInfoAPTList.put(cycles_same_disjoint_pv, "Check if the smallest cycles of a Petri net or LTS have the same or mutually disjoint parikh vectors");
+		bigInfoAPTList.put(cycles_same_pv, "Check if the smallest cycles of Petri net or LTS have the same parikh vector");
+
+
 
 	}
 

@@ -37,7 +37,7 @@ import javafx.util.Callback;
 
 public class OpenAPTController
 {
-
+	Utilities utilities = new Utilities();
 	BigInfoAPTList bial = new BigInfoAPTList();
 	Help helpObj = new Help();
 	Draw drawObj = new Draw();
@@ -98,7 +98,21 @@ public class OpenAPTController
 		options1ListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		    	typeOfNet = newValue;
 		        String desc = "";
+
+		        if(newValue.equals(bial.getHelp()))
+		        {
+		        	selectFileButton.setDisable(true);
+		        	fileTextField.setDisable(true);
+		        }
+
+		        else
+		        {
+		        	fileTextField.setDisable(false);
+		        	selectFileButton.setDisable(false);
+		        }
+
 		        for(Map.Entry<String, String> entry : bial.getBigList().entrySet())
 		        {
 		        	if(entry.getKey().equals(newValue))
@@ -205,8 +219,7 @@ public class OpenAPTController
 			{
 				strFileContents += new String(contents, 0, bytesRead);
 			}
-			Utilities.infoBox(strFileContents);
-			System.out.println(strFileContents);
+			utilities.modernInfoMessage(strFileContents);
 		} catch (IOException e)
 		{
 			System.out.print(e.getMessage());
