@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -51,23 +52,45 @@ public class OpenAPTController
 	Stage stage = MainWindowController.aptStage;
 
 	File jarFile;
+	File secondJarFile;
 
 	@FXML
-	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel;
+	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel, optionalInfoLabel;
 
 	@FXML
-	private Button selectFileButton, openButton, closeButton, infoAboutNetButton;
+	private Button selectFileButton, openButton, closeButton, infoAboutNetButton, secondFileButton;
 
 	@FXML
-	private TextField fileTextField;
+	private TextField fileTextField, secondFileTextField, optionalValueTextField;
 
 	@FXML
 	private ListView<String> options1ListView, options2ListView;
+
+	@FXML
+	private CheckBox optionalValueCheckBox;
 
 	Tooltip tooltip = new Tooltip();
 
 	public void initialize()
 	{
+		setSecondFileFieldsVisible(false);
+		setOptions2Visible(false);
+		setOptionalValueVisible(false);
+
+		optionalValueCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+		        if(newValue)
+		        {
+		        	optionalValueTextField.setDisable(false);
+		        }
+		        else
+		        {
+		        	optionalValueTextField.setDisable(true);
+		        }
+		    }
+		});
+
 		ObservableList<String> allTypes = bial.getTypesList();
 
 		options1ListView.setItems(allTypes);
@@ -133,12 +156,35 @@ public class OpenAPTController
 
 				if (newValue.equals(bial.getHelp()))
 				{
+					setOptions2Visible(true);
+					setSecondFileFieldsVisible(false);
+					setOptionalValueVisible(false);
 					options2ListView.setItems(helpObj.getHelpClassList());
 				} else if (newValue.equals(bial.getDraw()))
 				{
+					setOptions2Visible(false);
+					setSecondFileFieldsVisible(false);
+					setOptionalValueVisible(false);
 					options2ListView.setItems(drawObj.getDrawClassList());
-				} else
+				} else if(newValue.equals(bial.getBisimulation()))
 				{
+					setSecondFileFieldsVisible(true);
+					setOptions2Visible(false);
+					setOptionalValueVisible(false);
+				}
+				else if(newValue.equals(bial.getBounded()))
+				{
+
+					setOptions2Visible(false);
+					setSecondFileFieldsVisible(false);
+					setOptionalValueVisible(true);
+				}
+
+				else
+				{
+					setOptions2Visible(false);
+					setSecondFileFieldsVisible(false);
+					setOptionalValueVisible(false);
 					options2ListView.setItems(null);
 				}
 			}
@@ -156,25 +202,7 @@ public class OpenAPTController
 
 	}
 
-	@FXML
-	void selectFileButton_OnAction(ActionEvent event)
-	{
-		File file;
-		File directory = new File(startDir);
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open APT File");
-		fileChooser.setInitialDirectory(directory);
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("APT files (*.apt)", "*.apt");
-		fileChooser.getExtensionFilters().add(extFilter);
 
-		file = fileChooser.showOpenDialog(stage);
-
-		if (file != null)
-		{
-			fileTextField.setText(file.getAbsolutePath());
-			setJarFile(file);
-		}
-	}
 
 	@FXML
 	void closeButton_OnAction(ActionEvent event)
@@ -193,7 +221,7 @@ public class OpenAPTController
 	void infoAboutNetButton_OnAction(ActionEvent event)
 	{
 
-		if (!fileTextField.getText().trim().isEmpty() && options1ListView.getSelectionModel().getSelectedItem() != "help")
+		if (!fileTextField.getText().trim().isEmpty() && options1ListView.getSelectionModel().getSelectedItem() != "help" && options1ListView.getSelectionModel().getSelectedItem() != "bisimulation")
 		{
 			typeOfComp = "";
 			JarProcess(jarFile);
@@ -224,6 +252,31 @@ public class OpenAPTController
 			}
 
 		}
+
+		else if(options1ListView.getSelectionModel().getSelectedItem() == "bisimulation" && !secondFileTextField.getText().trim().isEmpty() && !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						typeOfNet, jarFile.getAbsolutePath(), secondJarFile.getAbsolutePath());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		else
 		{
 			Alert alert = new Alert(AlertType.WARNING, "Select file.", ButtonType.OK);
@@ -236,9 +289,42 @@ public class OpenAPTController
 		this.jarFile = file;
 	}
 
+	public void setSecondJarFile(File file)
+	{
+		this.secondJarFile = file;
+	}
+
 	public File getJarFile()
 	{
 		return this.jarFile;
+	}
+
+	private void setSecondFileFieldsVisible(boolean vis)
+	{
+		if(vis)
+		{
+			secondFileTextField.setVisible(true);
+			secondFileButton.setVisible(true);
+		}
+
+		else
+		{
+			secondFileTextField.clear();
+			secondFileTextField.setVisible(false);
+			secondFileButton.setVisible(false);
+		}
+	}
+
+	private void setOptions2Visible(boolean vis)
+	{
+		if(vis)
+		{
+			options2ListView.setVisible(true);
+		}
+		else
+		{
+			options2ListView.setVisible(false);
+		}
 	}
 
 	void JarProcess(File file)
@@ -287,5 +373,63 @@ public class OpenAPTController
 			System.out.print(e.getMessage());
 		}
 
+	}
+
+	@FXML
+	void secondFileButton_OnAction(ActionEvent event)
+	{
+		File file;
+		File directory = new File(startDir);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open APT File");
+		fileChooser.setInitialDirectory(directory);
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("APT files (*.apt)", "*.apt");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		file = fileChooser.showOpenDialog(stage);
+
+		if (file != null)
+		{
+			secondFileTextField.setText(file.getAbsolutePath());
+			setSecondJarFile(file);
+		}
+	}
+
+	@FXML
+	void selectFileButton_OnAction(ActionEvent event)
+	{
+		File file;
+		File directory = new File(startDir);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open APT File");
+		fileChooser.setInitialDirectory(directory);
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("APT files (*.apt)", "*.apt");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		file = fileChooser.showOpenDialog(stage);
+
+		if (file != null)
+		{
+			fileTextField.setText(file.getAbsolutePath());
+			setJarFile(file);
+		}
+	}
+
+	void setOptionalValueVisible(boolean vis)
+	{
+		if(vis)
+		{
+			optionalInfoLabel.setVisible(true);
+			optionalValueCheckBox.setVisible(true);
+			optionalValueTextField.setVisible(true);
+			optionalInfoLabel.setText("If given, k-boundedness is checked");
+		}
+		else
+		{
+			optionalInfoLabel.setVisible(false);
+			optionalValueCheckBox.setVisible(false);
+			optionalValueTextField.setVisible(false);
+			optionalValueTextField.setDisable(true);
+		}
 	}
 }

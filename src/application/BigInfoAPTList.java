@@ -98,6 +98,7 @@ public class BigInfoAPTList
 		typesList.add(bcf);
 		typesList.add(bicf);
 		typesList.add(bisimulation);
+		typesList.add(bounded);
 		typesList.add(check);
 		typesList.add(check_all_cycle_prop);
 		typesList.add(compute_pvs);
