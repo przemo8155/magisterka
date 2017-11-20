@@ -132,6 +132,54 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(covered_by_invariant, "Check if a Petri net is covered by an S-invariant or a T-invariant");
 		bigInfoAPTList.put(cycles_same_disjoint_pv, "Check if the smallest cycles of a Petri net or LTS have the same or mutually disjoint parikh vectors");
 		bigInfoAPTList.put(cycles_same_pv, "Check if the smallest cycles of Petri net or LTS have the same parikh vector");
+		bigInfoAPTList.put(examine_pn, "Perform various tests on a Petri net at once");
+		bigInfoAPTList.put(fairness, "Check if a Petri net or transition system is fair");
+		bigInfoAPTList.put(fc, "Check if a Petri net is free-choice");
+		bigInfoAPTList.put(fire_sequence, "Try to fire a given firing sequence on a Petri net");
+		bigInfoAPTList.put(homogeneous, "Check if a Petri net is homogeneous");
+		bigInfoAPTList.put(invariants, "Compute a generator set of S- or T-invariants");
+		bigInfoAPTList.put(isolated, "Check if a Petri net contains isolated elements");
+		bigInfoAPTList.put(isolated_elements, "Find isolated elements in a graph");
+		bigInfoAPTList.put(isomorphism, "Check if two Petri nets have isomorphic reachability graphs");
+		bigInfoAPTList.put(k_bounded, "Find the smallest k for which a Petri net is k-bounded");
+		bigInfoAPTList.put(k_marking, "Compute the largest k for which M0 is a k-marking");
+		bigInfoAPTList.put(language_equivalence, "Check if two Petri nets generate the same language");
+		bigInfoAPTList.put(matrices, "Calculate forward, backward, and incidence matrices");
+		bigInfoAPTList.put(mf, "Check if a Petri net is merge-free");
+		bigInfoAPTList.put(nonpure, "Check if a Petri net is nonpure but only simple sideconditions");
+		bigInfoAPTList.put(on, "Check if a Petri net is output-nonbranching");
+		bigInfoAPTList.put(persistent, "Check if a Petri net or LTS is persistent");
+		bigInfoAPTList.put(plain, "Check if a Petri net is plain");
+		bigInfoAPTList.put(pn_analysis, "Output a T-system of size g, which has a reachability graph, which is isomorph to the reachability graph of the input Petri net");
+		bigInfoAPTList.put(prime_cycle_property, "Check if the give Petri net or LTS fulfills the prime cycle property");
+		bigInfoAPTList.put(pure, "Check if a Petri net is pure");
+		bigInfoAPTList.put(reachability_graph, "Compute a Petri net's reachability graph");
+		bigInfoAPTList.put(reversible, "Check if a Petri net or LTS is reversible");
+		bigInfoAPTList.put(rfc, "Check if a Petri net is restricted-free-choice");
+		bigInfoAPTList.put(safe, "Check if a Petri net is safe");
+		bigInfoAPTList.put(sideconditions, "Compute the sideconditions of a Petri net");
+		bigInfoAPTList.put(simply_live, "Check if a Petri net or a transition (if given) is simply live");
+		bigInfoAPTList.put(siphons, "Compute all minimal siphons in a Petri net");
+		bigInfoAPTList.put(snet, "Check if a plain Petri net is an S-net");
+		bigInfoAPTList.put(strong_components, "Find the strongly connected components of a Petri net or LTS");
+		bigInfoAPTList.put(strong_separation, "Check if a given sequence is strongly k-separable");
+		bigInfoAPTList.put(strong_separation_length, "Check if all sequences up to a length are strongly k-separable");
+		bigInfoAPTList.put(strongly_connected, "Check if a Petri net or LTS is strongly connected");
+		bigInfoAPTList.put(strongly_live, "Check if a Petri net or a transition (if given) is strongly live");
+		bigInfoAPTList.put(sum_async, "Compute the synchronous sum of two PN");
+		bigInfoAPTList.put(sum_sync, "Compute the synchronous sum of two PN");
+		bigInfoAPTList.put(tnet, "Check if a plain Petri net is a T-net");
+		bigInfoAPTList.put(to_regular_expression, "Create a language-equivalent (up to prefix creation) regular expression");
+		bigInfoAPTList.put(traps, "Compute all minimal traps in a Petri net");
+		bigInfoAPTList.put(weak_components, "Find the weakly connected components of a Petri net or LTS");
+		bigInfoAPTList.put(weak_separation, "Check if a given sequence is weakly k-separable");
+		bigInfoAPTList.put(weak_separation_length, "Check if all sequences up to a length are weakly k-separable");
+		bigInfoAPTList.put(weakly_connected, "Check if a Petri net or LTS is weakly connected");
+		bigInfoAPTList.put(weakly_live, "Check if a Petri net or a transition (if given) is weakly live");
+		bigInfoAPTList.put(wfc, "Check if a Petri net is weighted free-choice");
+		bigInfoAPTList.put(word, " Check if a word is in a Petri net's prefix language");
+
+
 
 
 
