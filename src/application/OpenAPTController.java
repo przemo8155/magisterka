@@ -193,8 +193,9 @@ public class OpenAPTController
 	void infoAboutNetButton_OnAction(ActionEvent event)
 	{
 
-		if (!fileTextField.getText().trim().isEmpty())
+		if (!fileTextField.getText().trim().isEmpty() && options1ListView.getSelectionModel().getSelectedItem() != "help")
 		{
+			typeOfComp = "";
 			JarProcess(jarFile);
 
 		}
