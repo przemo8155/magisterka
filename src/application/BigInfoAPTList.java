@@ -108,6 +108,63 @@ public class BigInfoAPTList
 		typesList.add(cycles_same_disjoint_pv);
 		typesList.add(cycles_same_pv);
 		typesList.add(cf);
+		typesList.add(check);
+		typesList.add(check_all_cycle_prop);
+		typesList.add(compute_pvs);
+		typesList.add(concurrent_coverability_graph);
+		typesList.add(conpres);
+		typesList.add(coverability_graph);
+		typesList.add(covered_by_invariant);
+		typesList.add(cycles_same_disjoint_pv);
+		typesList.add(cycles_same_pv);
+		typesList.add(examine_pn);
+		typesList.add(fairness);
+		typesList.add(fc);
+		typesList.add(fire_sequence);
+		typesList.add(homogeneous);
+		typesList.add(invariants);
+		typesList.add(isolated);
+		typesList.add(isolated_elements);
+		typesList.add(isomorphism);
+		typesList.add(k_bounded);
+		typesList.add(k_marking);
+		typesList.add(language_equivalence);
+		typesList.add(matrices);
+		typesList.add(mf);
+		typesList.add(nonpure);
+		typesList.add(on);
+		typesList.add(persistent);
+		typesList.add(plain);
+		typesList.add(pn_analysis);
+		typesList.add(prime_cycle_property);
+		typesList.add(pure);
+		typesList.add(reachability_graph);
+		typesList.add(reversible);
+		typesList.add(rfc);
+		typesList.add(safe);
+		typesList.add(sideconditions);
+		typesList.add(simply_live);
+		typesList.add(siphons);
+		typesList.add(snet);
+		typesList.add(strong_components);
+		typesList.add(strong_separation);
+		typesList.add(strong_separation_length);
+		typesList.add(strongly_connected);
+		typesList.add(strongly_live);
+		typesList.add(sum_async);
+		typesList.add(sum_sync);
+		typesList.add(tnet);
+		typesList.add(to_regular_expression);
+		typesList.add(traps);
+		typesList.add(weak_components);
+		typesList.add(weak_separation);
+		typesList.add(weak_separation_length);
+		typesList.add(weakly_connected);
+		typesList.add(weakly_live);
+		typesList.add(wfc);
+		typesList.add(word);
+
+
 
 		//bigInfo
 		//misc

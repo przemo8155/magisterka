@@ -1,7 +1,6 @@
 
 package application;
 
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -37,12 +36,14 @@ import javafx.util.Callback;
 
 public class OpenAPTController
 {
+
 	Utilities utilities = new Utilities();
 	BigInfoAPTList bial = new BigInfoAPTList();
 	Help helpObj = new Help();
 	Draw drawObj = new Draw();
 
 	public String typeOfNet = "";
+	public String typeOfComp = "";
 	final String startDir = System.getProperty("user.dir");
 	final String eee = startDir + "\\apt\\apt.jar";
 	final String aptJarPath = eee.replaceAll("\\\\", "/");
@@ -69,74 +70,88 @@ public class OpenAPTController
 	{
 		ObservableList<String> allTypes = bial.getTypesList();
 
-
 		options1ListView.setItems(allTypes);
 
-		options1ListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-	        @Override
-	        public ListCell<String> call(ListView<String> param) {
-	            return new ListCell<String>() {
-	                @Override
-	                protected void updateItem(String item, boolean empty) {
-	                    super.updateItem(item, empty);
-	                    if (bial.getMiscHeader().equals(item) ||
-	                    	bial.getPetriNetsHeader().equals(item) 	) {
-	                        setDisable(true);
-	                    } else {
-	                        setDisable(false);
-	                    }
-	                    setText(item);
-	                }
+		options1ListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
 
-	            };
-	        }
-	    });
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				return new ListCell<String>()
+				{
 
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item))
+						{
+							setDisable(true);
+						} else
+						{
+							setDisable(false);
+						}
+						setText(item);
+					}
 
+				};
+			}
+		});
 
+		options1ListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
+		{
 
-		options1ListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		    	typeOfNet = newValue;
-		        String desc = "";
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				typeOfNet = newValue;
+				String desc = "";
 
-		        if(newValue.equals(bial.getHelp()))
-		        {
-		        	selectFileButton.setDisable(true);
-		        	fileTextField.setDisable(true);
-		        }
+				if (newValue.equals(bial.getHelp()))
+				{
+					selectFileButton.setDisable(true);
+					fileTextField.setDisable(true);
+				}
 
-		        else
-		        {
-		        	fileTextField.setDisable(false);
-		        	selectFileButton.setDisable(false);
-		        }
+				else
+				{
+					fileTextField.setDisable(false);
+					selectFileButton.setDisable(false);
+				}
 
-		        for(Map.Entry<String, String> entry : bial.getBigList().entrySet())
-		        {
-		        	if(entry.getKey().equals(newValue))
-		        	{
-		        		desc = entry.getValue();
-		        		break;
-		        	}
-		        }
+				for (Map.Entry<String, String> entry : bial.getBigList().entrySet())
+				{
+					if (entry.getKey().equals(newValue))
+					{
+						desc = entry.getValue();
+						break;
+					}
+				}
 
-		        descriptionLabel.setText(desc);
+				descriptionLabel.setText(desc);
 
-		        if(newValue.equals(bial.getHelp()))
-		        {
-		        	options2ListView.setItems(helpObj.getHelpClassList());
-		        }
-		        else if(newValue.equals(bial.getDraw()))
-		        {
-		        	options2ListView.setItems(drawObj.getDrawClassList());
-		        }
-		        else
-		        {
-		        	options2ListView.setItems(null);
-		        }
-		    }
+				if (newValue.equals(bial.getHelp()))
+				{
+					options2ListView.setItems(helpObj.getHelpClassList());
+				} else if (newValue.equals(bial.getDraw()))
+				{
+					options2ListView.setItems(drawObj.getDrawClassList());
+				} else
+				{
+					options2ListView.setItems(null);
+				}
+			}
+		});
+
+		options2ListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				typeOfComp = newValue;
+			}
 		});
 
 	}
@@ -172,19 +187,43 @@ public class OpenAPTController
 	void openButton_OnAction(ActionEvent event)
 	{
 
-
 	}
 
 	@FXML
 	void infoAboutNetButton_OnAction(ActionEvent event)
 	{
 
-
 		if (!fileTextField.getText().trim().isEmpty())
 		{
 			JarProcess(jarFile);
 
-		} else
+		}
+		else if(options1ListView.getSelectionModel().getSelectedItem() == "help")
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						typeOfNet, typeOfComp);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+		else
 		{
 			Alert alert = new Alert(AlertType.WARNING, "Select file.", ButtonType.OK);
 			alert.showAndWait();
@@ -206,20 +245,42 @@ public class OpenAPTController
 
 		try
 		{
-			ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar", typeOfNet,
-					file.getAbsolutePath());
-
-			Process p = pb.start();
-			BufferedInputStream in = new BufferedInputStream(p.getInputStream());
-			byte[] contents = new byte[1024];
-
-			int bytesRead = 0;
-			String strFileContents = "";
-			while ((bytesRead = in.read(contents)) != -1)
+			if (typeOfComp.equals(""))
 			{
-				strFileContents += new String(contents, 0, bytesRead);
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						typeOfNet, file.getAbsolutePath());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
 			}
-			utilities.modernInfoMessage(strFileContents);
+
+			else
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						typeOfNet, typeOfComp, file.getAbsolutePath());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			}
+
 		} catch (IOException e)
 		{
 			System.out.print(e.getMessage());
