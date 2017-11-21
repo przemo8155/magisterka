@@ -210,6 +210,7 @@ public class OpenAPTController
 					setOptionalValueVisible(true);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+
 					options2ListView.setItems(checkObj.getCheckGeneratorsClassList());
 					options3ListView.setItems(checkObj.getCheckAttributesClassList());
 				}
@@ -248,6 +249,34 @@ public class OpenAPTController
 
 		setInfoButtonEnable(false);
 
+		optionalValueTextField.textProperty().addListener(new ChangeListener<String>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				if (!newValue.matches("\\d*"))
+				{
+					optionalValueTextField.setText(newValue.replaceAll("[^\\d]", ""));
+					tooltip.setText("Only digits are allowed!");
+					tooltip.setX(optionalValueTextField.getLayoutX() + 50);
+					tooltip.setY(optionalValueTextField.getLayoutY() + 50);
+					tooltip.show((Stage) optionalValueTextField.getScene().getWindow());
+				} else
+				{
+					try
+					{
+						tooltip.hide();
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
+
+				}
+			}
+		});
+
 	}
 
 	@FXML
@@ -262,8 +291,6 @@ public class OpenAPTController
 	{
 
 	}
-
-
 
 	@FXML
 	void infoAboutNetButton_OnAction(ActionEvent event)
@@ -308,8 +335,6 @@ public class OpenAPTController
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
 						option1Value, optionalValueTextField.getText(), option2Value, option3Value);
-
-				utilities.infoBox("java -jar" + " " + startDir + sep + "apt" + sep + "apt.jar " + option1Value + " " + optionalValueTextField.getText() + " " + option2Value + " " + option3Value);
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
