@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import APTOptionsFolder.Check;
+import APTOptionsFolder.CoveredByInvariant;
 import APTOptionsFolder.Draw;
 import APTOptionsFolder.Help;
 import javafx.beans.value.ChangeListener;
@@ -44,6 +45,7 @@ public class OpenAPTController
 	Help helpObj = new Help();
 	Draw drawObj = new Draw();
 	Check checkObj = new Check();
+	CoveredByInvariant coveredByInvariant = new CoveredByInvariant();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -178,6 +180,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					options2ListView.setItems(helpObj.getHelpClassList());
 					options3ListView.setItems(null);
+
 				} else if (newValue.equals(bial.getDraw()))
 				{
 					setOptions2Visible(false);
@@ -186,6 +189,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					options2ListView.setItems(drawObj.getDrawClassList());
 					options3ListView.setItems(null);
+
 				} else if (newValue.equals(bial.getBisimulation()))
 				{
 					setSecondFileFieldsVisible(true);
@@ -194,6 +198,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					options2ListView.setItems(null);
 					options3ListView.setItems(null);
+
 				} else if (newValue.equals(bial.getBounded()))
 				{
 
@@ -203,6 +208,7 @@ public class OpenAPTController
 					setOptionalValueVisible(true);
 					options2ListView.setItems(null);
 					options3ListView.setItems(null);
+
 				} else if (newValue.equals(bial.getCheck()))
 				{
 					setOptions2Visible(true);
@@ -211,8 +217,25 @@ public class OpenAPTController
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
 
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
 					options2ListView.setItems(checkObj.getCheckGeneratorsClassList());
 					options3ListView.setItems(checkObj.getCheckAttributesClassList());
+
+				}
+
+				else if (newValue.equals(bial.getCovered_by_invariant()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(true);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+
+					options2ListView.setItems(coveredByInvariant.getCoveredByInvariantInvClassList());
+					options3ListView.setItems(coveredByInvariant.getCoveredByInvariantAlgoClassList());
 				}
 
 				else
@@ -259,16 +282,15 @@ public class OpenAPTController
 				{
 					optionalValueTextField.setText(newValue.replaceAll("[^\\d]", ""));
 					tooltip.setText("Only digits are allowed!");
-					tooltip.setX(optionalValueTextField.getLayoutX() + 50);
-					tooltip.setY(optionalValueTextField.getLayoutY() + 50);
+					tooltip.setX(optionalValueTextField.getLayoutX() + 400);
+					tooltip.setY(optionalValueTextField.getLayoutY());
 					tooltip.show((Stage) optionalValueTextField.getScene().getWindow());
 				} else
 				{
 					try
 					{
 						tooltip.hide();
-					}
-					catch(Exception e)
+					} catch (Exception e)
 					{
 						e.printStackTrace();
 					}
@@ -297,14 +319,16 @@ public class OpenAPTController
 	{
 
 		if (!fileTextField.getText().trim().isEmpty()
-				&& options1ListView.getSelectionModel().getSelectedItem() != "help"
-				&& options1ListView.getSelectionModel().getSelectedItem() != "bisimulation"
-				&& options1ListView.getSelectionModel().getSelectedItem() != "check")
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getHelp()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getBisimulation()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCheck()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCovered_by_invariant())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
 
-		} else if (options1ListView.getSelectionModel().getSelectedItem() == "help")
+		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getHelp()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			try
 			{
@@ -329,7 +353,10 @@ public class OpenAPTController
 
 		}
 
-		else if (options1ListView.getSelectionModel().getSelectedItem() == "check")
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCheck()
+				&& !optionalValueTextField.getText().trim().isEmpty()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			try
 			{
@@ -354,7 +381,34 @@ public class OpenAPTController
 
 		}
 
-		else if (options1ListView.getSelectionModel().getSelectedItem() == "bisimulation"
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCovered_by_invariant()
+				&& !selectFileButton.getText().trim().isEmpty()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						 option1Value, fileTextField.getText(), option2Value, option3Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getBisimulation()
 				&& !secondFileTextField.getText().trim().isEmpty() && !fileTextField.getText().trim().isEmpty())
 		{
 			try
@@ -379,7 +433,7 @@ public class OpenAPTController
 			}
 		} else
 		{
-			Alert alert = new Alert(AlertType.WARNING, "Select file.", ButtonType.OK);
+			Alert alert = new Alert(AlertType.WARNING, "One or more of required fields are empty.", ButtonType.OK);
 			alert.showAndWait();
 		}
 
