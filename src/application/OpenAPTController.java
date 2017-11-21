@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import APTOptionsFolder.Check;
 import APTOptionsFolder.Draw;
 import APTOptionsFolder.Help;
 import javafx.beans.value.ChangeListener;
@@ -42,9 +43,12 @@ public class OpenAPTController
 	BigInfoAPTList bial = new BigInfoAPTList();
 	Help helpObj = new Help();
 	Draw drawObj = new Draw();
+	Check checkObj = new Check();
 
-	public String typeOfNet = "";
-	public String typeOfComp = "";
+	public String option1Value = "";
+	public String option2Value = "";
+	public String option3Value = "";
+	public String smallTextBoxValue = "";
 	final String startDir = System.getProperty("user.dir");
 	final String eee = startDir + "\\apt\\apt.jar";
 	final String aptJarPath = eee.replaceAll("\\\\", "/");
@@ -64,7 +68,7 @@ public class OpenAPTController
 	private TextField fileTextField, secondFileTextField, optionalValueTextField;
 
 	@FXML
-	private ListView<String> options1ListView, options2ListView;
+	private ListView<String> options1ListView, options2ListView, options3ListView;
 
 	@FXML
 	private CheckBox optionalValueCheckBox;
@@ -75,20 +79,25 @@ public class OpenAPTController
 	{
 		setSecondFileFieldsVisible(false);
 		setOptions2Visible(false);
+		setOptions3Visible(false);
 		setOptionalValueVisible(false);
 
-		optionalValueCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-		        if(newValue)
-		        {
-		        	optionalValueTextField.setDisable(false);
-		        }
-		        else
-		        {
-		        	optionalValueTextField.setDisable(true);
-		        }
-		    }
+		fileTextField.setEditable(false);
+
+		optionalValueCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+			{
+				if (newValue)
+				{
+					optionalValueTextField.setDisable(false);
+				} else
+				{
+					optionalValueTextField.setDisable(true);
+				}
+			}
 		});
 
 		ObservableList<String> allTypes = bial.getTypesList();
@@ -128,10 +137,17 @@ public class OpenAPTController
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
-				typeOfNet = newValue;
+				option1Value = newValue;
+				if (!newValue.equals("") && !fileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(true);
+				} else
+				{
+					setInfoButtonEnable(false);
+				}
 				String desc = "";
 
-				if (newValue.equals(bial.getHelp()))
+				if (newValue.equals(bial.getHelp()) || newValue.equals(bial.getCheck()))
 				{
 					selectFileButton.setDisable(true);
 					fileTextField.setDisable(true);
@@ -157,35 +173,55 @@ public class OpenAPTController
 				if (newValue.equals(bial.getHelp()))
 				{
 					setOptions2Visible(true);
+					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(false);
 					options2ListView.setItems(helpObj.getHelpClassList());
+					options3ListView.setItems(null);
 				} else if (newValue.equals(bial.getDraw()))
 				{
 					setOptions2Visible(false);
+					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(false);
 					options2ListView.setItems(drawObj.getDrawClassList());
-				} else if(newValue.equals(bial.getBisimulation()))
+					options3ListView.setItems(null);
+				} else if (newValue.equals(bial.getBisimulation()))
 				{
 					setSecondFileFieldsVisible(true);
 					setOptions2Visible(false);
+					setOptions3Visible(false);
 					setOptionalValueVisible(false);
-				}
-				else if(newValue.equals(bial.getBounded()))
+					options2ListView.setItems(null);
+					options3ListView.setItems(null);
+				} else if (newValue.equals(bial.getBounded()))
 				{
 
 					setOptions2Visible(false);
+					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(true);
+					options2ListView.setItems(null);
+					options3ListView.setItems(null);
+				} else if (newValue.equals(bial.getCheck()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(true);
+					setOptionalValueVisible(true);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					options2ListView.setItems(checkObj.getCheckGeneratorsClassList());
+					options3ListView.setItems(checkObj.getCheckAttributesClassList());
 				}
 
 				else
 				{
 					setOptions2Visible(false);
+					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(false);
 					options2ListView.setItems(null);
+					options3ListView.setItems(null);
 				}
 			}
 		});
@@ -196,13 +232,23 @@ public class OpenAPTController
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
-				typeOfComp = newValue;
+				option2Value = newValue;
 			}
 		});
 
+		options3ListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				option3Value = newValue;
+			}
+		});
+
+		setInfoButtonEnable(false);
+
 	}
-
-
 
 	@FXML
 	void closeButton_OnAction(ActionEvent event)
@@ -217,22 +263,26 @@ public class OpenAPTController
 
 	}
 
+
+
 	@FXML
 	void infoAboutNetButton_OnAction(ActionEvent event)
 	{
 
-		if (!fileTextField.getText().trim().isEmpty() && options1ListView.getSelectionModel().getSelectedItem() != "help" && options1ListView.getSelectionModel().getSelectedItem() != "bisimulation")
+		if (!fileTextField.getText().trim().isEmpty()
+				&& options1ListView.getSelectionModel().getSelectedItem() != "help"
+				&& options1ListView.getSelectionModel().getSelectedItem() != "bisimulation"
+				&& options1ListView.getSelectionModel().getSelectedItem() != "check")
 		{
-			typeOfComp = "";
+			option2Value = "";
 			JarProcess(jarFile);
 
-		}
-		else if(options1ListView.getSelectionModel().getSelectedItem() == "help")
+		} else if (options1ListView.getSelectionModel().getSelectedItem() == "help")
 		{
 			try
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						typeOfNet, typeOfComp);
+						option1Value, option2Value);
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -245,20 +295,21 @@ public class OpenAPTController
 					strFileContents += new String(contents, 0, bytesRead);
 				}
 				utilities.modernInfoMessage(strFileContents);
-			}
-			catch(IOException e)
+			} catch (IOException e)
 			{
 				e.printStackTrace();
 			}
 
 		}
 
-		else if(options1ListView.getSelectionModel().getSelectedItem() == "bisimulation" && !secondFileTextField.getText().trim().isEmpty() && !fileTextField.getText().trim().isEmpty())
+		else if (options1ListView.getSelectionModel().getSelectedItem() == "check")
 		{
 			try
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						typeOfNet, jarFile.getAbsolutePath(), secondJarFile.getAbsolutePath());
+						option1Value, optionalValueTextField.getText(), option2Value, option3Value);
+
+				utilities.infoBox("java -jar" + " " + startDir + sep + "apt" + sep + "apt.jar " + option1Value + " " + optionalValueTextField.getText() + " " + option2Value + " " + option3Value);
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -271,17 +322,42 @@ public class OpenAPTController
 					strFileContents += new String(contents, 0, bytesRead);
 				}
 				utilities.modernInfoMessage(strFileContents);
-			}
-			catch(IOException e)
+			} catch (IOException e)
 			{
 				e.printStackTrace();
 			}
+
 		}
-		else
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == "bisimulation"
+				&& !secondFileTextField.getText().trim().isEmpty() && !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, jarFile.getAbsolutePath(), secondJarFile.getAbsolutePath());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		} else
 		{
 			Alert alert = new Alert(AlertType.WARNING, "Select file.", ButtonType.OK);
 			alert.showAndWait();
 		}
+
 	}
 
 	public void setJarFile(File file)
@@ -301,7 +377,7 @@ public class OpenAPTController
 
 	private void setSecondFileFieldsVisible(boolean vis)
 	{
-		if(vis)
+		if (vis)
 		{
 			secondFileTextField.setVisible(true);
 			secondFileButton.setVisible(true);
@@ -317,13 +393,23 @@ public class OpenAPTController
 
 	private void setOptions2Visible(boolean vis)
 	{
-		if(vis)
+		if (vis)
 		{
 			options2ListView.setVisible(true);
-		}
-		else
+		} else
 		{
 			options2ListView.setVisible(false);
+		}
+	}
+
+	private void setOptions3Visible(boolean vis)
+	{
+		if (vis)
+		{
+			options3ListView.setVisible(true);
+		} else
+		{
+			options3ListView.setVisible(false);
 		}
 	}
 
@@ -332,10 +418,10 @@ public class OpenAPTController
 
 		try
 		{
-			if (typeOfComp.equals(""))
+			if (option2Value.equals(""))
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						typeOfNet, file.getAbsolutePath());
+						option1Value, file.getAbsolutePath());
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -353,7 +439,7 @@ public class OpenAPTController
 			else
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						typeOfNet, typeOfComp, file.getAbsolutePath());
+						option1Value, option2Value, file.getAbsolutePath());
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -393,6 +479,7 @@ public class OpenAPTController
 			secondFileTextField.setText(file.getAbsolutePath());
 			setSecondJarFile(file);
 		}
+
 	}
 
 	@FXML
@@ -413,23 +500,42 @@ public class OpenAPTController
 			fileTextField.setText(file.getAbsolutePath());
 			setJarFile(file);
 		}
+
+		if (!option1Value.equals("") && !fileTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(true);
+		} else
+		{
+			setInfoButtonEnable(false);
+		}
 	}
 
 	void setOptionalValueVisible(boolean vis)
 	{
-		if(vis)
+		if (vis)
 		{
 			optionalInfoLabel.setVisible(true);
 			optionalValueCheckBox.setVisible(true);
 			optionalValueTextField.setVisible(true);
+			optionalValueTextField.setDisable(false);
 			optionalInfoLabel.setText("If given, k-boundedness is checked");
-		}
-		else
+		} else
 		{
 			optionalInfoLabel.setVisible(false);
 			optionalValueCheckBox.setVisible(false);
 			optionalValueTextField.setVisible(false);
 			optionalValueTextField.setDisable(true);
+		}
+	}
+
+	void setInfoButtonEnable(boolean en)
+	{
+		if (en)
+		{
+			infoAboutNetButton.setDisable(false);
+		} else
+		{
+			infoAboutNetButton.setDisable(true);
 		}
 	}
 }
