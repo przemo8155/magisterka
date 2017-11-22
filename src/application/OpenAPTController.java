@@ -16,6 +16,7 @@ import APTOptionsFolder.CoveredByInvariant;
 import APTOptionsFolder.Draw;
 import APTOptionsFolder.Fairness;
 import APTOptionsFolder.Help;
+import APTOptionsFolder.Invariants;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -50,6 +51,7 @@ public class OpenAPTController
 	Check checkObj = new Check();
 	CoveredByInvariant coveredByInvariant = new CoveredByInvariant();
 	Fairness fairness = new Fairness();
+	Invariants invariants = new Invariants();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -267,6 +269,29 @@ public class OpenAPTController
 					options3ListView.setItems(null);
 				}
 
+				else if (newValue.equals(bial.getInvariants()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(true);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+
+					options2ListView.setItems(invariants.getInvariantsInvClassList());
+					options3ListView.setItems(invariants.getInvariantsAlgoClassList());
+				}
+
+				 else if (newValue.equals(bial.getIsomorphism()))
+					{
+						setSecondFileFieldsVisible(true);
+						setOptions2Visible(false);
+						setOptions3Visible(false);
+						setOptionalValueVisible(false);
+						options2ListView.setItems(null);
+						options3ListView.setItems(null);
+
+					}
+
 				else
 				{
 					setOptions2Visible(false);
@@ -353,7 +378,9 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCheck()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCovered_by_invariant()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFairness()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFire_sequence())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFire_sequence()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getInvariants()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getIsomorphism())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -462,6 +489,32 @@ public class OpenAPTController
 			}
 
 		}
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getInvariants()
+				&& !selectFileButton.getText().trim().isEmpty()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option2Value, option3Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCovered_by_invariant()
 				&& !selectFileButton.getText().trim().isEmpty()
@@ -472,6 +525,30 @@ public class OpenAPTController
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
 						option1Value, fileTextField.getText(), option2Value, option3Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getIsomorphism()
+				&& !secondFileTextField.getText().trim().isEmpty() && !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, jarFile.getAbsolutePath(), secondJarFile.getAbsolutePath());
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
