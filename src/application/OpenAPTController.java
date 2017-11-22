@@ -2,8 +2,10 @@
 package application;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +60,8 @@ public class OpenAPTController
 	final String aptJarPath = eee.replaceAll("\\\\", "/");
 	String sep = System.getProperty("file.separator");
 	Stage stage = MainWindowController.aptStage;
+
+	String catFileContents = "";
 
 	File jarFile;
 	File secondJarFile;
@@ -251,6 +255,17 @@ public class OpenAPTController
 					options2ListView.setItems(fairness.getFairnessClassList());
 					options3ListView.setItems(null);
 				}
+				else if (newValue.equals(bial.getFire_sequence()) && !fileTextField.getText().trim().isEmpty())
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					catFile_GetTransitions(fileTextField.getText());
+
+					options3ListView.setItems(null);
+				}
 
 				else
 				{
@@ -337,7 +352,8 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getBisimulation()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCheck()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCovered_by_invariant()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFairness())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFairness()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFire_sequence())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -366,7 +382,34 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 
-		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness()
+		}
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, option2Value,  fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
 		{
@@ -626,6 +669,11 @@ public class OpenAPTController
 		{
 			setInfoButtonEnable(false);
 		}
+
+		if(options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence() && file != null)
+		{
+			catFile_GetTransitions(file.getAbsolutePath());
+		}
 	}
 
 	void setOptionalValueVisible(boolean vis)
@@ -655,5 +703,39 @@ public class OpenAPTController
 		{
 			infoAboutNetButton.setDisable(true);
 		}
+	}
+
+	void catFile_GetTransitions(String path)
+	{
+		ObservableList<String> tempList = FXCollections.observableArrayList();
+		try
+		{
+			Process p=Runtime.getRuntime().exec("cmd /c more " + path);
+            p.waitFor();
+            BufferedReader reader=new BufferedReader(
+                new InputStreamReader(p.getInputStream())
+            );
+            String line;
+            while((line = reader.readLine()) != null)
+            {
+            	if(line.equals(".transitions"))
+            	{
+            		while(!(line = reader.readLine()).equals(".flows"))
+            		{
+            			if(!line.equals(""))
+            			tempList.add(line);
+            		}
+            	}
+            }
+
+            setOptions2Visible(true);
+            options2ListView.setItems(tempList);
+		}
+
+		catch(InterruptedException | IOException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 }
