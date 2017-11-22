@@ -109,15 +109,6 @@ public class BigInfoAPTList
 		typesList.add(cycles_same_disjoint_pv);
 		typesList.add(cycles_same_pv);
 		typesList.add(cf);
-		typesList.add(check);
-		typesList.add(check_all_cycle_prop);
-		typesList.add(compute_pvs);
-		typesList.add(concurrent_coverability_graph);
-		typesList.add(conpres);
-		typesList.add(coverability_graph);
-		typesList.add(covered_by_invariant);
-		typesList.add(cycles_same_disjoint_pv);
-		typesList.add(cycles_same_pv);
 		typesList.add(examine_pn);
 		typesList.add(fairness);
 		typesList.add(fc);

@@ -12,6 +12,7 @@ import java.util.Map;
 import APTOptionsFolder.Check;
 import APTOptionsFolder.CoveredByInvariant;
 import APTOptionsFolder.Draw;
+import APTOptionsFolder.Fairness;
 import APTOptionsFolder.Help;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -46,6 +47,7 @@ public class OpenAPTController
 	Draw drawObj = new Draw();
 	Check checkObj = new Check();
 	CoveredByInvariant coveredByInvariant = new CoveredByInvariant();
+	Fairness fairness = new Fairness();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -238,6 +240,18 @@ public class OpenAPTController
 					options3ListView.setItems(coveredByInvariant.getCoveredByInvariantAlgoClassList());
 				}
 
+				else if (newValue.equals(bial.getFairness()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+
+					options2ListView.setItems(fairness.getFairnessClassList());
+					options3ListView.setItems(null);
+				}
+
 				else
 				{
 					setOptions2Visible(false);
@@ -322,7 +336,8 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getHelp()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getBisimulation()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCheck()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCovered_by_invariant())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCovered_by_invariant()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFairness())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -351,6 +366,30 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 
+		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						 option1Value, fileTextField.getText(), option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCheck()
@@ -389,7 +428,7 @@ public class OpenAPTController
 			try
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						 option1Value, fileTextField.getText(), option2Value, option3Value);
+						option1Value, fileTextField.getText(), option2Value, option3Value);
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
