@@ -17,6 +17,7 @@ import APTOptionsFolder.Draw;
 import APTOptionsFolder.Fairness;
 import APTOptionsFolder.Help;
 import APTOptionsFolder.Invariants;
+import APTOptionsFolder.PnAnalysis;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,9 +50,10 @@ public class OpenAPTController
 	Help helpObj = new Help();
 	Draw drawObj = new Draw();
 	Check checkObj = new Check();
-	CoveredByInvariant coveredByInvariant = new CoveredByInvariant();
-	Fairness fairness = new Fairness();
-	Invariants invariants = new Invariants();
+	CoveredByInvariant coveredByInvariantObj = new CoveredByInvariant();
+	Fairness fairnessObj = new Fairness();
+	Invariants invariantsObj = new Invariants();
+	PnAnalysis pnAnalysisObj = new PnAnalysis();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -242,8 +244,8 @@ public class OpenAPTController
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
 
-					options2ListView.setItems(coveredByInvariant.getCoveredByInvariantInvClassList());
-					options3ListView.setItems(coveredByInvariant.getCoveredByInvariantAlgoClassList());
+					options2ListView.setItems(coveredByInvariantObj.getCoveredByInvariantInvClassList());
+					options3ListView.setItems(coveredByInvariantObj.getCoveredByInvariantAlgoClassList());
 				}
 
 				else if (newValue.equals(bial.getFairness()))
@@ -254,10 +256,9 @@ public class OpenAPTController
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
 
-					options2ListView.setItems(fairness.getFairnessClassList());
+					options2ListView.setItems(fairnessObj.getFairnessClassList());
 					options3ListView.setItems(null);
-				}
-				else if (newValue.equals(bial.getFire_sequence()) && !fileTextField.getText().trim().isEmpty())
+				} else if (newValue.equals(bial.getFire_sequence()) && !fileTextField.getText().trim().isEmpty())
 				{
 					setOptions2Visible(true);
 					setOptions3Visible(false);
@@ -277,18 +278,43 @@ public class OpenAPTController
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
 
-					options2ListView.setItems(invariants.getInvariantsInvClassList());
-					options3ListView.setItems(invariants.getInvariantsAlgoClassList());
+					options2ListView.setItems(invariantsObj.getInvariantsInvClassList());
+					options3ListView.setItems(invariantsObj.getInvariantsAlgoClassList());
 				}
 
-				 else if (newValue.equals(bial.getIsomorphism()))
+				else if (newValue.equals(bial.getIsomorphism()))
+				{
+					setSecondFileFieldsVisible(true);
+					setOptions2Visible(false);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					options2ListView.setItems(null);
+					options3ListView.setItems(null);
+
+				}
+
+				else if (newValue.equals(bial.getLanguage_equivalence()))
+				{
+					setSecondFileFieldsVisible(true);
+					setOptions2Visible(false);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					options2ListView.setItems(null);
+					options3ListView.setItems(null);
+
+				}
+
+				 else if (newValue.equals(bial.getPn_analysis()))
 					{
-						setSecondFileFieldsVisible(true);
-						setOptions2Visible(false);
-						setOptions3Visible(false);
+						setOptions2Visible(true);
+						setOptions3Visible(true);
 						setOptionalValueVisible(false);
-						options2ListView.setItems(null);
-						options3ListView.setItems(null);
+						setSecondFileFieldsVisible(false);
+						setInfoButtonEnable(true);
+
+
+						options2ListView.setItems(pnAnalysisObj.getgClassList());
+						options3ListView.setItems(pnAnalysisObj.getkClassList());
 
 					}
 
@@ -380,7 +406,9 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFairness()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFire_sequence()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getInvariants()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getIsomorphism())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getIsomorphism()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getLanguage_equivalence()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getPn_analysis())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -409,15 +437,14 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 
-		}
-		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence()
+		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
 		{
 			try
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						option1Value, option2Value,  fileTextField.getText());
+						option1Value, option2Value, fileTextField.getText());
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -443,7 +470,32 @@ public class OpenAPTController
 			try
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						 option1Value, fileTextField.getText(), option2Value);
+						option1Value, fileTextField.getText(), option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getPn_analysis()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option2Value, option3Value);
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -488,8 +540,7 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 
-		}
-		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getInvariants()
+		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getInvariants()
 				&& !selectFileButton.getText().trim().isEmpty()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
@@ -541,8 +592,32 @@ public class OpenAPTController
 			{
 				e.printStackTrace();
 			}
+		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getIsomorphism()
+				&& !secondFileTextField.getText().trim().isEmpty() && !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, jarFile.getAbsolutePath(), secondJarFile.getAbsolutePath());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
-		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getIsomorphism()
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getLanguage_equivalence()
 				&& !secondFileTextField.getText().trim().isEmpty() && !fileTextField.getText().trim().isEmpty())
 		{
 			try
@@ -747,7 +822,7 @@ public class OpenAPTController
 			setInfoButtonEnable(false);
 		}
 
-		if(options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence() && file != null)
+		if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence() && file != null)
 		{
 			catFile_GetTransitions(file.getAbsolutePath());
 		}
@@ -787,29 +862,27 @@ public class OpenAPTController
 		ObservableList<String> tempList = FXCollections.observableArrayList();
 		try
 		{
-			Process p=Runtime.getRuntime().exec("cmd /c more " + path);
-            p.waitFor();
-            BufferedReader reader=new BufferedReader(
-                new InputStreamReader(p.getInputStream())
-            );
-            String line;
-            while((line = reader.readLine()) != null)
-            {
-            	if(line.equals(".transitions"))
-            	{
-            		while(!(line = reader.readLine()).equals(".flows"))
-            		{
-            			if(!line.equals(""))
-            			tempList.add(line);
-            		}
-            	}
-            }
+			Process p = Runtime.getRuntime().exec("cmd /c more " + path);
+			p.waitFor();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line;
+			while ((line = reader.readLine()) != null)
+			{
+				if (line.equals(".transitions"))
+				{
+					while (!(line = reader.readLine()).equals(".flows"))
+					{
+						if (!line.equals(""))
+							tempList.add(line);
+					}
+				}
+			}
 
-            setOptions2Visible(true);
-            options2ListView.setItems(tempList);
+			setOptions2Visible(true);
+			options2ListView.setItems(tempList);
 		}
 
-		catch(InterruptedException | IOException e)
+		catch (InterruptedException | IOException e)
 		{
 			e.printStackTrace();
 		}
