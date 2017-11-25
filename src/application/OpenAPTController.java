@@ -20,6 +20,8 @@ import APTOptionsFolder.Invariants;
 import APTOptionsFolder.PnAnalysis;
 import APTOptionsFolder.StrongSeparation;
 import APTOptionsFolder.StrongSeparationLength;
+import APTOptionsFolder.WeakSeparation;
+import APTOptionsFolder.WeakSeparationLength;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -58,6 +60,8 @@ public class OpenAPTController
 	PnAnalysis pnAnalysisObj = new PnAnalysis();
 	StrongSeparation strongSeparationObj = new StrongSeparation();
 	StrongSeparationLength strongSeparationLengthObj = new StrongSeparationLength();
+	WeakSeparation weakSeparationObj = new WeakSeparation();
+	WeakSeparationLength weakSeparationLengthObj = new WeakSeparationLength();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -75,13 +79,13 @@ public class OpenAPTController
 	File secondJarFile;
 
 	@FXML
-	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel, optionalInfoLabel;
+	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel, optionalInfoLabel, wordLabel;
 
 	@FXML
 	private Button selectFileButton, openButton, closeButton, infoAboutNetButton, secondFileButton;
 
 	@FXML
-	private TextField fileTextField, secondFileTextField, optionalValueTextField;
+	private TextField fileTextField, secondFileTextField, optionalValueTextField, wordTextField;
 
 	@FXML
 	private ListView<String> options1ListView, options2ListView, options3ListView;
@@ -97,6 +101,7 @@ public class OpenAPTController
 		setOptions2Visible(false);
 		setOptions3Visible(false);
 		setOptionalValueVisible(false);
+		setWordFieldsVisible(false);
 
 		fileTextField.setEditable(false);
 
@@ -192,6 +197,7 @@ public class OpenAPTController
 					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -206,6 +212,7 @@ public class OpenAPTController
 					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -220,6 +227,7 @@ public class OpenAPTController
 					setOptions2Visible(false);
 					setOptions3Visible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -236,6 +244,7 @@ public class OpenAPTController
 					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(true);
+					setWordFieldsVisible(false);
 
 					options2ListView.setItems(null);
 					options3ListView.setItems(null);
@@ -247,6 +256,7 @@ public class OpenAPTController
 					setOptionalValueVisible(true);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					options2ListView.setItems(checkObj.getCheckGeneratorsClassList());
 					options3ListView.setItems(checkObj.getCheckAttributesClassList());
@@ -260,6 +270,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -276,6 +287,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -292,6 +304,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 					catFile_GetTransitions(fileTextField.getText());
 
 					optionalInfoLabel.setVisible(false);
@@ -308,6 +321,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -323,6 +337,7 @@ public class OpenAPTController
 					setOptions2Visible(false);
 					setOptions3Visible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -339,6 +354,7 @@ public class OpenAPTController
 					setOptions2Visible(false);
 					setOptions3Visible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -356,6 +372,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -373,6 +390,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -390,6 +408,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -407,6 +426,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -424,6 +444,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -440,6 +461,7 @@ public class OpenAPTController
 					setOptions2Visible(false);
 					setOptions3Visible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -456,6 +478,79 @@ public class OpenAPTController
 					setOptions2Visible(false);
 					setOptions3Visible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(null);
+					options3ListView.setItems(null);
+
+				}
+
+				else if (newValue.equals(bial.getWeak_separation()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(true);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(weakSeparationObj.getWeakSeparationKClassList());
+					options3ListView.setItems(weakSeparationObj.getWeakSeparationSequenceClassList());
+
+				}
+
+				else if (newValue.equals(bial.getWeak_separation_length()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(true);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(weakSeparationLengthObj.getWeakSeparationLengthLengthClassList());
+					options3ListView.setItems(weakSeparationLengthObj.getWeakSeparationLengthKClassList());
+
+				}
+
+				else if (newValue.equals(bial.getWeakly_live()) && !fileTextField.getText().trim().isEmpty())
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					catFile_GetTransitions(fileTextField.getText());
+					options3ListView.setItems(null);
+
+				}
+
+				else if (newValue.equals(bial.getWord()))
+				{
+					setOptions2Visible(false);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(true);
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -562,7 +657,11 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getStrong_separation_length()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getStrongly_live()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getSum_async()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getSum_sync())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getSum_sync()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWeak_separation()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWeak_separation_length()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWeakly_live()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWord())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -591,7 +690,36 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 
-		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence()
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWord()
+				&& !wordTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				String opt2 = "\"" + ":" + wordTextField.getText() + "\"";
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), opt2);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
 		{
@@ -643,6 +771,8 @@ public class OpenAPTController
 			}
 		}
 
+
+
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getStrongly_live()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
@@ -668,6 +798,34 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 		}
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeakly_live()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
 
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness()
@@ -744,7 +902,60 @@ public class OpenAPTController
 			}
 		}
 
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeak_separation_length()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option2Value, option3Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getStrong_separation()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			try
+			{
+				option3Value = "\"" + option3Value + "\"";
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option3Value, option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				utilities.modernInfoMessage(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeak_separation()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
@@ -1024,6 +1235,21 @@ public class OpenAPTController
 		}
 	}
 
+	private void setWordFieldsVisible(boolean vis)
+	{
+		if(vis)
+		{
+			wordLabel.setVisible(true);
+			wordTextField.setVisible(true);
+		}
+
+		else
+		{
+			wordLabel.setVisible(false);
+			wordTextField.setVisible(false);
+		}
+	}
+
 	private void setOptions3Visible(boolean vis)
 	{
 		if (vis)
@@ -1133,7 +1359,8 @@ public class OpenAPTController
 
 		if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFire_sequence() && file != null
 				|| options1ListView.getSelectionModel().getSelectedItem() == bial.getSimply_live() && file != null
-				|| options1ListView.getSelectionModel().getSelectedItem() == bial.getStrongly_live() && file != null)
+				|| options1ListView.getSelectionModel().getSelectedItem() == bial.getStrongly_live() && file != null
+				|| options1ListView.getSelectionModel().getSelectedItem() == bial.getWeakly_live() && file != null)
 		{
 			catFile_GetTransitions(file.getAbsolutePath());
 		}

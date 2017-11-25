@@ -54,6 +54,8 @@
             <TextField fx:id="optionalValueTextField" layoutX="234.0" layoutY="452.0" />
             <Label fx:id="optionalInfoLabel" alignment="TOP_LEFT" layoutX="233.0" layoutY="494.0" prefHeight="40.0" prefWidth="309.0" />
             <ListView fx:id="options3ListView" layoutX="454.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
+            <TextField fx:id="wordTextField" layoutX="505.0" layoutY="452.0" />
+            <Label fx:id="wordLabel" layoutX="467.0" layoutY="456.0" text="Word:" />
          </children>
       </Pane>
    </children>
