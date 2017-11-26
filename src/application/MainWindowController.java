@@ -200,7 +200,7 @@ public class MainWindowController
 	Alert statisticsAlert = new Alert(Alert.AlertType.INFORMATION);
 
 	ObservableList<Circle> circleList = FXCollections.observableArrayList();
-	ObservableList<Rectangle> squareList = FXCollections.observableArrayList();
+	ObservableList<Rectangle> rectangleList = FXCollections.observableArrayList();
 	ObservableList<Line> lineList = FXCollections.observableArrayList();
 	ObservableList<Arrow> arrowList = FXCollections.observableArrayList();
 
@@ -744,7 +744,7 @@ public class MainWindowController
 			try
 			{
 				Rectangle r = ((Rectangle) t.getSource());
-				int index = squareList.indexOf(r);
+				int index = rectangleList.indexOf(r);
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -857,7 +857,7 @@ public class MainWindowController
 				r.setX(newTranslateX);
 				r.setY(newTranslateY);
 
-				squareList.set(index, r);
+				rectangleList.set(index, r);
 
 				for (HeadArrow ha : endHeadArrowList)
 				{
@@ -992,7 +992,7 @@ public class MainWindowController
 	void anchorPane_OnMouseClicked(MouseEvent event)
 	{
 		counters.circleCounter(circleList, numberOfCirclesCreatedL);
-		counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
+		counters.rectangleCounter(rectangleList, numberOfRectanglesCreatedL);
 		counters.headArrowCounter(headArrowList, numberOfArrowsCreatedL);
 		counters.mouseClickerCounter(mouseBothClicked, numberOfMouseBothClickL);
 		counters.mouseClickerCounter(mouseRightClicked, numberOfMouseRightClickL);
@@ -1096,7 +1096,7 @@ public class MainWindowController
 								rda.setEffect(s);
 							}
 
-							for (Rectangle r : squareList)
+							for (Rectangle r : rectangleList)
 							{
 								r.setEffect(null);
 							}
@@ -1133,7 +1133,7 @@ public class MainWindowController
 								rda.setEffect(s);
 							}
 
-							for (Rectangle r : squareList)
+							for (Rectangle r : rectangleList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1173,7 +1173,7 @@ public class MainWindowController
 								rda.setEffect(s);
 							}
 
-							for (Rectangle r : squareList)
+							for (Rectangle r : rectangleList)
 							{
 								Shadow s = new Shadow();
 								s.setRadius(10.0f);
@@ -1211,7 +1211,7 @@ public class MainWindowController
 					}
 				}
 
-				for (Rectangle myRectangle : squareList)
+				for (Rectangle myRectangle : rectangleList)
 				{
 					if ((event.getSceneX() + squareRay > myRectangle.getX() + 20) && (event.getSceneX() - squareRay < myRectangle.getX() + 20)
 							&& (event.getSceneY() + squareRay - minusWidth > myRectangle.getY() + 20)
@@ -1589,7 +1589,7 @@ public class MainWindowController
 						}
 					}
 
-					for (Rectangle myRectangle : squareList)
+					for (Rectangle myRectangle : rectangleList)
 					{
 						if ((x > myRectangle.getX() + 20 - squareRay) && (x < myRectangle.getX() + 20 + squareRay)
 								&& (y > myRectangle.getY() + 20 - squareRay + minusWidth)
@@ -1707,7 +1707,7 @@ public class MainWindowController
 								}
 							}
 
-							squareList.remove(myRectangle);
+							rectangleList.remove(myRectangle);
 							mainPane.getChildren().remove(myRectangle);
 							objectsDeleted += 1;
 							setMiddleLabelText("Rectangle removed...");
@@ -1744,7 +1744,7 @@ public class MainWindowController
 					mainPane.getChildren().add(r);
 					r.setOnMousePressed(squareOnMousePressedEventHandler);
 					setMiddleLabelText("Rectangle created...");
-					squareList.add(r);
+					rectangleList.add(r);
 				}
 				break;
 
@@ -1868,7 +1868,7 @@ public class MainWindowController
 						}
 					}
 
-					for (Rectangle myRectangle : squareList)
+					for (Rectangle myRectangle : rectangleList)
 					{
 						if ((x > myRectangle.getX() + 20 - squareRay) && (x < myRectangle.getX() + 20 + squareRay)
 								&& (y > myRectangle.getY() + 20 - squareRay + minusWidth)
@@ -1983,7 +1983,7 @@ public class MainWindowController
 		{
 			case "move":
 				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, squareList, headArrowList, leftDoubleArrowList,
+				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList, leftDoubleArrowList,
 						rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags))
 				{
 					try
@@ -2032,7 +2032,7 @@ public class MainWindowController
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 		openAPTFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
 
-		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+		utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
 				existingImageViews, tokensBiggerThanTen);
 
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -2142,7 +2142,7 @@ public class MainWindowController
 	void saveFileMenuItem_OnAction(ActionEvent event)
 	{
 		Stage s = Main.getPrimaryStage();
-		fileManager.SaveFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+		fileManager.SaveFile(s, circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
 				existingImageViews, tokensBiggerThanTen);
 		Boolean fileSaved = fileManager.getSomethingSaved();
 		if (fileSaved)
@@ -2161,7 +2161,7 @@ public class MainWindowController
 			mainPane.getChildren().remove(c);
 		}
 
-		for (Rectangle r : squareList)
+		for (Rectangle r : rectangleList)
 		{
 			mainPane.getChildren().remove(r);
 		}
@@ -2181,13 +2181,13 @@ public class MainWindowController
 			rda.removeFromMainPane(mainPane);
 		}
 
-		utilities.clearAllLists(circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+		utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
 				existingImageViews, tokensBiggerThanTen);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
-		squareList.clear();
-		fileManager.OpenFile(s, circleList, squareList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+		rectangleList.clear();
+		fileManager.OpenFile(s, circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
 				existingImageViews, tokensBiggerThanTen, mainPane);
 
 		for (Circle c : circleList)
@@ -2197,7 +2197,7 @@ public class MainWindowController
 			c.setOnMouseDragged(circleOnMouseDraggedEventHandler);
 		}
 
-		for (Rectangle r : squareList)
+		for (Rectangle r : rectangleList)
 		{
 			mainPane.getChildren().add(r);
 			r.setOnMousePressed(squareOnMousePressedEventHandler);
@@ -2246,12 +2246,12 @@ public class MainWindowController
 	@FXML
 	void clearAllButton_OnMouseClicked(MouseEvent event)
 	{
-		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, squareList,
+		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, rectangleList,
 				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen);
 		if (utilities.checkCleared)
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);
-			counters.rectangleCounter(squareList, numberOfRectanglesCreatedL);
+			counters.rectangleCounter(rectangleList, numberOfRectanglesCreatedL);
 			counters.headArrowCounter(headArrowList, numberOfArrowsCreatedL);
 			setMiddleLabelText("Cleared...");
 		} else
@@ -2430,9 +2430,9 @@ public class MainWindowController
 
 	protected void refreshLine()
 	{
-		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
-		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
-		mainPane.getChildren().remove(circleList.size() + squareList.size() + headArrowList.size() - 2);
+		mainPane.getChildren().remove(circleList.size() + rectangleList.size() + headArrowList.size() - 2);
+		mainPane.getChildren().remove(circleList.size() + rectangleList.size() + headArrowList.size() - 2);
+		mainPane.getChildren().remove(circleList.size() + rectangleList.size() + headArrowList.size() - 2);
 		headArrowList.remove(headArrowList.size() - 1);
 	}
 
@@ -2464,7 +2464,7 @@ public class MainWindowController
 	protected void setRectangleColor()
 	{
 
-		for (Rectangle r : squareList)
+		for (Rectangle r : rectangleList)
 		{
 			r.setFill(Paint.valueOf(rectangleColor));
 		}
@@ -2766,6 +2766,78 @@ public class MainWindowController
 	void exportPdfMenuItem_OnAction(ActionEvent event)
 	{
 		exportPdf.exportToPDF();
+	}
+
+
+	public Pane getMainPane()
+	{
+		return mainPane;
+	}
+
+
+	public void setMainPane(Pane mainPane)
+	{
+		this.mainPane = mainPane;
+	}
+
+
+	public ObservableList<Circle> getCircleList()
+	{
+		return circleList;
+	}
+
+
+	public void setCircleList(ObservableList<Circle> circleList)
+	{
+		this.circleList = circleList;
+	}
+
+
+	public ObservableList<Rectangle> getRectangleList()
+	{
+		return rectangleList;
+	}
+
+
+	public void setRectangleList(ObservableList<Rectangle> rectangleList)
+	{
+		this.rectangleList = rectangleList;
+	}
+
+
+	public ObservableList<HeadArrow> getHeadArrowList()
+	{
+		return headArrowList;
+	}
+
+
+	public void setHeadArrowList(ObservableList<HeadArrow> headArrowList)
+	{
+		this.headArrowList = headArrowList;
+	}
+
+
+	public ObservableList<LeftDoubleArrow> getLeftDoubleArrowList()
+	{
+		return leftDoubleArrowList;
+	}
+
+
+	public void setLeftDoubleArrowList(ObservableList<LeftDoubleArrow> leftDoubleArrowList)
+	{
+		this.leftDoubleArrowList = leftDoubleArrowList;
+	}
+
+
+	public ObservableList<RightDoubleArrow> getRightDoubleArrowList()
+	{
+		return rightDoubleArrowList;
+	}
+
+
+	public void setRightDoubleArrowList(ObservableList<RightDoubleArrow> rightDoubleArrowList)
+	{
+		this.rightDoubleArrowList = rightDoubleArrowList;
 	}
 
 }

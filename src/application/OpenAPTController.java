@@ -48,7 +48,8 @@ import javafx.util.Callback;
 
 public class OpenAPTController
 {
-
+	MainWindowController mwc = new MainWindowController();
+	SplitObjectsAlgorithms soa = new SplitObjectsAlgorithms();
 	FilesRecognition filesRecognition = new FilesRecognition();
 	Utilities utilities = new Utilities();
 	BigInfoAPTList bial = new BigInfoAPTList();
@@ -635,7 +636,9 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
-		ObservableList<String> ee = filesRecognition.getRectangles(fileTextField.getText());
+		FilesRecognition fr = new FilesRecognition(fileTextField.getText());
+		soa.splitBigAlgorithm(fr.getCirclesList(), fr.getRectanglesList(), fr.getEdgesList(), mwc.getArrowColor(), mwc.getMainPane(), mwc.getCircleList(), mwc.getRectangleList(), mwc.getHeadArrowList(), mwc.getLeftDoubleArrowList(), mwc.getRightDoubleArrowList());
+
 	}
 
 	@FXML

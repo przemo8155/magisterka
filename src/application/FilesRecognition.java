@@ -59,7 +59,6 @@ public class FilesRecognition
 							    asd = asd.substring(0, spaceIndex);
 							}
 							rectanglesList.add(asd);
-							System.out.println(asd);
 
 						}
 
