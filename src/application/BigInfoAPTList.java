@@ -15,6 +15,7 @@ public class BigInfoAPTList
 
 	private static ObservableList<String> typesList = FXCollections.observableArrayList();
 
+	//petri nets
 	private final String misc = "---MISC---";
 	private final String draw = "draw";
 	private final String help = "help";
@@ -82,6 +83,64 @@ public class BigInfoAPTList
 	private final String wfc = "wfc";
 	private final String word = "word";
 
+
+	//lts
+	private final String lts = "---LTS---";
+	private final String backward_persistent2 = "backward_persistent";
+	private final String backwards_deterministic2 = "backwards_deterministic";
+	private final String bisimulation2 = "bisimulation";
+	private final String compute_pvs2 = "compute_pvs";
+	private final String cycles_same_disjoint_pv2 = "cycles_same_disjoint_pv";
+	private final String cycles_same_pv2 = "cycles_same_pv";
+	private final String deterministic2 = "deterministic";
+	private final String examine_lts2 = "examine_lts";
+	private final String extend_deterministic_persistent2 = "extend_deterministic_persistent";
+	private final String extend_lts2 = "extend_lts";
+	private final String factorize2 = "factorize";
+	private final String fairness2 = "fairness";
+	private final String find_words2 = "find_words";
+	private final String gdiam2 = "gdiam";
+	private final String isolated_elements2 = "isolated_elements";
+	private final String isomorphism2 = "isomorphism";
+	private final String label_separation2 = "label_separation";
+	private final String language_equivalence2 = "language_equivalence";
+	private final String limited_unfolding2 = "limited_unfolding";
+	private final String overapproximate_synthesize2 = "overapproximate_synthesize";
+	private final String persistent2 = "persistent";
+	private final String pn_extend_and_synthesize2 = "pn_extend_and_synthesize";
+	private final String ppspresynthesis2 = "ppspresynthesis";
+	private final String prime_cycle_property2 = "prime_cycle_property";
+	private final String product_async2 = "product_async";
+	private final String product_sync2 = "product_sync";
+	private final String regular_language_to_lts2 = "regular_language_to_lts";
+	private final String reversible2 = "reversible";
+	private final String strong_components2 = "strong_components";
+	private final String strongly_connected2 = "strongly_connected";
+	private final String synthesize2 = "synthesize";
+	private final String to_regular_expression2 = "to_regular_expression";
+	private final String totally_reachable2 = "totally_reachable";
+	private final String use_petrify2 = "use_petrify";
+	private final String use_synet2 = "use_synet";
+	private final String weak_components2 = "weak_components";
+	private final String weakly_connected2 = "weakly_connected";
+	private final String word_synthesize2 = "word_synthesize";
+
+	//generators
+	private final String bistate_philnet_generator = "bistate_philnet_generator";
+	private final String bitnet_generator = "bitnet_generator";
+	private final String connected_bitnet_generator = "connected_bitnet_generator";
+	private final String cycle_generator = "cycle_generator";
+	private final String generate_reverse_arc = "generate_reverse_arc";
+	private final String inverse_generator = "inverse_generator";
+	private final String quadstate_philnet_generator = "quadstate_philnet_generator";
+	private final String random_t_net_generator = "random_t_net_generator";
+	private final String tnet_generator = "tnet_generator";
+	private final String tristate_philnet_generator = "tristate_philnet_generator";
+
+	//conveters
+	private final String draw_convert = "draw";
+	private final String lts_convert = "lts_convert";
+	private final String pn_convert = "pn_convert";
 
 
 	public BigInfoAPTList()
@@ -156,6 +215,9 @@ public class BigInfoAPTList
 		typesList.add(wfc);
 		typesList.add(word);
 
+		//lts
+
+
 
 
 		//bigInfo
@@ -227,6 +289,8 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(weakly_live, "Check if a Petri net or a transition (if given) is weakly live");
 		bigInfoAPTList.put(wfc, "Check if a Petri net is weighted free-choice");
 		bigInfoAPTList.put(word, " Check if a word is in a Petri net's prefix language");
+
+		//lts
 
 
 

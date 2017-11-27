@@ -11,17 +11,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import APTOptionsFolder.Check;
-import APTOptionsFolder.CoveredByInvariant;
-import APTOptionsFolder.Draw;
-import APTOptionsFolder.Fairness;
-import APTOptionsFolder.Help;
-import APTOptionsFolder.Invariants;
-import APTOptionsFolder.PnAnalysis;
-import APTOptionsFolder.StrongSeparation;
-import APTOptionsFolder.StrongSeparationLength;
-import APTOptionsFolder.WeakSeparation;
-import APTOptionsFolder.WeakSeparationLength;
+import APTOptionsFolderPetriNets.Check;
+import APTOptionsFolderPetriNets.CoveredByInvariant;
+import APTOptionsFolderPetriNets.Draw;
+import APTOptionsFolderPetriNets.Fairness;
+import APTOptionsFolderPetriNets.Help;
+import APTOptionsFolderPetriNets.Invariants;
+import APTOptionsFolderPetriNets.PnAnalysis;
+import APTOptionsFolderPetriNets.StrongSeparation;
+import APTOptionsFolderPetriNets.StrongSeparationLength;
+import APTOptionsFolderPetriNets.WeakSeparation;
+import APTOptionsFolderPetriNets.WeakSeparationLength;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -636,8 +636,8 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
-		FilesRecognition fr = new FilesRecognition(fileTextField.getText());
-		soa.splitBigAlgorithm(fr.getCirclesList(), fr.getRectanglesList(), fr.getEdgesList(), mwc.getArrowColor(), mwc.getMainPane(), mwc.getCircleList(), mwc.getRectangleList(), mwc.getHeadArrowList(), mwc.getLeftDoubleArrowList(), mwc.getRightDoubleArrowList());
+		//FilesRecognition fr = new FilesRecognition(fileTextField.getText());
+		//soa.splitBigAlgorithm(fr.getCirclesList(), fr.getRectanglesList(), fr.getEdgesList(), mwc.getArrowColor(), mwc.getMainPane(), mwc.getCircleList(), mwc.getRectangleList(), mwc.getHeadArrowList(), mwc.getLeftDoubleArrowList(), mwc.getRightDoubleArrowList());
 
 	}
 
