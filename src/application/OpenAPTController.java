@@ -48,6 +48,7 @@ import javafx.util.Callback;
 
 public class OpenAPTController
 {
+
 	MainWindowController mwc = new MainWindowController();
 	SplitObjectsAlgorithms soa = new SplitObjectsAlgorithms();
 	FilesRecognition filesRecognition = new FilesRecognition();
@@ -140,7 +141,9 @@ public class OpenAPTController
 					protected void updateItem(String item, boolean empty)
 					{
 						super.updateItem(item, empty);
-						if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item) || bial.getLTSHeader().equals(item))
+						if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item)
+								|| bial.getLTSHeader().equals(item) || bial.getGeneratorsHeader().equals(item)
+								|| bial.getConvetersHeader().equals(item))
 						{
 							setDisable(true);
 						} else
@@ -238,8 +241,7 @@ public class OpenAPTController
 					options2ListView.setItems(null);
 					options3ListView.setItems(null);
 
-				}
-				else if (newValue.equals(bial.getBounded()))
+				} else if (newValue.equals(bial.getBounded()))
 				{
 
 					setOptions2Visible(false);
@@ -298,8 +300,7 @@ public class OpenAPTController
 					options2ListView.setItems(fairnessObj.getFairnessClassList());
 					options3ListView.setItems(null);
 
-				}
-				else if (newValue.equals(bial.getFire_sequence()) && !fileTextField.getText().trim().isEmpty())
+				} else if (newValue.equals(bial.getFire_sequence()) && !fileTextField.getText().trim().isEmpty())
 				{
 					setOptions2Visible(true);
 					setOptions3Visible(false);
@@ -569,6 +570,8 @@ public class OpenAPTController
 					setOptions3Visible(false);
 					setSecondFileFieldsVisible(false);
 					setOptionalValueVisible(false);
+					setWordFieldsVisible(false);
+
 					options2ListView.setItems(null);
 					options3ListView.setItems(null);
 				}
@@ -636,8 +639,11 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
-		//FilesRecognition fr = new FilesRecognition(fileTextField.getText());
-		//soa.splitBigAlgorithm(fr.getCirclesList(), fr.getRectanglesList(), fr.getEdgesList(), mwc.getArrowColor(), mwc.getMainPane(), mwc.getCircleList(), mwc.getRectangleList(), mwc.getHeadArrowList(), mwc.getLeftDoubleArrowList(), mwc.getRightDoubleArrowList());
+		// FilesRecognition fr = new FilesRecognition(fileTextField.getText());
+		// soa.splitBigAlgorithm(fr.getCirclesList(), fr.getRectanglesList(),
+		// fr.getEdgesList(), mwc.getArrowColor(), mwc.getMainPane(),
+		// mwc.getCircleList(), mwc.getRectangleList(), mwc.getHeadArrowList(),
+		// mwc.getLeftDoubleArrowList(), mwc.getRightDoubleArrowList());
 
 	}
 
@@ -775,8 +781,6 @@ public class OpenAPTController
 			}
 		}
 
-
-
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getStrongly_live()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
@@ -803,7 +807,6 @@ public class OpenAPTController
 			}
 		}
 
-
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeakly_live()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
@@ -829,8 +832,6 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 		}
-
-
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
@@ -880,8 +881,7 @@ public class OpenAPTController
 			{
 				e.printStackTrace();
 			}
-		}
-		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getStrong_separation_length()
+		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getStrong_separation_length()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			try
@@ -930,7 +930,6 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 		}
-
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getStrong_separation()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
@@ -1241,7 +1240,7 @@ public class OpenAPTController
 
 	private void setWordFieldsVisible(boolean vis)
 	{
-		if(vis)
+		if (vis)
 		{
 			wordLabel.setVisible(true);
 			wordTextField.setVisible(true);

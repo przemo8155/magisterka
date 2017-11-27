@@ -127,6 +127,7 @@ public class BigInfoAPTList
 	private final String word_synthesize2 = "word_synthesize";
 
 	//generators
+	private final String generators = "---GENERATORS---";
 	private final String bistate_philnet_generator = "bistate_philnet_generator";
 	private final String bitnet_generator = "bitnet_generator";
 	private final String connected_bitnet_generator = "connected_bitnet_generator";
@@ -139,6 +140,7 @@ public class BigInfoAPTList
 	private final String tristate_philnet_generator = "tristate_philnet_generator";
 
 	//conveters
+	private final String conveters = "---CONVETERS---";
 	private final String draw_convert = "draw";
 	private final String lts_convert = "lts_convert";
 	private final String pn_convert = "pn_convert";
@@ -217,6 +219,7 @@ public class BigInfoAPTList
 		typesList.add(word);
 
 		//lts
+		typesList.add(lts);
 		typesList.add(backward_persistent2);
 		typesList.add(backwards_deterministic2);
 		typesList.add(bisimulation2);
@@ -257,6 +260,7 @@ public class BigInfoAPTList
 		typesList.add(word_synthesize2);
 
 		//generators
+		typesList.add(generators);
 		typesList.add(bistate_philnet_generator);
 		typesList.add(bitnet_generator);
 		typesList.add(connected_bitnet_generator);
@@ -269,6 +273,7 @@ public class BigInfoAPTList
 		typesList.add(tristate_philnet_generator);
 
 		//converts
+		typesList.add(conveters);
 		typesList.add(draw_convert);
 		typesList.add(lts_convert);
 		typesList.add(pn_convert);
@@ -347,6 +352,61 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(word, " Check if a word is in a Petri net's prefix language");
 
 		//lts
+		bigInfoAPTList.put(lts, "");
+		bigInfoAPTList.put(backward_persistent2,"Check if a Petri net or LTS is backward persistent");
+		bigInfoAPTList.put(backwards_deterministic2,"Check if a LTS is backwards deterministic");
+		bigInfoAPTList.put(bisimulation2,"Check if the reachability graphs of two bounded labeled Petri nets or of two LTS or a combination of both are bisimilar");
+		bigInfoAPTList.put(compute_pvs2,"Compute parikh vectors of smallest cycles of a Petri net or LTS");
+		bigInfoAPTList.put(create_lts2,"Create an LTS from a list of words");
+		bigInfoAPTList.put(cycles_same_disjoint_pv2,"Check if the smallest cycles of a Petri net or LTS have the same or mutually disjoint parikh vectors");
+		bigInfoAPTList.put(cycles_same_pv2,"Check if the smallest cycles of Petri net or LTS have the same parikh vector");
+		bigInfoAPTList.put(deterministic2,"Check if a LTS is deterministic");
+		bigInfoAPTList.put(examine_lts2,"Perform various tests on a transition system at once");
+		bigInfoAPTList.put(factorize2,"Decompose a LTS into its factors (if possible)");
+		bigInfoAPTList.put(fairness2,"Check if a Petri net or transition system is fair");
+		bigInfoAPTList.put(find_words2,"Print either minimal unsolvable or all solvable words of some class");
+		bigInfoAPTList.put(gdiam2,"Check if a LTS is a T'-gdiam");
+		bigInfoAPTList.put(isolated_elements2,"Find isolated elements in a graph");
+		bigInfoAPTList.put(isomorphism2,"Check if two Petri nets have isomorphic reachability graphs");
+		bigInfoAPTList.put(label_separation2,"Check if a LTS is T'-separated for some label set T'");
+		bigInfoAPTList.put(language_equivalence2,"Check if two Petri nets generate the same language");
+		bigInfoAPTList.put(limited_unfolding2,"Calculate the limited unfolding of a lts");
+		bigInfoAPTList.put(overapproximate_synthesize2,"Synthesize the minimal Petri Net overapproximation from a transition system");
+		bigInfoAPTList.put(persistent2,"Check if a Petri net or LTS is persistent");
+		bigInfoAPTList.put(pn_extend_and_synthesize2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet");
+		bigInfoAPTList.put(ppspresynthesis2,"Performs pps-presynthesis checks on a transition system");
+		bigInfoAPTList.put(prime_cycle_property2,"Check if the give Petri net or LTS fulfills the prime cycle property");
+		bigInfoAPTList.put(product_async2,"Compute the asynchronous product of two LTS");
+		bigInfoAPTList.put(product_sync2,"Compute the synchronous product of two LTS");
+		bigInfoAPTList.put(regular_language_to_lts2,"Represent a regular language as a transition system");
+		bigInfoAPTList.put(reversible2,"Check if a Petri net or LTS is reversible");
+		bigInfoAPTList.put(to_regular_expression2,"Create a language-equivalent (up to prefix creation) regular expression");
+		bigInfoAPTList.put(totally_reachable2,"Check if the given LTS is totally reachable");
+		bigInfoAPTList.put(use_petrify2,"Check if Petrify can generate a Petri net from a LTS");
+		bigInfoAPTList.put(use_synet2,"Check if Synet can generate a Petri net from a LTS");
+		bigInfoAPTList.put(weak_components2,"Find the weakly connected components of a Petri net or LTS");
+		bigInfoAPTList.put(weakly_connected2,"Check if a Petri net or LTS is weakly connected");
+		bigInfoAPTList.put(word_synthesize2,"Synthesize a Petri Net from a word");
+
+		//generators
+		bigInfoAPTList.put(generators, "");
+		bigInfoAPTList.put(bistate_philnet_generator,"Construct a Petri net for a bistate philosopher's net of a given size");
+		bigInfoAPTList.put(bitnet_generator,"Construct a Petri net for a bit nets of a given size");
+		bigInfoAPTList.put(connected_bitnet_generator,"Construct a Petri net for a connected bit net of a given size");
+		bigInfoAPTList.put(cycle_generator,"Construct a Petri net for a cycle of a given size with a given number of initial token");
+		bigInfoAPTList.put(generate_reverse_arc,"Generate reverse arcs for all arcs with a given label");
+		bigInfoAPTList.put(inverse_generator,"Construct the inverse of a Petri net");
+		bigInfoAPTList.put(quadstate_philnet_generator,"Construct a Petri net for a quadstate philosopher's net of a given size");
+		bigInfoAPTList.put(random_t_net_generator,"Construct a T-net or T-system (if k given) of size g");
+		bigInfoAPTList.put(tnet_generator,"Construct all T-nets up to a given size");
+		bigInfoAPTList.put(tristate_philnet_generator,"Construct a Petri net for a tristate philosopher's net of a given size");
+
+		//conveters
+		bigInfoAPTList.put(conveters, "");
+		bigInfoAPTList.put(draw_convert,"Convert a Petri net or LTS to the Dot format used by Graphviz");
+		bigInfoAPTList.put(lts_convert,"Convert between transition system file formats");
+		bigInfoAPTList.put(pn_convert,"Convert between Petri net file formats");
+
 
 
 
@@ -389,6 +449,16 @@ public class BigInfoAPTList
 	public String getDraw()
 	{
 		return draw;
+	}
+
+	public String getGeneratorsHeader()
+	{
+		return this.generators;
+	}
+
+	public String getConvetersHeader()
+	{
+		return this.conveters;
 	}
 
 
