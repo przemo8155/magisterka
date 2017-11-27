@@ -140,7 +140,7 @@ public class OpenAPTController
 					protected void updateItem(String item, boolean empty)
 					{
 						super.updateItem(item, empty);
-						if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item))
+						if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item) || bial.getLTSHeader().equals(item))
 						{
 							setDisable(true);
 						} else

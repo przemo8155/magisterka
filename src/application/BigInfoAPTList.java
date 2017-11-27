@@ -89,6 +89,7 @@ public class BigInfoAPTList
 	private final String backward_persistent2 = "backward_persistent";
 	private final String backwards_deterministic2 = "backwards_deterministic";
 	private final String bisimulation2 = "bisimulation";
+	private final String create_lts2 = "create_lts";
 	private final String compute_pvs2 = "compute_pvs";
 	private final String cycles_same_disjoint_pv2 = "cycles_same_disjoint_pv";
 	private final String cycles_same_pv2 = "cycles_same_pv";
@@ -216,6 +217,61 @@ public class BigInfoAPTList
 		typesList.add(word);
 
 		//lts
+		typesList.add(backward_persistent2);
+		typesList.add(backwards_deterministic2);
+		typesList.add(bisimulation2);
+		typesList.add(compute_pvs2);
+		typesList.add(create_lts2);
+		typesList.add(cycles_same_disjoint_pv2);
+		typesList.add(cycles_same_pv2);
+		typesList.add(deterministic2);
+		typesList.add(extend_deterministic_persistent2);
+		typesList.add(extend_lts2);
+		typesList.add(factorize2);
+		typesList.add(fairness2);
+		typesList.add(find_words2);
+		typesList.add(gdiam2);
+		typesList.add(isolated_elements2);
+		typesList.add(isomorphism2);
+		typesList.add(label_separation2);
+		typesList.add(language_equivalence2);
+		typesList.add(limited_unfolding2);
+		typesList.add(overapproximate_synthesize2);
+		typesList.add(persistent2);
+		typesList.add(pn_extend_and_synthesize2);
+		typesList.add(ppspresynthesis2);
+		typesList.add(prime_cycle_property2);
+		typesList.add(product_async2);
+		typesList.add(product_sync2);
+		typesList.add(regular_language_to_lts2);
+		typesList.add(reversible2);
+		typesList.add(strong_components2);
+		typesList.add(strongly_connected2);
+		typesList.add(synthesize2);
+		typesList.add(to_regular_expression2);
+		typesList.add(totally_reachable2);
+		typesList.add(use_petrify2);
+		typesList.add(use_synet2);
+		typesList.add(weak_components2);
+		typesList.add(weakly_connected2);
+		typesList.add(word_synthesize2);
+
+		//generators
+		typesList.add(bistate_philnet_generator);
+		typesList.add(bitnet_generator);
+		typesList.add(connected_bitnet_generator);
+		typesList.add(cycle_generator);
+		typesList.add(generate_reverse_arc);
+		typesList.add(inverse_generator);
+		typesList.add(quadstate_philnet_generator);
+		typesList.add(random_t_net_generator);
+		typesList.add(tnet_generator);
+		typesList.add(tristate_philnet_generator);
+
+		//converts
+		typesList.add(draw_convert);
+		typesList.add(lts_convert);
+		typesList.add(pn_convert);
 
 
 
@@ -316,6 +372,11 @@ public class BigInfoAPTList
 	public String getPetriNetsHeader()
 	{
 		return this.petri_net;
+	}
+
+	public String getLTSHeader()
+	{
+		return this.lts;
 	}
 
 
@@ -706,6 +767,331 @@ public class BigInfoAPTList
 	public String getWord()
 	{
 		return word;
+	}
+
+
+	public String getMisc()
+	{
+		return misc;
+	}
+
+
+
+	public String getBackward_persistent2()
+	{
+		return backward_persistent2;
+	}
+
+
+	public String getBackwards_deterministic2()
+	{
+		return backwards_deterministic2;
+	}
+
+
+	public String getBisimulation2()
+	{
+		return bisimulation2;
+	}
+
+
+	public String getCreate_lts2()
+	{
+		return create_lts2;
+	}
+
+
+	public String getCompute_pvs2()
+	{
+		return compute_pvs2;
+	}
+
+
+	public String getCycles_same_disjoint_pv2()
+	{
+		return cycles_same_disjoint_pv2;
+	}
+
+
+	public String getCycles_same_pv2()
+	{
+		return cycles_same_pv2;
+	}
+
+
+	public String getDeterministic2()
+	{
+		return deterministic2;
+	}
+
+
+	public String getExamine_lts2()
+	{
+		return examine_lts2;
+	}
+
+
+	public String getExtend_deterministic_persistent2()
+	{
+		return extend_deterministic_persistent2;
+	}
+
+
+	public String getExtend_lts2()
+	{
+		return extend_lts2;
+	}
+
+
+	public String getFactorize2()
+	{
+		return factorize2;
+	}
+
+
+	public String getFairness2()
+	{
+		return fairness2;
+	}
+
+
+	public String getFind_words2()
+	{
+		return find_words2;
+	}
+
+
+	public String getGdiam2()
+	{
+		return gdiam2;
+	}
+
+
+	public String getIsolated_elements2()
+	{
+		return isolated_elements2;
+	}
+
+
+	public String getIsomorphism2()
+	{
+		return isomorphism2;
+	}
+
+
+	public String getLabel_separation2()
+	{
+		return label_separation2;
+	}
+
+
+	public String getLanguage_equivalence2()
+	{
+		return language_equivalence2;
+	}
+
+
+	public String getLimited_unfolding2()
+	{
+		return limited_unfolding2;
+	}
+
+
+	public String getOverapproximate_synthesize2()
+	{
+		return overapproximate_synthesize2;
+	}
+
+
+	public String getPersistent2()
+	{
+		return persistent2;
+	}
+
+
+	public String getPn_extend_and_synthesize2()
+	{
+		return pn_extend_and_synthesize2;
+	}
+
+
+	public String getPpspresynthesis2()
+	{
+		return ppspresynthesis2;
+	}
+
+
+	public String getPrime_cycle_property2()
+	{
+		return prime_cycle_property2;
+	}
+
+
+	public String getProduct_async2()
+	{
+		return product_async2;
+	}
+
+
+	public String getProduct_sync2()
+	{
+		return product_sync2;
+	}
+
+
+	public String getRegular_language_to_lts2()
+	{
+		return regular_language_to_lts2;
+	}
+
+
+	public String getReversible2()
+	{
+		return reversible2;
+	}
+
+
+	public String getStrong_components2()
+	{
+		return strong_components2;
+	}
+
+
+	public String getStrongly_connected2()
+	{
+		return strongly_connected2;
+	}
+
+
+	public String getSynthesize2()
+	{
+		return synthesize2;
+	}
+
+
+	public String getTo_regular_expression2()
+	{
+		return to_regular_expression2;
+	}
+
+
+	public String getTotally_reachable2()
+	{
+		return totally_reachable2;
+	}
+
+
+	public String getUse_petrify2()
+	{
+		return use_petrify2;
+	}
+
+
+	public String getUse_synet2()
+	{
+		return use_synet2;
+	}
+
+
+	public String getWeak_components2()
+	{
+		return weak_components2;
+	}
+
+
+	public String getWeakly_connected2()
+	{
+		return weakly_connected2;
+	}
+
+
+	public String getWord_synthesize2()
+	{
+		return word_synthesize2;
+	}
+
+
+	public String getBistate_philnet_generator()
+	{
+		return bistate_philnet_generator;
+	}
+
+
+	public String getBitnet_generator()
+	{
+		return bitnet_generator;
+	}
+
+
+	public String getConnected_bitnet_generator()
+	{
+		return connected_bitnet_generator;
+	}
+
+
+	public String getCycle_generator()
+	{
+		return cycle_generator;
+	}
+
+
+	public String getGenerate_reverse_arc()
+	{
+		return generate_reverse_arc;
+	}
+
+
+	public String getInverse_generator()
+	{
+		return inverse_generator;
+	}
+
+
+	public String getQuadstate_philnet_generator()
+	{
+		return quadstate_philnet_generator;
+	}
+
+
+	public String getRandom_t_net_generator()
+	{
+		return random_t_net_generator;
+	}
+
+
+	public String getTnet_generator()
+	{
+		return tnet_generator;
+	}
+
+
+	public String getTristate_philnet_generator()
+	{
+		return tristate_philnet_generator;
+	}
+
+
+	public String getDraw_convert()
+	{
+		return draw_convert;
+	}
+
+
+	public String getLts_convert()
+	{
+		return lts_convert;
+	}
+
+
+	public String getPn_convert()
+	{
+		return pn_convert;
+	}
+
+
+	public static void setTypesList(ObservableList<String> typesList)
+	{
+		BigInfoAPTList.typesList = typesList;
 	}
 
 }
