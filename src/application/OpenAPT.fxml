@@ -56,6 +56,7 @@
             <ListView fx:id="options3ListView" layoutX="454.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
             <TextField fx:id="wordTextField" layoutX="505.0" layoutY="452.0" />
             <Label fx:id="wordLabel" layoutX="467.0" layoutY="456.0" text="Word:" />
+            <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="121.0" prefHeight="17.0" prefWidth="405.0" text="YOU NEED TO SELECT '-NET' FILE. THIS FILE MAY NOT WORK CORRETLY" textFill="RED" underline="true" />
          </children>
       </Pane>
    </children>

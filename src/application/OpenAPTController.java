@@ -82,7 +82,7 @@ public class OpenAPTController
 	File secondJarFile;
 
 	@FXML
-	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel, optionalInfoLabel, wordLabel;
+	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel, optionalInfoLabel, wordLabel, warningLabel;
 
 	@FXML
 	private Button selectFileButton, openButton, closeButton, infoAboutNetButton, secondFileButton;
@@ -105,6 +105,7 @@ public class OpenAPTController
 		setOptions3Visible(false);
 		setOptionalValueVisible(false);
 		setWordFieldsVisible(false);
+		setWarningVisible(false);
 
 		fileTextField.setEditable(false);
 
@@ -167,6 +168,8 @@ public class OpenAPTController
 				if (!newValue.equals("") && !fileTextField.getText().trim().isEmpty())
 				{
 					setInfoButtonEnable(true);
+					checkFileLTSorNET(options1ListView.getSelectionModel().getSelectedIndex(), fileTextField.getText());
+					checkFileLTSorNET(options1ListView.getSelectionModel().getSelectedIndex(), secondFileTextField.getText());
 				} else
 				{
 					setInfoButtonEnable(false);
@@ -1238,6 +1241,17 @@ public class OpenAPTController
 		}
 	}
 
+	private void setWarningVisible(boolean vis)
+	{
+		if (vis)
+		{
+			warningLabel.setVisible(true);
+		} else
+		{
+			warningLabel.setVisible(false);
+		}
+	}
+
 	private void setWordFieldsVisible(boolean vis)
 	{
 		if (vis)
@@ -1329,6 +1343,7 @@ public class OpenAPTController
 		{
 			secondFileTextField.setText(file.getAbsolutePath());
 			setSecondJarFile(file);
+			checkFileLTSorNET(options1ListView.getSelectionModel().getSelectedIndex(), secondFileTextField.getText());
 		}
 
 	}
@@ -1350,6 +1365,7 @@ public class OpenAPTController
 		{
 			fileTextField.setText(file.getAbsolutePath());
 			setJarFile(file);
+			checkFileLTSorNET(options1ListView.getSelectionModel().getSelectedIndex(), fileTextField.getText());
 		}
 
 		if (!option1Value.equals("") && !fileTextField.getText().trim().isEmpty())
@@ -1396,6 +1412,38 @@ public class OpenAPTController
 		{
 			infoAboutNetButton.setDisable(true);
 		}
+	}
+
+	void checkFileLTSorNET(int selected_index, String path)
+	{
+		if(!path.equals(""))
+		{
+			if(path.toLowerCase().contains("-net"))
+			{
+				if(selected_index > 66)
+				{
+					setWarningVisible(true);
+					warningLabel.setText("YOU NEED TO SELECT '-AUT' FILE. THIS FILE MAY NOT WORK CORRETLY");
+				}
+				else
+				{
+					setWarningVisible(false);
+				}
+			}
+			else if(path.toLowerCase().contains("-aut"))
+			{
+				if(selected_index < 66)
+				{
+					setWarningVisible(true);
+					warningLabel.setText("YOU NEED TO SELECT '-NET' FILE. THIS FILE MAY NOT WORK CORRETLY");
+				}
+				else
+				{
+					setWarningVisible(false);
+				}
+			}
+		}
+
 	}
 
 	void catFile_GetTransitions(String path)
