@@ -30,9 +30,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -77,6 +80,8 @@ public class OpenAPTController
 	final String aptJarPath = eee.replaceAll("\\\\", "/");
 	String sep = System.getProperty("file.separator");
 	Stage stage = MainWindowController.aptStage;
+
+	public static Stage aptStage;
 
 	String catFileContents = "";
 
@@ -688,11 +693,7 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
-		// FilesRecognition fr = new FilesRecognition(fileTextField.getText());
-		// soa.splitBigAlgorithm(fr.getCirclesList(), fr.getRectanglesList(),
-		// fr.getEdgesList(), mwc.getArrowColor(), mwc.getMainPane(),
-		// mwc.getCircleList(), mwc.getRectangleList(), mwc.getHeadArrowList(),
-		// mwc.getLeftDoubleArrowList(), mwc.getRightDoubleArrowList());
+		//TODO
 
 	}
 
@@ -744,7 +745,8 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
+
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -771,7 +773,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -798,7 +800,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -824,7 +826,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -850,7 +852,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -876,7 +878,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -902,7 +904,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -926,7 +928,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -949,7 +951,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -974,7 +976,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1001,7 +1003,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1028,7 +1030,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1055,7 +1057,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1081,7 +1083,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1108,7 +1110,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1133,7 +1135,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1160,7 +1162,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1185,7 +1187,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1210,7 +1212,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1235,7 +1237,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1260,7 +1262,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -1372,7 +1374,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			}
 
 			else
@@ -1390,7 +1392,7 @@ public class OpenAPTController
 				{
 					strFileContents += new String(contents, 0, bytesRead);
 				}
-				utilities.modernInfoMessage(strFileContents);
+				showPetriInfo(strFileContents);
 			}
 
 		} catch (IOException e)
@@ -1578,6 +1580,29 @@ public class OpenAPTController
 		} else
 		{
 			outputFileButton.setVisible(false);
+		}
+	}
+
+	private void showPetriInfo(String message)
+	{
+		try
+		{
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("PetriInfo.fxml"));
+
+			Scene scene = new Scene(fxmlLoader.load(), 600, 700);
+			scene.getStylesheets().add(getClass().getResource("petrinet.css").toExternalForm());
+			aptStage = new Stage();
+			aptStage.setTitle("Petri Information");
+			aptStage.setScene(scene);
+			aptStage.getIcons()
+					.add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
+			aptStage.show();
+			PetriInfoController controller = fxmlLoader.<PetriInfoController>getController();
+			controller.initialize(message);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }
