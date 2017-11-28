@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import APTOptionsFolderLTS.ExtendLts;
+import APTOptionsFolderLTS.FindWords;
 import APTOptionsFolderPetriNets.Check;
 import APTOptionsFolderPetriNets.CoveredByInvariant;
 import APTOptionsFolderPetriNets.Draw;
@@ -71,6 +72,7 @@ public class OpenAPTController
 	WeakSeparation weakSeparationObj = new WeakSeparation();
 	WeakSeparationLength weakSeparationLengthObj = new WeakSeparationLength();
 	ExtendLts extendLts = new ExtendLts();
+	FindWords findWords = new FindWords();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -188,7 +190,7 @@ public class OpenAPTController
 				}
 				String desc = "";
 
-				if (newValue.equals(bial.getHelp()) || newValue.equals(bial.getCheck()))
+				if (newValue.equals(bial.getHelp()) || newValue.equals(bial.getCheck()) || newValue.equals(bial.getFind_words2()))
 				{
 					selectFileButton.setDisable(true);
 					fileTextField.setDisable(true);
@@ -621,6 +623,25 @@ public class OpenAPTController
 
 				}
 
+				else if (newValue.equals(bial.getFind_words2()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(true);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(true);
+					setOutputFileButtonVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(findWords.getFindWordsOptionsClassList());
+					options3ListView.setItems(findWords.getFindWordsOperationsClassList());
+
+				}
+
 				else
 				{
 					setOptions2Visible(false);
@@ -726,7 +747,8 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWeak_separation_length()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWeakly_live()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWord()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getExtend_lts2())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getExtend_lts2()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getFind_words2())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -969,6 +991,33 @@ public class OpenAPTController
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
 						option1Value, fileTextField.getText(), option2Value, option3Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFind_words2()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !wordTextField.getText().trim().isEmpty()
+				)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, option2Value, option3Value, wordTextField.getText());
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -1522,6 +1571,38 @@ public class OpenAPTController
 					setWarningVisible(false);
 				}
 			}
+		}
+
+	}
+
+	void catFile_GetLabels(String path)
+	{
+		ObservableList<String> tempList = FXCollections.observableArrayList();
+		try
+		{
+			Process p = Runtime.getRuntime().exec("cmd /c more " + path);
+			p.waitFor();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line;
+			while ((line = reader.readLine()) != null)
+			{
+				if (line.equals(".labels"))
+				{
+					while (!(line = reader.readLine()).equals(".arcs"))
+					{
+						if (!line.equals(""))
+							tempList.add(line);
+					}
+				}
+			}
+
+			setOptions2Visible(true);
+			options2ListView.setItems(tempList);
+		}
+
+		catch (InterruptedException | IOException e)
+		{
+			e.printStackTrace();
 		}
 
 	}
