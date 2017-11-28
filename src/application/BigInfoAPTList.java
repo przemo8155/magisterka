@@ -228,6 +228,7 @@ public class BigInfoAPTList
 		typesList.add(cycles_same_disjoint_pv2);
 		typesList.add(cycles_same_pv2);
 		typesList.add(deterministic2);
+		typesList.add(examine_lts2);
 		typesList.add(extend_deterministic_persistent2);
 		typesList.add(extend_lts2);
 		typesList.add(factorize2);

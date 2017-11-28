@@ -57,6 +57,7 @@
             <TextField fx:id="wordTextField" layoutX="505.0" layoutY="452.0" />
             <Label fx:id="wordLabel" layoutX="467.0" layoutY="456.0" text="Word:" />
             <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="121.0" prefHeight="17.0" prefWidth="405.0" text="YOU NEED TO SELECT '-NET' FILE. THIS FILE MAY NOT WORK CORRETLY" textFill="RED" underline="true" />
+            <Button fx:id="outputFileButton" layoutX="132.0" layoutY="174.0" mnemonicParsing="false" onAction="#outputFileButton_OnAction" text="Select output file" />
          </children>
       </Pane>
    </children>
