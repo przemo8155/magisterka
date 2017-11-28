@@ -31,13 +31,11 @@ public class PetriInfoController
 
 	public void initialize(String message)
 	{
+		this.messageTextArea.setEditable(false);
 		this.messageTextArea.setText(message);
 	}
 
-	public void setMessageInfo(String message)
-	{
-		this.messageTextArea.setText(message);
-	}
+
 
 	@FXML
 	void copyButton_OnAction(ActionEvent event)

@@ -92,6 +92,11 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/addToken.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/openapt-background.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/openapt-background.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/pause.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/pause.png</location>

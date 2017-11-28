@@ -6,6 +6,7 @@
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PetriInfoController">
    <children>
@@ -26,7 +27,10 @@
                         <Blend mode="MULTIPLY" />
                      </input>
                   </SepiaTone>
-               </effect></Button>
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <TextArea fx:id="messageTextArea" layoutX="14.0" layoutY="14.0" prefHeight="631.0" prefWidth="572.0" />
          </children>
       </Pane>

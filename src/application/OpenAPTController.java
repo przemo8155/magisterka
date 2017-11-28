@@ -46,6 +46,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -87,6 +88,9 @@ public class OpenAPTController
 
 	File jarFile;
 	File secondJarFile;
+
+	@FXML
+	private Pane mainPane;
 
 	@FXML
 	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel, optionalInfoLabel, wordLabel, warningLabel;
