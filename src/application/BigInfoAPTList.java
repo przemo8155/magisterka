@@ -362,6 +362,8 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(cycles_same_pv2,"Check if the smallest cycles of Petri net or LTS have the same parikh vector");
 		bigInfoAPTList.put(deterministic2,"Check if a LTS is deterministic");
 		bigInfoAPTList.put(examine_lts2,"Perform various tests on a transition system at once");
+		bigInfoAPTList.put(extend_deterministic_persistent2, "Extend a transition system to an deterministic persistent transition system");
+		bigInfoAPTList.put(extend_lts2, "Generate extensions to a given LTS that satisfy certain properties");
 		bigInfoAPTList.put(factorize2,"Decompose a LTS into its factors (if possible)");
 		bigInfoAPTList.put(fairness2,"Check if a Petri net or transition system is fair");
 		bigInfoAPTList.put(find_words2,"Print either minimal unsolvable or all solvable words of some class");
@@ -380,6 +382,8 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(product_sync2,"Compute the synchronous product of two LTS");
 		bigInfoAPTList.put(regular_language_to_lts2,"Represent a regular language as a transition system");
 		bigInfoAPTList.put(reversible2,"Check if a Petri net or LTS is reversible");
+		bigInfoAPTList.put(strong_components2, "Find the strongly connected components of a Petri net or LTS");
+		bigInfoAPTList.put(strongly_connected2, "Check if a Petri net or LTS is strongly connected");
 		bigInfoAPTList.put(to_regular_expression2,"Create a language-equivalent (up to prefix creation) regular expression");
 		bigInfoAPTList.put(totally_reachable2,"Check if the given LTS is totally reachable");
 		bigInfoAPTList.put(use_petrify2,"Check if Petrify can generate a Petri net from a LTS");
