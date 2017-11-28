@@ -97,6 +97,16 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/pause.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/petrinet-background.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/petrinet-background.png</location>
+		</link>
+		<link>
+			<name>src/application/resources/petrinet-icon.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/petrinet-icon.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/play.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/play.png</location>

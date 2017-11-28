@@ -1596,7 +1596,7 @@ public class OpenAPTController
 			aptStage.setTitle("Petri Information");
 			aptStage.setScene(scene);
 			aptStage.getIcons()
-					.add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
+					.add(new Image(MainWindowController.class.getResourceAsStream("resources/petrinet-icon.png")));
 			aptStage.show();
 			PetriInfoController controller = fxmlLoader.<PetriInfoController>getController();
 			controller.initialize(message);
