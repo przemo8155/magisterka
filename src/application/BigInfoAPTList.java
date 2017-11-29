@@ -385,6 +385,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(reversible2,"Check if a Petri net or LTS is reversible");
 		bigInfoAPTList.put(strong_components2, "Find the strongly connected components of a Petri net or LTS");
 		bigInfoAPTList.put(strongly_connected2, "Check if a Petri net or LTS is strongly connected");
+		bigInfoAPTList.put(synthesize2, "Synthesize a Petri Net from a transition system");
 		bigInfoAPTList.put(to_regular_expression2,"Create a language-equivalent (up to prefix creation) regular expression");
 		bigInfoAPTList.put(totally_reachable2,"Check if the given LTS is totally reachable");
 		bigInfoAPTList.put(use_petrify2,"Check if Petrify can generate a Petri net from a LTS");
