@@ -11,25 +11,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import APTOptionsFolderLTS.ExtendLts;
-import APTOptionsFolderLTS.FindWords;
-import APTOptionsFolderLTS.OverapproximateSynthesize;
-import APTOptionsFolderLTS.PnExtendAndSynthesize;
-import APTOptionsFolderLTS.RegularLanguageToLts;
-import APTOptionsFolderLTS.Synthesize;
-import APTOptionsFolderLTS.UsePetrify;
-import APTOptionsFolderLTS.WordSynthesize;
-import APTOptionsFolderPetriNets.Check;
-import APTOptionsFolderPetriNets.CoveredByInvariant;
-import APTOptionsFolderPetriNets.Draw;
-import APTOptionsFolderPetriNets.Fairness;
-import APTOptionsFolderPetriNets.Help;
-import APTOptionsFolderPetriNets.Invariants;
-import APTOptionsFolderPetriNets.PnAnalysis;
-import APTOptionsFolderPetriNets.StrongSeparation;
-import APTOptionsFolderPetriNets.StrongSeparationLength;
-import APTOptionsFolderPetriNets.WeakSeparation;
-import APTOptionsFolderPetriNets.WeakSeparationLength;
+import aptOptionsFolderGenerators.BistatePhilnetGenerator;
+import aptOptionsFolderGenerators.BitnetGenerator;
+import aptOptionsFolderGenerators.ConnectedBitnetGenerator;
+import aptOptionsFolderLTS.ExtendLts;
+import aptOptionsFolderLTS.FindWords;
+import aptOptionsFolderLTS.OverapproximateSynthesize;
+import aptOptionsFolderLTS.PnExtendAndSynthesize;
+import aptOptionsFolderLTS.RegularLanguageToLts;
+import aptOptionsFolderLTS.Synthesize;
+import aptOptionsFolderLTS.UsePetrify;
+import aptOptionsFolderLTS.WordSynthesize;
+import aptOptionsFolderPetriNets.Check;
+import aptOptionsFolderPetriNets.CoveredByInvariant;
+import aptOptionsFolderPetriNets.Draw;
+import aptOptionsFolderPetriNets.Fairness;
+import aptOptionsFolderPetriNets.Help;
+import aptOptionsFolderPetriNets.Invariants;
+import aptOptionsFolderPetriNets.PnAnalysis;
+import aptOptionsFolderPetriNets.StrongSeparation;
+import aptOptionsFolderPetriNets.StrongSeparationLength;
+import aptOptionsFolderPetriNets.WeakSeparation;
+import aptOptionsFolderPetriNets.WeakSeparationLength;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -85,6 +88,9 @@ public class OpenAPTController
 	Synthesize synthesize = new Synthesize();
 	UsePetrify usePetrify = new UsePetrify();
 	WordSynthesize wordSynthesize = new WordSynthesize();
+	BistatePhilnetGenerator bistatePhilnetGenerator = new BistatePhilnetGenerator();
+	BitnetGenerator bitnetGenerator = new BitnetGenerator();
+	ConnectedBitnetGenerator connectedBitnetGenerator = new ConnectedBitnetGenerator();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -207,7 +213,10 @@ public class OpenAPTController
 				if (newValue.equals(bial.getHelp()) || newValue.equals(bial.getCheck())
 						|| newValue.equals(bial.getFind_words2())
 						|| newValue.equals(bial.getRegular_language_to_lts2())
-						|| newValue.equals(bial.getWord_synthesize2()))
+						|| newValue.equals(bial.getWord_synthesize2())
+						|| newValue.equals(bial.getBistate_philnet_generator())
+						|| newValue.equals(bial.getBitnet_generator())
+						|| newValue.equals(bial.getConnected_bitnet_generator()))
 				{
 					selectFileButton.setDisable(true);
 					fileTextField.setDisable(true);
@@ -849,6 +858,63 @@ public class OpenAPTController
 
 				}
 
+				else if (newValue.equals(bial.getBistate_philnet_generator()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+					setOutputFileButtonVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(bistatePhilnetGenerator.getBistatePhilnetGeneratorNClassList());
+					options3ListView.setItems(null);
+
+				}
+
+				else if (newValue.equals(bial.getBitnet_generator()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+					setOutputFileButtonVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(bitnetGenerator.getBitnetGeneratorNClassList());
+					options3ListView.setItems(null);
+
+				}
+
+				else if (newValue.equals(bial.getConnected_bitnet_generator()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+					setOutputFileButtonVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(connectedBitnetGenerator.getConnectedBitnetGeneratorNClassList());
+					options3ListView.setItems(null);
+
+				}
+
 				else
 				{
 					setOptions2Visible(false);
@@ -965,12 +1031,98 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getRegular_language_to_lts2()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getSynthesize2()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getUse_petrify2()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWord_synthesize2())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getWord_synthesize2()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getBistate_philnet_generator()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getBitnet_generator()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getConnected_bitnet_generator())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
 
 		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getHelp()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getBitnet_generator()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getConnected_bitnet_generator()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getBistate_philnet_generator()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			try
