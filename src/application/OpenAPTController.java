@@ -230,7 +230,8 @@ public class OpenAPTController
 						|| newValue.equals(bial.getConnected_bitnet_generator())
 						|| newValue.equals(bial.getCycle_generator())
 						|| newValue.equals(bial.getQuadstate_philnet_generator())
-						|| newValue.equals(bial.getRandom_t_net_generator()))
+						|| newValue.equals(bial.getRandom_t_net_generator())
+						|| newValue.equals(bial.getTnet_generator()))
 				{
 					selectFileButton.setDisable(true);
 					fileTextField.setDisable(true);
@@ -1130,11 +1131,11 @@ public class OpenAPTController
 
 				}
 
-				else if (newValue.equals(bial.getRandom_t_net_generator()))
+				else if (newValue.equals(bial.getTnet_generator()))
 				{
 					setOptions2Visible(true);
 					setOptions3Visible(true);
-					setOptions4Visible(false);
+					setOptions4Visible(true);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
 					setInfoButtonEnable(true);
@@ -1287,7 +1288,8 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCycle_generator()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getGenerate_reverse_arc()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getQuadstate_philnet_generator()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getRandom_t_net_generator())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getRandom_t_net_generator()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getTnet_generator())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -1347,6 +1349,72 @@ public class OpenAPTController
 				}
 
 			}
+
+
+		 else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getTnet_generator()
+					&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+			{
+				try
+					{
+						ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+								option1Value, option2Value, option3Value);
+
+						Process p = pb.start();
+						BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+						byte[] contents = new byte[1024];
+
+						int bytesRead = 0;
+						String strFileContents = "";
+						while ((bytesRead = in.read(contents)) != -1)
+						{
+							strFileContents += new String(contents, 0, bytesRead);
+						}
+						showPetriInfo(strFileContents);
+
+					} catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+
+
+
+			}
+
+
+		 else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getTnet_generator()
+					&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+			{
+				try
+					{
+						ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+								option1Value, option2Value, option3Value, option4Value);
+
+						Process p = pb.start();
+						BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+						byte[] contents = new byte[1024];
+
+						int bytesRead = 0;
+						String strFileContents = "";
+						while ((bytesRead = in.read(contents)) != -1)
+						{
+							strFileContents += new String(contents, 0, bytesRead);
+						}
+						showPetriInfo(strFileContents);
+
+					} catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+
+
+
+			}
+
+
 
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCycle_generator()
