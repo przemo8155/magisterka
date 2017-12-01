@@ -94,6 +94,7 @@
             <Label fx:id="eventLabel2" layoutX="454.0" layoutY="494.0" text="Reverse event:" />
             <TextField fx:id="eventTextField1" layoutX="266.0" layoutY="490.0" prefHeight="25.0" prefWidth="120.0" />
             <TextField fx:id="eventTextField2" layoutX="530.0" layoutY="490.0" prefHeight="25.0" prefWidth="120.0" />
+            <ListView fx:id="options4ListView" layoutX="664.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </Pane>
    </children>
