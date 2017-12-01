@@ -1,0 +1,17 @@
+.name " with 2 isolated transitions with initial marking {}"
+.type LPN
+
+.places
+p0
+
+.transitions
+t0[label="t0"]
+t1[label="t1"]
+t2[label="t2"]
+
+.flows
+t0: {1*p0} -> {1*p0}
+t1: {} -> {}
+t2: {} -> {}
+
+.initial_marking {}
