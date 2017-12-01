@@ -1180,6 +1180,8 @@ public class OpenAPTController
 				}
 
 
+
+
 				else
 				{
 					setOptions2Visible(false);
@@ -1347,6 +1349,7 @@ public class OpenAPTController
 			}
 
 		}
+
 
 		 else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getTristate_philnet_generator()
 					&& options2ListView.getSelectionModel().getSelectedIndex() > -1)

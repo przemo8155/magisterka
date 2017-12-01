@@ -276,8 +276,6 @@ public class BigInfoAPTList
 		//converts
 		typesList.add(conveters);
 		typesList.add(draw_convert);
-		typesList.add(lts_convert);
-		typesList.add(pn_convert);
 
 
 
@@ -410,8 +408,6 @@ public class BigInfoAPTList
 		//conveters
 		bigInfoAPTList.put(conveters, "");
 		bigInfoAPTList.put(draw_convert,"Convert a Petri net or LTS to the Dot format used by Graphviz");
-		bigInfoAPTList.put(lts_convert,"Convert between transition system file formats");
-		bigInfoAPTList.put(pn_convert,"Convert between Petri net file formats");
 
 
 
