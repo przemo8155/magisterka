@@ -18,6 +18,7 @@ import aptOptionsFolderGenerators.CycleGenerator;
 import aptOptionsFolderGenerators.QuadstatePhilnetGenerator;
 import aptOptionsFolderGenerators.RandomTNetGenerator;
 import aptOptionsFolderGenerators.TNetGenerator;
+import aptOptionsFolderGenerators.TristatePhilnetGenerator;
 import aptOptionsFolderLTS.ExtendLts;
 import aptOptionsFolderLTS.FindWords;
 import aptOptionsFolderLTS.OverapproximateSynthesize;
@@ -99,6 +100,7 @@ public class OpenAPTController
 	QuadstatePhilnetGenerator quadstatePhilnetGenerator = new QuadstatePhilnetGenerator();
 	RandomTNetGenerator randomTNetGenerator = new RandomTNetGenerator();
 	TNetGenerator tNetGenerator = new TNetGenerator();
+	TristatePhilnetGenerator tristatePhilnetGenerator = new TristatePhilnetGenerator();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -231,7 +233,8 @@ public class OpenAPTController
 						|| newValue.equals(bial.getCycle_generator())
 						|| newValue.equals(bial.getQuadstate_philnet_generator())
 						|| newValue.equals(bial.getRandom_t_net_generator())
-						|| newValue.equals(bial.getTnet_generator()))
+						|| newValue.equals(bial.getTnet_generator())
+						|| newValue.equals(bial.getTristate_philnet_generator()))
 				{
 					selectFileButton.setDisable(true);
 					fileTextField.setDisable(true);
@@ -1154,6 +1157,29 @@ public class OpenAPTController
 				}
 
 
+				else if (newValue.equals(bial.getTristate_philnet_generator()))
+				{
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptions4Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+					setOutputFileButtonVisible(false);
+					setEventVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(tristatePhilnetGenerator.getTristatePhilnetGeneratorNClassList());
+					options3ListView.setItems(null);
+					options4ListView.setItems(null);
+
+				}
+
+
 				else
 				{
 					setOptions2Visible(false);
@@ -1289,7 +1315,8 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getGenerate_reverse_arc()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getQuadstate_philnet_generator()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getRandom_t_net_generator()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getTnet_generator())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getTnet_generator()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getTristate_philnet_generator())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
@@ -1320,6 +1347,34 @@ public class OpenAPTController
 			}
 
 		}
+
+		 else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getTristate_philnet_generator()
+					&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+			{
+				try
+				{
+					ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+							option1Value, option2Value);
+
+					Process p = pb.start();
+					BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+					byte[] contents = new byte[1024];
+
+					int bytesRead = 0;
+					String strFileContents = "";
+					while ((bytesRead = in.read(contents)) != -1)
+					{
+						strFileContents += new String(contents, 0, bytesRead);
+					}
+					showPetriInfo(strFileContents);
+
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+
+			}
+
 
 		 else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getGenerate_reverse_arc()
 					&& !eventTextField1.getText().trim().isEmpty()
