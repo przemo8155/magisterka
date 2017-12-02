@@ -19,6 +19,8 @@ public class OptionsHeaders
 	private final String check2 = "Generators";
 	private final String check3 = "Attributes";
 	private final String check4 = "Max seconds";
+	private final String covered_by_invariant2 = "Parameter 's' for s-invariants and 't' for t-invariants";
+	private final String covered_by_invariant3 = "Parameter 'f' for farkas algorithm and 'p' for the adapted farkas algorithm of pipe";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -80,5 +82,17 @@ public class OptionsHeaders
 	public String getCheck4()
 	{
 		return check4;
+	}
+
+
+	public String getCovered_by_invariant2()
+	{
+		return covered_by_invariant2;
+	}
+
+
+	public String getCovered_by_invariant3()
+	{
+		return covered_by_invariant3;
 	}
 }

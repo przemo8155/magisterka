@@ -158,6 +158,9 @@ public class OpenAPTController
 		setEventVisible(false);
 
 		descTextLabel.setWrapText(true);
+		opt2Label.setWrapText(true);
+		opt3Label.setWrapText(true);
+		opt4Label.setWrapText(true);
 
 		fileTextField.setEditable(false);
 		secondFileTextField.setEditable(false);
@@ -397,12 +400,14 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getCovered_by_invariant()))
 				{
+					opt2Label.setText(oh.getCovered_by_invariant2());
+					opt3Label.setText(oh.getCovered_by_invariant3());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1251,9 +1256,16 @@ public class OpenAPTController
 					setInfoButtonEnable(true);
 				}
 
-				if(option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
-					&& options3ListView.getSelectionModel().getSelectedIndex() > -1
-					&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				if (option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getCovered_by_invariant())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& !fileTextField.getText().trim().isEmpty())
 				{
 					setInfoButtonEnable(true);
 				}
@@ -1267,12 +1279,19 @@ public class OpenAPTController
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
 				option3Value = newValue;
-				if(option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
+				if (option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
 						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
 						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
-					{
-						setInfoButtonEnable(true);
-					}
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getCovered_by_invariant())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& !fileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(true);
+				}
 			}
 		});
 
@@ -1283,12 +1302,12 @@ public class OpenAPTController
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
 				option4Value = newValue;
-				if(option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
+				if (option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
 						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
 						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
-					{
-						setInfoButtonEnable(true);
-					}
+				{
+					setInfoButtonEnable(true);
+				}
 			}
 		});
 
@@ -1415,7 +1434,6 @@ public class OpenAPTController
 
 		}
 
-
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getBounded()
 				&& !fileTextField.getText().trim().isEmpty()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > 0)
@@ -1444,7 +1462,6 @@ public class OpenAPTController
 
 		}
 
-
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getBounded()
 				&& !fileTextField.getText().trim().isEmpty()
 				&& options2ListView.getSelectionModel().getSelectedIndex() == 0)
@@ -1472,7 +1489,6 @@ public class OpenAPTController
 			}
 
 		}
-
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getTristate_philnet_generator()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
@@ -2872,6 +2888,9 @@ public class OpenAPTController
 				&& file != null)
 		{
 			setInfoButtonEnable(false);
+		} else if(!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getCovered_by_invariant()))
+		{
+			setInfoButtonEnable(true);
 		}
 	}
 

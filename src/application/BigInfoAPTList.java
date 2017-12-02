@@ -295,12 +295,12 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(bounded, "Check if a Petri net is bounded or k-bounded.\nA Petri net is bounded if there is an upper limit for the number of token on each place. It is k-bounded if this limit isn't bigger than k.");
 		bigInfoAPTList.put(cf, "This module tests if a plain Petri net is conflict-free.\nThat is:\\forall s \\in S: \\mid s^\\bullet \\mid \\leq 1 \\vee s^\\bullet \\subset ^\bullet s");
 		bigInfoAPTList.put(check, "Search for a Petri net which fulfills the given attributes.\nFor detailed descriptions see analysis modules and generator packet.");
-		bigInfoAPTList.put(check_all_cycle_prop, "Check all cycle properties of a Petri net");
+		bigInfoAPTList.put(check_all_cycle_prop, "Check all cycle properties of a Petri net.\nCheck if all smallest cycles have same Parikh vectors, if all smallest cycles have same or mutually disjoint Parikh vectors and it computes Parikh vectors of smallest cycles");
 		bigInfoAPTList.put(compute_pvs, "Compute parikh vectors of smallest cycles of a Petri net or LTS");
-		bigInfoAPTList.put(concurrent_coverability_graph, "Calculate the concurrent coverability graph of a Petri net in the step semantics");
-		bigInfoAPTList.put(conpres, "Check if a Petri net is concurrency-preserving");
+		bigInfoAPTList.put(concurrent_coverability_graph, "Calculate the concurrent coverability graph of a Petri net in the step semantics. In the step semantics, instead of individual transitions, sets of transitions called 'a step' are fired. When a step fires, first all of its transition consume token and only afterwards produce tokens. Put differently, on each place at least as many token have to be present as the sum of the arc weights of the transitions in a step require.");
+		bigInfoAPTList.put(conpres, "Check if a Petri net is concurrency-preserving.\nThis module checks if a Petri net is concurrency-preserving.That is: for every transition t there are as many places in the preset as in the postset of t.");
 		bigInfoAPTList.put(coverability_graph, "Compute a Petri net's coverability graph");
-		bigInfoAPTList.put(covered_by_invariant, "Check if a Petri net is covered by an S-invariant or a T-invariant");
+		bigInfoAPTList.put(covered_by_invariant, "Check if a Petri net is covered by an S-invariant or a T-invariant.\nAn invariant is a semi-positive vector from the nullspace of the incidence matrix C. For a T-invariant x?0 this means C*x=0 and a S-invariant x?0 satisfies C?*x=0. This module checks if a positive S- or T-invariant exists, that is an invariant without an entry equal to zero.");
 		bigInfoAPTList.put(cycles_same_disjoint_pv, "Check if the smallest cycles of a Petri net or LTS have the same or mutually disjoint parikh vectors");
 		bigInfoAPTList.put(cycles_same_pv, "Check if the smallest cycles of Petri net or LTS have the same parikh vector");
 		bigInfoAPTList.put(examine_pn, "Perform various tests on a Petri net at once");
