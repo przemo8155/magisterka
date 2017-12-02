@@ -305,7 +305,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(cycles_same_pv, "Check if the smallest cycles of Petri net or LTS have the same parikh vector.");
 		bigInfoAPTList.put(examine_pn, "Perform various tests on a Petri net at once");
 		bigInfoAPTList.put(fairness, "Check if a Petri net or transition system is fair. A transition system is fair if for every infinite firing sequence every infintely often k-activated event is fired infinitely often.");
-		bigInfoAPTList.put(fc, "Check if a Petri net is free-choice");
+		bigInfoAPTList.put(fc, "Check if a Petri net is free-choice.\nThat is: \\forall t1,t2 \\in T: ^{\\bullet}t1 \\Cap ^{\\bullet}t2 \\neq \\emptyset \\Rightarrow ^{\\bullet}t1 \\eq ^{\\bullet}t2.");
 		bigInfoAPTList.put(fire_sequence, "Try to fire a given firing sequence on a Petri net");
 		bigInfoAPTList.put(homogeneous, "Check if a Petri net is homogeneous");
 		bigInfoAPTList.put(invariants, "Compute a generator set of S- or T-invariants");
