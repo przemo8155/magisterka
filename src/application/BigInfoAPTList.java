@@ -292,7 +292,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(bcf, "Check if a Petri net is behaviourally conflict free (BCF).\nA Petri net is BCF if in every reachable marking M and for any enabled pair of transitions (M[a>, M[b> and a ? b), the presets of the transitions is disjoint (°a?°b=?).");
 		bigInfoAPTList.put(bicf, "Check if a Petri net is binary conflict free (BiCF).\nA Petri net is BiCF if in every reachable marking M and for any enabled pair of transitions (M[a>, M[b> and a ? b), enough tokens for both transitions are present (?p?P: M(p) ? F(p, a) + F(p, b)).");
 		bigInfoAPTList.put(bisimulation, "Check if the reachability graphs of two bounded labeled Petri nets or of two LTS or a combination of both are bisimilar");
-		bigInfoAPTList.put(bounded, "Check if a Petri net is bounded or k-bounded");
+		bigInfoAPTList.put(bounded, "Check if a Petri net is bounded or k-bounded.\nA Petri net is bounded if there is an upper limit for the number of token on each place. It is k-bounded if this limit isn't bigger than k.");
 		bigInfoAPTList.put(cf, "Check if a plain Petri net is conflict-free");
 		bigInfoAPTList.put(check, "Search for a Petri net which fulfills the given attributes");
 		bigInfoAPTList.put(check_all_cycle_prop, "Check all cycle properties of a Petri net");

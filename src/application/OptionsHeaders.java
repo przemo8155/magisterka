@@ -15,6 +15,7 @@ public class OptionsHeaders
 	private final String help2 = "Module name";
 	private final String bisimulation2 = "The first Petri net that should be examined";
 	private final String bisimulation3 = "The second Petri net that should be examined";
+	private final String bounded2 = "If given, k-boundedness is checked";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -52,5 +53,11 @@ public class OptionsHeaders
 	public String getBisimulation3()
 	{
 		return bisimulation3;
+	}
+
+
+	public String getBounded2()
+	{
+		return bounded2;
 	}
 }

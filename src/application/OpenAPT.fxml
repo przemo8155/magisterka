@@ -109,12 +109,12 @@
                   <InnerShadow color="RED" />
                </effect>
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
             <Label fx:id="opt3Label" alignment="CENTER" layoutX="444.0" layoutY="242.0" prefWidth="200.0">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
                <effect>
                   <InnerShadow color="RED" />
@@ -125,7 +125,7 @@
                   <InnerShadow color="RED" />
                </effect>
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
          </children>
