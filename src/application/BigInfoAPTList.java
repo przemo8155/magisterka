@@ -287,10 +287,10 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(help, "Get information about a module");
 		//petri nets
 		bigInfoAPTList.put(petri_net, "");
-		bigInfoAPTList.put(ac, "Check if a Petri net is asymmetric-choice");
-		bigInfoAPTList.put(backward_persistent, "Check if a Petri net or LTS is backward persistent");
-		bigInfoAPTList.put(bcf, "Check if a Petri net is behaviourally conflict free (BCF)");
-		bigInfoAPTList.put(bicf, "Check if a Petri net is binary conflict free (BiCF)");
+		bigInfoAPTList.put(ac, "Check if a Petri net is asymmetric-choice.\nA Petri net is an asymmetric choice net if ?p?,p??P: p?°?p?°?? ? p?°?p?° ? p?°?p?°.");
+		bigInfoAPTList.put(backward_persistent, "Check if a Petri net or LTS is backward persistent. \nA LTS is backward persistent if for all reachable states s and backward enabled labels a, b (a?b), there is a state r so that both r[ab>s and r[ba>s. A Petri net is backward persistent if its reachability graph is backward persistent.");
+		bigInfoAPTList.put(bcf, "Check if a Petri net is behaviourally conflict free (BCF).\nA Petri net is BCF if in every reachable marking M and for any enabled pair of transitions (M[a>, M[b> and a ? b), the presets of the transitions is disjoint (°a?°b=?).");
+		bigInfoAPTList.put(bicf, "Check if a Petri net is binary conflict free (BiCF).\nA Petri net is BiCF if in every reachable marking M and for any enabled pair of transitions (M[a>, M[b> and a ? b), enough tokens for both transitions are present (?p?P: M(p) ? F(p, a) + F(p, b)).");
 		bigInfoAPTList.put(bisimulation, "Check if the reachability graphs of two bounded labeled Petri nets or of two LTS or a combination of both are bisimilar");
 		bigInfoAPTList.put(bounded, "Check if a Petri net is bounded or k-bounded");
 		bigInfoAPTList.put(cf, "Check if a plain Petri net is conflict-free");

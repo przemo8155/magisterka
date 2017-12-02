@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -70,7 +71,7 @@
                      </input>
                   </SepiaTone>
                </effect></Button>
-            <Label fx:id="descriptionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="589.0" prefHeight="75.0" prefWidth="640.0" />
+            <Label fx:id="descriptionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="589.0" prefHeight="75.0" prefWidth="640.0" textAlignment="CENTER" wrapText="true" />
             <Label fx:id="descTextLabel" layoutX="279.0" layoutY="562.0" text="DESCRIPTION">
                <font>
                   <Font size="18.0" />
@@ -78,23 +79,55 @@
                <effect>
                   <DropShadow />
                </effect></Label>
-            <ListView fx:id="options1ListView" layoutX="14.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
-            <ListView fx:id="options2ListView" layoutX="234.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="options1ListView" layoutX="14.0" layoutY="260.0" prefHeight="250.0" prefWidth="200.0" />
+            <ListView fx:id="options2ListView" layoutX="229.0" layoutY="260.0" prefHeight="250.0" prefWidth="200.0" />
             <TextField fx:id="secondFileTextField" layoutX="14.0" layoutY="199.0" prefHeight="25.0" prefWidth="640.0" />
             <Button fx:id="secondFileButton" layoutX="280.0" layoutY="174.0" mnemonicParsing="false" onAction="#secondFileButton_OnAction" text="Select second file" />
-            <CheckBox fx:id="optionalValueCheckBox" layoutX="234.0" layoutY="477.0" mnemonicParsing="false" text="add optional value" />
-            <TextField fx:id="optionalValueTextField" layoutX="234.0" layoutY="452.0" />
+            <CheckBox fx:id="optionalValueCheckBox" layoutX="250.0" layoutY="430.0" mnemonicParsing="false" text="add optional value" />
+            <TextField fx:id="optionalValueTextField" layoutX="250.0" layoutY="400.0" />
             <Label fx:id="optionalInfoLabel" alignment="TOP_LEFT" layoutX="233.0" layoutY="494.0" prefHeight="40.0" prefWidth="309.0" />
-            <ListView fx:id="options3ListView" layoutX="454.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
-            <TextField fx:id="wordTextField" layoutX="505.0" layoutY="452.0" />
-            <Label fx:id="wordLabel" layoutX="467.0" layoutY="456.0" text="Word:" />
+            <ListView fx:id="options3ListView" layoutX="444.0" layoutY="260.0" prefHeight="250.0" prefWidth="200.0" />
+            <TextField fx:id="wordTextField" layoutX="350.0" layoutY="246.0" prefWidth="150.0" />
+            <Label fx:id="wordLabel" layoutX="250.0" layoutY="250.0" text="Word:" />
             <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="121.0" prefHeight="17.0" prefWidth="405.0" text="YOU NEED TO SELECT '-NET' FILE. THIS FILE MAY NOT WORK CORRETLY" textFill="RED" underline="true" />
             <Button fx:id="outputFileButton" layoutX="132.0" layoutY="174.0" mnemonicParsing="false" onAction="#outputFileButton_OnAction" text="Select output file" />
-            <Label fx:id="eventLabel1" layoutX="234.0" layoutY="494.0" text="Event:" />
-            <Label fx:id="eventLabel2" layoutX="454.0" layoutY="494.0" text="Reverse event:" />
-            <TextField fx:id="eventTextField1" layoutX="266.0" layoutY="490.0" prefHeight="25.0" prefWidth="120.0" />
-            <TextField fx:id="eventTextField2" layoutX="530.0" layoutY="490.0" prefHeight="25.0" prefWidth="120.0" />
-            <ListView fx:id="options4ListView" layoutX="664.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
+            <Label fx:id="eventLabel1" layoutX="250.0" layoutY="350.0" text="Event:" />
+            <Label fx:id="eventLabel2" layoutX="250.0" layoutY="300.0" text="Reverse event:" />
+            <TextField fx:id="eventTextField1" layoutX="350.0" layoutY="346.0" prefHeight="25.0" prefWidth="150.0" />
+            <TextField fx:id="eventTextField2" layoutX="350.0" layoutY="296.0" prefHeight="25.0" prefWidth="150.0" />
+            <ListView fx:id="options4ListView" layoutX="659.0" layoutY="260.0" prefHeight="250.0" prefWidth="200.0" />
+            <Label fx:id="opt1Label" alignment="CENTER" layoutX="14.0" layoutY="238.0" prefHeight="17.0" prefWidth="200.0" text="Command">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="RED" />
+               </effect>
+            </Label>
+            <Label fx:id="opt2Label" alignment="CENTER" layoutX="229.0" layoutY="238.0" prefWidth="200.0">
+               <effect>
+                  <InnerShadow color="RED" />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="opt3Label" alignment="CENTER" layoutX="444.0" layoutY="242.0" prefWidth="200.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="RED" />
+               </effect>
+            </Label>
+            <Label fx:id="opt4Label" alignment="CENTER" layoutX="659.0" layoutY="242.0" prefWidth="200.0">
+               <effect>
+                  <InnerShadow color="RED" />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

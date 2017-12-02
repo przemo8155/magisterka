@@ -73,6 +73,7 @@ public class OpenAPTController
 	SplitObjectsAlgorithms soa = new SplitObjectsAlgorithms();
 	FilesRecognition filesRecognition = new FilesRecognition();
 	Utilities utilities = new Utilities();
+	OptionsHeaders oh = new OptionsHeaders();
 	BigInfoAPTList bial = new BigInfoAPTList();
 	Help helpObj = new Help();
 	Draw drawObj = new Draw();
@@ -125,7 +126,7 @@ public class OpenAPTController
 
 	@FXML
 	private Label headLabel, typeLabel, fileLabel, descriptionLabel, descTextLabel, optionalInfoLabel, wordLabel,
-			warningLabel, eventLabel1, eventLabel2;
+			warningLabel, eventLabel1, eventLabel2, opt1Label, opt2Label, opt3Label, opt4Label;
 
 	@FXML
 	private Button selectFileButton, openButton, closeButton, infoAboutNetButton, secondFileButton, outputFileButton;
@@ -152,6 +153,8 @@ public class OpenAPTController
 		setWarningVisible(false);
 		setOutputFileButtonVisible(false);
 		setEventVisible(false);
+
+		descTextLabel.setWrapText(true);
 
 		fileTextField.setEditable(false);
 
@@ -204,6 +207,41 @@ public class OpenAPTController
 			}
 		});
 
+
+		options2ListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
+
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				return new ListCell<String>()
+				{
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if(option1Value.equals(bial.getHelp()))
+						{
+							if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item)
+									|| bial.getLTSHeader().equals(item) || bial.getGeneratorsHeader().equals(item)
+									|| bial.getConvetersHeader().equals(item))
+							{
+								setDisable(true);
+							} else
+							{
+								setDisable(false);
+							}
+						}
+
+						setText(item);
+					}
+
+				};
+			}
+		});
+
+
 		options1ListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
 		{
 
@@ -236,14 +274,14 @@ public class OpenAPTController
 						|| newValue.equals(bial.getTnet_generator())
 						|| newValue.equals(bial.getTristate_philnet_generator()))
 				{
-					selectFileButton.setDisable(true);
-					fileTextField.setDisable(true);
+					selectFileButton.setVisible(false);
+					fileTextField.setVisible(false);
 				}
 
 				else
 				{
-					fileTextField.setDisable(false);
-					selectFileButton.setDisable(false);
+					fileTextField.setVisible(true);
+					selectFileButton.setVisible(true);
 				}
 
 				for (Map.Entry<String, String> entry : bial.getBigList().entrySet())
@@ -259,6 +297,7 @@ public class OpenAPTController
 
 				if (newValue.equals(bial.getHelp()))
 				{
+					opt2Label.setText(oh.getHelp2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
@@ -266,6 +305,7 @@ public class OpenAPTController
 					setOptionalValueVisible(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
+					setInfoButtonEnable(false);
 					setEventVisible(false);
 
 					optionalInfoLabel.setVisible(false);
@@ -1205,6 +1245,10 @@ public class OpenAPTController
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
 				option2Value = newValue;
+				if(option1Value.equals(bial.getHelp()) && options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
 			}
 		});
 
@@ -2589,9 +2633,11 @@ public class OpenAPTController
 		if (vis)
 		{
 			options2ListView.setVisible(true);
+			opt2Label.setVisible(true);
 		} else
 		{
 			options2ListView.setVisible(false);
+			opt2Label.setVisible(false);
 		}
 	}
 
@@ -2600,9 +2646,11 @@ public class OpenAPTController
 		if (vis)
 		{
 			options4ListView.setVisible(true);
+			opt4Label.setVisible(true);
 		} else
 		{
 			options4ListView.setVisible(false);
+			opt4Label.setVisible(false);
 		}
 	}
 
@@ -2637,9 +2685,11 @@ public class OpenAPTController
 		if (vis)
 		{
 			options3ListView.setVisible(true);
+			opt3Label.setVisible(true);
 		} else
 		{
 			options3ListView.setVisible(false);
+			opt3Label.setVisible(false);
 		}
 	}
 
