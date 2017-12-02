@@ -157,6 +157,7 @@ public class OpenAPTController
 		descTextLabel.setWrapText(true);
 
 		fileTextField.setEditable(false);
+		secondFileTextField.setEditable(false);
 
 		optionalValueCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>()
 		{
@@ -337,12 +338,15 @@ public class OpenAPTController
 
 				} else if (newValue.equals(bial.getBisimulation()))
 				{
+					opt2Label.setText(oh.getBisimulation2());
+					opt3Label.setText(oh.getBisimulation3());
 					setSecondFileFieldsVisible(true);
 					setOptions2Visible(false);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setWordFieldsVisible(false);
+					setInfoButtonEnable(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
 
@@ -2761,6 +2765,15 @@ public class OpenAPTController
 			checkFileLTSorNET(options1ListView.getSelectionModel().getSelectedIndex(), secondFileTextField.getText());
 		}
 
+		if(!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getBisimulation()) && file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+		else if(fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getBisimulation()) && file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
 	}
 
 	@FXML
@@ -2781,6 +2794,7 @@ public class OpenAPTController
 			fileTextField.setText(file.getAbsolutePath());
 			setJarFile(file);
 			checkFileLTSorNET(options1ListView.getSelectionModel().getSelectedIndex(), fileTextField.getText());
+
 		}
 
 		if (!option1Value.equals("") && !fileTextField.getText().trim().isEmpty())
@@ -2804,6 +2818,15 @@ public class OpenAPTController
 						&& file != null)
 		{
 			catFile_GetLabels(file.getAbsolutePath());
+		}
+
+		if(!secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getBisimulation()) && file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+		else if(secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getBisimulation()) && file != null)
+		{
+			setInfoButtonEnable(false);
 		}
 	}
 
