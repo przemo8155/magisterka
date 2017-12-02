@@ -161,6 +161,7 @@ public class BigInfoAPTList
 		typesList.add(bicf);
 		typesList.add(bisimulation);
 		typesList.add(bounded);
+		typesList.add(cf);
 		typesList.add(check);
 		typesList.add(check_all_cycle_prop);
 		typesList.add(compute_pvs);
@@ -170,7 +171,6 @@ public class BigInfoAPTList
 		typesList.add(covered_by_invariant);
 		typesList.add(cycles_same_disjoint_pv);
 		typesList.add(cycles_same_pv);
-		typesList.add(cf);
 		typesList.add(examine_pn);
 		typesList.add(fairness);
 		typesList.add(fc);
@@ -293,7 +293,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(bicf, "Check if a Petri net is binary conflict free (BiCF).\nA Petri net is BiCF if in every reachable marking M and for any enabled pair of transitions (M[a>, M[b> and a ? b), enough tokens for both transitions are present (?p?P: M(p) ? F(p, a) + F(p, b)).");
 		bigInfoAPTList.put(bisimulation, "Check if the reachability graphs of two bounded labeled Petri nets or of two LTS or a combination of both are bisimilar");
 		bigInfoAPTList.put(bounded, "Check if a Petri net is bounded or k-bounded.\nA Petri net is bounded if there is an upper limit for the number of token on each place. It is k-bounded if this limit isn't bigger than k.");
-		bigInfoAPTList.put(cf, "Check if a plain Petri net is conflict-free");
+		bigInfoAPTList.put(cf, "This module tests if a plain Petri net is conflict-free.\nThat is:\\forall s \\in S: \\mid s^\\bullet \\mid \\leq 1 \\vee s^\\bullet \\subset ^\bullet s");
 		bigInfoAPTList.put(check, "Search for a Petri net which fulfills the given attributes");
 		bigInfoAPTList.put(check_all_cycle_prop, "Check all cycle properties of a Petri net");
 		bigInfoAPTList.put(compute_pvs, "Compute parikh vectors of smallest cycles of a Petri net or LTS");
