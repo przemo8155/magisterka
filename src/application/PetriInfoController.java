@@ -17,7 +17,7 @@ public class PetriInfoController
 	private Pane mainPane;
 
 	@FXML
-	private Button closeButton, copyButton;
+	private Button closeButton, copyButton, selectAllButton;
 
 	@FXML
 	private TextArea messageTextArea;
@@ -64,4 +64,11 @@ public class PetriInfoController
 
 		}
 	};
+
+	@FXML
+	void selectAllButton_OnAction(ActionEvent event)
+	{
+		messageTextArea.selectAll();
+	}
+
 }

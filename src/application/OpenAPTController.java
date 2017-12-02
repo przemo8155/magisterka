@@ -376,19 +376,22 @@ public class OpenAPTController
 
 				} else if (newValue.equals(bial.getCheck()))
 				{
+					opt2Label.setText(oh.getCheck2());
+					opt3Label.setText(oh.getCheck3());
+					opt4Label.setText(oh.getCheck4());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
-					setOptions4Visible(false);
-					setOptionalValueVisible(true);
+					setOptions4Visible(true);
+					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
 
 					options2ListView.setItems(checkObj.getCheckGeneratorsClassList());
 					options3ListView.setItems(checkObj.getCheckAttributesClassList());
-					options4ListView.setItems(null);
+					options4ListView.setItems(checkObj.getCheckMaxSecondsClassList());
 
 				}
 
@@ -1247,6 +1250,13 @@ public class OpenAPTController
 				{
 					setInfoButtonEnable(true);
 				}
+
+				if(option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
 			}
 		});
 
@@ -1257,6 +1267,12 @@ public class OpenAPTController
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
 				option3Value = newValue;
+				if(option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+					{
+						setInfoButtonEnable(true);
+					}
 			}
 		});
 
@@ -1267,6 +1283,12 @@ public class OpenAPTController
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
 				option4Value = newValue;
+				if(option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+					{
+						setInfoButtonEnable(true);
+					}
 			}
 		});
 
@@ -2337,14 +2359,14 @@ public class OpenAPTController
 		}
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCheck()
-				&& !optionalValueTextField.getText().trim().isEmpty()
+				&& options4ListView.getSelectionModel().getSelectedIndex() > -1
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			try
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						option1Value, optionalValueTextField.getText(), option2Value, option3Value);
+						option1Value, option4Value, option2Value, option3Value);
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());

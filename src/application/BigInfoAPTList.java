@@ -294,7 +294,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(bisimulation, "Check if the reachability graphs of two bounded labeled Petri nets or of two LTS or a combination of both are bisimilar");
 		bigInfoAPTList.put(bounded, "Check if a Petri net is bounded or k-bounded.\nA Petri net is bounded if there is an upper limit for the number of token on each place. It is k-bounded if this limit isn't bigger than k.");
 		bigInfoAPTList.put(cf, "This module tests if a plain Petri net is conflict-free.\nThat is:\\forall s \\in S: \\mid s^\\bullet \\mid \\leq 1 \\vee s^\\bullet \\subset ^\bullet s");
-		bigInfoAPTList.put(check, "Search for a Petri net which fulfills the given attributes");
+		bigInfoAPTList.put(check, "Search for a Petri net which fulfills the given attributes.\nFor detailed descriptions see analysis modules and generator packet.");
 		bigInfoAPTList.put(check_all_cycle_prop, "Check all cycle properties of a Petri net");
 		bigInfoAPTList.put(compute_pvs, "Compute parikh vectors of smallest cycles of a Petri net or LTS");
 		bigInfoAPTList.put(concurrent_coverability_graph, "Calculate the concurrent coverability graph of a Petri net in the step semantics");

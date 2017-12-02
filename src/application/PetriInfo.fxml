@@ -12,7 +12,7 @@
    <children>
       <Pane fx:id="mainPane" prefHeight="700.0" prefWidth="600.0">
          <children>
-            <Button fx:id="copyButton" layoutX="150.0" layoutY="650.0" mnemonicParsing="false" onAction="#copyButton_OnAction" prefHeight="40.0" prefWidth="150.0" text="Copy to clipboard">
+            <Button fx:id="copyButton" layoutX="240.0" layoutY="650.0" mnemonicParsing="false" onAction="#copyButton_OnAction" prefHeight="40.0" prefWidth="150.0" text="Copy to clipboard">
                <effect>
                   <SepiaTone>
                      <input>
@@ -20,7 +20,7 @@
                      </input>
                   </SepiaTone>
                </effect></Button>
-            <Button fx:id="closeButton" layoutX="340.0" layoutY="650.0" mnemonicParsing="false" onAction="#closeButton_OnAction" prefHeight="40.0" prefWidth="70.0" text="Close">
+            <Button fx:id="closeButton" layoutX="433.0" layoutY="650.0" mnemonicParsing="false" onAction="#closeButton_OnAction" prefHeight="40.0" prefWidth="100.0" text="Close">
                <effect>
                   <SepiaTone>
                      <input>
@@ -32,6 +32,15 @@
                   <Font name="System Bold" size="12.0" />
                </font></Button>
             <TextArea fx:id="messageTextArea" layoutX="14.0" layoutY="14.0" prefHeight="631.0" prefWidth="572.0" />
+            <Button fx:id="selectAllButton" layoutX="94.0" layoutY="650.0" mnemonicParsing="false" onAction="#selectAllButton_OnAction" prefHeight="40.0" prefWidth="100.0" text="Select all">
+               <effect>
+                  <SepiaTone>
+                     <input>
+                        <Blend mode="MULTIPLY" />
+                     </input>
+                  </SepiaTone>
+               </effect>
+            </Button>
          </children>
       </Pane>
    </children>
