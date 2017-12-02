@@ -21,6 +21,8 @@ public class OptionsHeaders
 	private final String check4 = "Max seconds";
 	private final String covered_by_invariant2 = "Parameter 's' for s-invariants and 't' for t-invariants";
 	private final String covered_by_invariant3 = "Parameter 'f' for farkas algorithm and 'p' for the adapted farkas algorithm of pipe";
+	private final String fairness2 = "If given, break if a k-unfair situation is found The default value is '0'";
+	private final String fairness3 = "If given, fairness regarding this event is checked";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -94,5 +96,17 @@ public class OptionsHeaders
 	public String getCovered_by_invariant3()
 	{
 		return covered_by_invariant3;
+	}
+
+
+	public String getFairness2()
+	{
+		return fairness2;
+	}
+
+
+	public String getFairness3()
+	{
+		return fairness3;
 	}
 }
