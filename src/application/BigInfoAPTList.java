@@ -316,11 +316,13 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(k_marking, "Compute the largest k for which M0 is a k-marking.\ne.g.: Output: Largest k for which M0 is a k-marking: 1");
 		bigInfoAPTList.put(language_equivalence, "Check if two Petri nets generate the same language");
 		bigInfoAPTList.put(matrices, "Calculate forward, backward, and incidence matrices");
-		bigInfoAPTList.put(mf, "Check if a Petri net is merge-free");
-		bigInfoAPTList.put(nonpure, "Check if a Petri net is nonpure but only simple sideconditions");
-		bigInfoAPTList.put(on, "Check if a Petri net is output-nonbranching");
-		bigInfoAPTList.put(persistent, "Check if a Petri net or LTS is persistent");
-		bigInfoAPTList.put(plain, "Check if a Petri net is plain");
+		bigInfoAPTList.put(mf, "This module checks if a Petri net is merge-free. A merge is a place where more than one transition produce token.");
+		bigInfoAPTList.put(nonpure, "Check if a Petri net is nonpure but only simple sideconditions. A Petri net is nonpure when there exists atleast one self-loop. A sidecondition is simple, when both arcsof the self-loop have a weight of 1.");
+		bigInfoAPTList.put(on, "This module checks if a Petri net is output-nonbranching. That is:\n\\forall s \\in S: \\mid s^\\bullet \\mid \\leq 1");
+		bigInfoAPTList.put(persistent, "Check if a Petri net or LTS is persistent.\nA LTS is persistent if for all reachable states s and enabled labels a, b (a?b), there is a state r so that both s[ab>r and s[ba>r. A Petri net is persistent if its reachability graph is persistent.");
+		bigInfoAPTList.put(plain, "Check if a Petri net is plain. A Petri net is plain if all arc weights are at most 1.");
+
+		///
 		bigInfoAPTList.put(pn_analysis, "Output a T-system of size g, which has a reachability graph, which is isomorph to the reachability graph of the input Petri net");
 		bigInfoAPTList.put(prime_cycle_property, "Check if the give Petri net or LTS fulfills the prime cycle property");
 		bigInfoAPTList.put(pure, "Check if a Petri net is pure");
