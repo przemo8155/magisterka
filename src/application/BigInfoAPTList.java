@@ -330,11 +330,11 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(safe, "Check if a Petri net is safe. A Petri net is safe if no marking is reachable were a place has more than one token.");
 		bigInfoAPTList.put(sideconditions, "Compute the sideconditions of a Petri net. A side condition is a self-loop, consisting of the place, the transition and the arcs.");
 		bigInfoAPTList.put(simply_live, "Check if a Petri net or a transition (if given) is simply live. A transition is simply live when it can fire at least once. A Petri net is simply live when all of its transitions are simply live. For a simply live transition, this module finds a firing sequence that fires the transition.");
-		bigInfoAPTList.put(siphons, "Compute all minimal siphons in a Petri net");
-		bigInfoAPTList.put(snet, "Check if a plain Petri net is an S-net");
+		bigInfoAPTList.put(siphons, "Compute all minimal siphons in a Petri net. A siphon is a set of places so that every transition consuming tokens from one of these places also produces tokens on at least one place in the set.");
+		bigInfoAPTList.put(snet, "Check if a plain Petri net is an S-net. In a S-net, the preset and postset of any transition has at most one entry (plus the net is plain).");
 		bigInfoAPTList.put(strong_components, "Find the strongly connected components of a Petri net or LTS");
-		bigInfoAPTList.put(strong_separation, "Check if a given sequence is strongly k-separable");
-		bigInfoAPTList.put(strong_separation_length, "Check if all sequences up to a length are strongly k-separable");
+		bigInfoAPTList.put(strong_separation, "Check if a given sequence is strongly k-separable.\nsequence:\nWords can be specified in two different forms.\nThe first format includes explicit delimiters between events. For delimiters, either commas, semicolons or spaces are allowed. An example of this format would be 'a, b, c'. Note that leading and trailing spaces are skipped.\nThe second format expects events to be individual letters. The special prefix : is used to indicate this format. An example would be ':abc'.");
+		bigInfoAPTList.put(strong_separation_length, "Check if all sequences up to a length are strongly k-separable.");
 		bigInfoAPTList.put(strongly_connected, "Check if a Petri net or LTS is strongly connected");
 		bigInfoAPTList.put(strongly_live, "Check if a Petri net or a transition (if given) is strongly live");
 		bigInfoAPTList.put(sum_async, "Compute the synchronous sum of two PN");

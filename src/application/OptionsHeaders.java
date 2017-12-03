@@ -30,6 +30,9 @@ public class OptionsHeaders
 	private final String pn_analysis3 = "maximum number of token of the checked T-systems";
 	private final String pn_analysis4 = "Parameter, which say, that a randomly selected T-system is checked with g as maximum size of places. The default value is ''";
 	private final String simply_live2 = "A transition that should be checked for liveness";
+	private final String strong_separation2 = "Firing sequence which should be checked";
+	private final String strong_separation3 = "Value of k";
+	private final String strong_separation4 = "Optional more output";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -157,5 +160,23 @@ public class OptionsHeaders
 	public String getSimply_live2()
 	{
 		return simply_live2;
+	}
+
+
+	public String getStrong_separation2()
+	{
+		return strong_separation2;
+	}
+
+
+	public String getStrong_separation3()
+	{
+		return strong_separation3;
+	}
+
+
+	public String getStrong_separation4()
+	{
+		return strong_separation4;
 	}
 }

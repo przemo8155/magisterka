@@ -9,6 +9,8 @@ public class StrongSeparation
 
 	public ObservableList<String> strongSeparationSequenceClassList = FXCollections.observableArrayList();
 
+	public ObservableList<String> strongSeparationVerboseClassList = FXCollections.observableArrayList();
+
 
 	public StrongSeparation()
 	{
@@ -24,40 +26,9 @@ public class StrongSeparation
 		strongSeparationKClassList.add("9");
 		strongSeparationKClassList.add("10");
 
+		strongSeparationVerboseClassList.add("[no verbose]");
+		strongSeparationVerboseClassList.add("verbose");
 
-		strongSeparationSequenceClassList.add("a1");
-		strongSeparationSequenceClassList.add("a2");
-		strongSeparationSequenceClassList.add("a3");
-		strongSeparationSequenceClassList.add("a4");
-		strongSeparationSequenceClassList.add("a5");
-
-		strongSeparationSequenceClassList.add("a1;a2");
-		strongSeparationSequenceClassList.add("a1;a3");
-		strongSeparationSequenceClassList.add("a1;a4");
-		strongSeparationSequenceClassList.add("a1;a5");
-		strongSeparationSequenceClassList.add("a2;a1");
-		strongSeparationSequenceClassList.add("a2;a3");
-		strongSeparationSequenceClassList.add("a2;a4");
-		strongSeparationSequenceClassList.add("a2;a5");
-		strongSeparationSequenceClassList.add("a3;a1");
-		strongSeparationSequenceClassList.add("a3;a2");
-		strongSeparationSequenceClassList.add("a3;a4");
-		strongSeparationSequenceClassList.add("a3;a5");
-		strongSeparationSequenceClassList.add("a4;a1");
-		strongSeparationSequenceClassList.add("a4;a2");
-		strongSeparationSequenceClassList.add("a4;a3");
-		strongSeparationSequenceClassList.add("a4;a5");
-		strongSeparationSequenceClassList.add("a5;a1");
-		strongSeparationSequenceClassList.add("a5;a2");
-		strongSeparationSequenceClassList.add("a5;a3");
-		strongSeparationSequenceClassList.add("a5;a4");
-		strongSeparationSequenceClassList.add("a1;a2;a3");
-		strongSeparationSequenceClassList.add("a1;a2;a4");
-		strongSeparationSequenceClassList.add("a1;a2;a5");
-		strongSeparationSequenceClassList.add("a1;a3;a2");
-		strongSeparationSequenceClassList.add("a1;a3;a4");
-		strongSeparationSequenceClassList.add("a1;a3;a5");
-		strongSeparationSequenceClassList.add("a1");
 
 	}
 
@@ -82,5 +53,17 @@ public class StrongSeparation
 	public void setStrongSeparationSequenceClassList(ObservableList<String> strongSeparationSequenceClassList)
 	{
 		this.strongSeparationSequenceClassList = strongSeparationSequenceClassList;
+	}
+
+
+	public ObservableList<String> getStrongSeparationVerboseClassList()
+	{
+		return strongSeparationVerboseClassList;
+	}
+
+
+	public void setStrongSeparationVerboseClassList(ObservableList<String> strongSeparationVerboseClassList)
+	{
+		this.strongSeparationVerboseClassList = strongSeparationVerboseClassList;
 	}
 }
