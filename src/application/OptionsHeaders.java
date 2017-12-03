@@ -23,6 +23,9 @@ public class OptionsHeaders
 	private final String covered_by_invariant3 = "Parameter 'f' for farkas algorithm and 'p' for the adapted farkas algorithm of pipe";
 	private final String fairness2 = "If given, break if a k-unfair situation is found The default value is '0'";
 	private final String fairness3 = "If given, fairness regarding this event is checked";
+	private final String fire_sequence2 = "Sequence that should be fired";
+	private final String invariants2 = "Parameter 's' for s-invariants and 't' for t-invariants";
+	private final String invariants3 = "Parameter 'f' for Farkas algorithm and 'p' for the adapted Farkas algorithm of PIPE";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -108,5 +111,23 @@ public class OptionsHeaders
 	public String getFairness3()
 	{
 		return fairness3;
+	}
+
+
+	public String getFire_sequence2()
+	{
+		return fire_sequence2;
+	}
+
+
+	public String getInvariants2()
+	{
+		return invariants2;
+	}
+
+
+	public String getInvariants3()
+	{
+		return invariants3;
 	}
 }

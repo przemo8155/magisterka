@@ -71,7 +71,7 @@
                      </input>
                   </SepiaTone>
                </effect></Button>
-            <Label fx:id="descriptionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="589.0" prefHeight="75.0" prefWidth="640.0" textAlignment="CENTER" wrapText="true" />
+            <Label fx:id="descriptionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="580.0" prefHeight="120.0" prefWidth="640.0" textAlignment="CENTER" wrapText="true" />
             <Label fx:id="descTextLabel" layoutX="279.0" layoutY="562.0" text="DESCRIPTION">
                <font>
                   <Font size="18.0" />
