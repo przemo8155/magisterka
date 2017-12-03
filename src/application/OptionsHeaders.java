@@ -26,6 +26,9 @@ public class OptionsHeaders
 	private final String fire_sequence2 = "Sequence that should be fired";
 	private final String invariants2 = "Parameter 's' for s-invariants and 't' for t-invariants";
 	private final String invariants3 = "Parameter 'f' for Farkas algorithm and 'p' for the adapted Farkas algorithm of PIPE";
+	private final String pn_analysis2 = "maximum size of places of the checked T-systems";
+	private final String pn_analysis3 = "maximum number of token of the checked T-systems";
+	private final String pn_analysis4 = "Parameter, which say, that a randomly selected T-system is checked with g as maximum size of places. The default value is ''";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -129,5 +132,23 @@ public class OptionsHeaders
 	public String getInvariants3()
 	{
 		return invariants3;
+	}
+
+
+	public String getPn_analysis2()
+	{
+		return pn_analysis2;
+	}
+
+
+	public String getPn_analysis3()
+	{
+		return pn_analysis3;
+	}
+
+
+	public String getPn_analysis4()
+	{
+		return pn_analysis4;
 	}
 }

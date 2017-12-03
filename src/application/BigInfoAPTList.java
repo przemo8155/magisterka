@@ -321,8 +321,6 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(on, "This module checks if a Petri net is output-nonbranching. That is:\n\\forall s \\in S: \\mid s^\\bullet \\mid \\leq 1");
 		bigInfoAPTList.put(persistent, "Check if a Petri net or LTS is persistent.\nA LTS is persistent if for all reachable states s and enabled labels a, b (a?b), there is a state r so that both s[ab>r and s[ba>r. A Petri net is persistent if its reachability graph is persistent.");
 		bigInfoAPTList.put(plain, "Check if a Petri net is plain. A Petri net is plain if all arc weights are at most 1.");
-
-		///
 		bigInfoAPTList.put(pn_analysis, "Output a T-system of size g, which has a reachability graph, which is isomorph to the reachability graph of the input Petri net");
 		bigInfoAPTList.put(prime_cycle_property, "Check if the give Petri net or LTS fulfills the prime cycle property");
 		bigInfoAPTList.put(pure, "Check if a Petri net is pure");
