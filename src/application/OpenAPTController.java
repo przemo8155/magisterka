@@ -2934,10 +2934,36 @@ public class OpenAPTController
 		if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getBisimulation()) && file != null)
 		{
 			setInfoButtonEnable(true);
-		} else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getBisimulation())
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getBisimulation())
 				&& file != null)
 		{
 			setInfoButtonEnable(false);
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getIsomorphism())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getIsomorphism())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getLanguage_equivalence())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getLanguage_equivalence())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
 		}
 
 	}
@@ -3029,6 +3055,32 @@ public class OpenAPTController
 		{
 			setInfoButtonEnable(false);
 		}
+
+		else if (secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getIsomorphism())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getIsomorphism())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getLanguage_equivalence())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getLanguage_equivalence())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+
+
 	}
 
 	void setOptionalValueVisible(boolean vis)

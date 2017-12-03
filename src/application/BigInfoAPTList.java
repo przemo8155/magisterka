@@ -309,11 +309,11 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(fire_sequence, "Try to fire a given firing sequence on a Petri net.. This module tries to fire a given sequence of transitions in a Petri net. It will report the longest enabled prefix of the sequence and print the marking that is reached at the end.\nsequence: Words can be specified in two different forms. The first format includes explicit delimiters between events. For delimiters, either commas, semicolons or spaces are allowed. An example of this format would be 'a, b, c'. Note that leading and trailing spaces are skipped. The second format expects events to be individual letters. The special prefix : is used to indicate this format. An example would be ':abc'.");
 		bigInfoAPTList.put(homogeneous, "Check if a Petri net is homogeneous.\nA Petri net is an homogeneous net if ?p?P:?t?,t??p°: F(p,t?)=F(p,t?)");
 		bigInfoAPTList.put(invariants, "Compute a generator set of S- or T-invariants.\nAn invariant is a semi-positive vector from the nullspace of the incidence matrix C. For a T-invariant x?0 this means C*x=0 and a S-invariant x?0 satisfies C?*x=0. This module finds the set of generators for all S- or T-invariants.");
-		bigInfoAPTList.put(isolated, "Check if a Petri net contains isolated elements");
+		bigInfoAPTList.put(isolated, "Check if a Petri net contains isolated elements. A Petri net contains isolated elements when at least one element's pre- and postset is empty.");
 		bigInfoAPTList.put(isolated_elements, "Find isolated elements in a graph");
 		bigInfoAPTList.put(isomorphism, "Check if two Petri nets have isomorphic reachability graphs");
-		bigInfoAPTList.put(k_bounded, "Find the smallest k for which a Petri net is k-bounded");
-		bigInfoAPTList.put(k_marking, "Compute the largest k for which M0 is a k-marking");
+		bigInfoAPTList.put(k_bounded, "Find the smallest k for which a Petri net is k-bounded. A Petri net is bounded if there is an upper limit for the number of token on each place. It is k-bounded if this limit isn't bigger than k.");
+		bigInfoAPTList.put(k_marking, "Compute the largest k for which M0 is a k-marking.\ne.g.: Output: Largest k for which M0 is a k-marking: 1");
 		bigInfoAPTList.put(language_equivalence, "Check if two Petri nets generate the same language");
 		bigInfoAPTList.put(matrices, "Calculate forward, backward, and incidence matrices");
 		bigInfoAPTList.put(mf, "Check if a Petri net is merge-free");
