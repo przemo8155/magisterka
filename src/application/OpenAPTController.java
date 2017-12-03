@@ -557,6 +557,7 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getSimply_live()) && !fileTextField.getText().trim().isEmpty())
 				{
+					opt2Label.setText(oh.getSimply_live2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
@@ -2121,6 +2122,33 @@ public class OpenAPTController
 			}
 		}
 
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getSimply_live()
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getStrongly_live()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
@@ -3170,6 +3198,11 @@ public class OpenAPTController
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			setInfoButtonEnable(true);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSimply_live()))
+		{
+			opt2Label.setText(oh.getSimply_live2());
 		}
 
 
