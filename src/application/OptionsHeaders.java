@@ -33,6 +33,10 @@ public class OptionsHeaders
 	private final String strong_separation2 = "Firing sequence which should be checked";
 	private final String strong_separation3 = "Value of k";
 	private final String strong_separation4 = "Optional more output";
+	private final String strong_separation_length2 = "Maximum length of firing sequences";
+	private final String strong_separation_length3 = "Value of k";
+	private final String strong_separation_length4 = "Optional more output";
+	private final String strongly_live2 = "A transition that should be checked for liveness";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -178,5 +182,29 @@ public class OptionsHeaders
 	public String getStrong_separation4()
 	{
 		return strong_separation4;
+	}
+
+
+	public String getStrong_separation_length2()
+	{
+		return strong_separation_length2;
+	}
+
+
+	public String getStrong_separation_length3()
+	{
+		return strong_separation_length3;
+	}
+
+
+	public String getStrong_separation_length4()
+	{
+		return strong_separation_length4;
+	}
+
+
+	public String getStrongly_live2()
+	{
+		return strongly_live2;
 	}
 }

@@ -9,6 +9,8 @@ public class StrongSeparationLength
 
 	public ObservableList<String> strongSeparationLengthKClassList = FXCollections.observableArrayList();
 
+	public ObservableList<String> strongSeparationLengthVerboseClassList = FXCollections.observableArrayList();
+
 
 	public StrongSeparationLength()
 	{
@@ -33,6 +35,10 @@ public class StrongSeparationLength
 		strongSeparationLengthKClassList.add("8");
 		strongSeparationLengthKClassList.add("9");
 		strongSeparationLengthKClassList.add("10");
+
+		strongSeparationLengthVerboseClassList.add("[no verbose]");
+		strongSeparationLengthVerboseClassList.add("verbose");
+
 
 	}
 
@@ -59,5 +65,17 @@ public class StrongSeparationLength
 	public void setStrongSeparationLengthKClassList(ObservableList<String> strongSeparationLengthKClassList)
 	{
 		this.strongSeparationLengthKClassList = strongSeparationLengthKClassList;
+	}
+
+
+	public ObservableList<String> getStrongSeparationLengthVerboseClassList()
+	{
+		return strongSeparationLengthVerboseClassList;
+	}
+
+
+	public void setStrongSeparationLengthVerboseClassList(ObservableList<String> strongSeparationLengthVerboseClassList)
+	{
+		this.strongSeparationLengthVerboseClassList = strongSeparationLengthVerboseClassList;
 	}
 }

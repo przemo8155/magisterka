@@ -336,7 +336,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(strong_separation, "Check if a given sequence is strongly k-separable.\nsequence:\nWords can be specified in two different forms.\nThe first format includes explicit delimiters between events. For delimiters, either commas, semicolons or spaces are allowed. An example of this format would be 'a, b, c'. Note that leading and trailing spaces are skipped.\nThe second format expects events to be individual letters. The special prefix : is used to indicate this format. An example would be ':abc'.");
 		bigInfoAPTList.put(strong_separation_length, "Check if all sequences up to a length are strongly k-separable.");
 		bigInfoAPTList.put(strongly_connected, "Check if a Petri net or LTS is strongly connected");
-		bigInfoAPTList.put(strongly_live, "Check if a Petri net or a transition (if given) is strongly live");
+		bigInfoAPTList.put(strongly_live, "Check if a Petri net or a transition (if given) is strongly live. A transition is strongly live when for every reachable marking there exists a firing sequence after which this transition is activated. A Petri net is strongly live when all of its transitions are strongly live. For a transition which is not strongly live, this module finds a firing sequence after which the transition cannot fire anymore.");
 		bigInfoAPTList.put(sum_async, "Compute the synchronous sum of two PN");
 		bigInfoAPTList.put(sum_sync, "Compute the synchronous sum of two PN");
 		bigInfoAPTList.put(tnet, "Check if a plain Petri net is a T-net");
