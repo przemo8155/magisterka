@@ -347,8 +347,8 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(weak_separation_length, "Check if all sequences up to a length are weakly k-separable");
 		bigInfoAPTList.put(weakly_connected, "Check if a Petri net or LTS is weakly connected");
 		bigInfoAPTList.put(weakly_live, "Check if a Petri net or a transition (if given) is weakly live. A transition is weakly live if an infinite fire sequence exists which fires this transition infinitely often. A Petri net is weakly live when all of its transitions are weakly live");
-		bigInfoAPTList.put(wfc, "Check if a Petri net is weighted free-choice");
-		bigInfoAPTList.put(word, " Check if a word is in a Petri net's prefix language");
+		bigInfoAPTList.put(wfc, "Check if a Petri net is weighted free-choice. That is: \\forall t1,t2 \\in T: ^{\\bullet}t1 \\Cap ^{\\bullet}t2 \\neq \\emptyset \\Rightarrow ^{\\bullet}t1 \\eq ^{\\bullet}t2.");
+		bigInfoAPTList.put(word, " Check if a word is in a Petri net's prefix language.\nword:\nWords can be specified in two different forms.\nThe first format includes explicit delimiters between events. For delimiters, either commas, semicolons or spaces are allowed. An example of this format would be 'a, b, c'. Note that leading and trailing spaces are skipped.\nThe second format expects events to be individual letters. The special prefix : is used to indicate this format. An example would be ':abc'.");
 
 		//lts
 		bigInfoAPTList.put(lts, "");

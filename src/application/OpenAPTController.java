@@ -192,6 +192,17 @@ public class OpenAPTController
 			{
 				setInfoButtonEnable(false);
 			}
+
+			else if (!newValue.trim().isEmpty() && option1Value.equals(bial.getWord())
+					&& !fileTextField.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(true);
+			}
+			else if(newValue.trim().isEmpty() && option1Value.equals(bial.getWord())
+					&& !fileTextField.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
 		});
 
 		optionalValueCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>()
@@ -813,7 +824,7 @@ public class OpenAPTController
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(true);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -3388,6 +3399,31 @@ public class OpenAPTController
 			setInfoButtonEnable(true);
 		}
 
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_async())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_async())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_sync())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_sync())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+
 	}
 
 	@FXML
@@ -3641,6 +3677,44 @@ public class OpenAPTController
 		{
 			setInfoButtonEnable(false);
 		}
+
+		else if (secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_async())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_async())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_sync())
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!secondFileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getSum_sync())
+				&& file != null)
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (option1Value.equals(bial.getWord())
+				&& wordTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (option1Value.equals(bial.getWord())
+				&& !wordTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(true);
+		}
+
+
 
 	}
 
