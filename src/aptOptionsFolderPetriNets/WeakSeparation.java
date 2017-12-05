@@ -9,6 +9,8 @@ public class WeakSeparation
 
 	public ObservableList<String> weakSeparationSequenceClassList = FXCollections.observableArrayList();
 
+	public ObservableList<String> weakSeparationVerboseClassList = FXCollections.observableArrayList();
+
 	public WeakSeparation()
 	{
 		weakSeparationKClassList.add("0");
@@ -56,6 +58,10 @@ public class WeakSeparation
 		weakSeparationSequenceClassList.add("a1;a3;a4");
 		weakSeparationSequenceClassList.add("a1;a3;a5");
 		weakSeparationSequenceClassList.add("a1");
+
+
+		weakSeparationVerboseClassList.add("[no verbose]");
+		weakSeparationVerboseClassList.add("verbose");
 	}
 
 
@@ -82,6 +88,20 @@ public class WeakSeparation
 	public void setWeakSeparationSequenceClassList(ObservableList<String> weakSeparationSequenceClassList)
 	{
 		this.weakSeparationSequenceClassList = weakSeparationSequenceClassList;
+	}
+
+
+
+	public ObservableList<String> getWeakSeparationVerboseClassList()
+	{
+		return weakSeparationVerboseClassList;
+	}
+
+
+
+	public void setWeakSeparationVerboseClassList(ObservableList<String> weakSeparationVerboseClassList)
+	{
+		this.weakSeparationVerboseClassList = weakSeparationVerboseClassList;
 	}
 
 }

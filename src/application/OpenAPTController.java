@@ -179,6 +179,19 @@ public class OpenAPTController
 			{
 				setInfoButtonEnable(false);
 			}
+
+			else if (!newValue.trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+			{
+				setInfoButtonEnable(true);
+			}
+			else if(newValue.trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+			{
+				setInfoButtonEnable(false);
+			}
 		});
 
 		optionalValueCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>()
@@ -716,37 +729,50 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getWeak_separation()))
 				{
+					opt2Label.setText(oh.getWeak_separation3());
+					opt3Label.setText(oh.getWeak_separation2());
+					opt4Label.setText(oh.getWeak_separation4());
 					setOptions2Visible(true);
-					setOptions3Visible(true);
-					setOptions4Visible(false);
+					setOptions3Visible(false);
+					setOptions4Visible(true);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
-					setWordFieldsVisible(false);
+					setInfoButtonEnable(false);
+					setWordFieldsVisible(true);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
+					opt3Label.setVisible(true);
+					wordLabel.setLayoutX(430);
+					wordLabel.setLayoutY(390);
+					wordTextField.setLayoutX(495);
+					wordTextField.setLayoutY(386);
+					wordLabel.setText("Sequcence: ");
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
 					optionalValueTextField.setDisable(false);
 
 					options2ListView.setItems(weakSeparationObj.getWeakSeparationKClassList());
-					options3ListView.setItems(weakSeparationObj.getWeakSeparationSequenceClassList());
-					options4ListView.setItems(null);
+					options3ListView.setItems(null);
+					options4ListView.setItems(weakSeparationObj.getWeakSeparationVerboseClassList());
 
 				}
 
 				else if (newValue.equals(bial.getWeak_separation_length()))
 				{
+					opt2Label.setText(oh.getWeak_separation_length2());
+					opt3Label.setText(oh.getWeak_separation_length3());
+					opt4Label.setText(oh.getWeak_separation_length4());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
-					setOptions4Visible(false);
+					setOptions4Visible(true);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
+
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -754,12 +780,12 @@ public class OpenAPTController
 
 					options2ListView.setItems(weakSeparationLengthObj.getWeakSeparationLengthLengthClassList());
 					options3ListView.setItems(weakSeparationLengthObj.getWeakSeparationLengthKClassList());
-					options4ListView.setItems(null);
-
+					options4ListView.setItems(weakSeparationLengthObj.getWeakSeparationLengthVerboseClassList());
 				}
 
 				else if (newValue.equals(bial.getWeakly_live()) && !fileTextField.getText().trim().isEmpty())
 				{
+					opt2Label.setText(oh.getWeakly_live2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
@@ -1357,6 +1383,13 @@ public class OpenAPTController
 				if (option1Value.equals(bial.getStrong_separation_length())
 						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 						&& !fileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& !wordTextField.getText().trim().isEmpty())
 				{
 					setInfoButtonEnable(true);
 				}
@@ -2315,6 +2348,33 @@ public class OpenAPTController
 		}
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeakly_live()
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeakly_live()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !fileTextField.getText().trim().isEmpty())
 		{
@@ -2590,7 +2650,36 @@ public class OpenAPTController
 		}
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeak_separation_length()
-				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+				&& options4ListView.getSelectionModel().getSelectedIndex() < 1)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeak_separation_length()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options4ListView.getSelectionModel().getSelectedIndex() < 1)
 		{
 			try
 			{
@@ -2612,7 +2701,37 @@ public class OpenAPTController
 			{
 				e.printStackTrace();
 			}
-		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFind_words2()
+		}
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeak_separation_length()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options4ListView.getSelectionModel().getSelectedIndex() > 0)
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option2Value, option3Value, "verbose");
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFind_words2()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& options3ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !wordTextField.getText().trim().isEmpty())
@@ -2696,16 +2815,47 @@ public class OpenAPTController
 				e.printStackTrace();
 			}
 		}
-
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeak_separation()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
-				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+				&& options4ListView.getSelectionModel().getSelectedIndex() > 0
+				&& !fileTextField.getText().trim().isEmpty() && !wordTextField.getText().trim().isEmpty())
 		{
 			try
 			{
-				option3Value = "\"" + option3Value + "\"";
+				String cmd = wordTextField.getText();
+				cmd = "\"" + cmd + "\"";
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
-						option1Value, fileTextField.getText(), option3Value, option2Value);
+						option1Value, fileTextField.getText(), cmd, option2Value, "verbose");
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getWeak_separation()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options4ListView.getSelectionModel().getSelectedIndex() < 1
+				&& !fileTextField.getText().trim().isEmpty() && !wordTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				String cmd = wordTextField.getText();
+				cmd = "\"" + cmd + "\"";
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), cmd, option2Value);
 
 				Process p = pb.start();
 				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
@@ -3375,6 +3525,16 @@ public class OpenAPTController
 			opt2Label.setText(oh.getSimply_live2());
 		}
 
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getWeakly_live()))
+		{
+			opt2Label.setText(oh.getWeakly_live2());
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getStrongly_live()))
+		{
+			opt2Label.setText(oh.getStrongly_live2());
+		}
+
 		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getStrong_separation())
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 				&& !wordTextField.getText().trim().isEmpty())
@@ -3429,6 +3589,54 @@ public class OpenAPTController
 		}
 
 		else if (option1Value.equals(bial.getStrong_separation_length())
+				&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !wordTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& wordTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& wordTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& !wordTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getWeak_separation())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& wordTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+
+		else if (option1Value.equals(bial.getWeak_separation_length())
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (option1Value.equals(bial.getWeak_separation_length())
 				&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			setInfoButtonEnable(false);

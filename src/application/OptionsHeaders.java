@@ -37,6 +37,13 @@ public class OptionsHeaders
 	private final String strong_separation_length3 = "Value of k";
 	private final String strong_separation_length4 = "Optional more output";
 	private final String strongly_live2 = "A transition that should be checked for liveness";
+	private final String weak_separation2 = "Firing sequence which should be checked";
+	private final String weak_separation3 = "Value of k";
+	private final String weak_separation4 = "Optional more output";
+	private final String weak_separation_length2 = "Maximum length of firing sequences";
+	private final String weak_separation_length3 = "Value of k";
+	private final String weak_separation_length4 = "Optional more output";
+	private final String weakly_live2 = "A transition that should be checked for liveness";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -206,5 +213,47 @@ public class OptionsHeaders
 	public String getStrongly_live2()
 	{
 		return strongly_live2;
+	}
+
+
+	public String getWeak_separation2()
+	{
+		return weak_separation2;
+	}
+
+
+	public String getWeak_separation3()
+	{
+		return weak_separation3;
+	}
+
+
+	public String getWeak_separation4()
+	{
+		return weak_separation4;
+	}
+
+
+	public String getWeak_separation_length2()
+	{
+		return weak_separation_length2;
+	}
+
+
+	public String getWeak_separation_length3()
+	{
+		return weak_separation_length3;
+	}
+
+
+	public String getWeak_separation_length4()
+	{
+		return weak_separation_length4;
+	}
+
+
+	public String getWeakly_live2()
+	{
+		return weakly_live2;
 	}
 }

@@ -339,14 +339,14 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(strongly_live, "Check if a Petri net or a transition (if given) is strongly live. A transition is strongly live when for every reachable marking there exists a firing sequence after which this transition is activated. A Petri net is strongly live when all of its transitions are strongly live. For a transition which is not strongly live, this module finds a firing sequence after which the transition cannot fire anymore.");
 		bigInfoAPTList.put(sum_async, "Compute the synchronous sum of two PN");
 		bigInfoAPTList.put(sum_sync, "Compute the synchronous sum of two PN");
-		bigInfoAPTList.put(tnet, "Check if a plain Petri net is a T-net");
+		bigInfoAPTList.put(tnet, "Check if a plain Petri net is a T-net. In a T-net, the preset and postset of any place has at most one entry (plus the net is plain).");
 		bigInfoAPTList.put(to_regular_expression, "Create a language-equivalent (up to prefix creation) regular expression");
-		bigInfoAPTList.put(traps, "Compute all minimal traps in a Petri net");
+		bigInfoAPTList.put(traps, "Compute all minimal traps in a Petri net. A trap is a set of places so that every transition producing tokens on one of these places also consumes tokens from at least one place in the set.");
 		bigInfoAPTList.put(weak_components, "Find the weakly connected components of a Petri net or LTS");
-		bigInfoAPTList.put(weak_separation, "Check if a given sequence is weakly k-separable");
+		bigInfoAPTList.put(weak_separation, "Check if a given sequence is weakly k-separable.\nsequence:\nWords can be specified in two different forms.\nThe first format includes explicit delimiters between events. For delimiters, either commas, semicolons or spaces are allowed. An example of this format would be 'a, b, c'. Note that leading and trailing spaces are skipped.\nThe second format expects events to be individual letters. The special prefix : is used to indicate this format. An example would be ':abc'.");
 		bigInfoAPTList.put(weak_separation_length, "Check if all sequences up to a length are weakly k-separable");
 		bigInfoAPTList.put(weakly_connected, "Check if a Petri net or LTS is weakly connected");
-		bigInfoAPTList.put(weakly_live, "Check if a Petri net or a transition (if given) is weakly live");
+		bigInfoAPTList.put(weakly_live, "Check if a Petri net or a transition (if given) is weakly live. A transition is weakly live if an infinite fire sequence exists which fires this transition infinitely often. A Petri net is weakly live when all of its transitions are weakly live");
 		bigInfoAPTList.put(wfc, "Check if a Petri net is weighted free-choice");
 		bigInfoAPTList.put(word, " Check if a word is in a Petri net's prefix language");
 
