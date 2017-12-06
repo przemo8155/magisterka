@@ -205,6 +205,20 @@ public class OpenAPTController
 			{
 				setInfoButtonEnable(false);
 			}
+
+			else if(newValue.trim().isEmpty() && option1Value.equals(bial.getFind_words2())
+					&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+			{
+				setInfoButtonEnable(false);
+			}
+
+			else if(!newValue.trim().isEmpty() && option1Value.equals(bial.getFind_words2())
+					&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+					&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+			{
+				setInfoButtonEnable(true);
+			}
 		});
 
 		optionalValueCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>()
@@ -902,20 +916,23 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getFind_words2()))
 				{
+					opt2Label.setText(oh.getFind_words2());
+					opt3Label.setText(oh.getFind_words3());
+					opt4Label.setText(oh.getFind_words4());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(true);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
 					wordLabel.setLayoutX(250);
-					wordLabel.setLayoutY(250);
+					wordLabel.setLayoutY(200);
 					wordTextField.setLayoutX(350);
-					wordTextField.setLayoutY(246);
-					wordLabel.setText("Word: ");
+					wordTextField.setLayoutY(196);
+					wordLabel.setText("Alphabet: ");
 
 					optionalInfoLabel.setVisible(false);
 					optionalValueCheckBox.setVisible(false);
@@ -929,12 +946,13 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getGdiam2()) && !fileTextField.getText().trim().isEmpty())
 				{
+					opt2Label.setText(oh.getGdiam2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1492,6 +1510,20 @@ public class OpenAPTController
 				{
 					setInfoButtonEnable(true);
 				}
+
+				if (option1Value.equals(bial.getFind_words2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& !wordTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGdiam2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
 			}
 		});
 
@@ -1521,6 +1553,14 @@ public class OpenAPTController
 						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
 						&& !fileTextField.getText().trim().isEmpty()
 						&& !secondFileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getFind_words2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& !wordTextField.getText().trim().isEmpty())
 				{
 					setInfoButtonEnable(true);
 				}
@@ -4000,6 +4040,15 @@ public class OpenAPTController
 		{
 			setInfoButtonEnable(false);
 		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGdiam2()))
+		{
+			opt2Label.setText(oh.getGdiam2());
+			catFile_GetLabels(fileTextField.getText());
+			setInfoButtonEnable(false);
+		}
+
+
 
 
 

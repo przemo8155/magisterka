@@ -16,7 +16,7 @@ public class FindWords
 		findWordsOptionsClassList.add("none");
 
 		findWordsOperationsClassList.add("solvable");
-		findWordsOperationsClassList.add("unsolvable");
+		findWordsOperationsClassList.add("minimal_unsolvable");
 	}
 
 	public ObservableList<String> getFindWordsOptionsClassList()

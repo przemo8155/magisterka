@@ -48,6 +48,10 @@ public class OptionsHeaders
 	private final String extend_lts2 = "Maximum number of new nodes";
 	private final String extend_lts3 = "The mode";
 	private final String extend_lts4 = "The file to load/save the state from/to";
+	private final String find_words2 = "Options";
+	private final String find_words3 = "Choose between printing all 'minimal_unsolvable' words or all 'solvable' words";
+	private final String find_words4 = "Letters that should be part of the alphabet";
+	private final String gdiam2 = "Set of labels to check";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -283,5 +287,29 @@ public class OptionsHeaders
 	public String getExtend_lts4()
 	{
 		return extend_lts4;
+	}
+
+
+	public String getFind_words2()
+	{
+		return find_words2;
+	}
+
+
+	public String getFind_words3()
+	{
+		return find_words3;
+	}
+
+
+	public String getFind_words4()
+	{
+		return find_words4;
+	}
+
+
+	public String getGdiam2()
+	{
+		return gdiam2;
 	}
 }
