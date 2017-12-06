@@ -463,7 +463,8 @@ public class OpenAPTController
 					options4ListView.setItems(null);
 				}
 
-				else if (newValue.equals(bial.getFairness()) && !fileTextField.getText().trim().isEmpty())
+				else if (newValue.equals(bial.getFairness()) && !fileTextField.getText().trim().isEmpty()
+						&& options1ListView.getSelectionModel().getSelectedIndex() < 30)
 				{
 					opt2Label.setText(oh.getFairness2());
 					opt3Label.setText(oh.getFairness3());
@@ -485,7 +486,35 @@ public class OpenAPTController
 					catFile_GetTransitions3List(fileTextField.getText());
 					options4ListView.setItems(null);
 
-				} else if (newValue.equals(bial.getFire_sequence()) && !fileTextField.getText().trim().isEmpty())
+				}
+
+
+				else if (newValue.equals(bial.getFairness()) && !fileTextField.getText().trim().isEmpty()
+						&& options1ListView.getSelectionModel().getSelectedIndex() > 30)
+				{
+					opt2Label.setText(oh.getFairness2());
+					opt3Label.setText(oh.getFairness3());
+					setOptions2Visible(true);
+					setOptions3Visible(true);
+					setOptions4Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(true);
+					setWordFieldsVisible(false);
+					setOutputFileButtonVisible(false);
+					setEventVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(fairnessObj.getFairnessClassList());
+					catFile_GetLabels3List(fileTextField.getText());
+					options4ListView.setItems(null);
+
+				}
+
+				else if (newValue.equals(bial.getFire_sequence()) && !fileTextField.getText().trim().isEmpty())
 				{
 					opt2Label.setText(oh.getFire_sequence2());
 					setOptions2Visible(true);
@@ -3666,13 +3695,24 @@ public class OpenAPTController
 			catFile_GetTransitions(file.getAbsolutePath());
 		}
 
-		if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness() && file != null)
+		if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness() && file != null
+				&& options1ListView.getSelectionModel().getSelectedIndex() < 40)
 		{
 			opt2Label.setText(oh.getFairness2());
 			opt3Label.setText(oh.getFairness3());
 			setOptions2Visible(true);
 			options2ListView.setItems(fairnessObj.getFairnessClassList());
 			catFile_GetTransitions3List(file.getAbsolutePath());
+		}
+
+		if (options1ListView.getSelectionModel().getSelectedItem() == bial.getFairness() && file != null
+				&& options1ListView.getSelectionModel().getSelectedIndex() > 40)
+		{
+			opt2Label.setText(oh.getFairness2());
+			opt3Label.setText(oh.getFairness3());
+			setOptions2Visible(true);
+			options2ListView.setItems(fairnessObj.getFairnessClassList());
+			catFile_GetLabels3List(file.getAbsolutePath());
 		}
 
 		if (options1ListView.getSelectionModel().getSelectedItem() == bial.getGdiam2() && file != null
@@ -4118,6 +4158,39 @@ public class OpenAPTController
 				if (line.equals(".transitions"))
 				{
 					while (!(line = reader.readLine()).equals(".flows"))
+					{
+						if (!line.equals(""))
+							tempList.add(line);
+					}
+				}
+			}
+
+			setOptions3Visible(true);
+			options3ListView.setItems(tempList);
+		}
+
+		catch (InterruptedException | IOException e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+
+
+	void catFile_GetLabels3List(String path)
+	{
+		ObservableList<String> tempList = FXCollections.observableArrayList();
+		try
+		{
+			Process p = Runtime.getRuntime().exec("cmd /c more " + path);
+			p.waitFor();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line;
+			while ((line = reader.readLine()) != null)
+			{
+				if (line.equals(".labels"))
+				{
+					while (!(line = reader.readLine()).equals(".arcs"))
 					{
 						if (!line.equals(""))
 							tempList.add(line);
