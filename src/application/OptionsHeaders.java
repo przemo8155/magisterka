@@ -44,6 +44,7 @@ public class OptionsHeaders
 	private final String weak_separation_length3 = "Value of k";
 	private final String weak_separation_length4 = "Optional more output";
 	private final String weakly_live2 = "A transition that should be checked for liveness";
+	private final String extend_deterministic_persistent2 = "Maximum allowed number of processing rounds that add new states";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -255,5 +256,11 @@ public class OptionsHeaders
 	public String getWeakly_live2()
 	{
 		return weakly_live2;
+	}
+
+
+	public String getExtend_deterministic_persistent2()
+	{
+		return extend_deterministic_persistent2;
 	}
 }

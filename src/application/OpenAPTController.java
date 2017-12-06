@@ -19,6 +19,7 @@ import aptOptionsFolderGenerators.QuadstatePhilnetGenerator;
 import aptOptionsFolderGenerators.RandomTNetGenerator;
 import aptOptionsFolderGenerators.TNetGenerator;
 import aptOptionsFolderGenerators.TristatePhilnetGenerator;
+import aptOptionsFolderLTS.ExtendDeterministicPersistent;
 import aptOptionsFolderLTS.ExtendLts;
 import aptOptionsFolderLTS.FindWords;
 import aptOptionsFolderLTS.OverapproximateSynthesize;
@@ -104,6 +105,7 @@ public class OpenAPTController
 	RandomTNetGenerator randomTNetGenerator = new RandomTNetGenerator();
 	TNetGenerator tNetGenerator = new TNetGenerator();
 	TristatePhilnetGenerator tristatePhilnetGenerator = new TristatePhilnetGenerator();
+	ExtendDeterministicPersistent extendDeterministicPersistent = new ExtendDeterministicPersistent();
 
 	public String option1Value = "";
 	public String option2Value = "";
@@ -1322,6 +1324,52 @@ public class OpenAPTController
 
 				}
 
+				else if (newValue.equals(bial.getCreate_lts2()))
+				{
+					setOptions2Visible(false);
+					setOptions3Visible(false);
+					setOptions4Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(true);
+					setInfoButtonEnable(false);
+					setWordFieldsVisible(false);
+					setOutputFileButtonVisible(false);
+					setEventVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(null);
+					options3ListView.setItems(null);
+					options4ListView.setItems(null);
+
+				}
+
+				else if (newValue.equals(bial.getExtend_deterministic_persistent2()))
+				{
+					opt2Label.setText(oh.getExtend_deterministic_persistent2());
+					setOptions2Visible(true);
+					setOptions3Visible(false);
+					setOptions4Visible(false);
+					setOptionalValueVisible(false);
+					setSecondFileFieldsVisible(false);
+					setInfoButtonEnable(false);
+					setWordFieldsVisible(false);
+					setOutputFileButtonVisible(false);
+					setEventVisible(false);
+
+					optionalInfoLabel.setVisible(false);
+					optionalValueCheckBox.setVisible(false);
+					optionalValueTextField.setDisable(false);
+
+					options2ListView.setItems(extendDeterministicPersistent.getExtendDeterministicPersistentClassList());
+					options3ListView.setItems(null);
+					options4ListView.setItems(null);
+
+				}
+
+
 				else
 				{
 					setOptions2Visible(false);
@@ -1537,12 +1585,16 @@ public class OpenAPTController
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getQuadstate_philnet_generator()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getRandom_t_net_generator()
 				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getTnet_generator()
-				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getTristate_philnet_generator())
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getTristate_philnet_generator()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getCreate_lts2()
+				&& options1ListView.getSelectionModel().getSelectedItem() != bial.getExtend_deterministic_persistent2())
 		{
 			option2Value = "";
 			JarProcess(jarFile);
 
-		} else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getHelp()
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getHelp()
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
 			try
@@ -1568,6 +1620,122 @@ public class OpenAPTController
 			}
 
 		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getExtend_deterministic_persistent2()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), option2Value);
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getExtend_deterministic_persistent2()
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCreate_lts2()
+				&& !fileTextField.getText().trim().isEmpty()
+				&& secondFileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getCreate_lts2()
+				&& !fileTextField.getText().trim().isEmpty()
+				&& !secondFileTextField.getText().trim().isEmpty())
+		{
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, fileTextField.getText(), secondFileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getBounded()
 				&& !fileTextField.getText().trim().isEmpty()
@@ -3712,6 +3880,18 @@ public class OpenAPTController
 				&& !wordTextField.getText().trim().isEmpty())
 		{
 			setInfoButtonEnable(true);
+		}
+
+		else if (option1Value.equals(bial.getCreate_lts2())
+				&& !fileTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (option1Value.equals(bial.getCreate_lts2())
+				&& fileTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
 		}
 
 

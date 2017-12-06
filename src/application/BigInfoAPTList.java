@@ -352,7 +352,7 @@ public class BigInfoAPTList
 
 		//lts
 		bigInfoAPTList.put(lts, "");
-		bigInfoAPTList.put(backward_persistent2,"Check if a Petri net or LTS is backward persistent");
+		bigInfoAPTList.put(backward_persistent2,"A LTS is backward persistent if for all reachable states s and backward enabled labels a, b (a?b), there is a state r so that both r[ab>s and r[ba>s. A Petri net is backward persistent if its reachability graph is backward persistent.");
 		bigInfoAPTList.put(backwards_deterministic2,"Check if a LTS is backwards deterministic");
 		bigInfoAPTList.put(bisimulation2,"Check if the reachability graphs of two bounded labeled Petri nets or of two LTS or a combination of both are bisimilar");
 		bigInfoAPTList.put(compute_pvs2,"Compute parikh vectors of smallest cycles of a Petri net or LTS");
