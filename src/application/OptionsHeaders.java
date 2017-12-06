@@ -45,6 +45,9 @@ public class OptionsHeaders
 	private final String weak_separation_length4 = "Optional more output";
 	private final String weakly_live2 = "A transition that should be checked for liveness";
 	private final String extend_deterministic_persistent2 = "Maximum allowed number of processing rounds that add new states";
+	private final String extend_lts2 = "Maximum number of new nodes";
+	private final String extend_lts3 = "The mode";
+	private final String extend_lts4 = "The file to load/save the state from/to";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -262,5 +265,23 @@ public class OptionsHeaders
 	public String getExtend_deterministic_persistent2()
 	{
 		return extend_deterministic_persistent2;
+	}
+
+
+	public String getExtend_lts2()
+	{
+		return extend_lts2;
+	}
+
+
+	public String getExtend_lts3()
+	{
+		return extend_lts3;
+	}
+
+
+	public String getExtend_lts4()
+	{
+		return extend_lts4;
 	}
 }

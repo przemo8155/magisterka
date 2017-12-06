@@ -362,7 +362,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(deterministic2,"Check if a LTS is deterministic");
 		bigInfoAPTList.put(examine_lts2,"Perform various tests on a transition system at once");
 		bigInfoAPTList.put(extend_deterministic_persistent2, "Extend a transition system to an deterministic persistent transition system");
-		bigInfoAPTList.put(extend_lts2, "Generate extensions to a given LTS that satisfy certain properties");
+		bigInfoAPTList.put(extend_lts2, "Generate extensions to a given LTS that satisfy certain properties.\nGenerate extensions to a given LTS that are reversible, persistent. Also, all smallest cycles share the same parikh vector. This module can run in three different modes: It can generate the next possible extension to the given LTS, the next extension that satisfies the above properties or the next satisfying extension that is also minimal among satisfying extensions.");
 		bigInfoAPTList.put(factorize2,"Decompose a LTS into its factors (if possible)");
 		bigInfoAPTList.put(fairness2,"Check if a Petri net or transition system is fair");
 		bigInfoAPTList.put(find_words2,"Print either minimal unsolvable or all solvable words of some class");
