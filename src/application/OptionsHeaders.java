@@ -52,6 +52,7 @@ public class OptionsHeaders
 	private final String find_words3 = "Choose between printing all 'minimal_unsolvable' words or all 'solvable' words";
 	private final String find_words4 = "Letters that should be part of the alphabet";
 	private final String gdiam2 = "Set of labels to check";
+	private final String label_separation2 = "Set of labels to check";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -311,5 +312,11 @@ public class OptionsHeaders
 	public String getGdiam2()
 	{
 		return gdiam2;
+	}
+
+
+	public String getLabel_separation2()
+	{
+		return label_separation2;
 	}
 }
