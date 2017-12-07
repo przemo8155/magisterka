@@ -375,22 +375,22 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(overapproximate_synthesize2,"Synthesize the minimal Petri Net overapproximation from a transition system");
 		bigInfoAPTList.put(persistent2,"A LTS is persistent if for all reachable states s and enabled labels a, b (a?b), there is a state r so that both s[ab>r and s[ba>r. A Petri net is persistent if its reachability graph is persistent.");
 		bigInfoAPTList.put(pn_extend_and_synthesize2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet. This module gets a PetriNet as input and tries to re-use the places of the given PetriNet in the synthesized result.");
-		bigInfoAPTList.put(ppspresynthesis2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet. This module gets a PetriNet as input and tries to re-use the places of the given PetriNet in the synthesized result.");
+		bigInfoAPTList.put(ppspresynthesis2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet. This module gets a PetriNet as input and tries to re-use the places of the given PetriNet in the synthesized result.Checks if it is infeasible to synthesize a plain, pure and safe Petri net from the given transition system. The following properties are checked:\n(B) If M'[a>M and M''[b>M then [b>M' <=> [a>M''\n(D) If M[a> and M[b> then for any K: (K[ab> <=> K[ba>)\n(F) If M[wv> and M[vw> and M[wc> and M[vc> then M[wvc>M' and M[vwc>M' and M[c>");
 		bigInfoAPTList.put(prime_cycle_property2,"Check if the give Petri net or LTS fulfills the prime cycle property");
 		bigInfoAPTList.put(product_async2,"Compute the asynchronous product of two LTS");
 		bigInfoAPTList.put(product_sync2,"Compute the synchronous product of two LTS");
-		bigInfoAPTList.put(regular_language_to_lts2,"Represent a regular language as a transition system");
-		bigInfoAPTList.put(reversible2,"Check if a Petri net or LTS is reversible");
+		bigInfoAPTList.put(regular_language_to_lts2,"Represent a regular language as a transition system.\nLet's start with an example: (abc?)*This regular expression describes the language where every word consists of a sequence of 'a', then 'b', then an optional 'c'. This sequence can be repeated infinitely often or never at all.\nAs this example demonstrates, single letter events are just entered as is. White space is not significant and gets ignored. Concatenation is expressed by writing some sub-expressions next to each other. If you need an event consisting of more than just a single letter, enclose it in angle brackets like this: <event>");
+		bigInfoAPTList.put(reversible2,"Check if a Petri net or LTS is reversible. A LTS is reversible if every reachable state can reach the initial state again. A Petri net is reversible if its reachability graph is reversible.");
 		bigInfoAPTList.put(strong_components2, "Find the strongly connected components of a Petri net or LTS");
 		bigInfoAPTList.put(strongly_connected2, "Check if a Petri net or LTS is strongly connected");
 		bigInfoAPTList.put(synthesize2, "Synthesize a Petri Net from a transition system");
 		bigInfoAPTList.put(to_regular_expression2,"Create a language-equivalent (up to prefix creation) regular expression");
 		bigInfoAPTList.put(totally_reachable2,"Check if the given LTS is totally reachable");
-		bigInfoAPTList.put(use_petrify2,"Check if Petrify can generate a Petri net from a LTS");
-		bigInfoAPTList.put(use_synet2,"Check if Synet can generate a Petri net from a LTS");
+		bigInfoAPTList.put(use_petrify2,"Check if Petrify can generate a Petri net from a LTS.\nFor this module to function properly you must ensure that the Petrify executable can be found on your system. On most systems adding the directory where the executable is located to the PATH environment variable suffices to make it available to the APT system.");
+		bigInfoAPTList.put(use_synet2,"Check if Synet can generate a Petri net from a LTS.\nFor this module to function properly you must ensure that the Synet executable can be found on your system. On most systems adding the directory where the executable is located to the PATH environment variable suffices to make it available to the APT system.");
 		bigInfoAPTList.put(weak_components2,"Find the weakly connected components of a Petri net or LTS");
 		bigInfoAPTList.put(weakly_connected2,"Check if a Petri net or LTS is weakly connected");
-		bigInfoAPTList.put(word_synthesize2,"Synthesize a Petri Net from a word");
+		bigInfoAPTList.put(word_synthesize2,"Synthesize a Petri Net from a word.\nWords can be specified in two different forms.\nThe first format includes explicit delimiters between events. For delimiters, either commas, semicolons or spaces are allowed. An example of this format would be 'a, b, c'. Note that leading and trailing spaces are skipped.\nThe second format expects events to be individual letters. The special prefix : is used to indicate this format. An example would be ':abc'.");
 
 		//generators
 		bigInfoAPTList.put(generators, "");

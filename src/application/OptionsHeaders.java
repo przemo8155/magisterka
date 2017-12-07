@@ -55,6 +55,10 @@ public class OptionsHeaders
 	private final String label_separation2 = "Set of labels to check";
 	private final String overapproximate_synthesize2 = "Comma separated list of options";
 	private final String pn_extend_and_synthesize2 = "Comma separated list of options";
+	private final String regular_language_to_lts2 = "The regular language to transform";
+	private final String synthesize2 = "Comma separated list of options";
+	private final String word_synthesize2 = "Comma separated list of options";
+	private final String word_synthesize3 = "The word that should be synthesized";
 
 
 
@@ -333,5 +337,29 @@ public class OptionsHeaders
 	public String getPn_extend_and_synthesize2()
 	{
 		return pn_extend_and_synthesize2;
+	}
+
+
+	public String getRegular_language_to_lts2()
+	{
+		return regular_language_to_lts2;
+	}
+
+
+	public String getSynthesize2()
+	{
+		return synthesize2;
+	}
+
+
+	public String getWord_synthesize2()
+	{
+		return word_synthesize2;
+	}
+
+
+	public String getWord_synthesize3()
+	{
+		return word_synthesize3;
 	}
 }
