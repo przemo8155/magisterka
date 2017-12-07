@@ -1017,12 +1017,13 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getPn_extend_and_synthesize2()))
 				{
+					opt2Label.setText(oh.getPn_extend_and_synthesize2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(true);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1539,6 +1540,34 @@ public class OpenAPTController
 						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 				{
 					setInfoButtonEnable(true);
+				}
+
+				if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& !secondFileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& secondFileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& secondFileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& !secondFileTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(false);
 				}
 			}
 		});
@@ -3796,6 +3825,34 @@ public class OpenAPTController
 			setInfoButtonEnable(false);
 		}
 
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& file == null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& file == null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& file != null)
+		{
+			setInfoButtonEnable(false);
+		}
+
 	}
 
 	@FXML
@@ -4170,6 +4227,34 @@ public class OpenAPTController
 
 		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getOverapproximate_synthesize2())
 				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& !secondFileTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+				&& secondFileTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& secondFileTextField.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getPn_extend_and_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& !secondFileTextField.getText().trim().isEmpty())
 		{
 			setInfoButtonEnable(true);
 		}

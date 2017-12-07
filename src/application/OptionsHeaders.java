@@ -54,6 +54,8 @@ public class OptionsHeaders
 	private final String gdiam2 = "Set of labels to check";
 	private final String label_separation2 = "Set of labels to check";
 	private final String overapproximate_synthesize2 = "Comma separated list of options";
+	private final String pn_extend_and_synthesize2 = "Comma separated list of options";
+
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -325,5 +327,11 @@ public class OptionsHeaders
 	public String getOverapproximate_synthesize2()
 	{
 		return overapproximate_synthesize2;
+	}
+
+
+	public String getPn_extend_and_synthesize2()
+	{
+		return pn_extend_and_synthesize2;
 	}
 }

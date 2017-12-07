@@ -373,9 +373,9 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(language_equivalence2,"Check if two Petri nets generate the same language");
 		bigInfoAPTList.put(limited_unfolding2,"Calculate the limited unfolding of a lts. The limited unfolding, as defined in 'Petri Net Synthesis' (E. Badouel, L. Bernardinello and P. Darondeau) eliminates paths that reach the same state (where possible) without changing the language of the LTS.");
 		bigInfoAPTList.put(overapproximate_synthesize2,"Synthesize the minimal Petri Net overapproximation from a transition system");
-		bigInfoAPTList.put(persistent2,"Check if a Petri net or LTS is persistent");
-		bigInfoAPTList.put(pn_extend_and_synthesize2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet");
-		bigInfoAPTList.put(ppspresynthesis2,"Performs pps-presynthesis checks on a transition system");
+		bigInfoAPTList.put(persistent2,"A LTS is persistent if for all reachable states s and enabled labels a, b (a?b), there is a state r so that both s[ab>r and s[ba>r. A Petri net is persistent if its reachability graph is persistent.");
+		bigInfoAPTList.put(pn_extend_and_synthesize2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet. This module gets a PetriNet as input and tries to re-use the places of the given PetriNet in the synthesized result.");
+		bigInfoAPTList.put(ppspresynthesis2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet. This module gets a PetriNet as input and tries to re-use the places of the given PetriNet in the synthesized result.");
 		bigInfoAPTList.put(prime_cycle_property2,"Check if the give Petri net or LTS fulfills the prime cycle property");
 		bigInfoAPTList.put(product_async2,"Compute the asynchronous product of two LTS");
 		bigInfoAPTList.put(product_sync2,"Compute the synchronous product of two LTS");
