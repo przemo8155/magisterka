@@ -53,6 +53,7 @@ public class OptionsHeaders
 	private final String find_words4 = "Letters that should be part of the alphabet";
 	private final String gdiam2 = "Set of labels to check";
 	private final String label_separation2 = "Set of labels to check";
+	private final String overapproximate_synthesize2 = "Comma separated list of options";
 
 
 	public ObservableList<String> optionsHeadersList = FXCollections.observableArrayList();
@@ -318,5 +319,11 @@ public class OptionsHeaders
 	public String getLabel_separation2()
 	{
 		return label_separation2;
+	}
+
+
+	public String getOverapproximate_synthesize2()
+	{
+		return overapproximate_synthesize2;
 	}
 }

@@ -992,12 +992,15 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getOverapproximate_synthesize2()))
 				{
+					opt2Label.setText(oh.getOverapproximate_synthesize2());
+					opt3Label.setText(oh.getOverapproximate_synthesize2());
+					opt4Label.setText(oh.getOverapproximate_synthesize2());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
-					setOptions4Visible(false);
+					setOptions4Visible(true);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1008,7 +1011,7 @@ public class OpenAPTController
 
 					options2ListView.setItems(overapproximateSynthesize.getOverapproximateSynthesizeOptionsClassList());
 					options3ListView.setItems(overapproximateSynthesize.getOverapproximateSynthesizeOptionsClassList());
-					options4ListView.setItems(null);
+					options4ListView.setItems(overapproximateSynthesize.getOverapproximateSynthesizeOptionsClassList());
 
 				}
 
@@ -1527,6 +1530,12 @@ public class OpenAPTController
 				}
 
 				if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getLabel_separation2())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getOverapproximate_synthesize2())
 						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 				{
 					setInfoButtonEnable(true);
@@ -2378,17 +2387,101 @@ public class OpenAPTController
 		}
 
 		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getOverapproximate_synthesize2()
-				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
 		{
-			String cmd = "";
-			if (!option2Value.equals("") && !option3Value.equals(""))
+			String cmd = option2Value + "," + option3Value + "," +  option4Value;
+			try
 			{
-				cmd = option2Value + "," + option3Value;
-			} else if (!option2Value.equals("") && option3Value.equals(""))
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, cmd, fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
 			{
-				cmd = option2Value;
+				e.printStackTrace();
 			}
 
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getOverapproximate_synthesize2()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+		{
+			String cmd = option2Value + "," + option3Value;
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, cmd, fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getOverapproximate_synthesize2()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+				&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+		{
+			String cmd = option2Value;
+			try
+			{
+				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
+						option1Value, cmd, fileTextField.getText());
+
+				Process p = pb.start();
+				BufferedInputStream in = new BufferedInputStream(p.getInputStream());
+				byte[] contents = new byte[1024];
+
+				int bytesRead = 0;
+				String strFileContents = "";
+				while ((bytesRead = in.read(contents)) != -1)
+				{
+					strFileContents += new String(contents, 0, bytesRead);
+				}
+				showPetriInfo(strFileContents);
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+
+		else if (options1ListView.getSelectionModel().getSelectedItem() == bial.getOverapproximate_synthesize2()
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+				&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+				&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
+			String cmd = option2Value + "," + option4Value;
 			try
 			{
 				ProcessBuilder pb = new ProcessBuilder("java", "-jar", startDir + sep + "apt" + sep + "apt.jar",
@@ -4055,10 +4148,29 @@ public class OpenAPTController
 			setInfoButtonEnable(false);
 		}
 
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getLabel_separation2()))
+		{
+			opt2Label.setText(oh.getLabel_separation2());
+			catFile_GetLabels(fileTextField.getText());
+			setInfoButtonEnable(false);
+		}
+
 		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getLabel_separation2()))
 		{
 			opt2Label.setText(oh.getLabel_separation2());
 			catFile_GetLabels(fileTextField.getText());
+			setInfoButtonEnable(true);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getOverapproximate_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getOverapproximate_synthesize2())
+				&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+		{
 			setInfoButtonEnable(true);
 		}
 

@@ -371,7 +371,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(isomorphism2,"Check if two Petri nets have isomorphic reachability graphs.");
 		bigInfoAPTList.put(label_separation2,"Check if a LTS is T'-separated for some label set T'.\nCheck if for all states s != s' it is impossible to go from s to s' using only labels from T' (disregarding arc direction) as well as only labels outside T' (disregarding arc direction).\nWords can be specified in two different forms.\nThe first format includes explicit delimiters between events. For delimiters, either commas, semicolons or spaces are allowed. An example of this format would be 'a, b, c'. Note that leading and trailing spaces are skipped.\nThe second format expects events to be individual letters. The special prefix : is used to indicate this format. An example would be ':abc'.");
 		bigInfoAPTList.put(language_equivalence2,"Check if two Petri nets generate the same language");
-		bigInfoAPTList.put(limited_unfolding2,"Calculate the limited unfolding of a lts");
+		bigInfoAPTList.put(limited_unfolding2,"Calculate the limited unfolding of a lts. The limited unfolding, as defined in 'Petri Net Synthesis' (E. Badouel, L. Bernardinello and P. Darondeau) eliminates paths that reach the same state (where possible) without changing the language of the LTS.");
 		bigInfoAPTList.put(overapproximate_synthesize2,"Synthesize the minimal Petri Net overapproximation from a transition system");
 		bigInfoAPTList.put(persistent2,"Check if a Petri net or LTS is persistent");
 		bigInfoAPTList.put(pn_extend_and_synthesize2,"Synthesize a Petri Net from a transition system, reusing places of a PetriNet");
