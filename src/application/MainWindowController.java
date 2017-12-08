@@ -2032,10 +2032,6 @@ public class MainWindowController
 
 		mainPane_AddEventHandlerClick();
 
-
-
-
-
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
 		openAPTFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
@@ -2106,7 +2102,7 @@ public class MainWindowController
 			@Override
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1)
 			{
-				if(checkFileRecognition.equals("yes"))
+				if (checkFileRecognition.equals("yes"))
 				{
 					ReadFile(optPath);
 					checkFileRecognition = "";
@@ -2852,97 +2848,206 @@ public class MainWindowController
 
 	public void ReadFile(String p)
 	{
-		circleList.clear();
-		rectangleList.clear();
-		headArrowList.clear();
-		rightDoubleArrowList.clear();
-		leftDoubleArrowList.clear();
-
-		FilesRecognition fr = new FilesRecognition(p);
-		ObservableList<String> edgesListFromFile = fr.getEdgesList();
-		ObservableList<String> circlesListFromFile = fr.getCirclesList();
-		ObservableList<String> rectanglesListFromFile = fr.getRectanglesList();
-
-		double width = 1350;
-		double height = 700;
-
-		int obj = 1;
-
-		//int numberOfObjectsToDraw = circlesListFromFile.size() + rectanglesListFromFile.size();
-
-		for (String s : circlesListFromFile)
+		try
 		{
-			Circle c = new Circle((obj*width / (circlesListFromFile.size() + 1)), (2*height / 3) - minusWidth, 20.0f,
-					Paint.valueOf(circleColor));
+			for(Circle c : circleList)
+			{
+				mainPane.getChildren().remove(c);
+			}
+			circleList.clear();
 
-			c.setStroke(Paint.valueOf("#555555"));
-			c.setStrokeWidth(5.0f);
-			this.mainPane.getChildren().add(c);
-			c.setOnMousePressed(circleOnMousePressedEventHandler);
-			circleList.add(c);
-			obj++;
-		}
+			for(Rectangle r : rectangleList)
+			{
+				mainPane.getChildren().remove(r);
+			}
+			rectangleList.clear();
 
-		obj = 1;
+			for(HeadArrow ha : headArrowList)
+			{
+				ha.removeFromMainPane(mainPane);
+			}
+			headArrowList.clear();
 
-		for(String s : rectanglesListFromFile)
+			for(RightDoubleArrow rda : rightDoubleArrowList)
+			{
+				rda.removeFromMainPane(mainPane);
+			}
+			rightDoubleArrowList.clear();
+
+			for(LeftDoubleArrow lda : leftDoubleArrowList)
+			{
+				lda.removeFromMainPane(mainPane);
+			}
+			leftDoubleArrowList.clear();
+
+			for(Label t : tokensBiggerThanTen)
+			{
+				mainPane.getChildren().remove(t);
+			}
+			tokensBiggerThanTen.clear();
+
+			for(ImageView iv : existingImageViews)
+			{
+				mainPane.getChildren().remove(iv);
+			}
+			existingImageViews.clear();
+
+			for(Label l : tags)
+			{
+				mainPane.getChildren().remove(l);
+
+			}
+			tags.clear();
+
+
+			FilesRecognition fr = new FilesRecognition(p);
+			ObservableList<String> edgesListFromFile = fr.getEdgesList();
+			ObservableList<String> circlesListFromFile = fr.getCirclesList();
+			ObservableList<String> rectanglesListFromFile = fr.getRectanglesList();
+
+			double width = 1350;
+			double height = 700;
+
+			int obj = 1;
+
+			for (String s : circlesListFromFile)
+			{
+				Circle c = new Circle((obj * width / (circlesListFromFile.size() + 1)), (2 * height / 3) - minusWidth,
+						20.0f, Paint.valueOf(circleColor));
+
+				c.setStroke(Paint.valueOf("#555555"));
+				c.setStrokeWidth(5.0f);
+				this.mainPane.getChildren().add(c);
+				c.setOnMousePressed(circleOnMousePressedEventHandler);
+				circleList.add(c);
+				obj++;
+			}
+
+			obj = 1;
+
+			for (String s : rectanglesListFromFile)
+			{
+				Rectangle r = new Rectangle((obj * width / (rectanglesListFromFile.size() + 1)),
+						(height / 3) - minusWidth - 20, 40.0f, 40.0f);
+				r.setFill(Paint.valueOf(rectangleColor));
+				r.setStroke(Paint.valueOf("#555555"));
+				r.setStrokeWidth(5.0f);
+				mainPane.getChildren().add(r);
+				r.setOnMousePressed(squareOnMousePressedEventHandler);
+				rectangleList.add(r);
+				obj++;
+			}
+
+			for (String s : edgesListFromFile)
+			{
+				double firstX = 0, firstY = 0, secX = 0, secY = 0;
+
+				String[] parts = s.split("->");
+				if (parts[0].contains("s"))
+				{
+					String numberS = parts[0].replaceAll("\\D+", "");
+					Integer liczba = Integer.parseInt(numberS);
+					Circle c = circleList.get(liczba - 1);
+					firstX = c.getCenterX();
+					firstY = c.getCenterY();
+				}
+
+				else if (parts[0].contains("t"))
+				{
+					String numberS = parts[0].replaceAll("\\D+", "");
+					Integer liczba = Integer.parseInt(numberS);
+					Rectangle r = rectangleList.get(liczba - 1);
+					firstX = r.getX() + 20;
+					firstY = r.getY() + 20;
+				}
+
+				if (parts[1].contains("s"))
+				{
+					String numberS = parts[1].replaceAll("\\D+", "");
+					Integer liczba = Integer.parseInt(numberS);
+					Circle c = circleList.get(liczba - 1);
+					secX = c.getCenterX();
+					secY = c.getCenterY();
+				}
+
+				else if (parts[1].contains("t"))
+				{
+					String numberS = parts[1].replaceAll("\\D+", "");
+					Integer liczba = Integer.parseInt(numberS);
+					Rectangle r = rectangleList.get(liczba - 1);
+					secX = r.getX() + 20;
+					secY = r.getY() + 20;
+				}
+
+				boolean flag = false;
+				int index = -1;
+				double control1X = 0, control2X = 0, control1Y = 0, control2Y = 0;
+
+				HeadArrow tempHeadArrow = null;
+
+				for (HeadArrow ha : headArrowList)
+				{
+					if (ha.getStartX() == secX && ha.getStartY() == secY && ha.getEndX() == firstX
+							&& ha.getEndY() == firstY
+							|| ha.getStartX() == firstX && ha.getStartY() == firstY && ha.getEndX() == secX
+									&& ha.getEndY() == secY)
+					{
+						flag = true;
+						Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(firstX, firstY, secX, secY);
+						double midX = pair.getKey();
+						double midY = pair.getValue();
+
+						Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getEndX(), ha.getEndY(),
+								ha.getStartX(), ha.getStartY());
+						double moveX = pair2.getKey();
+						double moveY = pair2.getValue();
+
+						control1X = midX + moveX;
+						control2X = midX - moveX;
+						control1Y = midY + moveY;
+						control2Y = midY - moveY;
+
+						LeftDoubleArrow path1 = new LeftDoubleArrow(firstX, firstY, control1X, control1Y, secX, secY);
+
+						RightDoubleArrow path2 = new RightDoubleArrow(ha.getStartX(), ha.getStartY(), control2X,
+								control2Y, ha.getEndX(), ha.getEndY());
+
+						path1.addToMainPane(mainPane);
+						path2.addToMainPane(mainPane);
+
+						path1.setFill(arrowColor);
+						path2.setFill(arrowColor);
+
+						leftDoubleArrowList.add(path1);
+						rightDoubleArrowList.add(path2);
+
+						index = headArrowList.indexOf(ha);
+						tempHeadArrow = ha;
+					}
+				}
+
+				if (flag)
+				{
+					if (index != -1)
+					{
+						tempHeadArrow.removeFromMainPane(mainPane);
+						headArrowList.remove(index);
+					}
+				} else
+				{
+					HeadArrow headArrow = new HeadArrow(firstX, firstY, secX, secY, mainPane);
+					headArrow.setFill(arrowColor);
+					headArrowList.add(headArrow);
+					headArrow.addToMainPane(mainPane);
+
+				}
+				index = -1;
+				flag = false;
+
+			}
+		} catch (Exception e)
 		{
-			Rectangle r = new Rectangle((obj*width / (rectanglesListFromFile.size() + 1)), (height / 3) - minusWidth - 20, 40.0f,
-					40.0f);
-			r.setFill(Paint.valueOf(rectangleColor));
-			r.setStroke(Paint.valueOf("#555555"));
-			r.setStrokeWidth(5.0f);
-			mainPane.getChildren().add(r);
-			r.setOnMousePressed(squareOnMousePressedEventHandler);
-			rectangleList.add(r);
-			obj++;
-		}
-
-		for(String s : edgesListFromFile)
-		{
-			double firstX = 0, firstY = 0, secX = 0, secY = 0;
-
-			String[] parts = s.split("->");
-			if(parts[0].contains("s"))
-			{
-				String numberS = parts[0].replaceAll("\\D+","");
-				Integer liczba = Integer.parseInt(numberS);
-				Circle c = circleList.get(liczba-1);
-				firstX = c.getCenterX();
-				firstY = c.getCenterY();
-			}
-
-			else if(parts[0].contains("t"))
-			{
-				String numberS = parts[0].replaceAll("\\D+","");
-				Integer liczba = Integer.parseInt(numberS);
-				Rectangle r = rectangleList.get(liczba-1);
-				firstX = r.getX() + 20;
-				firstY = r.getY() + 20;
-			}
-
-			if(parts[1].contains("s"))
-			{
-				String numberS = parts[1].replaceAll("\\D+","");
-				Integer liczba = Integer.parseInt(numberS);
-				Circle c = circleList.get(liczba-1);
-				secX = c.getCenterX();
-				secY = c.getCenterY();
-			}
-
-			else if(parts[1].contains("t"))
-			{
-				String numberS = parts[1].replaceAll("\\D+","");
-				Integer liczba = Integer.parseInt(numberS);
-				Rectangle r = rectangleList.get(liczba-1);
-				secX = r.getX() + 20;
-				secY = r.getY() + 20;
-			}
-
-			HeadArrow headArrow = new HeadArrow(firstX, firstY, secX, secY, mainPane);
-			headArrow.setFill(arrowColor);
-			headArrowList.add(headArrow);
-			headArrow.addToMainPane(mainPane);
+			System.err.println(e.toString());
 		}
 
 	}
