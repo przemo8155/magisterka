@@ -123,6 +123,9 @@ public class MainWindowController
 	static int minusWidth = 95;
 	protected int startingFaze = 0;
 
+	public static String optPath = "";
+	public static String checkFileRecognition = "";
+
 	private static int labelInTokensRay = 15;
 
 	static double ll = 15;
@@ -248,7 +251,6 @@ public class MainWindowController
 	Map<Label, RightDoubleArrow> rightDoubleArrowTags = new LinkedHashMap<Label, RightDoubleArrow>();
 	Map<Label, LeftDoubleArrow> moveLeftDoubleArrowTags = new LinkedHashMap<Label, LeftDoubleArrow>();
 	Map<Label, RightDoubleArrow> moveRightDoubleArrowTags = new LinkedHashMap<Label, RightDoubleArrow>();
-
 
 	@FXML
 	private TitledPane titledPaneStats;
@@ -1197,7 +1199,7 @@ public class MainWindowController
 							&& c.getCenterY() > event.getSceneY() - circleRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						if(utilities.checkNameTagOfCircleOrRectangle(tag))
+						if (utilities.checkNameTagOfCircleOrRectangle(tag))
 						{
 							Pair<Double, Double> pair = utilities.returnCircleTagPosition(c, headArrowList);
 							Label l = new Label();
@@ -1214,12 +1216,13 @@ public class MainWindowController
 
 				for (Rectangle myRectangle : rectangleList)
 				{
-					if ((event.getSceneX() + squareRay > myRectangle.getX() + 20) && (event.getSceneX() - squareRay < myRectangle.getX() + 20)
+					if ((event.getSceneX() + squareRay > myRectangle.getX() + 20)
+							&& (event.getSceneX() - squareRay < myRectangle.getX() + 20)
 							&& (event.getSceneY() + squareRay - minusWidth > myRectangle.getY() + 20)
 							&& (event.getSceneY() - squareRay - minusWidth < myRectangle.getY() + 20))
 					{
 						tag = utilities.tagDialog();
-						if(utilities.checkNameTagOfCircleOrRectangle(tag))
+						if (utilities.checkNameTagOfCircleOrRectangle(tag))
 						{
 							Utilities.infoBox("rect");
 						}
@@ -1984,8 +1987,8 @@ public class MainWindowController
 		{
 			case "move":
 				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList, leftDoubleArrowList,
-						rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags))
+				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
+						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags))
 				{
 					try
 					{
@@ -2028,6 +2031,22 @@ public class MainWindowController
 		middleLabel.setDisable(true);
 
 		mainPane_AddEventHandlerClick();
+
+		Main.getPrimaryStage().focusedProperty().addListener(new ChangeListener<Boolean>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1)
+			{
+				if(checkFileRecognition.equals("yes"))
+				{
+					ReadFile(optPath);
+					checkFileRecognition = "";
+				}
+			}
+		});
+
+
 
 		saveFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
 		openFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -2769,93 +2788,96 @@ public class MainWindowController
 		exportPdf.exportToPDF();
 	}
 
-
 	public Pane getMainPane()
 	{
 		return mainPane;
 	}
-
 
 	public void setMainPane(Pane mainPane)
 	{
 		this.mainPane = mainPane;
 	}
 
-
 	public ObservableList<Circle> getCircleList()
 	{
 		return circleList;
 	}
-
 
 	public void setCircleList(ObservableList<Circle> circleList)
 	{
 		this.circleList = circleList;
 	}
 
-
 	public ObservableList<Rectangle> getRectangleList()
 	{
 		return rectangleList;
 	}
-
 
 	public void setRectangleList(ObservableList<Rectangle> rectangleList)
 	{
 		this.rectangleList = rectangleList;
 	}
 
-
 	public ObservableList<HeadArrow> getHeadArrowList()
 	{
 		return headArrowList;
 	}
-
 
 	public void setHeadArrowList(ObservableList<HeadArrow> headArrowList)
 	{
 		this.headArrowList = headArrowList;
 	}
 
-
 	public ObservableList<LeftDoubleArrow> getLeftDoubleArrowList()
 	{
 		return leftDoubleArrowList;
 	}
-
 
 	public void setLeftDoubleArrowList(ObservableList<LeftDoubleArrow> leftDoubleArrowList)
 	{
 		this.leftDoubleArrowList = leftDoubleArrowList;
 	}
 
-
 	public ObservableList<RightDoubleArrow> getRightDoubleArrowList()
 	{
 		return rightDoubleArrowList;
 	}
-
 
 	public void setRightDoubleArrowList(ObservableList<RightDoubleArrow> rightDoubleArrowList)
 	{
 		this.rightDoubleArrowList = rightDoubleArrowList;
 	}
 
-	public static void ReadFile(String p)
+	public void ReadFile(String p)
 	{
 		FilesRecognition fr = new FilesRecognition(p);
 		ObservableList<String> edgesListFromFile = fr.getEdgesList();
 		ObservableList<String> circlesListFromFile = fr.getCirclesList();
 		ObservableList<String> rectanglesListFromFile = fr.getRectanglesList();
 
+		double width = 1350;
+		double height = 700;
 
-		final int width = 1350;
-		final int height = 700;
+		double edge = 50;
+
+		int obj = 1;
 
 		int numberOfObjectsToDraw = circlesListFromFile.size() + rectanglesListFromFile.size();
 
+		for (String s : circlesListFromFile)
+		{
+			Circle c = new Circle((width / obj) - edge, (height / 2) - edge - minusWidth, 20.0f,
+					Paint.valueOf("#666666"));
+
+			c.setStroke(Paint.valueOf("#555555"));
+			c.setStrokeWidth(5.0f);
+			this.mainPane.getChildren().add(c);
+			c.setOnMousePressed(circleOnMousePressedEventHandler);
+			// setMiddleLabelText("Circle created...");
+			circleList.add(c);
+			obj++;
+		}
+
 	}
-
-
 
 }
