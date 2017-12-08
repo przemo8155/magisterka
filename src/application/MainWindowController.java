@@ -2032,19 +2032,7 @@ public class MainWindowController
 
 		mainPane_AddEventHandlerClick();
 
-		Main.getPrimaryStage().focusedProperty().addListener(new ChangeListener<Boolean>()
-		{
 
-			@Override
-			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1)
-			{
-				if(checkFileRecognition.equals("yes"))
-				{
-					ReadFile(optPath);
-					checkFileRecognition = "";
-				}
-			}
-		});
 
 
 
@@ -2109,6 +2097,20 @@ public class MainWindowController
 						setMiddleLabelText("Starting animation...");
 				}
 
+			}
+		});
+
+		Main.getPrimaryStage().focusedProperty().addListener(new ChangeListener<Boolean>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1)
+			{
+				if(checkFileRecognition.equals("yes"))
+				{
+					ReadFile(optPath);
+					checkFileRecognition = "";
+				}
 			}
 		});
 
@@ -2850,6 +2852,12 @@ public class MainWindowController
 
 	public void ReadFile(String p)
 	{
+		circleList.clear();
+		rectangleList.clear();
+		headArrowList.clear();
+		rightDoubleArrowList.clear();
+		leftDoubleArrowList.clear();
+
 		FilesRecognition fr = new FilesRecognition(p);
 		ObservableList<String> edgesListFromFile = fr.getEdgesList();
 		ObservableList<String> circlesListFromFile = fr.getCirclesList();
@@ -2858,24 +2866,83 @@ public class MainWindowController
 		double width = 1350;
 		double height = 700;
 
-		double edge = 50;
-
 		int obj = 1;
 
-		int numberOfObjectsToDraw = circlesListFromFile.size() + rectanglesListFromFile.size();
+		//int numberOfObjectsToDraw = circlesListFromFile.size() + rectanglesListFromFile.size();
 
 		for (String s : circlesListFromFile)
 		{
-			Circle c = new Circle((width / obj) - edge, (height / 2) - edge - minusWidth, 20.0f,
-					Paint.valueOf("#666666"));
+			Circle c = new Circle((obj*width / (circlesListFromFile.size() + 1)), (2*height / 3) - minusWidth, 20.0f,
+					Paint.valueOf(circleColor));
 
 			c.setStroke(Paint.valueOf("#555555"));
 			c.setStrokeWidth(5.0f);
 			this.mainPane.getChildren().add(c);
 			c.setOnMousePressed(circleOnMousePressedEventHandler);
-			// setMiddleLabelText("Circle created...");
 			circleList.add(c);
 			obj++;
+		}
+
+		obj = 1;
+
+		for(String s : rectanglesListFromFile)
+		{
+			Rectangle r = new Rectangle((obj*width / (rectanglesListFromFile.size() + 1)), (height / 3) - minusWidth - 20, 40.0f,
+					40.0f);
+			r.setFill(Paint.valueOf(rectangleColor));
+			r.setStroke(Paint.valueOf("#555555"));
+			r.setStrokeWidth(5.0f);
+			mainPane.getChildren().add(r);
+			r.setOnMousePressed(squareOnMousePressedEventHandler);
+			rectangleList.add(r);
+			obj++;
+		}
+
+		for(String s : edgesListFromFile)
+		{
+			double firstX = 0, firstY = 0, secX = 0, secY = 0;
+
+			String[] parts = s.split("->");
+			if(parts[0].contains("s"))
+			{
+				String numberS = parts[0].replaceAll("\\D+","");
+				Integer liczba = Integer.parseInt(numberS);
+				Circle c = circleList.get(liczba-1);
+				firstX = c.getCenterX();
+				firstY = c.getCenterY();
+			}
+
+			else if(parts[0].contains("t"))
+			{
+				String numberS = parts[0].replaceAll("\\D+","");
+				Integer liczba = Integer.parseInt(numberS);
+				Rectangle r = rectangleList.get(liczba-1);
+				firstX = r.getX() + 20;
+				firstY = r.getY() + 20;
+			}
+
+			if(parts[1].contains("s"))
+			{
+				String numberS = parts[1].replaceAll("\\D+","");
+				Integer liczba = Integer.parseInt(numberS);
+				Circle c = circleList.get(liczba-1);
+				secX = c.getCenterX();
+				secY = c.getCenterY();
+			}
+
+			else if(parts[1].contains("t"))
+			{
+				String numberS = parts[1].replaceAll("\\D+","");
+				Integer liczba = Integer.parseInt(numberS);
+				Rectangle r = rectangleList.get(liczba-1);
+				secX = r.getX() + 20;
+				secY = r.getY() + 20;
+			}
+
+			HeadArrow headArrow = new HeadArrow(firstX, firstY, secX, secY, mainPane);
+			headArrow.setFill(arrowColor);
+			headArrowList.add(headArrow);
+			headArrow.addToMainPane(mainPane);
 		}
 
 	}
