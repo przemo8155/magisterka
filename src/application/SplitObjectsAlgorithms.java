@@ -25,8 +25,6 @@ public class SplitObjectsAlgorithms
 
 		int sizeOfObjects = sizeOfCirclesList + sizeOfRectanglesList;
 
-		final int width = 1350;
-		final int height = 700;
 
 		String elo = "#555555";
 		Circle y = new Circle(width / 2, height / 2 - minusWidth, 20.0f, Paint.valueOf(elo));

@@ -118,6 +118,8 @@ public class OpenAPTController
 	String sep = System.getProperty("file.separator");
 	Stage stage = MainWindowController.aptStage;
 
+	public String mwcPath = "";
+
 	public static Stage aptStage;
 
 	String catFileContents = "";
@@ -2188,7 +2190,10 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
-		// TODO
+		this.mwcPath = fileTextField.getText();
+		MainWindowController.ReadFile(fileTextField.getText());
+		Stage closeStage = (Stage) openButton.getScene().getWindow();
+		closeStage.close();
 
 	}
 
@@ -5302,5 +5307,17 @@ public class OpenAPTController
 		{
 			e.printStackTrace();
 		}
+	}
+
+
+	public String getMwcPath()
+	{
+		return mwcPath;
+	}
+
+
+	public void setMwcPath(String mwcPath)
+	{
+		this.mwcPath = mwcPath;
 	}
 }

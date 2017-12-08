@@ -249,6 +249,7 @@ public class MainWindowController
 	Map<Label, LeftDoubleArrow> moveLeftDoubleArrowTags = new LinkedHashMap<Label, LeftDoubleArrow>();
 	Map<Label, RightDoubleArrow> moveRightDoubleArrowTags = new LinkedHashMap<Label, RightDoubleArrow>();
 
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -2839,5 +2840,22 @@ public class MainWindowController
 	{
 		this.rightDoubleArrowList = rightDoubleArrowList;
 	}
+
+	public static void ReadFile(String p)
+	{
+		FilesRecognition fr = new FilesRecognition(p);
+		ObservableList<String> edgesListFromFile = fr.getEdgesList();
+		ObservableList<String> circlesListFromFile = fr.getCirclesList();
+		ObservableList<String> rectanglesListFromFile = fr.getRectanglesList();
+
+
+		final int width = 1350;
+		final int height = 700;
+
+		int numberOfObjectsToDraw = circlesListFromFile.size() + rectanglesListFromFile.size();
+
+	}
+
+
 
 }

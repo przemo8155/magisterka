@@ -32,7 +32,7 @@ public class FilesRecognition
 
 	}
 
-	protected ObservableList<String> getRectangles(String path)
+	public ObservableList<String> getRectangles(String path)
 	{
 
 		try
@@ -78,7 +78,7 @@ public class FilesRecognition
 	}
 
 
-	protected ObservableList<String> getCircles(String path)
+	public ObservableList<String> getCircles(String path)
 	{
 
 		try
@@ -123,7 +123,7 @@ public class FilesRecognition
 		return this.circlesList;
 	}
 
-	protected ObservableList<String> getEdges(String path)
+	public ObservableList<String> getEdges(String path)
 	{
 
 		try
