@@ -1514,12 +1514,13 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getTristate_philnet_generator()))
 				{
+					opt2Label.setText(oh.getTristate_philnet_generator2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1803,6 +1804,18 @@ public class OpenAPTController
 				}
 
 				if (option1Value.equals(bial.getConnected_bitnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTristate_philnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getTristate_philnet_generator())
 						&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
 				{
 					setInfoButtonEnable(false);

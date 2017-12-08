@@ -70,6 +70,7 @@ public class OptionsHeaders
 	private final String t_net_generator2 = "The maximum number of place for the Petri nets";
 	private final String t_net_generator3 = "The maximum number of transitions for the Petri nets";
 	private final String t_net_generator4 = "The maximum number of token for the Petri nets";
+	private final String tristate_philnet_generator2 = "The argument for the Petri net generator";
 
 
 
@@ -438,5 +439,11 @@ public class OptionsHeaders
 	public String getT_net_generator4()
 	{
 		return t_net_generator4;
+	}
+
+
+	public String getTristate_philnet_generator2()
+	{
+		return tristate_philnet_generator2;
 	}
 }
