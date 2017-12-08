@@ -167,6 +167,111 @@ public class OpenAPTController
 		fileTextField.setEditable(false);
 		secondFileTextField.setEditable(false);
 
+		eventTextField1.textProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& !eventTextField2.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(true);
+			}
+
+			if (newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& !eventTextField2.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& !eventTextField2.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& eventTextField2.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& eventTextField2.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& !eventTextField2.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& eventTextField2.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+		});
+
+		eventTextField2.textProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& !eventTextField1.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(true);
+			}
+
+			if (newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& !eventTextField1.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& !eventTextField1.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& eventTextField1.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& eventTextField1.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& fileTextField.getText().trim().isEmpty()
+					&& !eventTextField1.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+
+			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+					&& !fileTextField.getText().trim().isEmpty()
+					&& eventTextField1.getText().trim().isEmpty())
+			{
+				setInfoButtonEnable(false);
+			}
+		});
+
+
 		wordTextField.textProperty().addListener((observable, oldValue, newValue) ->
 		{
 			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getStrong_separation())
@@ -1221,12 +1326,13 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getBistate_philnet_generator()))
 				{
+					opt2Label.setText(oh.getBistate_philnet_generator2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1243,12 +1349,13 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getBitnet_generator()))
 				{
+					opt2Label.setText(oh.getBitnet_generator2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1265,6 +1372,7 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getConnected_bitnet_generator()))
 				{
+					opt2Label.setText(oh.getBitnet_generator2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
@@ -1287,12 +1395,14 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getCycle_generator()))
 				{
+					opt2Label.setText(oh.getCycle_generator2());
+					opt3Label.setText(oh.getCycle_generator3());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1309,12 +1419,13 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getGenerate_reverse_arc()))
 				{
+					opt2Label.setText(oh.getGenerate_reverse_arc2());
 					setOptions2Visible(false);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(true);
@@ -1657,6 +1768,54 @@ public class OpenAPTController
 				if (option1Value.equals(bial.getWord_synthesize2())
 						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 						&& !wordTextField.getText().trim().isEmpty())
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getBistate_philnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getBistate_philnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getBitnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getBitnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getConnected_bitnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getConnected_bitnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getCycle_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getCycle_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
 				{
 					setInfoButtonEnable(true);
 				}
@@ -4574,6 +4733,55 @@ public class OpenAPTController
 		}
 
 		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getUse_synet2()))
+		{
+			setInfoButtonEnable(true);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+				&& eventTextField1.getText().trim().isEmpty()
+				&& !eventTextField2.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+				&& !eventTextField1.getText().trim().isEmpty()
+				&& eventTextField2.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+				&& eventTextField1.getText().trim().isEmpty()
+				&& eventTextField2.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+				&& eventTextField1.getText().trim().isEmpty()
+				&& eventTextField2.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+				&& eventTextField1.getText().trim().isEmpty()
+				&& !eventTextField2.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+				&& !eventTextField1.getText().trim().isEmpty()
+				&& !eventTextField2.getText().trim().isEmpty())
+		{
+			setInfoButtonEnable(false);
+		}
+
+		else if (!fileTextField.getText().trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
+				&& !eventTextField1.getText().trim().isEmpty()
+				&& !eventTextField2.getText().trim().isEmpty())
 		{
 			setInfoButtonEnable(true);
 		}

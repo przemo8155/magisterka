@@ -59,6 +59,11 @@ public class OptionsHeaders
 	private final String synthesize2 = "Comma separated list of options";
 	private final String word_synthesize2 = "Comma separated list of options";
 	private final String word_synthesize3 = "The word that should be synthesized";
+	private final String bistate_philnet_generator2 = "The argument for the Petri net generator";
+	private final String bitnet_generator2 = "The argument for the Petri net generator";
+	private final String cycle_generator2 = "The argument for the Petri net generator";
+	private final String cycle_generator3 = "The number of token in the initial marking";
+	private final String generate_reverse_arc2 = "Events";
 
 
 
@@ -361,5 +366,35 @@ public class OptionsHeaders
 	public String getWord_synthesize3()
 	{
 		return word_synthesize3;
+	}
+
+
+	public String getBistate_philnet_generator2()
+	{
+		return bistate_philnet_generator2;
+	}
+
+
+	public String getBitnet_generator2()
+	{
+		return bitnet_generator2;
+	}
+
+
+	public String getCycle_generator2()
+	{
+		return cycle_generator2;
+	}
+
+
+	public String getCycle_generator3()
+	{
+		return cycle_generator3;
+	}
+
+
+	public String getGenerate_reverse_arc2()
+	{
+		return generate_reverse_arc2;
 	}
 }

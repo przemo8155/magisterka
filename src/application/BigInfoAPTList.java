@@ -398,7 +398,7 @@ public class BigInfoAPTList
 		bigInfoAPTList.put(bitnet_generator,"Construct a Petri net for a bit nets of a given size");
 		bigInfoAPTList.put(connected_bitnet_generator,"Construct a Petri net for a connected bit net of a given size");
 		bigInfoAPTList.put(cycle_generator,"Construct a Petri net for a cycle of a given size with a given number of initial token");
-		bigInfoAPTList.put(generate_reverse_arc,"Generate reverse arcs for all arcs with a given label");
+		bigInfoAPTList.put(generate_reverse_arc,"Generate reverse arcs for all arcs with a given label.\nGenerate reverse arcs for all arcs with a given label. For all arcs labelled with the given event, an arc in the opposite direction labelled with the given reverseEvent is added.");
 		bigInfoAPTList.put(inverse_generator,"Construct the inverse of a Petri net");
 		bigInfoAPTList.put(quadstate_philnet_generator,"Construct a Petri net for a quadstate philosopher's net of a given size");
 		bigInfoAPTList.put(random_t_net_generator,"Construct a T-net or T-system (if k given) of size g");
