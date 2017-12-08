@@ -64,6 +64,12 @@ public class OptionsHeaders
 	private final String cycle_generator2 = "The argument for the Petri net generator";
 	private final String cycle_generator3 = "The number of token in the initial marking";
 	private final String generate_reverse_arc2 = "Events";
+	private final String quadstate_philnet_generator2 = "The argument for the Petri net generator";
+	private final String random_t_net_generator2 = "Maximum count of places of the returned t-net";
+	private final String random_t_net_generator3 = "Maximum number of token of a place in the t-net";
+	private final String t_net_generator2 = "The maximum number of place for the Petri nets";
+	private final String t_net_generator3 = "The maximum number of transitions for the Petri nets";
+	private final String t_net_generator4 = "The maximum number of token for the Petri nets";
 
 
 
@@ -396,5 +402,41 @@ public class OptionsHeaders
 	public String getGenerate_reverse_arc2()
 	{
 		return generate_reverse_arc2;
+	}
+
+
+	public String getQuadstate_philnet_generator2()
+	{
+		return quadstate_philnet_generator2;
+	}
+
+
+	public String getRandom_t_net_generator2()
+	{
+		return random_t_net_generator2;
+	}
+
+
+	public String getRandom_t_net_generator3()
+	{
+		return random_t_net_generator3;
+	}
+
+
+	public String getT_net_generator2()
+	{
+		return t_net_generator2;
+	}
+
+
+	public String getT_net_generator3()
+	{
+		return t_net_generator3;
+	}
+
+
+	public String getT_net_generator4()
+	{
+		return t_net_generator4;
 	}
 }

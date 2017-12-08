@@ -1442,12 +1442,13 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getQuadstate_philnet_generator()))
 				{
+					opt2Label.setText(oh.getQuadstate_philnet_generator2());
 					setOptions2Visible(true);
 					setOptions3Visible(false);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1464,12 +1465,14 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getRandom_t_net_generator()))
 				{
+					opt2Label.setText(oh.getRandom_t_net_generator2());
+					opt3Label.setText(oh.getRandom_t_net_generator3());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
 					setOptions4Visible(false);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1486,12 +1489,15 @@ public class OpenAPTController
 
 				else if (newValue.equals(bial.getTnet_generator()))
 				{
+					opt2Label.setText(oh.getT_net_generator2());
+					opt3Label.setText(oh.getT_net_generator3());
+					opt4Label.setText(oh.getT_net_generator4());
 					setOptions2Visible(true);
 					setOptions3Visible(true);
 					setOptions4Visible(true);
 					setOptionalValueVisible(false);
 					setSecondFileFieldsVisible(false);
-					setInfoButtonEnable(true);
+					setInfoButtonEnable(false);
 					setWordFieldsVisible(false);
 					setOutputFileButtonVisible(false);
 					setEventVisible(false);
@@ -1819,6 +1825,102 @@ public class OpenAPTController
 				{
 					setInfoButtonEnable(true);
 				}
+
+				if (option1Value.equals(bial.getQuadstate_philnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getQuadstate_philnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
 			}
 		});
 
@@ -1873,6 +1975,90 @@ public class OpenAPTController
 				{
 					setInfoButtonEnable(true);
 				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getRandom_t_net_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
 			}
 		});
 
@@ -1884,6 +2070,62 @@ public class OpenAPTController
 			{
 				option4Value = newValue;
 				if (option1Value.equals(bial.getCheck()) && options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(true);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() < 0
+						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
+						&& options4ListView.getSelectionModel().getSelectedIndex() < 0)
+				{
+					setInfoButtonEnable(false);
+				}
+
+				if (option1Value.equals(bial.getTnet_generator())
+						&& options2ListView.getSelectionModel().getSelectedIndex() > -1
 						&& options3ListView.getSelectionModel().getSelectedIndex() > -1
 						&& options4ListView.getSelectionModel().getSelectedIndex() > -1)
 				{
