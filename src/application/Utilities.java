@@ -47,7 +47,7 @@ public class Utilities
 	public void clearUpMessage(Pane pane, String title, String header, String content, ObservableList<Circle> circ,
 			ObservableList<Rectangle> rect, ObservableList<HeadArrow> lin,
 			ObservableList<LeftDoubleArrow> leftDoubleArrows, ObservableList<RightDoubleArrow> rightDoubleArrows,
-			ObservableList<ImageView> imageViews, ObservableList<Label> labelList)
+			ObservableList<ImageView> imageViews, ObservableList<Label> labelList, ObservableList<Label> tags)
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);
@@ -65,6 +65,7 @@ public class Utilities
 			rightDoubleArrows.clear();
 			imageViews.clear();
 			labelList.clear();
+			tags.clear();
 			checkCleared = true;
 		} else
 		{

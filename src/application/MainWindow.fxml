@@ -43,7 +43,7 @@
       </MenuBar>
       <Separator layoutY="90.0" prefHeight="10.0" prefWidth="1366.0" />
       <Pane fx:id="mainPane" layoutY="95.0" onDragDropped="#mainPane_OnDragDropped" onMouseClicked="#mainPane_OnMouseClicked" onMouseDragged="#mainPane_OnMouseDragged" onMouseMoved="#mainPane_OnMouseMoved" onMouseReleased="#mainPane_OnMouseReseased" prefHeight="608.0" prefWidth="1366.0" />
-      <Button fx:id="clearAllButton" layoutX="723.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
+      <Button fx:id="clearAllButton" layoutX="611.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#clearAllButton_OnMouseClicked" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="circleToggleButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="squareToggleButton" layoutX="69.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="moveToggleButton" layoutX="179.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
@@ -55,14 +55,14 @@
          <font>
             <Font name="Gabriola" size="44.0" />
          </font></Label>
-      <ToggleButton fx:id="removeToggleButton" layoutX="668.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
+      <ToggleButton fx:id="removeToggleButton" layoutX="556.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
 
       <ToggleButton fx:id="removeTagToggleButton" layoutX="420.0" layoutY="36.0" mnemonicParsing="false" onAction="#removeTagToggleButton_OnAction" prefHeight="50.0" prefWidth="50.0" />
       <ToggleButton fx:id="startAnimationToggleButton" layoutX="488.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
       <Separator fx:id="toggleButtonSeparator1" layoutX="235.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
       <Separator fx:id="toggleButtonSeparator2" layoutX="355.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
       <Separator fx:id="toggleButtonSeparator3" layoutX="478.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
-      <Separator fx:id="toggleButtonSeparator4" layoutX="658.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
+      <Separator fx:id="toggleButtonSeparator4" layoutX="545.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
 
    </children>
    <opaqueInsets>

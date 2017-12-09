@@ -244,6 +244,8 @@ public class MainWindowController
 
 	ObservableList<Label> tags = FXCollections.observableArrayList();
 
+	ObservableList<Label> tagsToRemove = FXCollections.observableArrayList();
+
 	Map<Label, HeadArrow> headArrowTags = new LinkedHashMap<Label, HeadArrow>();
 	Map<Label, HeadArrow> moveHeadArrowTags = new LinkedHashMap<Label, HeadArrow>();
 
@@ -1458,6 +1460,8 @@ public class MainWindowController
 								&& (y < myCircle.getCenterY() + circleRay + minusWidth))
 						{
 
+
+
 							for (ImageView iv : existingImageViews)
 							{
 								if (iv.getLayoutX() == myCircle.getCenterX() - 20
@@ -1514,6 +1518,142 @@ public class MainWindowController
 									rightEndDoubleArrowList.add(da);
 								}
 							}
+
+							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							{
+								for(HeadArrow rda : startHeadArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							{
+								for(HeadArrow rda : endHeadArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+
+
+							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							{
+								for(RightDoubleArrow rda : rightStartDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							{
+								for(RightDoubleArrow rda : rightEndDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							{
+								for(LeftDoubleArrow rda : leftEndDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							{
+								for(LeftDoubleArrow rda : leftStartDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+
 
 							if (!imageViewsToRemove.isEmpty())
 							{
@@ -1650,6 +1790,138 @@ public class MainWindowController
 									rightEndDoubleArrowList.add(da);
 								}
 							}
+
+							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							{
+								for(HeadArrow rda : startHeadArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							{
+								for(HeadArrow rda : endHeadArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							{
+								for(RightDoubleArrow rda : rightStartDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							{
+								for(RightDoubleArrow rda : rightEndDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							{
+								for(LeftDoubleArrow rda : leftEndDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
+
+							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							{
+								for(LeftDoubleArrow rda : leftStartDoubleArrowList)
+								{
+									if(rda.equals(entry.getValue()))
+									{
+										tagsToRemove.add(entry.getKey());
+									}
+								}
+							}
+
+							if(!tagsToRemove.isEmpty())
+							{
+								for(Label l : tagsToRemove)
+								{
+									mainPane.getChildren().remove(l);
+								}
+								tags.removeAll(tagsToRemove);
+							}
+
+							tagsToRemove.clear();
 
 							if (!startHeadArrowList.isEmpty())
 							{
@@ -2278,7 +2550,7 @@ public class MainWindowController
 	void clearAllButton_OnMouseClicked(MouseEvent event)
 	{
 		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, rectangleList,
-				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen);
+				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags);
 		if (utilities.checkCleared)
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);
