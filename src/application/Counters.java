@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -53,6 +54,24 @@ public class Counters
 		label.setText(text);
 		return text;
 	}
+
+	public String tagsCounter(ObservableList<Label> list, Label label)
+	{
+		final int number = list.size();
+		String text = Integer.toString(number);
+		label.setText(text);
+		return text;
+	}
+
+	public String tokensCounter(ObservableList<Label> list, ObservableList<ImageView> list2, Label label)
+	{
+		final int number = list.size();
+		final int number2 = list2.size();
+		String text = Integer.toString(number+number2);
+		label.setText(text);
+		return text;
+	}
+
 
 	public String mouseClickerCounter(int n, Label label)
 	{

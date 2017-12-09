@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -73,6 +74,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
@@ -105,6 +107,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import javafx.*;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -164,6 +167,12 @@ public class MainWindowController
 
 	Label doubleArrowsCreatedL = new Label("Double arrows created: ");
 	Label numberOfDoubleArrowsCreatedL = new Label("0");
+
+	Label tagsCreatedL = new Label("Tags created: ");
+	Label numberOfTagsCreatedL = new Label("0");
+
+	Label tokensCreatedL = new Label("Tokens created: ");
+	Label numberOfTokensCreatedL = new Label("0");
 
 	Label mouseBothClickL = new Label("Mouse both clicked: ");
 	Label numberOfMouseBothClickL = new Label("0");
@@ -1005,6 +1014,8 @@ public class MainWindowController
 		counters.doubleArrowsCounter(leftDoubleArrowList, numberOfDoubleArrowsCreatedL);
 		counters.objDeleted(objectsDeleted, numberOfObjectsDeletedL);
 		counters.objDeleted(objectsMoved, numberOfObjectsMovedL);
+		counters.tagsCounter(tags, numberOfTagsCreatedL);
+		counters.tokensCounter(tokensBiggerThanTen, existingImageViews, numberOfTokensCreatedL);
 	}
 
 	@FXML
@@ -2297,7 +2308,7 @@ public class MainWindowController
 		mainWindowControllerConnectToDatabase();
 
 		setBackgroundColor();
-
+		setTooltips();
 		initializeStats();
 
 		middleLabel.setDisable(true);
@@ -2637,6 +2648,8 @@ public class MainWindowController
 		GridPane.setHalignment(mouseRightClickL, HPos.RIGHT);
 		GridPane.setHalignment(objectsDeletedL, HPos.RIGHT);
 		GridPane.setHalignment(objectsMovedL, HPos.RIGHT);
+		GridPane.setHalignment(tagsCreatedL, HPos.RIGHT);
+		GridPane.setHalignment(tokensCreatedL, HPos.RIGHT);
 
 		grid.setPadding(new Insets(5, 5, 5, 5));
 
@@ -2653,25 +2666,31 @@ public class MainWindowController
 		grid.add(doubleArrowsCreatedL, 0, 4);
 		grid.add(numberOfDoubleArrowsCreatedL, 1, 4);
 
-		grid.add(separator1, 0, 5);
-		grid.add(separator2, 1, 5);
+		grid.add(tagsCreatedL, 0, 5);
+		grid.add(numberOfTagsCreatedL, 1, 5);
 
-		grid.add(interactions, 0, 6);
+		grid.add(tokensCreatedL, 0, 6);
+		grid.add(numberOfTokensCreatedL, 1, 6);
 
-		grid.add(mouseBothClickL, 0, 7);
-		grid.add(numberOfMouseBothClickL, 1, 7);
+		grid.add(separator1, 0, 7);
+		grid.add(separator2, 1, 7);
 
-		grid.add(mouseRightClickL, 0, 8);
-		grid.add(numberOfMouseRightClickL, 1, 8);
+		grid.add(interactions, 0, 8);
 
-		grid.add(mouseLeftClickL, 0, 9);
-		grid.add(numberOfMouseLeftClickL, 1, 9);
+		grid.add(mouseBothClickL, 0, 9);
+		grid.add(numberOfMouseBothClickL, 1, 9);
 
-		grid.add(objectsDeletedL, 0, 10);
-		grid.add(numberOfObjectsDeletedL, 1, 10);
+		grid.add(mouseRightClickL, 0, 10);
+		grid.add(numberOfMouseRightClickL, 1, 10);
 
-		grid.add(objectsMovedL, 0, 11);
-		grid.add(numberOfObjectsMovedL, 1, 11);
+		grid.add(mouseLeftClickL, 0, 11);
+		grid.add(numberOfMouseLeftClickL, 1, 11);
+
+		grid.add(objectsDeletedL, 0, 12);
+		grid.add(numberOfObjectsDeletedL, 1, 12);
+
+		grid.add(objectsMovedL, 0, 13);
+		grid.add(numberOfObjectsMovedL, 1, 13);
 
 		allStatsLabels.add(arrowsCreatedL);
 		allStatsLabels.add(circlesCreatedL);
@@ -2682,6 +2701,8 @@ public class MainWindowController
 		allStatsLabels.add(mouseRightClickL);
 		allStatsLabels.add(objectsDeletedL);
 		allStatsLabels.add(objectsMovedL);
+		allStatsLabels.add(tokensCreatedL);
+		allStatsLabels.add(tagsCreatedL);
 		allStatsLabels.add(numberOfArrowsCreatedL);
 		allStatsLabels.add(numberOfCirclesCreatedL);
 		allStatsLabels.add(numberOfDoubleArrowsCreatedL);
@@ -2691,6 +2712,9 @@ public class MainWindowController
 		allStatsLabels.add(numberOfObjectsDeletedL);
 		allStatsLabels.add(numberOfObjectsMovedL);
 		allStatsLabels.add(numberOfRectanglesCreatedL);
+		allStatsLabels.add(numberOfTokensCreatedL);
+		allStatsLabels.add(numberOfTagsCreatedL);
+
 
 		for (Label l : allStatsLabels)
 		{
@@ -3060,8 +3084,6 @@ public class MainWindowController
 		DialogPane dialogPane = statisticsAlert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("statisticsAlert.css").toExternalForm());
 		dialogPane.getStyleClass().add("statDialog");
-		Stage myStage = (Stage) statisticsAlert.getDialogPane().getScene().getWindow();
-		myStage.getIcons().add(new Image(this.getClass().getResource("resources/statIcon.png").toString()));
 		statisticsAlert.showAndWait();
 	}
 
@@ -3336,5 +3358,111 @@ public class MainWindowController
 		}
 
 	}
+
+	private void setTooltips()
+	{
+		Tooltip addTagTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(addTagTooltip);
+		Tooltip.install(addTagToggleButton, addTagTooltip);
+		addTagTooltip.setText("Add Tag");
+		addTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip createCircleTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(createCircleTooltip);
+		Tooltip.install(circleToggleButton, createCircleTooltip);
+		createCircleTooltip.setText("Add Circle");
+		createCircleTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip createRectangleTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(createRectangleTooltip);
+		Tooltip.install(squareToggleButton, createRectangleTooltip);
+		createRectangleTooltip.setText("Add Rectangle");
+		createRectangleTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip createArrowTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(createArrowTooltip);
+		Tooltip.install(lineToggleButton, createArrowTooltip);
+		createArrowTooltip.setText("Add Arrow");
+		createArrowTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip removeTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(removeTooltip);
+		Tooltip.install(removeToggleButton, removeTooltip);
+		removeTooltip.setText("Remove");
+		removeTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip clearAllTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(clearAllTooltip);
+		Tooltip.install(clearAllButton, clearAllTooltip);
+		clearAllTooltip.setText("Clear All");
+		clearAllTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip createTokenTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(createTokenTooltip);
+		Tooltip.install(addTokenToggleButton, createTokenTooltip);
+		createTokenTooltip.setText("Add Token");
+		createTokenTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip removeTokenTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(removeTokenTooltip);
+		Tooltip.install(removeTokenToggleButton, removeTokenTooltip);
+		removeTokenTooltip.setText("Remove Token");
+		removeTokenTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip removeTagTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(removeTagTooltip);
+		Tooltip.install(removeTagToggleButton, removeTagTooltip);
+		removeTagTooltip.setText("Remove Tag");
+		removeTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip moveTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(moveTooltip);
+		Tooltip.install(moveToggleButton, moveTooltip);
+		moveTooltip.setText("Move Objects");
+		moveTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+		Tooltip animationTooltip = new Tooltip();
+		Utilities.hackTooltipStartTiming(animationTooltip);
+		Tooltip.install(startAnimationToggleButton, animationTooltip);
+		animationTooltip.setText("Animation");
+		animationTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
+		    + "-fx-base: #AE3522; "
+		    + "-fx-text-fill: orange;"
+		    + "-fx-font-size: 16;");
+
+
+	}
+
+	
 
 }
