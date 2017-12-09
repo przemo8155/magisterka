@@ -1988,7 +1988,7 @@ public class MainWindowController
 			case "move":
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
-						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags))
+						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags))
 				{
 					try
 					{
@@ -2037,7 +2037,7 @@ public class MainWindowController
 		openAPTFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
 
 		utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags);
 
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
 		squareToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -2161,7 +2161,7 @@ public class MainWindowController
 	{
 		Stage s = Main.getPrimaryStage();
 		fileManager.SaveFile(s, circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags);
 		Boolean fileSaved = fileManager.getSomethingSaved();
 		if (fileSaved)
 		{
@@ -2199,14 +2199,21 @@ public class MainWindowController
 			rda.removeFromMainPane(mainPane);
 		}
 
+		for(Label l : tags)
+		{
+			mainPane.getChildren().remove(l);
+		}
+
+
+
 		utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		rectangleList.clear();
 		fileManager.OpenFile(s, circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen, mainPane);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags, mainPane);
 
 		for (Circle c : circleList)
 		{
@@ -2246,6 +2253,12 @@ public class MainWindowController
 		{
 			mainPane.getChildren().add(l);
 		}
+
+		for(Label l : tags)
+		{
+			mainPane.getChildren().add(l);
+		}
+
 
 		Boolean fileOpened = fileManager.getSomethingOpened();
 		if (fileOpened)

@@ -3,6 +3,7 @@ package application;
 
 import java.io.File;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
@@ -99,17 +100,20 @@ public class Utilities
 
 	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle,
 			ObservableList<HeadArrow> arrow, ObservableList<LeftDoubleArrow> da, ObservableList<RightDoubleArrow> da2,
-			ObservableList<ImageView> iv, ObservableList<Label> label, ObservableList<Label> tags)
+			ObservableList<ImageView> iv, ObservableList<Label> label, ObservableList<Label> tags, Map<Label, HeadArrow> haTags,
+			Map<Label, RightDoubleArrow> rightTags,
+			Map<Label, LeftDoubleArrow> leftTags)
 	{
 		int w = 0;
 		w = circle.size() + rectangle.size() + arrow.size() + da.size() + da2.size() + iv.size() + label.size()
-				+ tags.size();
+				+ tags.size() + haTags.size() + rightTags.size() + leftTags.size();
 		return w;
 	}
 
 	public void clearAllLists(ObservableList<Circle> circ, ObservableList<Rectangle> rect,
 			ObservableList<HeadArrow> arr, ObservableList<LeftDoubleArrow> lda, ObservableList<RightDoubleArrow> rda,
-			ObservableList<ImageView> images, ObservableList<Label> labelList)
+			ObservableList<ImageView> images, ObservableList<Label> labelList, ObservableList<Label> tags, Map<Label, HeadArrow> haTags, Map<Label, RightDoubleArrow> rightTags,
+			Map<Label, LeftDoubleArrow> leftTags)
 	{
 		circ.clear();
 		rect.clear();
@@ -118,6 +122,10 @@ public class Utilities
 		rda.clear();
 		images.clear();
 		labelList.clear();
+		rightTags.clear();
+		leftTags.clear();
+		haTags.clear();
+		tags.clear();
 	}
 
 	public void clearStartAndEndLineLists(ObservableList<Line> lin1, ObservableList<Line> lin2)
