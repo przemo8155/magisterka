@@ -16,13 +16,19 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import static java.util.concurrent.TimeUnit.*;
@@ -70,35 +76,46 @@ public class MyPreloader extends Preloader
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		ImageView image = new ImageView("file:resources/sowa.jpg");
 		this.preloaderStage = primaryStage;
 
-		VBox loading = new VBox(20);
-		loading.setMaxWidth(Region.USE_PREF_SIZE);
-		loading.setMaxHeight(Region.USE_PREF_SIZE);
-		loading.getChildren().add(new ProgressBar());
-		loading.getChildren().add(new Label("Please wait..."));
-		loading.getChildren().add(image);
+		ProgressIndicator pi = new ProgressIndicator();
+		pi.setLayoutX(250.0f);
+		pi.setLayoutY(180.0f);
+		pi.setMinHeight(100.0f);
+		pi.setMinWidth(100.f);
 
-		BorderPane root = new BorderPane(loading);
+		Label waitLabel = new Label("Please wait...");
+		waitLabel.setLayoutX(230.0f);
+		waitLabel.setLayoutY(300.0f);
+		waitLabel.setFont(Font.font("Verdana", 22));
+
+
+		Pane pane = new Pane();
+		pane.setId("pane");
+		pane.setPickOnBounds(false);
+		pane.setLayoutX(0.0f);
+		pane.setLayoutY(0.0f);
+		pane.setMinWidth(600);
+		pane.setMinHeight(400);
+
+
+		pane.getChildren().add(pi);
+		pane.getChildren().add(waitLabel);
+
+
+		BorderPane root = new BorderPane(pane);
 		Scene scene = new Scene(root);
+		scene.getStylesheets().addAll(this.getClass().getResource("MyPreloader.css").toExternalForm());
 		scene.setFill(Paint.valueOf("#555555"));
-
-		primaryStage.setWidth(800);
-		primaryStage.setHeight(600);
+		primaryStage.initStyle(StageStyle.UNDECORATED);
+		primaryStage.resizableProperty().setValue(Boolean.FALSE);
+		primaryStage.setWidth(600);
+		primaryStage.setHeight(400);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 	}
 
-	/*@Override
-	public void handleStateChangeNotification(StateChangeNotification stateChangeNotification)
-	{
-		if (stateChangeNotification.getType() == Type.BEFORE_START)
-		{
-			preloaderStage.hide();
-		}
-	}*/
 
 
 	public void initialize()

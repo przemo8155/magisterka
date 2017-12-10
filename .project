@@ -117,6 +117,11 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/play.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/preloader.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/preloader.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/removeTag.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/removeTag.png</location>

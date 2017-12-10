@@ -1,0 +1,4 @@
+#pane{
+    -fx-background-image: url('resources/preloader.png');
+    -fx-background-position: center center;
+}
