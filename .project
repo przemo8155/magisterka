@@ -127,6 +127,11 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/removeToken.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/sowa.jpg</name>
+			<type>1</type>
+			<location>D:/sowa.jpg</location>
+		</link>
+		<link>
 			<name>src/application/resources/statBackground.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/statBackground.png</location>
