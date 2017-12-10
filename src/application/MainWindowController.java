@@ -278,6 +278,9 @@ public class MainWindowController
 	private MenuItem showStatisticsMenuItem;
 
 	@FXML
+	private MenuItem compareNetsMenuItem;
+
+	@FXML
 	private MenuItem openFileMenuItem;
 
 	@FXML
@@ -3462,6 +3465,12 @@ public class MainWindowController
 		    + "-fx-text-fill: orange;"
 		    + "-fx-font-size: 16;");
 
+
+	}
+
+	@FXML
+	void compareNetsMenuItem_OnAction(ActionEvent event)
+	{
 
 	}
 
