@@ -175,6 +175,21 @@ public class OpenAPTController
 		fileTextField.setEditable(false);
 		secondFileTextField.setEditable(false);
 
+		openButton.setDisable(true);
+
+		fileTextField.textProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if(!newValue.trim().isEmpty())
+			{
+				openButton.setDisable(false);
+			}
+
+			else
+			{
+				openButton.setDisable(true);
+			}
+		});
+
 		eventTextField1.textProperty().addListener((observable, oldValue, newValue) ->
 		{
 			if (!newValue.trim().isEmpty() && option1Value.equals(bial.getGenerate_reverse_arc())
