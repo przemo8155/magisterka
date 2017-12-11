@@ -24,6 +24,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -46,6 +47,10 @@ public class SettingsController
 
 	public ObservableList<String> allEnableColors = FXCollections.observableArrayList();
 
+
+	String dir = System.getProperty("user.dir");
+	String sep = System.getProperty("file.separator");
+	String settingsFolder = "settings";
 	// colors
 	private final String white = "#FFFFFF";
 	private final String black = "#3A3938";
@@ -57,11 +62,12 @@ public class SettingsController
 
 	public void ReadSettings()
 	{
-		File f = new File("settings.sat");
+
+		File f = new File(dir +  sep + settingsFolder + sep + "settings.sat");
 		if(f.exists())
 		{
 			try {
-				BufferedReader br = new BufferedReader(new FileReader("settings.sat"));
+				BufferedReader br = new BufferedReader(new FileReader(dir + sep + settingsFolder + sep +"settings.sat"));
 			    StringBuilder sb = new StringBuilder();
 			    String line = br.readLine();
 			    int i = 1;
@@ -92,10 +98,9 @@ public class SettingsController
 			}
 		}
 		else
-		{	Utilities.infoBox("else");
 			try
 			{
-				FileWriter fileWriter = new FileWriter("settings.sat");
+				FileWriter fileWriter = new FileWriter(dir + sep + settingsFolder + sep +"settings.sat");
 			    PrintWriter printWriter = new PrintWriter(fileWriter);
 			    printWriter.println(white);
 			    printWriter.println(white);
@@ -110,7 +115,7 @@ public class SettingsController
 			{
 				e.printStackTrace();
 			}
-		}
+
 
 
 	}
@@ -119,7 +124,7 @@ public class SettingsController
 	{
 		try
 		{
-			FileWriter fileWriter = new FileWriter("settings.sat");
+			FileWriter fileWriter = new FileWriter(dir + sep + settingsFolder + sep +"settings.sat");
 		    PrintWriter printWriter = new PrintWriter(fileWriter);
 		    printWriter.println(backgroundColorString);
 		    printWriter.println(circleColorString);
