@@ -2310,7 +2310,8 @@ public class MainWindowController
 
 	public void initialize()
 	{
-		mainWindowControllerConnectToDatabase();
+		mainWindowControllerReadSetting();
+
 
 		setBackgroundColor();
 		setTooltips();
@@ -2435,7 +2436,7 @@ public class MainWindowController
 		@Override
 		public void handle(WindowEvent event)
 		{
-			mainWindowControllerConnectToDatabase();
+			mainWindowControllerReadSetting();
 			setBackgroundColor();
 			setCircleColor();
 			setRectangleColor();
@@ -2552,7 +2553,7 @@ public class MainWindowController
 		if (fileOpened)
 		{
 			setMiddleLabelText("File opened...");
-			mainWindowControllerConnectToDatabase();
+			mainWindowControllerReadSetting();
 			setBackgroundColor();
 			setCircleColor();
 			setArrowColor();
@@ -2768,14 +2769,14 @@ public class MainWindowController
 		headArrowList.remove(headArrowList.size() - 1);
 	}
 
-	private void mainWindowControllerConnectToDatabase()
+	private void mainWindowControllerReadSetting()
 	{
-		ConnectToDatabase ctd = new ConnectToDatabase();
-		ctd.Connect();
-		backgroundColor = ctd.getBackgroundString();
-		rectangleColor = ctd.getRectangleString();
-		circleColor = ctd.getCircleString();
-		arrowColor = ctd.getArrowString();
+		SettingsController set = new SettingsController();
+		set.ReadSettings();
+		backgroundColor = set.getBackgroundColor();
+		rectangleColor = set.getRectangleColor();
+		circleColor = set.getCircleColor();
+		arrowColor = set.getLineColor();
 	}
 
 	public void setBackgroundColor()

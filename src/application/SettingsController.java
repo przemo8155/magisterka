@@ -1,8 +1,14 @@
 
 package application;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.nio.channels.SeekableByteChannel;
 
 import javafx.collections.FXCollections;
@@ -23,6 +29,8 @@ import javafx.util.Callback;
 
 public class SettingsController
 {
+	Log log = new Log();
+	Logger logger = new Logger(log, null);
 
 	public String backgroundColorString = null, circleColorString = null, rectangleColorString = null,
 			lineColorString = null;
@@ -44,8 +52,87 @@ public class SettingsController
 	private final String blue = "#5C4CFB";
 	private final String red = "#FF420E";
 	private final String green = "#89C25E";
-	private final String yellow = "E7DF18";
-	private final String pink = "D118E7";
+	private final String yellow = "#E7DF18";
+	private final String pink = "#D118E7";
+
+	public void ReadSettings()
+	{
+		File f = new File("settings.sat");
+		if(f.exists())
+		{
+			try {
+				BufferedReader br = new BufferedReader(new FileReader("settings.sat"));
+			    StringBuilder sb = new StringBuilder();
+			    String line = br.readLine();
+			    int i = 1;
+			    while (line != null) {
+			    	if(i == 1)
+			    	{
+			    		backgroundColorString = line;
+			    	} else if(i == 2)
+			    	{
+			    		circleColorString = line;
+			    	} else if(i == 3)
+			    	{
+			    		rectangleColorString= line;
+			    	} else if(i == 4)
+			    	{
+			    		lineColorString = line;
+			    	}
+			    	i=i+1;
+			    	line = br.readLine();
+			    }
+
+			    String everything = sb.toString();
+			    i = 1;
+			    br.close();
+			} catch(IOException e){
+				logger.debug(e.getLocalizedMessage());
+
+			}
+		}
+		else
+		{	Utilities.infoBox("else");
+			try
+			{
+				FileWriter fileWriter = new FileWriter("settings.sat");
+			    PrintWriter printWriter = new PrintWriter(fileWriter);
+			    printWriter.println(white);
+			    printWriter.println(white);
+			    printWriter.println(white);
+			    printWriter.println(black);
+			    setBackgroundColor(white);
+			    setCircleColor(white);
+			    setRectangleColor(white);
+			    setLineColor(black);
+			    printWriter.close();
+			}catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+
+	}
+
+	public void WriteSettings()
+	{
+		try
+		{
+			FileWriter fileWriter = new FileWriter("settings.sat");
+		    PrintWriter printWriter = new PrintWriter(fileWriter);
+		    printWriter.println(backgroundColorString);
+		    printWriter.println(circleColorString);
+		    printWriter.println(rectangleColorString);
+		    printWriter.println(lineColorString);
+		    printWriter.close();
+		}catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
+
+	}
 
 	private void backgroundSetItems()
 	{
@@ -276,7 +363,7 @@ public class SettingsController
 		circleColorBox.getItems().addAll("Default", "Black", "Blue", "Red", "Green", "Yellow", "Pink");
 		rectangleColorBox.getItems().addAll("Default", "Black", "Blue", "Red", "Green", "Yellow", "Pink");
 		lineColorBox.getItems().addAll("Default", "White", "Blue", "Red", "Green", "Yellow", "Pink");
-		getDataFromDatabase();
+		ReadSettings();
 		setComboItems();
 		backgroundSetItems();
 		circleSetItems();
@@ -387,11 +474,13 @@ public class SettingsController
 				setLineColor(pink);
 				break;
 		}
-		UpdateDatabase updateDatabase = new UpdateDatabase();
-		updateDatabase.Update(backgroundColorString, "background");
-		updateDatabase.Update(circleColorString, "circle");
-		updateDatabase.Update(rectangleColorString, "rectangle");
-		updateDatabase.Update(lineColorString, "arrow");
+		//UpdateDatabase updateDatabase = new UpdateDatabase();
+		//updateDatabase.Update(backgroundColorString, "background");
+		//updateDatabase.Update(circleColorString, "circle");
+		//updateDatabase.Update(rectangleColorString, "rectangle");
+		//updateDatabase.Update(lineColorString, "arrow");
+
+		WriteSettings();
 
 		cancelButton_OnAction(event);
 
