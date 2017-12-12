@@ -2311,7 +2311,7 @@ public class MainWindowController
 	public void initialize()
 	{
 		mainWindowControllerReadSetting();
-
+		setPaneResolution();
 
 		setBackgroundColor();
 		setTooltips();
@@ -3473,6 +3473,15 @@ public class MainWindowController
 	void compareNetsMenuItem_OnAction(ActionEvent event)
 	{
 
+	}
+
+	void setPaneResolution()
+	{
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		mainPane.setMaxWidth(primaryScreenBounds.getWidth());
+		mainPane.setMaxHeight(primaryScreenBounds.getHeight());
+		mainPane.setMinWidth(primaryScreenBounds.getWidth());
+		mainPane.setMinHeight(primaryScreenBounds.getHeight());
 	}
 
 

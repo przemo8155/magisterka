@@ -63,11 +63,11 @@ public class SettingsController
 	public void ReadSettings()
 	{
 
-		File f = new File(dir +  sep + settingsFolder + sep + "settings.sat");
+		File f = new File(dir +  sep + "settings.sat");
 		if(f.exists())
 		{
 			try {
-				BufferedReader br = new BufferedReader(new FileReader(dir + sep + settingsFolder + sep +"settings.sat"));
+				BufferedReader br = new BufferedReader(new FileReader(dir + sep +"settings.sat"));
 			    StringBuilder sb = new StringBuilder();
 			    String line = br.readLine();
 			    int i = 1;
@@ -100,7 +100,7 @@ public class SettingsController
 		else
 			try
 			{
-				FileWriter fileWriter = new FileWriter(dir + sep + settingsFolder + sep +"settings.sat");
+				FileWriter fileWriter = new FileWriter(dir + sep + "settings.sat");
 			    PrintWriter printWriter = new PrintWriter(fileWriter);
 			    printWriter.println(white);
 			    printWriter.println(white);
@@ -124,7 +124,7 @@ public class SettingsController
 	{
 		try
 		{
-			FileWriter fileWriter = new FileWriter(dir + sep + settingsFolder + sep +"settings.sat");
+			FileWriter fileWriter = new FileWriter(dir + sep +"settings.sat");
 		    PrintWriter printWriter = new PrintWriter(fileWriter);
 		    printWriter.println(backgroundColorString);
 		    printWriter.println(circleColorString);
