@@ -5,7 +5,7 @@ package application;
 
 import java.awt.Color;
 import java.awt.List;
-
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,10 +13,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.lang.model.element.Element;
 import javax.swing.JOptionPane;
@@ -77,6 +82,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BlurType;
+import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.effect.Light.Distant;
@@ -203,6 +209,7 @@ public class MainWindowController
 	ConnectToDatabase connectToDatabase = new ConnectToDatabase();
 	ExportPDF exportPdf = new ExportPDF();
 	LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
+	AnimationSchedules animationsSchedules = new AnimationSchedules();
 
 	private String backgroundColor;
 	private String circleColor;
@@ -1034,175 +1041,61 @@ public class MainWindowController
 				// Colors
 				javafx.scene.paint.Color active = javafx.scene.paint.Color.INDIANRED;
 				javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
+				Shadow s = new Shadow();
+				s.setRadius(10.0f);
+				s.setColor(active);
 
-				if (event.getSceneY() > minusWidth)
+				int tagValue = -1;
+				for (Label l : tags)
 				{
-					if (event.getButton() == MouseButton.PRIMARY)
+					if (l.getLayoutX() < event.getSceneX() + arrowRay && l.getLayoutX() > event.getSceneX() - arrowRay
+							&& l.getLayoutY() < event.getSceneY() + arrowRay - minusWidth
+							&& l.getLayoutY() > event.getSceneY() - arrowRay - minusWidth)
 					{
-						if (startingFaze < 4)
+						tagValue = Integer.parseInt(l.getText());
+						for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 						{
-							startingFaze += 1;
+							if (l.equals(entry.getKey()))
+							{
+								for (Circle c : circleList)
+								{
+									if (c.getCenterX() == entry.getValue().getStartX())
+									{
+										double positionX = c.getCenterX() - 20;
+										double positionY = c.getCenterY() - 20;
+										int i = checkBitmapToken(positionX, positionY);
+										animation(c, l, entry.getValue(), i, tagValue);
+
+										if (i > 1 && i < 11)
+										{
+											deleteBitmapToken(positionX, positionY);
+											setBitmapToken(c, i - tagValue);
+
+										}
+
+										else if (i > 11)
+										{
+											i -= tagValue;
+											deleteTokenBiggerThanTen(positionX, positionY);
+											setBitmapToken(c, i - 1);
+										}
+
+										else if (i == 11)
+										{
+											i -= tagValue;
+											deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
+													c.getCenterY() - labelInTokensRay);
+											setBitmapToken(c, i - 1);
+
+										} else
+										{
+											deleteBitmapToken(positionX, positionY);
+										}
+
+									}
+								}
+							}
 						}
-					} else if (event.getButton() == MouseButton.SECONDARY)
-					{
-						if (startingFaze > 0)
-						{
-							startingFaze -= 1;
-						}
-					}
-
-					switch (startingFaze)
-					{
-
-						case 0:
-							for (Circle c : circleList)
-							{
-								c.setEffect(null);
-							}
-
-							break;
-						case 1:
-							for (Circle c : circleList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(active);
-								c.setEffect(s);
-							}
-							for (HeadArrow ha : headArrowList)
-							{
-								ha.setEffect(null);
-							}
-
-							for (LeftDoubleArrow lda : leftDoubleArrowList)
-							{
-								lda.setEffect(null);
-							}
-
-							for (RightDoubleArrow rda : rightDoubleArrowList)
-							{
-								rda.setEffect(null);
-							}
-
-							break;
-						case 2:
-							for (Circle c : circleList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								c.setEffect(s);
-							}
-							for (HeadArrow ha : headArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(active);
-								ha.setEffect(s);
-							}
-
-							for (LeftDoubleArrow lda : leftDoubleArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(active);
-								lda.setEffect(s);
-							}
-
-							for (RightDoubleArrow rda : rightDoubleArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(active);
-								rda.setEffect(s);
-							}
-
-							for (Rectangle r : rectangleList)
-							{
-								r.setEffect(null);
-							}
-							break;
-						case 3:
-							for (Circle c : circleList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								c.setEffect(s);
-							}
-							for (HeadArrow ha : headArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								ha.setEffect(s);
-							}
-
-							for (LeftDoubleArrow lda : leftDoubleArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								lda.setEffect(s);
-							}
-
-							for (RightDoubleArrow rda : rightDoubleArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								rda.setEffect(s);
-							}
-
-							for (Rectangle r : rectangleList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(active);
-								r.setEffect(s);
-							}
-							break;
-						case 4:
-							for (Circle c : circleList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								c.setEffect(s);
-							}
-							for (HeadArrow ha : headArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								ha.setEffect(s);
-							}
-
-							for (LeftDoubleArrow lda : leftDoubleArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								lda.setEffect(s);
-							}
-
-							for (RightDoubleArrow rda : rightDoubleArrowList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								rda.setEffect(s);
-							}
-
-							for (Rectangle r : rectangleList)
-							{
-								Shadow s = new Shadow();
-								s.setRadius(10.0f);
-								s.setColor(done);
-								r.setEffect(s);
-							}
-							break;
-
 					}
 				}
 
@@ -1476,8 +1369,6 @@ public class MainWindowController
 								&& (y < myCircle.getCenterY() + circleRay + minusWidth))
 						{
 
-
-
 							for (ImageView iv : existingImageViews)
 							{
 								if (iv.getLayoutX() == myCircle.getCenterX() - 20
@@ -1535,20 +1426,20 @@ public class MainWindowController
 								}
 							}
 
-							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 							{
-								for(HeadArrow rda : startHeadArrowList)
+								for (HeadArrow rda : startHeadArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1557,20 +1448,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 							{
-								for(HeadArrow rda : endHeadArrowList)
+								for (HeadArrow rda : endHeadArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1579,22 +1470,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-
-
-							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
 							{
-								for(RightDoubleArrow rda : rightStartDoubleArrowList)
+								for (RightDoubleArrow rda : rightStartDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1603,20 +1492,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
 							{
-								for(RightDoubleArrow rda : rightEndDoubleArrowList)
+								for (RightDoubleArrow rda : rightEndDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1625,20 +1514,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
 							{
-								for(LeftDoubleArrow rda : leftEndDoubleArrowList)
+								for (LeftDoubleArrow rda : leftEndDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1647,20 +1536,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
 							{
-								for(LeftDoubleArrow rda : leftStartDoubleArrowList)
+								for (LeftDoubleArrow rda : leftStartDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1668,8 +1557,6 @@ public class MainWindowController
 							}
 
 							tagsToRemove.clear();
-
-
 
 							if (!imageViewsToRemove.isEmpty())
 							{
@@ -1807,20 +1694,20 @@ public class MainWindowController
 								}
 							}
 
-							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 							{
-								for(HeadArrow rda : startHeadArrowList)
+								for (HeadArrow rda : startHeadArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1829,20 +1716,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 							{
-								for(HeadArrow rda : endHeadArrowList)
+								for (HeadArrow rda : endHeadArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1851,20 +1738,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
 							{
-								for(RightDoubleArrow rda : rightStartDoubleArrowList)
+								for (RightDoubleArrow rda : rightStartDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1873,20 +1760,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
 							{
-								for(RightDoubleArrow rda : rightEndDoubleArrowList)
+								for (RightDoubleArrow rda : rightEndDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1895,20 +1782,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
 							{
-								for(LeftDoubleArrow rda : leftEndDoubleArrowList)
+								for (LeftDoubleArrow rda : leftEndDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -1917,20 +1804,20 @@ public class MainWindowController
 
 							tagsToRemove.clear();
 
-							for(Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
 							{
-								for(LeftDoubleArrow rda : leftStartDoubleArrowList)
+								for (LeftDoubleArrow rda : leftStartDoubleArrowList)
 								{
-									if(rda.equals(entry.getValue()))
+									if (rda.equals(entry.getValue()))
 									{
 										tagsToRemove.add(entry.getKey());
 									}
 								}
 							}
 
-							if(!tagsToRemove.isEmpty())
+							if (!tagsToRemove.isEmpty())
 							{
-								for(Label l : tagsToRemove)
+								for (Label l : tagsToRemove)
 								{
 									mainPane.getChildren().remove(l);
 								}
@@ -2276,7 +2163,8 @@ public class MainWindowController
 			case "move":
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
-						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags))
+						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags,
+						headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags))
 				{
 					try
 					{
@@ -2326,7 +2214,8 @@ public class MainWindowController
 		openAPTFileMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
 
 		utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags,
+				leftDoubleArrowTags);
 
 		circleToggleButton.setToggleGroup(toggleButtonsGroup);
 		squareToggleButton.setToggleGroup(toggleButtonsGroup);
@@ -2450,7 +2339,8 @@ public class MainWindowController
 	{
 		Stage s = Main.getPrimaryStage();
 		fileManager.SaveFile(s, circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags,
+				leftDoubleArrowTags);
 		Boolean fileSaved = fileManager.getSomethingSaved();
 		if (fileSaved)
 		{
@@ -2488,21 +2378,21 @@ public class MainWindowController
 			rda.removeFromMainPane(mainPane);
 		}
 
-		for(Label l : tags)
+		for (Label l : tags)
 		{
 			mainPane.getChildren().remove(l);
 		}
 
-
-
 		utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags,
+				leftDoubleArrowTags);
 
 		Stage s = Main.getPrimaryStage();
 		circleList.clear();
 		rectangleList.clear();
 		fileManager.OpenFile(s, circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
-				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags, mainPane);
+				existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags,
+				mainPane);
 
 		for (Circle c : circleList)
 		{
@@ -2543,11 +2433,10 @@ public class MainWindowController
 			mainPane.getChildren().add(l);
 		}
 
-		for(Label l : tags)
+		for (Label l : tags)
 		{
 			mainPane.getChildren().add(l);
 		}
-
 
 		Boolean fileOpened = fileManager.getSomethingOpened();
 		if (fileOpened)
@@ -2567,7 +2456,8 @@ public class MainWindowController
 	void clearAllButton_OnMouseClicked(MouseEvent event)
 	{
 		utilities.clearUpMessage(mainPane, "Question", "Clear all elements", "Are you sure?", circleList, rectangleList,
-				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags);
+				headArrowList, leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen,
+				tags);
 		if (utilities.checkCleared)
 		{
 			counters.circleCounter(circleList, numberOfCirclesCreatedL);
@@ -2720,7 +2610,6 @@ public class MainWindowController
 		allStatsLabels.add(numberOfRectanglesCreatedL);
 		allStatsLabels.add(numberOfTokensCreatedL);
 		allStatsLabels.add(numberOfTagsCreatedL);
-
 
 		for (Label l : allStatsLabels)
 		{
@@ -3163,55 +3052,54 @@ public class MainWindowController
 	{
 		try
 		{
-			for(Circle c : circleList)
+			for (Circle c : circleList)
 			{
 				mainPane.getChildren().remove(c);
 			}
 			circleList.clear();
 
-			for(Rectangle r : rectangleList)
+			for (Rectangle r : rectangleList)
 			{
 				mainPane.getChildren().remove(r);
 			}
 			rectangleList.clear();
 
-			for(HeadArrow ha : headArrowList)
+			for (HeadArrow ha : headArrowList)
 			{
 				ha.removeFromMainPane(mainPane);
 			}
 			headArrowList.clear();
 
-			for(RightDoubleArrow rda : rightDoubleArrowList)
+			for (RightDoubleArrow rda : rightDoubleArrowList)
 			{
 				rda.removeFromMainPane(mainPane);
 			}
 			rightDoubleArrowList.clear();
 
-			for(LeftDoubleArrow lda : leftDoubleArrowList)
+			for (LeftDoubleArrow lda : leftDoubleArrowList)
 			{
 				lda.removeFromMainPane(mainPane);
 			}
 			leftDoubleArrowList.clear();
 
-			for(Label t : tokensBiggerThanTen)
+			for (Label t : tokensBiggerThanTen)
 			{
 				mainPane.getChildren().remove(t);
 			}
 			tokensBiggerThanTen.clear();
 
-			for(ImageView iv : existingImageViews)
+			for (ImageView iv : existingImageViews)
 			{
 				mainPane.getChildren().remove(iv);
 			}
 			existingImageViews.clear();
 
-			for(Label l : tags)
+			for (Label l : tags)
 			{
 				mainPane.getChildren().remove(l);
 
 			}
 			tags.clear();
-
 
 			FilesRecognition fr = new FilesRecognition(p);
 			ObservableList<String> edgesListFromFile = fr.getEdgesList();
@@ -3371,101 +3259,78 @@ public class MainWindowController
 		Utilities.hackTooltipStartTiming(addTagTooltip);
 		Tooltip.install(addTagToggleButton, addTagTooltip);
 		addTagTooltip.setText("Add Tag");
-		addTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		addTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+				+ "-fx-font-size: 16;");
 
 		Tooltip createCircleTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(createCircleTooltip);
 		Tooltip.install(circleToggleButton, createCircleTooltip);
 		createCircleTooltip.setText("Add Circle");
-		createCircleTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		createCircleTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; "
+				+ "-fx-text-fill: orange;" + "-fx-font-size: 16;");
 
 		Tooltip createRectangleTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(createRectangleTooltip);
 		Tooltip.install(squareToggleButton, createRectangleTooltip);
 		createRectangleTooltip.setText("Add Rectangle");
-		createRectangleTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		createRectangleTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; "
+				+ "-fx-text-fill: orange;" + "-fx-font-size: 16;");
 
 		Tooltip createArrowTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(createArrowTooltip);
 		Tooltip.install(lineToggleButton, createArrowTooltip);
 		createArrowTooltip.setText("Add Arrow");
-		createArrowTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		createArrowTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; "
+				+ "-fx-text-fill: orange;" + "-fx-font-size: 16;");
 
 		Tooltip removeTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(removeTooltip);
 		Tooltip.install(removeToggleButton, removeTooltip);
 		removeTooltip.setText("Remove");
-		removeTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		removeTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+				+ "-fx-font-size: 16;");
 
 		Tooltip clearAllTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(clearAllTooltip);
 		Tooltip.install(clearAllButton, clearAllTooltip);
 		clearAllTooltip.setText("Clear All");
-		clearAllTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		clearAllTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+				+ "-fx-font-size: 16;");
 
 		Tooltip createTokenTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(createTokenTooltip);
 		Tooltip.install(addTokenToggleButton, createTokenTooltip);
 		createTokenTooltip.setText("Add Token");
-		createTokenTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		createTokenTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; "
+				+ "-fx-text-fill: orange;" + "-fx-font-size: 16;");
 
 		Tooltip removeTokenTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(removeTokenTooltip);
 		Tooltip.install(removeTokenToggleButton, removeTokenTooltip);
 		removeTokenTooltip.setText("Remove Token");
-		removeTokenTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		removeTokenTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; "
+				+ "-fx-text-fill: orange;" + "-fx-font-size: 16;");
 
 		Tooltip removeTagTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(removeTagTooltip);
 		Tooltip.install(removeTagToggleButton, removeTagTooltip);
 		removeTagTooltip.setText("Remove Tag");
-		removeTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		removeTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+				+ "-fx-font-size: 16;");
 
 		Tooltip moveTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(moveTooltip);
 		Tooltip.install(moveToggleButton, moveTooltip);
 		moveTooltip.setText("Move Objects");
-		moveTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
+		moveTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+				+ "-fx-font-size: 16;");
 
 		Tooltip animationTooltip = new Tooltip();
 		Utilities.hackTooltipStartTiming(animationTooltip);
 		Tooltip.install(startAnimationToggleButton, animationTooltip);
 		animationTooltip.setText("Animation");
-		animationTooltip.setStyle("-fx-font: normal bold 4 Langdon; "
-		    + "-fx-base: #AE3522; "
-		    + "-fx-text-fill: orange;"
-		    + "-fx-font-size: 16;");
-
+		animationTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+				+ "-fx-font-size: 16;");
 
 	}
 
@@ -3484,8 +3349,81 @@ public class MainWindowController
 		mainPane.setMinHeight(primaryScreenBounds.getHeight());
 	}
 
+	void animation(Circle c, Label l, HeadArrow ha, int valueCirc, int valueLab)
+	{
+		javafx.scene.paint.Color active = javafx.scene.paint.Color.INDIANRED;
+		javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
+
+		double positionX = c.getCenterX() - 20;
+		double positionY = c.getCenterY() - 20;
+
+		Shadow act = new Shadow();
+		act.setRadius(10.0f);
+		act.setColor(active);
+
+		Shadow don = new Shadow();
+		don.setRadius(10.0f);
+		don.setColor(done);
+
+		if (valueCirc < 1)
+		{
+			utilities.infoBox("blad");
+		} else
+		{
+			for (int n = valueCirc; n > 0; n = n - valueLab)
+			{
+				c.setEffect(act);
+				animationsSchedules.animationCircle(c, act);
+
+				l.setEffect(act);
+				//dream();
+
+				ha.setEffect(act);
+				//dream();
+
+				int i = Integer.parseInt(l.getText());
+				if (n > 1 && n < 11)
+				{
+					deleteBitmapToken(positionX, positionY);
+					setBitmapToken(c, n - i);
+
+				}
+
+				else if (n > 11)
+				{
+					n -= i;
+					deleteTokenBiggerThanTen(positionX, positionY);
+					setBitmapToken(c, n - i);
+				}
+
+				else if (n == 11)
+				{
+					n -= i;
+					deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
+							c.getCenterY() - labelInTokensRay);
+					setBitmapToken(c, n - i);
+
+				} else
+				{
+					deleteBitmapToken(positionX, positionY);
+				}
+				//dream();
 
 
+				c.setEffect(null);
+				l.setEffect(null);
+				ha.setEffect(null);
+				animationsSchedules.animationCircle(c, null);
+
+
+			}
+
+			c.setEffect(don);
+			//r.setEffect(don);
+			l.setEffect(don);
+			ha.setEffect(don);
+		}
+	}
 
 
 

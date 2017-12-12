@@ -1,0 +1,20 @@
+success: Yes
+.name ""
+.type LPN
+
+.places
+p0
+p1
+p2
+
+.transitions
+t1[label="t1"]
+t2[label="t2"]
+t3[label="t3"]
+
+.flows
+t1: {1*p0} -> {1*p2}
+t2: {1*p1} -> {2*p2}
+t3: {1*p2} -> {1*p0}
+
+.initial_marking {1*p1, 2*p2}
