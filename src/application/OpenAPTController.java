@@ -78,7 +78,7 @@ public class OpenAPTController
 	FilesRecognition filesRecognition = new FilesRecognition();
 	Utilities utilities = new Utilities();
 	OptionsHeaders oh = new OptionsHeaders();
-	BigInfoAPTList bial = new BigInfoAPTList();
+	static BigInfoAPTList bial = new BigInfoAPTList();
 	Help helpObj = new Help();
 	Draw drawObj = new Draw();
 	Check checkObj = new Check();
@@ -125,6 +125,7 @@ public class OpenAPTController
 	public static Stage aptStage;
 
 	String catFileContents = "";
+	static ObservableList<String> allTypes = bial.getTypesList();
 
 	File jarFile;
 	File secondJarFile;
@@ -155,8 +156,16 @@ public class OpenAPTController
 
 	public void initialize()
 	{
+		if(options1ListView.getItems().size() < 100)
+		{
+			options1ListView.setItems(allTypes);
 
-
+		}
+		else
+		{
+			allTypes.clear();
+			options1ListView.setItems(null);
+		}
 		setSecondFileFieldsVisible(false);
 		setOptions2Visible(false);
 		setOptions3Visible(false);
@@ -381,9 +390,10 @@ public class OpenAPTController
 			}
 		});
 
-		ObservableList<String> allTypes = bial.getTypesList();
 
-		options1ListView.setItems(allTypes);
+
+
+
 
 		options1ListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
 		{
@@ -398,16 +408,21 @@ public class OpenAPTController
 					protected void updateItem(String item, boolean empty)
 					{
 						super.updateItem(item, empty);
-						if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item)
-								|| bial.getLTSHeader().equals(item) || bial.getGeneratorsHeader().equals(item)
-								|| bial.getConvetersHeader().equals(item))
+						if(!empty)
 						{
-							setDisable(true);
-						} else
-						{
-							setDisable(false);
+							if (bial.getMiscHeader().equals(item) || bial.getPetriNetsHeader().equals(item)
+									|| bial.getLTSHeader().equals(item) || bial.getGeneratorsHeader().equals(item)
+									|| bial.getConvetersHeader().equals(item))
+							{
+								setDisable(true);
+							} else
+							{
+								setDisable(false);
+							}
+							setText(item);
 						}
-						setText(item);
+
+
 					}
 
 				};
@@ -2193,6 +2208,7 @@ public class OpenAPTController
 		MainWindowController.checkFileRecognition = "yes";
 		Stage closeStage = (Stage) openButton.getScene().getWindow();
 		closeStage.close();
+		options1ListView.setItems(allTypes);
 
 	}
 

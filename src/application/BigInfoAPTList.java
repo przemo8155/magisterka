@@ -416,12 +416,12 @@ public class BigInfoAPTList
 
 	}
 
-	public HashMap<String, String> getBigList()
+	public final HashMap<String, String> getBigList()
 	{
 		return BigInfoAPTList.bigInfoAPTList;
 	}
 
-	public ObservableList<String> getTypesList()
+	public final ObservableList<String> getTypesList()
 	{
 		return BigInfoAPTList.typesList;
 	}
