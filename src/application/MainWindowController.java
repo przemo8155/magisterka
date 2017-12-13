@@ -1043,6 +1043,7 @@ public class MainWindowController
 		{
 			case "play":
 				boolean canRunTransition = true;
+				FourDimensionObject fdo_temp = null;
 				// Colors
 				javafx.scene.paint.Color active = javafx.scene.paint.Color.INDIANRED;
 				javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
@@ -1095,6 +1096,7 @@ public class MainWindowController
 					{
 						Circle c = fdo.getC();
 						Label l = fdo.getL();
+						HeadArrow ha = fdo.getHa();
 						double positionX = c.getCenterX() - 20;
 						double positionY = c.getCenterY() - 20;
 						int i = checkBitmapToken(positionX, positionY);
@@ -1104,7 +1106,9 @@ public class MainWindowController
 						if(tagValue > i)
 						{
 							canRunTransition = false;
-							break;
+							animationWhoCantBeExecuteHeadArrow(c, l, ha, r);
+							fdo_temp = fdo;
+							//break;
 						}
 
 
@@ -1187,6 +1191,7 @@ public class MainWindowController
 					else
 					{
 						setMiddleLabelText(cannotExecuteTransition);
+						animationWhoCantBeExecuteHeadArrow(fdo_temp.getC(), fdo_temp.getL(), fdo_temp.getHa(), fdo_temp.getR());
 					}
 
 
@@ -3821,6 +3826,35 @@ public class MainWindowController
 		}
 
 		n = n + valueLab;
+
+	}
+
+	void animationWhoCantBeExecuteHeadArrow(Circle c, Label l, HeadArrow ha, Rectangle r)
+	{
+		double duration = 30;
+		javafx.scene.paint.Color active = javafx.scene.paint.Color.CRIMSON;
+		javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
+
+		double positionX = c.getCenterX() - 20;
+		double positionY = c.getCenterY() - 20;
+
+		Shadow act = new Shadow();
+		act.setRadius(10.0f);
+		act.setColor(active);
+
+		Shadow don = new Shadow();
+		don.setRadius(10.0f);
+		don.setColor(done);
+
+
+		final KeyFrame kf1 = new KeyFrame(Duration.millis(1 * duration), e -> r.setEffect(act));
+		final KeyFrame kf2 = new KeyFrame(Duration.millis(1 * duration), e -> ha.setEffect(act));
+		final KeyFrame kf3 = new KeyFrame(Duration.millis(1 * duration), e -> c.setEffect(act));
+		final KeyFrame kf4 = new KeyFrame(Duration.millis(15 * duration), e -> r.setEffect(null));
+		final KeyFrame kf5 = new KeyFrame(Duration.millis(15 * duration), e -> ha.setEffect(null));
+		final KeyFrame kf6 = new KeyFrame(Duration.millis(15 * duration), e -> c.setEffect(null));
+		final Timeline timeline = new Timeline(kf1, kf2, kf3, kf4, kf5, kf6);
+		Platform.runLater(timeline::play);
 
 	}
 
