@@ -1108,7 +1108,6 @@ public class MainWindowController
 							canRunTransition = false;
 							animationWhoCantBeExecuteHeadArrow(c, l, ha, r);
 							fdo_temp = fdo;
-							//break;
 						}
 
 
