@@ -106,9 +106,8 @@ public class Utilities
 
 	public int takeMaximumFromLists(ObservableList<Circle> circle, ObservableList<Rectangle> rectangle,
 			ObservableList<HeadArrow> arrow, ObservableList<LeftDoubleArrow> da, ObservableList<RightDoubleArrow> da2,
-			ObservableList<ImageView> iv, ObservableList<Label> label, ObservableList<Label> tags, Map<Label, HeadArrow> haTags,
-			Map<Label, RightDoubleArrow> rightTags,
-			Map<Label, LeftDoubleArrow> leftTags)
+			ObservableList<ImageView> iv, ObservableList<Label> label, ObservableList<Label> tags,
+			Map<Label, HeadArrow> haTags, Map<Label, RightDoubleArrow> rightTags, Map<Label, LeftDoubleArrow> leftTags)
 	{
 		int w = 0;
 		w = circle.size() + rectangle.size() + arrow.size() + da.size() + da2.size() + iv.size() + label.size()
@@ -118,8 +117,8 @@ public class Utilities
 
 	public void clearAllLists(ObservableList<Circle> circ, ObservableList<Rectangle> rect,
 			ObservableList<HeadArrow> arr, ObservableList<LeftDoubleArrow> lda, ObservableList<RightDoubleArrow> rda,
-			ObservableList<ImageView> images, ObservableList<Label> labelList, ObservableList<Label> tags, Map<Label, HeadArrow> haTags, Map<Label, RightDoubleArrow> rightTags,
-			Map<Label, LeftDoubleArrow> leftTags)
+			ObservableList<ImageView> images, ObservableList<Label> labelList, ObservableList<Label> tags,
+			Map<Label, HeadArrow> haTags, Map<Label, RightDoubleArrow> rightTags, Map<Label, LeftDoubleArrow> leftTags)
 	{
 		circ.clear();
 		rect.clear();
@@ -319,12 +318,14 @@ public class Utilities
 
 	public Boolean checkNameTag(String tagText)
 	{
+
 		if (!tagText.matches("[0-9]+"))
 		{
 			modernInfoMessage("Only digits are allowed!");
 			return false;
 		} else
 			return true;
+
 	}
 
 	public Boolean checkNameTagOfCircleOrRectangle(String tagText)
@@ -353,12 +354,11 @@ public class Utilities
 		ObservableList<Double> angles = FXCollections.observableArrayList();
 		for (HeadArrow ha : haList)
 		{
-			if(Math.abs(ha.getStartX() - cPosX) > 30 && Math.abs(ha.getStartY() - cPosY) > 30)
+			if (Math.abs(ha.getStartX() - cPosX) > 30 && Math.abs(ha.getStartY() - cPosY) > 30)
 			{
 				double angle = ha.returnAngle(cPosX, cPosY, ha.getEndX(), ha.getEndY());
 				angles.add(angle);
-			}
-			else
+			} else
 			{
 				double angle = ha.returnAngle(cPosX, cPosY, ha.getStartX(), ha.getStartY());
 				angles.add(angle);
@@ -370,7 +370,7 @@ public class Utilities
 		SortedList<Double> sortedAngles = new SortedList<Double>(angles);
 		double max = 0;
 		double a1 = 0, a2 = 0;
-		if(sortedAngles.size() > 1)
+		if (sortedAngles.size() > 1)
 		{
 			for (Double d : sortedAngles)
 			{
@@ -385,8 +385,7 @@ public class Utilities
 			}
 		}
 
-
-		final double myFinalAngle = (a1+a2)/2;
+		final double myFinalAngle = (a1 + a2) / 2;
 		HeadArrow headArrow = new HeadArrow();
 		double e1 = headArrow.calculateX(myFinalAngle);
 		double e2 = headArrow.calculateY(myFinalAngle);
@@ -395,35 +394,40 @@ public class Utilities
 
 	}
 
+	private void getAllFiles(File curDir)
+	{
 
-	private void getAllFiles(File curDir) {
+		File[] filesList = curDir.listFiles();
+		for (File f : filesList)
+		{
+			if (f.isDirectory())
+				System.out.println((f.getName()));
+			if (f.isFile())
+			{
+				System.out.println((f.getName()));
+			}
+		}
 
-        File[] filesList = curDir.listFiles();
-        for(File f : filesList){
-            if(f.isDirectory())
-                System.out.println((f.getName()));
-            if(f.isFile()){
-            	System.out.println((f.getName()));
-            }
-        }
+	}
 
-    }
+	public static void hackTooltipStartTiming(Tooltip tooltip)
+	{
+		try
+		{
+			Field fieldBehavior = tooltip.getClass().getDeclaredField("BEHAVIOR");
+			fieldBehavior.setAccessible(true);
+			Object objBehavior = fieldBehavior.get(tooltip);
 
-	public static void hackTooltipStartTiming(Tooltip tooltip) {
-	    try {
-	        Field fieldBehavior = tooltip.getClass().getDeclaredField("BEHAVIOR");
-	        fieldBehavior.setAccessible(true);
-	        Object objBehavior = fieldBehavior.get(tooltip);
+			Field fieldTimer = objBehavior.getClass().getDeclaredField("activationTimer");
+			fieldTimer.setAccessible(true);
+			Timeline objTimer = (Timeline) fieldTimer.get(objBehavior);
 
-	        Field fieldTimer = objBehavior.getClass().getDeclaredField("activationTimer");
-	        fieldTimer.setAccessible(true);
-	        Timeline objTimer = (Timeline) fieldTimer.get(objBehavior);
-
-	        objTimer.getKeyFrames().clear();
-	        objTimer.getKeyFrames().add(new KeyFrame(new Duration(250)));
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+			objTimer.getKeyFrames().clear();
+			objTimer.getKeyFrames().add(new KeyFrame(new Duration(250)));
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }

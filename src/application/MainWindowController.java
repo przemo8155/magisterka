@@ -1530,7 +1530,7 @@ public class MainWindowController
 							&& c.getCenterY() > event.getSceneY() - circleRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						if (utilities.checkNameTagOfCircleOrRectangle(tag))
+						if (utilities.checkNameTagOfCircleOrRectangle(tag) && !tag.equals(""))
 						{
 							Pair<Double, Double> pair = utilities.returnCircleTagPosition(c, headArrowList);
 							Label l = new Label();
@@ -1553,7 +1553,7 @@ public class MainWindowController
 							&& (event.getSceneY() - squareRay - minusWidth < myRectangle.getY() + 20))
 					{
 						tag = utilities.tagDialog();
-						if (utilities.checkNameTagOfCircleOrRectangle(tag))
+						if (utilities.checkNameTagOfCircleOrRectangle(tag) && !tag.equals(""))
 						{
 							Utilities.infoBox("rect");
 						}
@@ -1569,7 +1569,7 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						if (utilities.checkNameTag(tag))
+						if (utilities.checkNameTag(tag) && !tag.equals(""))
 						{
 							Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
 									lda.getEndX(), lda.getEndY());
@@ -1606,7 +1606,7 @@ public class MainWindowController
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						if (utilities.checkNameTag(tag))
+						if (utilities.checkNameTag(tag) && !tag.equals(""))
 						{
 							Pair<Double, Double> pair = lda.returnMiddlePoint(lda.getStartX(), lda.getStartY(),
 									lda.getEndX(), lda.getEndY());
@@ -1643,7 +1643,7 @@ public class MainWindowController
 							&& middleY > event.getSceneY() - arrowRay - minusWidth)
 					{
 						tag = utilities.tagDialog();
-						if (utilities.checkNameTag(tag))
+						if (utilities.checkNameTag(tag) && !tag.equals(""))
 						{
 							Pair<Double, Double> pair = left.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
 									ha.getEndX(), ha.getEndY());
@@ -4005,6 +4005,7 @@ public class MainWindowController
 		final Timeline timeline = new Timeline(kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9);
 		Platform.runLater(timeline::play);
 		int i = Integer.parseInt(l.getText());
+
 		if (n > 1 && n < 11)
 		{
 			deleteBitmapToken(positionX, positionY);
@@ -4063,6 +4064,7 @@ public class MainWindowController
 		final Timeline timeline = new Timeline(kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9);
 		Platform.runLater(timeline::play);
 		int i = Integer.parseInt(l.getText());
+
 		if (n > 1 && n < 11)
 		{
 			deleteBitmapToken(positionX, positionY);
@@ -4121,6 +4123,8 @@ public class MainWindowController
 		final Timeline timeline = new Timeline(kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9);
 		Platform.runLater(timeline::play);
 		int i = Integer.parseInt(l.getText());
+
+
 		if (n > 1 && n < 11)
 		{
 			deleteBitmapToken(positionX, positionY);
@@ -4154,9 +4158,6 @@ public class MainWindowController
 		javafx.scene.paint.Color active = javafx.scene.paint.Color.CRIMSON;
 		javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
 
-		double positionX = c.getCenterX() - 20;
-		double positionY = c.getCenterY() - 20;
-
 		Shadow act = new Shadow();
 		act.setRadius(10.0f);
 		act.setColor(active);
@@ -4182,9 +4183,6 @@ public class MainWindowController
 		javafx.scene.paint.Color active = javafx.scene.paint.Color.CRIMSON;
 		javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
 
-		double positionX = c.getCenterX() - 20;
-		double positionY = c.getCenterY() - 20;
-
 		Shadow act = new Shadow();
 		act.setRadius(10.0f);
 		act.setColor(active);
@@ -4209,9 +4207,6 @@ public class MainWindowController
 		double duration = 30;
 		javafx.scene.paint.Color active = javafx.scene.paint.Color.CRIMSON;
 		javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
-
-		double positionX = c.getCenterX() - 20;
-		double positionY = c.getCenterY() - 20;
 
 		Shadow act = new Shadow();
 		act.setRadius(10.0f);
