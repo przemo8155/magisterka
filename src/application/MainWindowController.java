@@ -1042,7 +1042,7 @@ public class MainWindowController
 		switch (selectedToggle)
 		{
 			case "play":
-
+				boolean canRunTransition = true;
 				// Colors
 				javafx.scene.paint.Color active = javafx.scene.paint.Color.INDIANRED;
 				javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
@@ -1091,80 +1091,108 @@ public class MainWindowController
 							}
 						}
 					}
-
-					for (FourDimensionObject fdo : dimensionPlusHeadArrow)
+					for(FourDimensionObject fdo : dimensionMinusHeadArrow)
 					{
 						Circle c = fdo.getC();
 						Label l = fdo.getL();
-						HeadArrow ha = fdo.getHa();
 						double positionX = c.getCenterX() - 20;
 						double positionY = c.getCenterY() - 20;
 						int i = checkBitmapToken(positionX, positionY);
 						String labValS = l.getText();
 						int tagValue = Integer.parseInt(labValS);
-						animationPlusHeadArrow(c, l, ha, r, i, tagValue);
-						if (i != 0 && i < 10)
-						{
-							deleteBitmapToken(positionX, positionY);
-							setBitmapToken(c, i + tagValue);
 
-						} else if (i != 0 && i >= 10)
+						if(tagValue > i)
 						{
-							deleteTokenBiggerThanTen(positionX, positionY);
-							setBitmapToken(c, i + tagValue - 1);
+							canRunTransition = false;
+							break;
 						}
 
-						else
-						{
-							i += tagValue;
-							setBitmapToken(c, tagValue);
-						}
+
 					}
 
-					for (FourDimensionObject fdo : dimensionMinusHeadArrow)
+
+					if(canRunTransition)
 					{
-						Circle c = fdo.getC();
-						Label l = fdo.getL();
-						HeadArrow ha = fdo.getHa();
-						double positionX = c.getCenterX() - 20;
-						double positionY = c.getCenterY() - 20;
-						int i = checkBitmapToken(positionX, positionY);
-						String labValS = l.getText();
-						int tagValue = Integer.parseInt(labValS);
-						animationMinusHeadArrow(c, l, ha, r, i, tagValue);
-						if (i > tagValue && i < 11)
+						for (FourDimensionObject fdo : dimensionPlusHeadArrow)
 						{
-							deleteBitmapToken(positionX, positionY);
-							setBitmapToken(c, i - tagValue);
+							Circle c = fdo.getC();
+							Label l = fdo.getL();
+							HeadArrow ha = fdo.getHa();
+							double positionX = c.getCenterX() - 20;
+							double positionY = c.getCenterY() - 20;
+							int i = checkBitmapToken(positionX, positionY);
+							String labValS = l.getText();
+							int tagValue = Integer.parseInt(labValS);
+							animationPlusHeadArrow(c, l, ha, r, i, tagValue);
+							if (i != 0 && i < 10)
+							{
+								deleteBitmapToken(positionX, positionY);
+								setBitmapToken(c, i + tagValue);
 
+							} else if (i != 0 && i >= 10)
+							{
+								deleteTokenBiggerThanTen(positionX, positionY);
+								setBitmapToken(c, i + tagValue - 1);
+							}
+
+							else
+							{
+								i += tagValue;
+								setBitmapToken(c, tagValue);
+							}
 						}
 
-						else if (i > 11)
+						for (FourDimensionObject fdo : dimensionMinusHeadArrow)
 						{
-							deleteTokenBiggerThanTen(positionX, positionY);
-							setBitmapToken(c, i - tagValue - 1);
-						}
+							Circle c = fdo.getC();
+							Label l = fdo.getL();
+							HeadArrow ha = fdo.getHa();
+							double positionX = c.getCenterX() - 20;
+							double positionY = c.getCenterY() - 20;
+							int i = checkBitmapToken(positionX, positionY);
+							String labValS = l.getText();
+							int tagValue = Integer.parseInt(labValS);
+							animationMinusHeadArrow(c, l, ha, r, i, tagValue);
+							if (i > tagValue && i < 11)
+							{
+								deleteBitmapToken(positionX, positionY);
+								setBitmapToken(c, i - tagValue);
 
-						else if (i == 11)
-						{
-							i -= tagValue;
-							deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
-									c.getCenterY() - labelInTokensRay);
-							setBitmapToken(c, i - tagValue);
+							}
 
-						} else if (i > 0 && i < tagValue)
-						{
+							else if (i > 11)
+							{
+								deleteTokenBiggerThanTen(positionX, positionY);
+								setBitmapToken(c, i - tagValue - 1);
+							}
 
-						}
+							else if (i == 11)
+							{
+								i -= tagValue;
+								deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
+										c.getCenterY() - labelInTokensRay);
+								setBitmapToken(c, i - tagValue);
 
-						else
-						{
-							deleteBitmapToken(positionX, positionY);
+							} else if (i > 0 && i < tagValue)
+							{
+
+							}
+
+							else
+							{
+								deleteBitmapToken(positionX, positionY);
+							}
 						}
 					}
+					else
+					{
+						setMiddleLabelText(cannotExecuteTransition);
+					}
+
 
 					dimensionMinusHeadArrow.clear();
 					dimensionPlusHeadArrow.clear();
+					canRunTransition = true;
 				}
 
 				break;
