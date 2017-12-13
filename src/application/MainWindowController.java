@@ -277,6 +277,12 @@ public class MainWindowController
 	ObservableList<FourDimensionObject> dimensionMinusHeadArrow = FXCollections.observableArrayList();
 	ObservableList<FourDimensionObject> dimensionPlusHeadArrow = FXCollections.observableArrayList();
 
+	ObservableList<FourDimensionLeftObject> dimensionMinusLeftDoubleArrow = FXCollections.observableArrayList();
+	ObservableList<FourDimensionLeftObject> dimensionPlusLeftDoubleArrow = FXCollections.observableArrayList();
+
+	ObservableList<FourDimensionRightObject> dimensionMinusRightDoubleArrow = FXCollections.observableArrayList();
+	ObservableList<FourDimensionRightObject> dimensionPlusRightDoubleArrow = FXCollections.observableArrayList();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -1044,6 +1050,8 @@ public class MainWindowController
 			case "play":
 				boolean canRunTransition = true;
 				FourDimensionObject fdo_temp = null;
+				FourDimensionLeftObject fdo_left_temp = null;
+				FourDimensionRightObject fdo_right_temp = null;
 				// Colors
 				javafx.scene.paint.Color active = javafx.scene.paint.Color.INDIANRED;
 				javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
@@ -1068,16 +1076,14 @@ public class MainWindowController
 									if (entry.getValue().getEndX() == c.getCenterX()
 											&& entry.getValue().getEndY() == c.getCenterY())
 									{
-										for(HeadArrow ha : headArrowList)
+										for (HeadArrow ha : headArrowList)
 										{
-											if(ha.equals(entry.getValue()))
+											if (ha.equals(entry.getValue()))
 											{
 												dimensionPlusHeadArrow
-												.add(new FourDimensionObject(r, ha, entry.getKey(), c));
+														.add(new FourDimensionObject(r, ha, entry.getKey(), c));
 											}
 										}
-
-
 
 									}
 								}
@@ -1091,12 +1097,12 @@ public class MainWindowController
 									if (entry.getValue().getStartX() == c.getCenterX()
 											&& entry.getValue().getStartY() == c.getCenterY())
 									{
-										for(HeadArrow ha : headArrowList)
+										for (HeadArrow ha : headArrowList)
 										{
-											if(ha.equals(entry.getValue()))
+											if (ha.equals(entry.getValue()))
 											{
 												dimensionMinusHeadArrow
-												.add(new FourDimensionObject(r, ha, entry.getKey(), c));
+														.add(new FourDimensionObject(r, ha, entry.getKey(), c));
 											}
 										}
 
@@ -1104,8 +1110,99 @@ public class MainWindowController
 								}
 							}
 						}
+
+						for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+						{
+							if (entry.getValue().getStartX() == r.getX() + 20
+									&& entry.getValue().getStartY() == r.getY() + 20)
+							{
+								for (Circle c : circleList)
+								{
+									if (entry.getValue().getEndX() == c.getCenterX()
+											&& entry.getValue().getEndY() == c.getCenterY())
+									{
+										for (LeftDoubleArrow ha : leftDoubleArrowList)
+										{
+											if (ha.equals(entry.getValue()))
+											{
+												dimensionPlusLeftDoubleArrow
+														.add(new FourDimensionLeftObject(r, ha, entry.getKey(), c));
+											}
+										}
+
+									}
+								}
+							}
+
+							if (entry.getValue().getEndX() == r.getX() + 20
+									&& entry.getValue().getEndY() == r.getY() + 20)
+							{
+								for (Circle c : circleList)
+								{
+									if (entry.getValue().getStartX() == c.getCenterX()
+											&& entry.getValue().getStartY() == c.getCenterY())
+									{
+										for (LeftDoubleArrow ha : leftDoubleArrowList)
+										{
+											if (ha.equals(entry.getValue()))
+											{
+												dimensionMinusLeftDoubleArrow
+														.add(new FourDimensionLeftObject(r, ha, entry.getKey(), c));
+											}
+										}
+
+									}
+								}
+							}
+						}
+
+						for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+						{
+							if (entry.getValue().getStartX() == r.getX() + 20
+									&& entry.getValue().getStartY() == r.getY() + 20)
+							{
+								for (Circle c : circleList)
+								{
+									if (entry.getValue().getEndX() == c.getCenterX()
+											&& entry.getValue().getEndY() == c.getCenterY())
+									{
+										for (RightDoubleArrow ha : rightDoubleArrowList)
+										{
+											if (ha.equals(entry.getValue()))
+											{
+												dimensionPlusRightDoubleArrow
+														.add(new FourDimensionRightObject(r, ha, entry.getKey(), c));
+											}
+										}
+
+									}
+								}
+							}
+
+							if (entry.getValue().getEndX() == r.getX() + 20
+									&& entry.getValue().getEndY() == r.getY() + 20)
+							{
+								for (Circle c : circleList)
+								{
+									if (entry.getValue().getStartX() == c.getCenterX()
+											&& entry.getValue().getStartY() == c.getCenterY())
+									{
+										for (RightDoubleArrow ha : rightDoubleArrowList)
+										{
+											if (ha.equals(entry.getValue()))
+											{
+												dimensionMinusRightDoubleArrow
+														.add(new FourDimensionRightObject(r, ha, entry.getKey(), c));
+											}
+										}
+
+									}
+								}
+							}
+						}
+
 					}
-					for(FourDimensionObject fdo : dimensionMinusHeadArrow)
+					for (FourDimensionObject fdo : dimensionMinusHeadArrow)
 					{
 						Circle c = fdo.getC();
 						Label l = fdo.getL();
@@ -1116,18 +1213,54 @@ public class MainWindowController
 						String labValS = l.getText();
 						int tagValue = Integer.parseInt(labValS);
 
-						if(tagValue > i)
+						if (tagValue > i)
 						{
 							canRunTransition = false;
 							animationWhoCantBeExecuteHeadArrow(c, l, ha, r);
 							fdo_temp = fdo;
 						}
 
-
 					}
 
+					for (FourDimensionLeftObject fdo : dimensionMinusLeftDoubleArrow)
+					{
+						Circle c = fdo.getC();
+						Label l = fdo.getL();
+						LeftDoubleArrow ha = fdo.getHa();
+						double positionX = c.getCenterX() - 20;
+						double positionY = c.getCenterY() - 20;
+						int i = checkBitmapToken(positionX, positionY);
+						String labValS = l.getText();
+						int tagValue = Integer.parseInt(labValS);
 
-					if(canRunTransition)
+						if (tagValue > i)
+						{
+							canRunTransition = false;
+							animationWhoCantBeExecuteLeftDoubleArrow(c, l, ha, r);
+							fdo_left_temp = fdo;
+						}
+					}
+
+					for (FourDimensionRightObject fdo : dimensionMinusRightDoubleArrow)
+					{
+						Circle c = fdo.getC();
+						Label l = fdo.getL();
+						RightDoubleArrow ha = fdo.getHa();
+						double positionX = c.getCenterX() - 20;
+						double positionY = c.getCenterY() - 20;
+						int i = checkBitmapToken(positionX, positionY);
+						String labValS = l.getText();
+						int tagValue = Integer.parseInt(labValS);
+
+						if (tagValue > i)
+						{
+							canRunTransition = false;
+							animationWhoCantBeExecuteRightDoubleArrow(c, l, ha, r);
+							fdo_right_temp = fdo;
+						}
+					}
+
+					if (canRunTransition)
 					{
 						for (FourDimensionObject fdo : dimensionPlusHeadArrow)
 						{
@@ -1199,17 +1332,191 @@ public class MainWindowController
 								deleteBitmapToken(positionX, positionY);
 							}
 						}
-					}
-					else
+
+
+
+						for (FourDimensionLeftObject fdo : dimensionPlusLeftDoubleArrow)
+						{
+							Circle c = fdo.getC();
+							Label l = fdo.getL();
+							LeftDoubleArrow ha = fdo.getHa();
+							double positionX = c.getCenterX() - 20;
+							double positionY = c.getCenterY() - 20;
+							int i = checkBitmapToken(positionX, positionY);
+							String labValS = l.getText();
+							int tagValue = Integer.parseInt(labValS);
+							animationPlusLeftDoubleArrow(c, l, ha, r, i, tagValue);
+							if (i != 0 && i < 10)
+							{
+								deleteBitmapToken(positionX, positionY);
+								setBitmapToken(c, i + tagValue);
+
+							} else if (i != 0 && i >= 10)
+							{
+								deleteTokenBiggerThanTen(positionX, positionY);
+								setBitmapToken(c, i + tagValue - 1);
+							}
+
+							else
+							{
+								i += tagValue;
+								setBitmapToken(c, tagValue);
+							}
+						}
+
+
+						for (FourDimensionLeftObject fdo : dimensionMinusLeftDoubleArrow)
+						{
+							Circle c = fdo.getC();
+							Label l = fdo.getL();
+							LeftDoubleArrow ha = fdo.getHa();
+							double positionX = c.getCenterX() - 20;
+							double positionY = c.getCenterY() - 20;
+							int i = checkBitmapToken(positionX, positionY);
+							String labValS = l.getText();
+							int tagValue = Integer.parseInt(labValS);
+							animationMinusLeftDoubleArrow(c, l, ha, r, i, tagValue);
+							if (i > tagValue && i < 11)
+							{
+								deleteBitmapToken(positionX, positionY);
+								setBitmapToken(c, i - tagValue);
+
+							}
+
+							else if (i > 11)
+							{
+								deleteTokenBiggerThanTen(positionX, positionY);
+								setBitmapToken(c, i - tagValue - 1);
+							}
+
+							else if (i == 11)
+							{
+								i -= tagValue;
+								deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
+										c.getCenterY() - labelInTokensRay);
+								setBitmapToken(c, i - tagValue);
+
+							} else if (i > 0 && i < tagValue)
+							{
+
+							}
+
+							else
+							{
+								deleteBitmapToken(positionX, positionY);
+							}
+						}
+
+
+
+
+						for (FourDimensionRightObject fdo : dimensionPlusRightDoubleArrow)
+						{
+							Circle c = fdo.getC();
+							Label l = fdo.getL();
+							RightDoubleArrow ha = fdo.getHa();
+							double positionX = c.getCenterX() - 20;
+							double positionY = c.getCenterY() - 20;
+							int i = checkBitmapToken(positionX, positionY);
+							String labValS = l.getText();
+							int tagValue = Integer.parseInt(labValS);
+							animationPlusRightDoubleArrow(c, l, ha, r, i, tagValue);
+							if (i != 0 && i < 10)
+							{
+								deleteBitmapToken(positionX, positionY);
+								setBitmapToken(c, i + tagValue);
+
+							} else if (i != 0 && i >= 10)
+							{
+								deleteTokenBiggerThanTen(positionX, positionY);
+								setBitmapToken(c, i + tagValue - 1);
+							}
+
+							else
+							{
+								i += tagValue;
+								setBitmapToken(c, tagValue);
+							}
+						}
+
+
+						for (FourDimensionRightObject fdo : dimensionMinusRightDoubleArrow)
+						{
+							Circle c = fdo.getC();
+							Label l = fdo.getL();
+							RightDoubleArrow ha = fdo.getHa();
+							double positionX = c.getCenterX() - 20;
+							double positionY = c.getCenterY() - 20;
+							int i = checkBitmapToken(positionX, positionY);
+							String labValS = l.getText();
+							int tagValue = Integer.parseInt(labValS);
+							animationMinusRightDoubleArrow(c, l, ha, r, i, tagValue);
+							if (i > tagValue && i < 11)
+							{
+								deleteBitmapToken(positionX, positionY);
+								setBitmapToken(c, i - tagValue);
+
+							}
+
+							else if (i > 11)
+							{
+								deleteTokenBiggerThanTen(positionX, positionY);
+								setBitmapToken(c, i - tagValue - 1);
+							}
+
+							else if (i == 11)
+							{
+								i -= tagValue;
+								deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
+										c.getCenterY() - labelInTokensRay);
+								setBitmapToken(c, i - tagValue);
+
+							} else if (i > 0 && i < tagValue)
+							{
+
+							}
+
+							else
+							{
+								deleteBitmapToken(positionX, positionY);
+							}
+						}
+
+
+
+
+
+
+					} else
 					{
 						setMiddleLabelText(cannotExecuteTransition);
-						animationWhoCantBeExecuteHeadArrow(fdo_temp.getC(), fdo_temp.getL(), fdo_temp.getHa(), fdo_temp.getR());
+						if (fdo_temp != null)
+						{
+							animationWhoCantBeExecuteHeadArrow(fdo_temp.getC(), fdo_temp.getL(), fdo_temp.getHa(),
+									fdo_temp.getR());
+						}
+						if (fdo_left_temp != null)
+						{
+							animationWhoCantBeExecuteLeftDoubleArrow(fdo_left_temp.getC(), fdo_left_temp.getL(),
+									fdo_left_temp.getHa(), fdo_left_temp.getR());
+						}
+						if (fdo_right_temp != null)
+						{
+							animationWhoCantBeExecuteRightDoubleArrow(fdo_right_temp.getC(), fdo_right_temp.getL(),
+									fdo_right_temp.getHa(), fdo_right_temp.getR());
+						}
 					}
-
 
 					dimensionMinusHeadArrow.clear();
 					dimensionPlusHeadArrow.clear();
+					dimensionPlusLeftDoubleArrow.clear();
+					dimensionMinusLeftDoubleArrow.clear();
+					dimensionMinusRightDoubleArrow.clear();
+					dimensionPlusRightDoubleArrow.clear();
 					canRunTransition = true;
+					fdo_temp = null;
+					fdo_left_temp = null;
+					fdo_right_temp = null;
 				}
 
 				break;
@@ -3858,6 +4165,61 @@ public class MainWindowController
 		don.setRadius(10.0f);
 		don.setColor(done);
 
+		final KeyFrame kf1 = new KeyFrame(Duration.millis(1 * duration), e -> r.setEffect(act));
+		final KeyFrame kf2 = new KeyFrame(Duration.millis(1 * duration), e -> ha.setEffect(act));
+		final KeyFrame kf3 = new KeyFrame(Duration.millis(1 * duration), e -> c.setEffect(act));
+		final KeyFrame kf4 = new KeyFrame(Duration.millis(15 * duration), e -> r.setEffect(null));
+		final KeyFrame kf5 = new KeyFrame(Duration.millis(15 * duration), e -> ha.setEffect(null));
+		final KeyFrame kf6 = new KeyFrame(Duration.millis(15 * duration), e -> c.setEffect(null));
+		final Timeline timeline = new Timeline(kf1, kf2, kf3, kf4, kf5, kf6);
+		Platform.runLater(timeline::play);
+
+	}
+
+	void animationWhoCantBeExecuteRightDoubleArrow(Circle c, Label l, RightDoubleArrow ha, Rectangle r)
+	{
+		double duration = 30;
+		javafx.scene.paint.Color active = javafx.scene.paint.Color.CRIMSON;
+		javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
+
+		double positionX = c.getCenterX() - 20;
+		double positionY = c.getCenterY() - 20;
+
+		Shadow act = new Shadow();
+		act.setRadius(10.0f);
+		act.setColor(active);
+
+		Shadow don = new Shadow();
+		don.setRadius(10.0f);
+		don.setColor(done);
+
+		final KeyFrame kf1 = new KeyFrame(Duration.millis(1 * duration), e -> r.setEffect(act));
+		final KeyFrame kf2 = new KeyFrame(Duration.millis(1 * duration), e -> ha.setEffect(act));
+		final KeyFrame kf3 = new KeyFrame(Duration.millis(1 * duration), e -> c.setEffect(act));
+		final KeyFrame kf4 = new KeyFrame(Duration.millis(15 * duration), e -> r.setEffect(null));
+		final KeyFrame kf5 = new KeyFrame(Duration.millis(15 * duration), e -> ha.setEffect(null));
+		final KeyFrame kf6 = new KeyFrame(Duration.millis(15 * duration), e -> c.setEffect(null));
+		final Timeline timeline = new Timeline(kf1, kf2, kf3, kf4, kf5, kf6);
+		Platform.runLater(timeline::play);
+
+	}
+
+	void animationWhoCantBeExecuteLeftDoubleArrow(Circle c, Label l, LeftDoubleArrow ha, Rectangle r)
+	{
+		double duration = 30;
+		javafx.scene.paint.Color active = javafx.scene.paint.Color.CRIMSON;
+		javafx.scene.paint.Color done = javafx.scene.paint.Color.DARKGRAY;
+
+		double positionX = c.getCenterX() - 20;
+		double positionY = c.getCenterY() - 20;
+
+		Shadow act = new Shadow();
+		act.setRadius(10.0f);
+		act.setColor(active);
+
+		Shadow don = new Shadow();
+		don.setRadius(10.0f);
+		don.setColor(done);
 
 		final KeyFrame kf1 = new KeyFrame(Duration.millis(1 * duration), e -> r.setEffect(act));
 		final KeyFrame kf2 = new KeyFrame(Duration.millis(1 * duration), e -> ha.setEffect(act));
