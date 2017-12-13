@@ -1068,9 +1068,16 @@ public class MainWindowController
 									if (entry.getValue().getEndX() == c.getCenterX()
 											&& entry.getValue().getEndY() == c.getCenterY())
 									{
+										for(HeadArrow ha : headArrowList)
+										{
+											if(ha.equals(entry.getValue()))
+											{
+												dimensionPlusHeadArrow
+												.add(new FourDimensionObject(r, ha, entry.getKey(), c));
+											}
+										}
 
-										dimensionPlusHeadArrow
-												.add(new FourDimensionObject(r, entry.getValue(), entry.getKey(), c));
+
 
 									}
 								}
@@ -1084,8 +1091,14 @@ public class MainWindowController
 									if (entry.getValue().getStartX() == c.getCenterX()
 											&& entry.getValue().getStartY() == c.getCenterY())
 									{
-										dimensionMinusHeadArrow
-												.add(new FourDimensionObject(r, entry.getValue(), entry.getKey(), c));
+										for(HeadArrow ha : headArrowList)
+										{
+											if(ha.equals(entry.getValue()))
+											{
+												dimensionMinusHeadArrow
+												.add(new FourDimensionObject(r, ha, entry.getKey(), c));
+											}
+										}
 
 									}
 								}
