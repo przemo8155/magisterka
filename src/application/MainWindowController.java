@@ -1047,310 +1047,93 @@ public class MainWindowController
 				s.setRadius(10.0f);
 				s.setColor(active);
 
-				int tagValue = -1;
-				for (Label l : tags)
+				for(Rectangle r : rectangleList)
 				{
-					if (l.getLayoutX() < event.getSceneX() + arrowRay && l.getLayoutX() > event.getSceneX() - arrowRay
-							&& l.getLayoutY() < event.getSceneY() + arrowRay - minusWidth
-							&& l.getLayoutY() > event.getSceneY() - arrowRay - minusWidth)
+					if ((event.getSceneX() + squareRay > r.getX() + 20)
+							&& (event.getSceneX() - squareRay < r.getX() + 20)
+							&& (event.getSceneY() + squareRay - minusWidth > r.getY() + 20)
+							&& (event.getSceneY() - squareRay - minusWidth < r.getY() + 20))
 					{
-						tagValue = Integer.parseInt(l.getText());
-						for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+						for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 						{
-							if (l.equals(entry.getKey()))
+							if(entry.getValue().getStartX() == r.getX() + 20
+									&& entry.getValue().getStartY() == r.getY() + 20)
 							{
-								for (Circle c : circleList)
+								for(Circle c : circleList)
 								{
-									if (c.getCenterX() == entry.getValue().getEndX()
-											&& c.getCenterY() == entry.getValue().getEndY())
+									if(entry.getValue().getEndX() == c.getCenterX()
+											&& entry.getValue().getEndY() == c.getCenterY())
 									{
-										for (Rectangle r : rectangleList)
+										double positionX = c.getCenterX() - 20;
+										double positionY = c.getCenterY() - 20;
+										int i = checkBitmapToken(positionX, positionY);
+										String labValS = entry.getKey().getText();
+										int tagValue = Integer.parseInt(labValS);
+										animationPlusHeadArrow(c, entry.getKey(), entry.getValue(), r, i, tagValue);
+										if (i != 0 && i < 10)
 										{
-											if (r.getX() + 20 == entry.getValue().getStartX()
-													&& r.getY() + 20 == entry.getValue().getStartY())
-											{
+											deleteBitmapToken(positionX, positionY);
+											setBitmapToken(c, i + tagValue);
 
-												double positionX = c.getCenterX() - 20;
-												double positionY = c.getCenterY() - 20;
-												int i = checkBitmapToken(positionX, positionY);
-												animationPlusHeadArrow(c, l, entry.getValue(), r, i, tagValue);
-												if (i > 1 && i < 11)
-												{
-													deleteBitmapToken(positionX, positionY);
-													setBitmapToken(c, i + tagValue);
-
-												}
-
-												else if (i > 11)
-												{
-													i += tagValue;
-													deleteTokenBiggerThanTen(positionX, positionY);
-													setBitmapToken(c, i - 1);
-												}
-
-												else if (i == 11)
-												{
-													i += tagValue;
-													deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
-															c.getCenterY() - labelInTokensRay);
-													setBitmapToken(c, i - 1);
-
-												} else
-												{
-													i += tagValue;
-													setBitmapToken(c, i);
-												}
-
-											}
+										} else if (i != 0 && i >= 10)
+										{
+											deleteTokenBiggerThanTen(positionX, positionY);
+											setBitmapToken(c, i + tagValue - 1);
 										}
 
-									}
-								}
-
-								for (Circle c : circleList)
-								{
-									if (c.getCenterX() == entry.getValue().getStartX()
-											&& c.getCenterY() == entry.getValue().getStartY())
-									{
-										for (Rectangle r : rectangleList)
+										else
 										{
-											if (r.getX() + 20 == entry.getValue().getEndX()
-													&& r.getY() + 20 == entry.getValue().getEndY())
-											{
-												double positionX = c.getCenterX() - 20;
-												double positionY = c.getCenterY() - 20;
-												int i = checkBitmapToken(positionX, positionY);
-												animationMinusHeadArrow(c, l, entry.getValue(), r, i, tagValue);
-
-												if (i > 1 && i < 11)
-												{
-													deleteBitmapToken(positionX, positionY);
-													setBitmapToken(c, i - tagValue);
-
-												}
-
-												else if (i > 11)
-												{
-													i -= tagValue;
-													deleteTokenBiggerThanTen(positionX, positionY);
-													setBitmapToken(c, i - 1);
-												}
-
-												else if (i == 11)
-												{
-													i -= tagValue;
-													deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
-															c.getCenterY() - labelInTokensRay);
-													setBitmapToken(c, i - 1);
-
-												} else
-												{
-													deleteBitmapToken(positionX, positionY);
-												}
-
-											}
+											i+= tagValue;
+											setBitmapToken(c, tagValue);
 										}
-
 									}
 								}
 							}
-						}
 
-						for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
-						{
-							if (l.equals(entry.getKey()))
+
+							if(entry.getValue().getEndX() == r.getX() + 20
+									&& entry.getValue().getEndY() == r.getY() + 20)
 							{
-								for (Circle c : circleList)
+								for(Circle c : circleList)
 								{
-									if (c.getCenterX() == entry.getValue().getEndX()
-											&& c.getCenterY() == entry.getValue().getEndY())
+									if(entry.getValue().getStartX() == c.getCenterX()
+											&& entry.getValue().getStartY() == c.getCenterY())
 									{
-										for (Rectangle r : rectangleList)
+										double positionX = c.getCenterX() - 20;
+										double positionY = c.getCenterY() - 20;
+										int i = checkBitmapToken(positionX, positionY);
+										String labValS = entry.getKey().getText();
+										int tagValue = Integer.parseInt(labValS);
+										animationMinusHeadArrow(c, entry.getKey(), entry.getValue(), r, i, tagValue);
+										if (i > tagValue && i < 11)
 										{
-											if (r.getX() + 20 == entry.getValue().getStartX()
-													&& r.getY() + 20 == entry.getValue().getStartY())
-											{
-												double positionX = c.getCenterX() - 20;
-												double positionY = c.getCenterY() - 20;
-												int i = checkBitmapToken(positionX, positionY);
-												animationPlusLeftDoubleArrow(c, l, entry.getValue(), r, i, tagValue);
-												if (i > 1 && i < 11)
-												{
-													deleteBitmapToken(positionX, positionY);
-													setBitmapToken(c, i + tagValue);
+											deleteBitmapToken(positionX, positionY);
+											setBitmapToken(c, i - tagValue);
 
-												}
-
-												else if (i > 11)
-												{
-													i += tagValue;
-													deleteTokenBiggerThanTen(positionX, positionY);
-													setBitmapToken(c, i - 1);
-												}
-
-												else if (i == 11)
-												{
-													i += tagValue;
-													deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
-															c.getCenterY() - labelInTokensRay);
-													setBitmapToken(c, i - 1);
-
-												} else
-												{
-													i += tagValue;
-													setBitmapToken(c, i);
-												}
-
-											}
 										}
 
-									}
-								}
-
-								for (Circle c : circleList)
-								{
-									if (c.getCenterX() == entry.getValue().getStartX()
-											&& c.getCenterY() == entry.getValue().getStartY())
-									{
-										for (Rectangle r : rectangleList)
+										else if (i > 11)
 										{
-											if (r.getX() + 20 == entry.getValue().getEndX()
-													&& r.getY() + 20 == entry.getValue().getEndY())
-											{
-												double positionX = c.getCenterX() - 20;
-												double positionY = c.getCenterY() - 20;
-												int i = checkBitmapToken(positionX, positionY);
-												animationMinusLeftDoubleArrow(c, l, entry.getValue(), r, i, tagValue);
-
-												if (i > 1 && i < 11)
-												{
-													deleteBitmapToken(positionX, positionY);
-													setBitmapToken(c, i - tagValue);
-
-												}
-
-												else if (i > 11)
-												{
-													i -= tagValue;
-													deleteTokenBiggerThanTen(positionX, positionY);
-													setBitmapToken(c, i - 1);
-												}
-
-												else if (i == 11)
-												{
-													i -= tagValue;
-													deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
-															c.getCenterY() - labelInTokensRay);
-													setBitmapToken(c, i - 1);
-
-												} else
-												{
-													deleteBitmapToken(positionX, positionY);
-												}
-
-											}
+											deleteTokenBiggerThanTen(positionX, positionY);
+											setBitmapToken(c, i - tagValue - 1);
 										}
 
-									}
-								}
-							}
-						}
-
-						for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
-						{
-							if (l.equals(entry.getKey()))
-							{
-								for (Circle c : circleList)
-								{
-									if (c.getCenterX() == entry.getValue().getEndX()
-											&& c.getCenterY() == entry.getValue().getEndY())
-									{
-										for (Rectangle r : rectangleList)
+										else if (i == 11)
 										{
-											if (r.getX() + 20 == entry.getValue().getStartX()
-													&& r.getY() + 20 == entry.getValue().getStartY())
-											{
-												double positionX = c.getCenterX() - 20;
-												double positionY = c.getCenterY() - 20;
-												int i = checkBitmapToken(positionX, positionY);
-												animationPlusRightDoubleArrow(c, l, entry.getValue(), r, i, tagValue);
-												if (i > 1 && i < 11)
-												{
-													deleteBitmapToken(positionX, positionY);
-													setBitmapToken(c, i + tagValue);
+											i -= tagValue;
+											deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
+													c.getCenterY() - labelInTokensRay);
+											setBitmapToken(c, i - tagValue);
 
-												}
+										} else if(i > 0 && i < tagValue)
+										{
 
-												else if (i > 11)
-												{
-													i += tagValue;
-													deleteTokenBiggerThanTen(positionX, positionY);
-													setBitmapToken(c, i - 1);
-												}
-
-												else if (i == 11)
-												{
-													i += tagValue;
-													deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
-															c.getCenterY() - labelInTokensRay);
-													setBitmapToken(c, i - 1);
-
-												} else
-												{
-													i += tagValue;
-													setBitmapToken(c, i);
-												}
-
-											}
 										}
 
-									}
-								}
-
-								for (Circle c : circleList)
-								{
-									if (c.getCenterX() == entry.getValue().getStartX()
-											&& c.getCenterY() == entry.getValue().getStartY())
-									{
-										for (Rectangle r : rectangleList)
+										else
 										{
-											if (r.getX() + 20 == entry.getValue().getEndX()
-													&& r.getY() + 20 == entry.getValue().getEndY())
-											{
-												double positionX = c.getCenterX() - 20;
-												double positionY = c.getCenterY() - 20;
-												int i = checkBitmapToken(positionX, positionY);
-												animationMinusRightDoubleArrow(c, l, entry.getValue(), r, i, tagValue);
-
-												if (i > 1 && i < 11)
-												{
-													deleteBitmapToken(positionX, positionY);
-													setBitmapToken(c, i - tagValue);
-
-												}
-
-												else if (i > 11)
-												{
-													i -= tagValue;
-													deleteTokenBiggerThanTen(positionX, positionY);
-													setBitmapToken(c, i - 1);
-												}
-
-												else if (i == 11)
-												{
-													i -= tagValue;
-													deleteTokenBiggerThanTen(c.getCenterX() - labelInTokensRay,
-															c.getCenterY() - labelInTokensRay);
-													setBitmapToken(c, i - 1);
-
-												} else
-												{
-													deleteBitmapToken(positionX, positionY);
-												}
-
-											}
+											deleteBitmapToken(positionX, positionY);
 										}
-
 									}
 								}
 							}
@@ -3631,8 +3414,7 @@ public class MainWindowController
 		} else
 		{
 			int n = valueCirc;
-			while (n > 0)
-			{
+
 				final KeyFrame kf1 = new KeyFrame(Duration.millis(0 * duration), e -> c.setEffect(act));
 				final KeyFrame kf2 = new KeyFrame(Duration.millis(1 * duration), e -> ha.setEffect(act));
 				final KeyFrame kf3 = new KeyFrame(Duration.millis(2 * duration), e -> r.setEffect(act));
@@ -3671,7 +3453,7 @@ public class MainWindowController
 
 				n = n - valueLab;
 
-			}
+
 
 		}
 
