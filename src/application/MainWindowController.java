@@ -4308,6 +4308,7 @@ public class MainWindowController
 			}
 
 
+
 			for(String s : flowsListFromFile)
 			{
 				String[] parts = s.split(";");
@@ -4335,79 +4336,83 @@ public class MainWindowController
 
 				String ends = parts[2];
 				String[] endPoints = ends.split(",");
+				HeadArrow tempHeadArrow = null;
+
+				double firstX = 0, firstY = 0, secX = 0, secY = 0;
 				for(String ins : endPoints)
 				{
 					ins = ins.replaceAll("\\D+","");
 					Integer lIndex = Integer.parseInt(ins);
 					Circle c = circleList.get(lIndex - 1);
 
-					HeadArrow headArrow = new HeadArrow(r.getX() + 20,  r.getY() + 20, c.getCenterX() , c.getCenterY(),
-							mainPane);
-					headArrow.setFill(arrowColor);
-					headArrowList.add(headArrow);
-					headArrow.addToMainPane(mainPane);
-
-				}
-
-			}
-
-			int tempIndex1 = -1;
-			int tempIndex2 = -1;
-			ObservableList<Integer> indexesToDelete = FXCollections.observableArrayList();
-			double firstX = 0, firstY = 0, secX = 0, secY = 0;
-			for(HeadArrow ha1 : headArrowList)
-			{
-				for(HeadArrow ha2 : headArrowList)
-				{
-					if(ha1.getStartX() == ha2.getEndX() && ha1.getStartY() == ha2.getEndY()
-							&& ha1.getEndX() == ha2.getStartX() && ha1.getEndY() == ha2.getStartY())
+					boolean flag = false;
+					int index = -1;
+					double control1X = 0, control2X = 0, control1Y = 0, control2Y = 0;
+					for(HeadArrow ha : headArrowList)
 					{
-						tempIndex1 = headArrowList.indexOf(ha1);
-						tempIndex2 = headArrowList.indexOf(ha2);
-						indexesToDelete.add(tempIndex1);
-						indexesToDelete.add(tempIndex2);
+						if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY() && ha.getEndX() == r.getX() + 20
+								&& ha.getEndY() == r.getY() + 20)
+						{
+							flag = true;
+							Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(c.getCenterX(), c.getCenterY(), r.getX() + 20, r.getY() + 20);
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+
+							Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getEndX(), ha.getEndY(),
+									ha.getStartX(), ha.getStartY());
+							double moveX = pair2.getKey();
+							double moveY = pair2.getValue();
+
+							control1X = midX + moveX;
+							control2X = midX - moveX;
+							control1Y = midY + moveY;
+							control2Y = midY - moveY;
+
+							LeftDoubleArrow path1 = new LeftDoubleArrow(c.getCenterX(), c.getCenterY(), control1X, control1Y, r.getX() + 20, r.getY() + 20);
+
+							RightDoubleArrow path2 = new RightDoubleArrow(ha.getEndX(), ha.getEndY(), control2X,
+									control2Y, ha.getStartX(), ha.getStartY());
+
+							path1.addToMainPane(mainPane);
+							path2.addToMainPane(mainPane);
+
+							path1.setFill(arrowColor);
+							path2.setFill(arrowColor);
+
+							leftDoubleArrowList.add(path1);
+							rightDoubleArrowList.add(path2);
+
+							index = headArrowList.indexOf(ha);
+							tempHeadArrow = ha;
+						}
 					}
 
+
+
+					if (flag)
+					{
+						if (index != -1)
+						{
+							tempHeadArrow.removeFromMainPane(mainPane);
+							headArrowList.remove(index);
+						}
+					} else
+					{
+						HeadArrow headArrow = new HeadArrow(r.getX() + 20,  r.getY() + 20, c.getCenterX() , c.getCenterY(),
+								mainPane);
+						headArrow.setFill(arrowColor);
+						headArrowList.add(headArrow);
+						headArrow.addToMainPane(mainPane);
+
+					}
+					index = -1;
+					flag = false;
+
 				}
+
 			}
 
-			for(Integer i : indexesToDelete)
-			{
-				HeadArrow ha = headArrowList.get(i);
-				firstX = ha.getStartX();
-				firstY = ha.getStartY();
-				secX = ha.getEndX();
-				secY = ha.getEndY();
-				Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(firstX, firstY, secX, secY);
-				double midX = pair.getKey();
-				double midY = pair.getValue();
 
-				Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getEndX(), ha.getEndY(),
-						ha.getStartX(), ha.getStartY());
-				double moveX = pair2.getKey();
-				double moveY = pair2.getValue();
-
-				double control1X = midX + moveX;
-				double control2X = midX - moveX;
-				double control1Y = midY + moveY;
-				double control2Y = midY - moveY;
-
-				LeftDoubleArrow path1 = new LeftDoubleArrow(firstX, firstY, control1X, control1Y, secX, secY);
-
-				RightDoubleArrow path2 = new RightDoubleArrow(ha.getStartX(), ha.getStartY(), control2X,
-						control2Y, ha.getEndX(), ha.getEndY());
-
-				path1.addToMainPane(mainPane);
-				path2.addToMainPane(mainPane);
-
-				path1.setFill(arrowColor);
-				path2.setFill(arrowColor);
-
-				leftDoubleArrowList.add(path1);
-				rightDoubleArrowList.add(path2);
-				headArrowList.remove(i);
-				ha.removeFromMainPane(mainPane);
-			}
 
 		} catch (Exception e)
 		{
