@@ -27,7 +27,47 @@ public class NetParser
 		this.placesList = getPlaces(path);
 		this.transitionsList = getTransitions(path);
 		this.flowsList = getFlows(path);
+		this.initialMarkingsList = getMarkings(path);
 	}
+
+	public ObservableList<String> getMarkings(String path)
+	{
+		if(isLPN(path))
+		{
+			try
+			{
+				Process p = Runtime.getRuntime().exec("cmd /c more " + path);
+				p.waitFor();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				String line;
+				while ((line = reader.readLine()) != null)
+				{
+
+					if(line.contains("marking"))
+					{
+						String marks = line.split("\\{")[1];
+						marks = marks.replace("}", "");
+						initialMarkingsList.add(marks);
+					}
+				}
+
+			}
+
+			catch (InterruptedException | IOException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+		else
+		{
+			utilities.modernInfoMessage("Not implemented yet...");
+		}
+
+		return this.initialMarkingsList;
+
+	}
+
 
 	public ObservableList<String> getPlaces(String path)
 	{
@@ -87,7 +127,7 @@ public class NetParser
 
 					if(line.equals(".flows"))
 					{
-						while (!(line = reader.readLine()).equals("marking") && line != null)
+						while (!(line = reader.readLine()).contains("marking") && line != null)
 						{
 							if(!line.equals(""))
 							{

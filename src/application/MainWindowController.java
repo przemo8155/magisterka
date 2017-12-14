@@ -4268,6 +4268,7 @@ public class MainWindowController
 			ObservableList<String> placesListFromFile = lp.getPlacesList();
 			ObservableList<String> transitionsListFromFile = lp.getTransitionsList();
 			ObservableList<String> flowsListFromFile = lp.getFlowsList();
+			ObservableList<String> markingsListFromFile = lp.getInitialMarkingsList();
 
 			double width = 1350;
 			double height = 700;
@@ -4405,6 +4406,33 @@ public class MainWindowController
 
 				}
 
+			}
+
+			for(String s : markingsListFromFile)
+			{
+				String[] parts = s.split("\\,");
+				for(String a : parts)
+				{
+					if(a.contains("*"))
+					{
+						String[] numberAndCirc = a.split("\\*");
+						Integer val = Integer.parseInt(numberAndCirc[0]);
+
+						String partTwo = numberAndCirc[1];
+						partTwo = partTwo.replaceAll("\\D+", "");
+						Integer num = Integer.parseInt(partTwo);
+						Circle c = circleList.get(num-1);
+						setBitmapToken(c, val);
+					}
+					else
+					{
+						a = a.replaceAll("\\D+","");
+						Integer num = Integer.parseInt(a);
+						Circle c = circleList.get(num-1);
+						setBitmapToken(c, 1);
+
+					}
+				}
 			}
 
 
