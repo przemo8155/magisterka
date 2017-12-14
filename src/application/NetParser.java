@@ -87,7 +87,7 @@ public class NetParser
 
 					if(line.equals(".flows"))
 					{
-						while (!(line = reader.readLine()).equals("marking"))
+						while (!(line = reader.readLine()).equals("marking") && line != null)
 						{
 							if(!line.equals(""))
 							{

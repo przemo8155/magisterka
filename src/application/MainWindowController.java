@@ -4223,50 +4223,46 @@ public class MainWindowController
 			{
 				mainPane.getChildren().remove(c);
 			}
-			circleList.clear();
 
 			for (Rectangle r : rectangleList)
 			{
 				mainPane.getChildren().remove(r);
 			}
-			rectangleList.clear();
 
 			for (HeadArrow ha : headArrowList)
 			{
 				ha.removeFromMainPane(mainPane);
 			}
-			headArrowList.clear();
 
 			for (RightDoubleArrow rda : rightDoubleArrowList)
 			{
 				rda.removeFromMainPane(mainPane);
 			}
-			rightDoubleArrowList.clear();
 
 			for (LeftDoubleArrow lda : leftDoubleArrowList)
 			{
 				lda.removeFromMainPane(mainPane);
 			}
-			leftDoubleArrowList.clear();
 
 			for (Label t : tokensBiggerThanTen)
 			{
 				mainPane.getChildren().remove(t);
 			}
-			tokensBiggerThanTen.clear();
 
 			for (ImageView iv : existingImageViews)
 			{
 				mainPane.getChildren().remove(iv);
 			}
-			existingImageViews.clear();
 
 			for (Label l : tags)
 			{
 				mainPane.getChildren().remove(l);
 
 			}
-			tags.clear();
+
+			utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
+					existingImageViews, tokensBiggerThanTen, tags, headArrowTags, rightDoubleArrowTags,
+					leftDoubleArrowTags);
 
 			NetParser lp = new NetParser(p);
 			ObservableList<String> placesListFromFile = lp.getPlacesList();
@@ -4281,14 +4277,14 @@ public class MainWindowController
 			for (String s : placesListFromFile)
 			{
 
-				Circle c = new Circle((obj * width / (placesListFromFile.size() + 1)), (2 * height / 3) - minusWidth,
+				Circle c = new Circle((obj * width / (placesListFromFile.size() + 1)), (2 * height / 3),
 						20.0f, Paint.valueOf(circleColor));
 
 				c.setStroke(Paint.valueOf("#555555"));
 				c.setStrokeWidth(5.0f);
-				this.mainPane.getChildren().add(c);
 				c.setOnMousePressed(circleOnMousePressedEventHandler);
 				circleList.add(c);
+				this.mainPane.getChildren().add(c);
 				obj++;
 			}
 
@@ -4297,13 +4293,13 @@ public class MainWindowController
 			for (String s : transitionsListFromFile)
 			{
 				Rectangle r = new Rectangle((obj * width / (transitionsListFromFile.size() + 1)),
-						(height / 3) - minusWidth - 20, 40.0f, 40.0f);
+						minusWidth, 40.0f, 40.0f);
 				r.setFill(Paint.valueOf(rectangleColor));
 				r.setStroke(Paint.valueOf("#555555"));
 				r.setStrokeWidth(5.0f);
-				mainPane.getChildren().add(r);
 				r.setOnMousePressed(squareOnMousePressedEventHandler);
 				rectangleList.add(r);
+				mainPane.getChildren().add(r);
 				obj++;
 			}
 
@@ -4338,7 +4334,6 @@ public class MainWindowController
 				String[] endPoints = ends.split(",");
 				HeadArrow tempHeadArrow = null;
 
-				double firstX = 0, firstY = 0, secX = 0, secY = 0;
 				for(String ins : endPoints)
 				{
 					ins = ins.replaceAll("\\D+","");
