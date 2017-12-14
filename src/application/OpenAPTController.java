@@ -2208,7 +2208,6 @@ public class OpenAPTController
 		MainWindowController.checkFileRecognition = "yes";
 		Stage closeStage = (Stage) openButton.getScene().getWindow();
 		closeStage.close();
-		options1ListView.setItems(allTypes);
 
 	}
 
