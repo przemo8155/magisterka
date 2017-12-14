@@ -26,6 +26,7 @@ public class NetParser
 	{
 		this.placesList = getPlaces(path);
 		this.transitionsList = getTransitions(path);
+		this.flowsList = getFlows(path);
 	}
 
 	public ObservableList<String> getPlaces(String path)
@@ -70,6 +71,72 @@ public class NetParser
 		return this.placesList;
 
 	}
+
+	public ObservableList<String> getFlows(String path)
+	{
+		if(isLPN(path))
+		{
+			try
+			{
+				Process p = Runtime.getRuntime().exec("cmd /c more " + path);
+				p.waitFor();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				String line;
+				while ((line = reader.readLine()) != null)
+				{
+
+					if(line.equals(".flows"))
+					{
+						while (!(line = reader.readLine()).equals("marking"))
+						{
+							if(!line.equals(""))
+							{
+								String asd = line.replaceAll("\\s+","");
+
+								String[] splitter = asd.split("\\:");
+								if(splitter.length > 1)
+								{
+									String beforeDoubleDot = splitter[0];
+									String afterDoubleDot = splitter[1];
+									String beforeArrow = afterDoubleDot.split("\\->")[0];
+									String afterArrow = afterDoubleDot.split("\\->")[1];
+
+									String withoutClamreBeforeTemp = beforeArrow.replace("{", "");
+									String withoutClamreBefore = withoutClamreBeforeTemp.replace("}", "");
+
+									String withoutClamreAfterTemp = afterArrow.replace("{", "");
+									String withoutClamreAfter = withoutClamreAfterTemp.replace("}", "");
+
+									String fullString = beforeDoubleDot + ";" + withoutClamreBefore + ";" + withoutClamreAfter;
+
+									flowsList.add(fullString);
+								}
+
+
+
+
+							}
+						}
+					}
+				}
+
+			}
+
+			catch (InterruptedException | IOException | ArrayIndexOutOfBoundsException | NullPointerException e)
+			{
+				e.printStackTrace();
+			}
+
+		}
+		else
+		{
+			utilities.modernInfoMessage("Not implemented yet...");
+		}
+
+		return this.flowsList;
+
+	}
+
 
 
 
