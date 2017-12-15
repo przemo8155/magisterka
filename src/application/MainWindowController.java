@@ -4279,8 +4279,8 @@ public class MainWindowController
 			for (String s : placesListFromFile)
 			{
 
-				Circle c = new Circle((obj * width / (placesListFromFile.size() + 1)), (2 * height / 3),
-						20.0f, Paint.valueOf(circleColor));
+				Circle c = new Circle((obj * width / (placesListFromFile.size() + 1)), (2 * height / 3), 20.0f,
+						Paint.valueOf(circleColor));
 
 				c.setStroke(Paint.valueOf("#555555"));
 				c.setStrokeWidth(5.0f);
@@ -4294,8 +4294,8 @@ public class MainWindowController
 
 			for (String s : transitionsListFromFile)
 			{
-				Rectangle r = new Rectangle((obj * width / (transitionsListFromFile.size() + 1)),
-						minusWidth, 40.0f, 40.0f);
+				Rectangle r = new Rectangle((obj * width / (transitionsListFromFile.size() + 1)), minusWidth, 40.0f,
+						40.0f);
 				r.setFill(Paint.valueOf(rectangleColor));
 				r.setStroke(Paint.valueOf("#555555"));
 				r.setStrokeWidth(5.0f);
@@ -4305,58 +4305,65 @@ public class MainWindowController
 				obj++;
 			}
 
-
 			boolean zeroFlag = false;
-			for(String s : flowsListFromFile)
+			for (String s : flowsListFromFile)
 			{
 				String[] parts = s.split(";");
-				if(!parts[0].equals(""))
+
+				if (!parts[0].equals(""))
 				{
 					String transition = parts[0];
-					transition = transition.replaceAll("\\D+","");
+					transition = transition.replaceAll("\\D+", "");
 
 					Integer numberOfTransition = Integer.parseInt(transition);
-					if(numberOfTransition == 0)
+					if (numberOfTransition == 0)
 					{
 						numberOfTransition = 1;
 						zeroFlag = true;
 					}
-					if(zeroFlag)
+					if (zeroFlag)
 					{
 						numberOfTransition += 1;
 					}
-					Rectangle r = rectangleList.get(numberOfTransition - 1);
+					Rectangle r = null;
+					if (rectangleList.size() < 2)
+					{
+						r = rectangleList.get(0);
+					} else
+					{
+						r = rectangleList.get(numberOfTransition - 1);
+					}
 
 					String starts = parts[1];
 					String[] startPoints = starts.split(",");
-					for(String ins : startPoints)
+					for (String ins : startPoints)
 					{
 
-						if(ins.contains("*"))
+						if (ins.contains("*"))
 						{
 							ins = ins.replaceAll("s", "");
 							ins = ins.replaceAll("p", "");
 							Integer val = Integer.parseInt(ins.split("\\*")[0]);
 							Integer lIndex = Integer.parseInt(ins.split("\\*")[1]);
-							if(zeroFlag)
+							if (zeroFlag)
 							{
 								lIndex += 1;
 							}
 							Circle c = circleList.get(lIndex - 1);
 
-							HeadArrow headArrow = new HeadArrow(c.getCenterX(), c.getCenterY(), r.getX() + 20, r.getY() + 20,
-									mainPane);
+							HeadArrow headArrow = new HeadArrow(c.getCenterX(), c.getCenterY(), r.getX() + 20,
+									r.getY() + 20, mainPane);
 							headArrow.setFill(arrowColor);
 							headArrowList.add(headArrow);
 							headArrow.addToMainPane(mainPane);
 
 							LeftDoubleArrow left = new LeftDoubleArrow();
-							Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
-									headArrow.getEndX(), headArrow.getEndY());
+							Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(),
+									headArrow.getStartY(), headArrow.getEndX(), headArrow.getEndY());
 							double midX = pair.getKey();
 							double midY = pair.getValue();
-							Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
-									headArrow.getEndX(), headArrow.getEndY());
+							Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(),
+									headArrow.getStartY(), headArrow.getEndX(), headArrow.getEndY());
 							double mvX = pair2.getKey() / 5;
 							double mvY = pair2.getValue() / 5;
 							Label l = new Label();
@@ -4369,192 +4376,30 @@ public class MainWindowController
 							tags.add(l);
 							headArrowTags.put(l, headArrow);
 
-
-
-						}
-						else
+						} else
 						{
-							ins = ins.replaceAll("\\D+","");
-							Integer lIndex = Integer.parseInt(ins);
-							Circle c = circleList.get(lIndex - 1);
-							if(zeroFlag)
+							ins = ins.replaceAll("\\D+", "");
+							if (!ins.trim().isEmpty())
 							{
-								lIndex += 1;
-							}
-							HeadArrow headArrow = new HeadArrow(c.getCenterX(), c.getCenterY(), r.getX() + 20, r.getY() + 20,
-									mainPane);
-							headArrow.setFill(arrowColor);
-							headArrowList.add(headArrow);
-							headArrow.addToMainPane(mainPane);
-
-							LeftDoubleArrow left = new LeftDoubleArrow();
-							Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
-									headArrow.getEndX(), headArrow.getEndY());
-							double midX = pair.getKey();
-							double midY = pair.getValue();
-							Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
-									headArrow.getEndX(), headArrow.getEndY());
-							double mvX = pair2.getKey() / 5;
-							double mvY = pair2.getValue() / 5;
-							Label l = new Label();
-							l.setText("1");
-							l.setLayoutX(midX + mvX);
-							l.setLayoutY(midY + mvY);
-							l.setFont(new Font("Arial", 16));
-							l.setId("fancytext");
-							mainPane.getChildren().add(l);
-							tags.add(l);
-							headArrowTags.put(l, headArrow);
-						}
-
-					}
-
-
-
-					String ends = parts[2];
-					String[] endPoints = ends.split(",");
-					HeadArrow tempHeadArrow = null;
-
-					for(String ins : endPoints)
-					{
-						if(ins.contains("*"))
-						{
-							ins = ins.replaceAll("s", "");
-							ins = ins.replaceAll("p", "");
-							Integer val = Integer.parseInt(ins.split("\\*")[0]);
-							Integer lIndex = Integer.parseInt(ins.split("\\*")[1]);
-							if(zeroFlag)
-							{
-								lIndex += 1;
-							}
-						}
-						else
-						{
-							ins = ins.replaceAll("\\D+","");
-							Integer lIndex = Integer.parseInt(ins);
-							if(zeroFlag)
-							{
-								lIndex += 1;
-							}
-							Circle c = circleList.get(lIndex - 1);
-
-							boolean flag = false;
-							int index = -1;
-							double control1X = 0, control2X = 0, control1Y = 0, control2Y = 0;
-							for(HeadArrow ha : headArrowList)
-							{
-								if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY() && ha.getEndX() == r.getX() + 20
-										&& ha.getEndY() == r.getY() + 20)
+								Integer lIndex = Integer.parseInt(ins);
+								Circle c = circleList.get(lIndex - 1);
+								if (zeroFlag)
 								{
-									flag = true;
-									Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(c.getCenterX(), c.getCenterY(), r.getX() + 20, r.getY() + 20);
-									double midX = pair.getKey();
-									double midY = pair.getValue();
-
-									Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getEndX(), ha.getEndY(),
-											ha.getStartX(), ha.getStartY());
-									double moveX = pair2.getKey();
-									double moveY = pair2.getValue();
-
-									control1X = midX + moveX;
-									control2X = midX - moveX;
-									control1Y = midY + moveY;
-									control2Y = midY - moveY;
-
-									LeftDoubleArrow path1 = new LeftDoubleArrow(c.getCenterX(), c.getCenterY(), control1X, control1Y, r.getX() + 20, r.getY() + 20);
-
-									RightDoubleArrow path2 = new RightDoubleArrow(ha.getEndX(), ha.getEndY(), control2X,
-											control2Y, ha.getStartX(), ha.getStartY());
-
-									path1.addToMainPane(mainPane);
-									path2.addToMainPane(mainPane);
-
-									path1.setFill(arrowColor);
-									path2.setFill(arrowColor);
-
-									leftDoubleArrowList.add(path1);
-									rightDoubleArrowList.add(path2);
-
-									index = headArrowList.indexOf(ha);
-									tempHeadArrow = ha;
-
-									Pair<Double, Double> pair3 = path1.returnMiddlePoint(path1.getStartX(), path1.getStartY(),
-											path1.getEndX(), path1.getEndY());
-									double midX3 = pair3.getKey();
-									double midY3 = pair3.getValue();
-									Pair<Double, Double> pair4 = path1.returnMoveXandY(path1.getStartX(), path1.getStartY(),
-											path1.getEndX(), path1.getEndY());
-									double mvX3 = pair4.getKey();
-									double mvY3 = pair4.getValue();
-									Label l = new Label();
-									l.setText("1");
-									l.setLayoutX(midX3 + mvX3);
-									l.setLayoutY(midY3 + mvY3);
-									l.setFont(new Font("Arial", 16));
-									l.setId("fancytext");
-									mainPane.getChildren().add(l);
-									tags.add(l);
-									leftDoubleArrowTags.put(l, path1);
-
-									Pair<Double, Double> pair5 = path2.returnMiddlePoint(path2.getStartX(), path2.getStartY(),
-											path2.getEndX(), path2.getEndY());
-									double midX5 = pair5.getKey();
-									double midY5 = pair5.getValue();
-									Pair<Double, Double> pair6 = path2.returnMoveXandY(path2.getStartX(), path2.getStartY(),
-											path2.getEndX(), path2.getEndY());
-									double mvX6 = pair6.getKey();
-									double mvY6 = pair6.getValue();
-									Label l2 = new Label();
-									l2.setText("1");
-									l2.setLayoutX(midX5 - mvX6);
-									l2.setLayoutY(midY5 - mvY6);
-									l2.setFont(new Font("Arial", 16));
-									l2.setId("fancytext");
-									mainPane.getChildren().add(l2);
-									tags.add(l2);
-									rightDoubleArrowTags.put(l2, path2);
-
+									lIndex += 1;
 								}
-							}
-
-							if (flag)
-							{
-								if (index != -1)
-								{
-									int h = -1;
-									Label tempLab = null;
-									for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
-									{
-										if(entry.getValue().equals(tempHeadArrow))
-										{
-											h = tags.indexOf(entry.getKey());
-											tempLab = entry.getKey();
-										}
-									}
-									if(h != -1)
-									{
-										mainPane.getChildren().remove(tempLab);
-										tags.remove(h);
-									}
-									tempHeadArrow.removeFromMainPane(mainPane);
-									headArrowList.remove(index);
-									h = -1;
-								}
-							} else
-							{
-								HeadArrow headArrow = new HeadArrow(r.getX() + 20,  r.getY() + 20, c.getCenterX() , c.getCenterY(),
-										mainPane);
+								HeadArrow headArrow = new HeadArrow(c.getCenterX(), c.getCenterY(), r.getX() + 20,
+										r.getY() + 20, mainPane);
 								headArrow.setFill(arrowColor);
 								headArrowList.add(headArrow);
 								headArrow.addToMainPane(mainPane);
 
 								LeftDoubleArrow left = new LeftDoubleArrow();
-								Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
-										headArrow.getEndX(), headArrow.getEndY());
+								Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(),
+										headArrow.getStartY(), headArrow.getEndX(), headArrow.getEndY());
 								double midX = pair.getKey();
 								double midY = pair.getValue();
-								Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
-										headArrow.getEndX(), headArrow.getEndY());
+								Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(),
+										headArrow.getStartY(), headArrow.getEndX(), headArrow.getEndY());
 								double mvX = pair2.getKey() / 5;
 								double mvY = pair2.getValue() / 5;
 								Label l = new Label();
@@ -4566,53 +4411,234 @@ public class MainWindowController
 								mainPane.getChildren().add(l);
 								tags.add(l);
 								headArrowTags.put(l, headArrow);
-
 							}
-							index = -1;
-							flag = false;
-
 						}
 
-
-
-
-
 					}
-				}
 
+					if (parts.length > 2 && (!parts[1].trim().isEmpty() || parts[1] != null))
+					{
+						String ends = parts[2];
+						String[] endPoints = ends.split(",");
+						HeadArrow tempHeadArrow = null;
+
+						for (String ins : endPoints)
+						{
+							if (ins.contains("*"))
+							{
+								ins = ins.replaceAll("s", "");
+								ins = ins.replaceAll("p", "");
+								Integer val = Integer.parseInt(ins.split("\\*")[0]);
+								Integer lIndex = Integer.parseInt(ins.split("\\*")[1]);
+								if (zeroFlag)
+								{
+									lIndex += 1;
+								}
+							} else
+							{
+								ins = ins.replaceAll("\\D+", "");
+								Integer lIndex = Integer.parseInt(ins);
+								if (zeroFlag)
+								{
+									lIndex += 1;
+								}
+								Circle c = circleList.get(lIndex - 1);
+
+								boolean flag = false;
+								int index = -1;
+								double control1X = 0, control2X = 0, control1Y = 0, control2Y = 0;
+								for (HeadArrow ha : headArrowList)
+								{
+									if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY()
+											&& ha.getEndX() == r.getX() + 20 && ha.getEndY() == r.getY() + 20)
+									{
+										flag = true;
+										Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(c.getCenterX(),
+												c.getCenterY(), r.getX() + 20, r.getY() + 20);
+										double midX = pair.getKey();
+										double midY = pair.getValue();
+
+										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getEndX(),
+												ha.getEndY(), ha.getStartX(), ha.getStartY());
+										double moveX = pair2.getKey();
+										double moveY = pair2.getValue();
+
+										control1X = midX + moveX;
+										control2X = midX - moveX;
+										control1Y = midY + moveY;
+										control2Y = midY - moveY;
+
+										LeftDoubleArrow path1 = new LeftDoubleArrow(c.getCenterX(), c.getCenterY(),
+												control1X, control1Y, r.getX() + 20, r.getY() + 20);
+
+										RightDoubleArrow path2 = new RightDoubleArrow(ha.getEndX(), ha.getEndY(),
+												control2X, control2Y, ha.getStartX(), ha.getStartY());
+
+										path1.addToMainPane(mainPane);
+										path2.addToMainPane(mainPane);
+
+										path1.setFill(arrowColor);
+										path2.setFill(arrowColor);
+
+										leftDoubleArrowList.add(path1);
+										rightDoubleArrowList.add(path2);
+
+										index = headArrowList.indexOf(ha);
+										tempHeadArrow = ha;
+
+										Pair<Double, Double> pair3 = path1.returnMiddlePoint(path1.getStartX(),
+												path1.getStartY(), path1.getEndX(), path1.getEndY());
+										double midX3 = pair3.getKey();
+										double midY3 = pair3.getValue();
+										Pair<Double, Double> pair4 = path1.returnMoveXandY(path1.getStartX(),
+												path1.getStartY(), path1.getEndX(), path1.getEndY());
+										double mvX3 = pair4.getKey();
+										double mvY3 = pair4.getValue();
+										Label l = new Label();
+										l.setText("1");
+										l.setLayoutX(midX3 + mvX3);
+										l.setLayoutY(midY3 + mvY3);
+										l.setFont(new Font("Arial", 16));
+										l.setId("fancytext");
+										mainPane.getChildren().add(l);
+										tags.add(l);
+										leftDoubleArrowTags.put(l, path1);
+
+										Pair<Double, Double> pair5 = path2.returnMiddlePoint(path2.getStartX(),
+												path2.getStartY(), path2.getEndX(), path2.getEndY());
+										double midX5 = pair5.getKey();
+										double midY5 = pair5.getValue();
+										Pair<Double, Double> pair6 = path2.returnMoveXandY(path2.getStartX(),
+												path2.getStartY(), path2.getEndX(), path2.getEndY());
+										double mvX6 = pair6.getKey();
+										double mvY6 = pair6.getValue();
+										Label l2 = new Label();
+										l2.setText("1");
+										l2.setLayoutX(midX5 - mvX6);
+										l2.setLayoutY(midY5 - mvY6);
+										l2.setFont(new Font("Arial", 16));
+										l2.setId("fancytext");
+										mainPane.getChildren().add(l2);
+										tags.add(l2);
+										rightDoubleArrowTags.put(l2, path2);
+
+									}
+								}
+
+								if (flag)
+								{
+									if (index != -1)
+									{
+										int h = -1;
+										Label tempLab = null;
+										for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+										{
+											if (entry.getValue().equals(tempHeadArrow))
+											{
+												h = tags.indexOf(entry.getKey());
+												tempLab = entry.getKey();
+											}
+										}
+										if (h != -1)
+										{
+											mainPane.getChildren().remove(tempLab);
+											tags.remove(h);
+										}
+										tempHeadArrow.removeFromMainPane(mainPane);
+										headArrowList.remove(index);
+										h = -1;
+									}
+								} else
+								{
+									HeadArrow headArrow = new HeadArrow(r.getX() + 20, r.getY() + 20, c.getCenterX(),
+											c.getCenterY(), mainPane);
+									headArrow.setFill(arrowColor);
+									headArrowList.add(headArrow);
+									headArrow.addToMainPane(mainPane);
+
+									LeftDoubleArrow left = new LeftDoubleArrow();
+									Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(),
+											headArrow.getStartY(), headArrow.getEndX(), headArrow.getEndY());
+									double midX = pair.getKey();
+									double midY = pair.getValue();
+									Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(),
+											headArrow.getStartY(), headArrow.getEndX(), headArrow.getEndY());
+									double mvX = pair2.getKey() / 5;
+									double mvY = pair2.getValue() / 5;
+									Label l = new Label();
+									l.setText("1");
+									l.setLayoutX(midX + mvX);
+									l.setLayoutY(midY + mvY);
+									l.setFont(new Font("Arial", 16));
+									l.setId("fancytext");
+									mainPane.getChildren().add(l);
+									tags.add(l);
+									headArrowTags.put(l, headArrow);
+
+								}
+								index = -1;
+								flag = false;
+
+							}
+
+						}
+					}
+
+				}
 
 			}
 
 			zeroFlag = false;
 
-			for(String s : markingsListFromFile)
+			boolean zeroFlag2 = false;
+
+			for (String s : markingsListFromFile)
 			{
 				String[] parts = s.split("\\,");
-				for(String a : parts)
+				for (String a : parts)
 				{
-					if(a.contains("*"))
+					if (a.contains("*"))
 					{
 						String[] numberAndCirc = a.split("\\*");
-						Integer val = Integer.parseInt(numberAndCirc[0]);
+						String delWhiteSpace = numberAndCirc[0];
+						delWhiteSpace = delWhiteSpace.replaceAll("\\D+", "");
+						Integer val = Integer.parseInt(delWhiteSpace);
 
 						String partTwo = numberAndCirc[1];
 						partTwo = partTwo.replaceAll("\\D+", "");
 						Integer num = Integer.parseInt(partTwo);
-						Circle c = circleList.get(num-1);
+						if (num == 0)
+						{
+							num = 1;
+							zeroFlag2 = true;
+						}
+						if (zeroFlag2)
+						{
+							num += 1;
+						}
+						Circle c = circleList.get(num - 1);
 						setBitmapToken(c, val);
-					}
-					else
+					} else
 					{
-						a = a.replaceAll("\\D+","");
+						a = a.replaceAll("\\D+", "");
 						Integer num = Integer.parseInt(a);
-						Circle c = circleList.get(num-1);
+						if (num == 0)
+						{
+							num = 1;
+							zeroFlag2 = true;
+						}
+						if (zeroFlag2)
+						{
+							num += 1;
+						}
+						Circle c = circleList.get(num - 1);
 						setBitmapToken(c, 1);
 
 					}
 				}
 			}
 
-
+			zeroFlag2 = false;
 
 		} catch (Exception e)
 		{

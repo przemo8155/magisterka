@@ -43,7 +43,7 @@ public class NetParser
 				while ((line = reader.readLine()) != null)
 				{
 
-					if(line.contains("marking"))
+					if(line.contains("initial_marking"))
 					{
 						String marks = line.split("\\{")[1];
 						marks = marks.replace("}", "");
@@ -127,7 +127,7 @@ public class NetParser
 
 					if(line.equals(".flows"))
 					{
-						while (!(line = reader.readLine()).contains("marking") && line != null)
+						while (!(line = reader.readLine()).contains("initial_marking") && line != null)
 						{
 							if(!line.equals(""))
 							{
