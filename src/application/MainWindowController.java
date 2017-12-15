@@ -4384,6 +4384,25 @@ public class MainWindowController
 						headArrow.setFill(arrowColor);
 						headArrowList.add(headArrow);
 						headArrow.addToMainPane(mainPane);
+
+						LeftDoubleArrow left = new LeftDoubleArrow();
+						Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
+								headArrow.getEndX(), headArrow.getEndY());
+						double midX = pair.getKey();
+						double midY = pair.getValue();
+						Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
+								headArrow.getEndX(), headArrow.getEndY());
+						double mvX = pair2.getKey() / 5;
+						double mvY = pair2.getValue() / 5;
+						Label l = new Label();
+						l.setText("1");
+						l.setLayoutX(midX + mvX);
+						l.setLayoutY(midY + mvY);
+						l.setFont(new Font("Arial", 16));
+						l.setId("fancytext");
+						mainPane.getChildren().add(l);
+						tags.add(l);
+						headArrowTags.put(l, headArrow);
 					}
 
 				}
@@ -4456,6 +4475,43 @@ public class MainWindowController
 
 								index = headArrowList.indexOf(ha);
 								tempHeadArrow = ha;
+
+								Pair<Double, Double> pair3 = path1.returnMiddlePoint(path1.getStartX(), path1.getStartY(),
+										path1.getEndX(), path1.getEndY());
+								double midX3 = pair3.getKey();
+								double midY3 = pair3.getValue();
+								Pair<Double, Double> pair4 = path1.returnMoveXandY(path1.getStartX(), path1.getStartY(),
+										path1.getEndX(), path1.getEndY());
+								double mvX3 = pair4.getKey();
+								double mvY3 = pair4.getValue();
+								Label l = new Label();
+								l.setText("1");
+								l.setLayoutX(midX3 + mvX3);
+								l.setLayoutY(midY3 + mvY3);
+								l.setFont(new Font("Arial", 16));
+								l.setId("fancytext");
+								mainPane.getChildren().add(l);
+								tags.add(l);
+								leftDoubleArrowTags.put(l, path1);
+
+								Pair<Double, Double> pair5 = path2.returnMiddlePoint(path2.getStartX(), path2.getStartY(),
+										path2.getEndX(), path2.getEndY());
+								double midX5 = pair5.getKey();
+								double midY5 = pair5.getValue();
+								Pair<Double, Double> pair6 = path2.returnMoveXandY(path2.getStartX(), path2.getStartY(),
+										path2.getEndX(), path2.getEndY());
+								double mvX6 = pair6.getKey();
+								double mvY6 = pair6.getValue();
+								Label l2 = new Label();
+								l2.setText("1");
+								l2.setLayoutX(midX5 - mvX6);
+								l2.setLayoutY(midY5 - mvY6);
+								l2.setFont(new Font("Arial", 16));
+								l2.setId("fancytext");
+								mainPane.getChildren().add(l2);
+								tags.add(l2);
+								rightDoubleArrowTags.put(l2, path2);
+
 							}
 						}
 
@@ -4463,8 +4519,24 @@ public class MainWindowController
 						{
 							if (index != -1)
 							{
+								int h = -1;
+								Label tempLab = null;
+								for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+								{
+									if(entry.getValue().equals(tempHeadArrow))
+									{
+										h = tags.indexOf(entry.getKey());
+										tempLab = entry.getKey();
+									}
+								}
+								if(h != -1)
+								{
+									mainPane.getChildren().remove(tempLab);
+									tags.remove(h);
+								}
 								tempHeadArrow.removeFromMainPane(mainPane);
 								headArrowList.remove(index);
+								h = -1;
 							}
 						} else
 						{
@@ -4473,6 +4545,25 @@ public class MainWindowController
 							headArrow.setFill(arrowColor);
 							headArrowList.add(headArrow);
 							headArrow.addToMainPane(mainPane);
+
+							LeftDoubleArrow left = new LeftDoubleArrow();
+							Pair<Double, Double> pair = left.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
+									headArrow.getEndX(), headArrow.getEndY());
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+							Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
+									headArrow.getEndX(), headArrow.getEndY());
+							double mvX = pair2.getKey() / 5;
+							double mvY = pair2.getValue() / 5;
+							Label l = new Label();
+							l.setText("1");
+							l.setLayoutX(midX + mvX);
+							l.setLayoutY(midY + mvY);
+							l.setFont(new Font("Arial", 16));
+							l.setId("fancytext");
+							mainPane.getChildren().add(l);
+							tags.add(l);
+							headArrowTags.put(l, headArrow);
 
 						}
 						index = -1;
