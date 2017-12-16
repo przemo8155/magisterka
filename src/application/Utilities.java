@@ -52,6 +52,9 @@ public class Utilities
 
 	private MainWindowController mwc;
 
+	final String startDir = System.getProperty("user.dir");
+	String sep = System.getProperty("file.separator");
+
 	public Boolean checkCleared = false;
 
 	public void clearUpMessage(Pane pane, String title, String header, String content, ObservableList<Circle> circ,
@@ -446,6 +449,7 @@ public class Utilities
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
 			bw.write("states");
+			bw.newLine();
 			for (String s : states)
 			{
 				bw.write(s);
@@ -453,6 +457,7 @@ public class Utilities
 			}
 
 			bw.write("labels");
+			bw.newLine();
 			for (String s : labels)
 			{
 				bw.write(s);
@@ -460,6 +465,7 @@ public class Utilities
 			}
 
 			bw.write("arcs");
+			bw.newLine();
 			for (String s : arcs)
 			{
 				bw.write(s);
