@@ -5,7 +5,6 @@ package application;
 
 import java.awt.Color;
 import java.awt.List;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -4649,30 +4648,39 @@ public class MainWindowController
 
 			else
 			{
-				ObservableList<String> statesListFromFile = lp.getStatesList();
-				ObservableList<String> labelsListFromFile = lp.getLabelsList();
-				ObservableList<String> arcsListFromFile = lp.getArcsList();
-				try
-				{
-					FXMLLoader fxmlLoader = new FXMLLoader();
-					fxmlLoader.setLocation(getClass().getResource("LTSPreview.fxml"));
 
-					Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-					Stage stage = new Stage();
-					stage.setTitle("LTS Preview");
-					stage.setScene(scene);
-					stage.initStyle(StageStyle.UNDECORATED);
-					stage.show();
-				} catch (IOException e)
-				{
-					e.printStackTrace();
-				}
+				initLTS(p);
+
 			}
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 
+	}
+
+
+	void initLTS(String p)
+	{
+		NetParser np = new NetParser(p, "use");
+		ObservableList<String> labelsListFromFile = np.getLabelsList();
+		ObservableList<String> statesListFromFile = np.getStatesList();
+		ObservableList<String> arcsListFromFile = np.getArcsList();
+
+		try
+		{
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("LTSPreview.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+			utilities.createTemponaryFile(statesListFromFile, labelsListFromFile, arcsListFromFile);
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.initStyle(StageStyle.UNDECORATED);
+			stage.show();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }

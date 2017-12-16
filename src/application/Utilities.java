@@ -1,7 +1,12 @@
 
 package application;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.Comparator;
 import java.util.Map;
@@ -425,6 +430,46 @@ public class Utilities
 			objTimer.getKeyFrames().clear();
 			objTimer.getKeyFrames().add(new KeyFrame(new Duration(250)));
 		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void createTemponaryFile(ObservableList<String> states, ObservableList<String> labels,
+			ObservableList<String> arcs)
+	{
+		try
+		{
+			File fout = new File("out_temp.txt");
+			FileOutputStream fos = new FileOutputStream(fout);
+
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+			bw.write("states");
+			for (String s : states)
+			{
+				bw.write(s);
+				bw.newLine();
+			}
+
+			bw.write("labels");
+			for (String s : labels)
+			{
+				bw.write(s);
+				bw.newLine();
+			}
+
+			bw.write("arcs");
+			for (String s : arcs)
+			{
+				bw.write(s);
+				bw.newLine();
+			}
+
+
+
+			bw.close();
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}

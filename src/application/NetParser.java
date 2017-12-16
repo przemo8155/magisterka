@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.*;
 
 public class NetParser
 {
@@ -54,9 +55,12 @@ public class NetParser
 				if (line.equals(".arcs"))
 				{
 
-					if (!line.equals("") && !line.contains(".arcs"))
+					while ((line = reader.readLine()) != null)
 					{
-						arcsList.add(line);
+						if (!line.equals("") && !line.contains(".arcs"))
+						{
+							arcsList.add(line);
+						}
 					}
 
 				}
@@ -440,12 +444,10 @@ public class NetParser
 		this.labelsList = labelsList;
 	}
 
-
 	public ObservableList<String> getArcsList()
 	{
 		return arcsList;
 	}
-
 
 	public void setArcsList(ObservableList<String> arcsList)
 	{
