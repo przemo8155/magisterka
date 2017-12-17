@@ -5089,11 +5089,20 @@ public class OpenAPTController
 				}
 			} else if (path.toLowerCase().contains("-aut"))
 			{
-				if (selected_index < 66)
+				if(selected_index == -1)
+				{
+					setWarningVisible(false);
+				}
+				else if (selected_index < 66 || selected_index > 3)
 				{
 					setWarningVisible(true);
 					warningLabel.setText("YOU NEED TO SELECT '-NET' FILE. THIS FILE MAY NOT WORK CORRETLY");
-				} else
+				} else if(selected_index < 1)
+				{
+					setWarningVisible(false);
+				}
+
+				else
 				{
 					setWarningVisible(false);
 				}

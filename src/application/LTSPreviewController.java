@@ -220,6 +220,13 @@ public class LTSPreviewController
 		}
 
 		scrollMainPane.setContent(mainPane);
+		scrollMainPane.setMinHeight(levelY + 60);
+		scrollMainPane.setMaxHeight(levelY + 60);
+		mainPane.setMinHeight(levelY + 60);
+		mainPane.setMinHeight(levelY + 60);
+		this.closeButton.setLayoutY(levelY + 30);
+
+
 
 	}
 
