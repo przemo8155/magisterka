@@ -36,6 +36,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.sun.javafx.font.FontFactory;
+import com.sun.javafx.robot.impl.FXRobotHelper;
 import com.sun.javafx.stage.StageHelper;
 
 import javafx.application.Application;
@@ -2692,12 +2693,18 @@ public class MainWindowController
 				if (checkFileRecognition.equals("yes"))
 				{
 					openFile(optPath);
-					// ReadFile(optPath);
 					checkFileRecognition = "";
 				}
 			}
 		});
 
+	}
+
+	void getAllStages()
+	{
+		ObservableList<Stage> windows = FXRobotHelper.getStages();
+		Stage s = windows.get(1);
+		s.hide();
 	}
 
 	@FXML
@@ -4644,10 +4651,153 @@ public class MainWindowController
 				zeroFlag2 = false;
 			}
 
-
-
 			else
 			{
+
+				NetParser np = new NetParser(p, "use");
+				ObservableList<String> labelsListFromFile = np.getLabelsList();
+				ObservableList<String> statesListFromFile = np.getStatesList();
+				ObservableList<String> arcsListFromFile = np.getArcsList();
+
+				double width = 1350;
+				double height = 700;
+
+				int obj = 1;
+
+				for (String s : statesListFromFile)
+				{
+
+					Circle c = new Circle((obj * width / (statesListFromFile.size() + 1)), (2 * height / 3), 20.0f,
+							Paint.valueOf(circleColor));
+
+					c.setStroke(Paint.valueOf("#555555"));
+					c.setStrokeWidth(5.0f);
+					c.setOnMousePressed(circleOnMousePressedEventHandler);
+					circleList.add(c);
+					this.mainPane.getChildren().add(c);
+					obj++;
+				}
+
+				obj = 1;
+
+				for (String s : labelsListFromFile)
+				{
+					Rectangle r = new Rectangle((obj * width / (labelsListFromFile.size() + 1)), minusWidth, 40.0f,
+							40.0f);
+					r.setFill(Paint.valueOf(rectangleColor));
+					r.setStroke(Paint.valueOf("#555555"));
+					r.setStrokeWidth(5.0f);
+					r.setOnMousePressed(squareOnMousePressedEventHandler);
+					rectangleList.add(r);
+					mainPane.getChildren().add(r);
+					obj++;
+				}
+
+				obj = 1;
+
+				boolean zeroFlag3 = false;
+				boolean zeroFlag4 = false;
+				boolean zeroFlag5 = false;
+
+				for (String s : arcsListFromFile)
+				{
+					String[] parts = s.split(" ");
+					String part0 = parts[0];
+					String part1 = parts[1];
+					String part2 = parts[2];
+					part0 = part0.replaceAll("s", "");
+					part1 = part1.replaceAll("t", "");
+					part2 = part2.replaceAll("s", "");
+					Integer p0 = Integer.parseInt(part0);
+					if (p0 == 0)
+					{
+						p0 = 1;
+						zeroFlag3 = true;
+					}
+					if (zeroFlag3)
+					{
+						p0 += 1;
+					}
+					Integer p1 = Integer.parseInt(part1);
+					if (p1 == 0)
+					{
+						p1 = 1;
+						zeroFlag4 = true;
+					}
+					if (zeroFlag4)
+					{
+						p1 += 1;
+					}
+					Integer p2 = Integer.parseInt(part2);
+					if (p2 == 0)
+					{
+						p2 = 1;
+						zeroFlag5 = true;
+					}
+					if (zeroFlag5)
+					{
+						p2 += 1;
+					}
+
+					Circle cStart = circleList.get(p0 - 1);
+					Rectangle r = rectangleList.get(p1 - 1);
+					Circle cEnd = circleList.get(p2 - 1);
+
+					HeadArrow headArrow1 = new HeadArrow(cStart.getCenterX(), cStart.getCenterY(), r.getX() + 20,
+							r.getY() + 20, mainPane);
+					headArrow1.setFill(arrowColor);
+					headArrowList.add(headArrow1);
+					headArrow1.addToMainPane(mainPane);
+
+					HeadArrow headArrow2 = new HeadArrow(r.getX() + 20, r.getY() + 20, cEnd.getCenterX(),
+							cEnd.getCenterY(), mainPane);
+					headArrow2.setFill(arrowColor);
+					headArrowList.add(headArrow2);
+					headArrow2.addToMainPane(mainPane);
+
+					LeftDoubleArrow left = new LeftDoubleArrow();
+					Pair<Double, Double> pair = left.returnMiddlePoint(headArrow1.getStartX(),
+							headArrow1.getStartY(), headArrow1.getEndX(), headArrow1.getEndY());
+					double midX = pair.getKey();
+					double midY = pair.getValue();
+					Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow1.getStartX(),
+							headArrow1.getStartY(), headArrow1.getEndX(), headArrow1.getEndY());
+					double mvX = pair2.getKey() / 5;
+					double mvY = pair2.getValue() / 5;
+					Label l = new Label();
+					l.setText(String.valueOf("1"));
+					l.setLayoutX(midX + mvX);
+					l.setLayoutY(midY + mvY);
+					l.setFont(new Font("Arial", 16));
+					l.setId("fancytext");
+					mainPane.getChildren().add(l);
+					tags.add(l);
+					headArrowTags.put(l, headArrow1);
+
+
+					Pair<Double, Double> pair3 = left.returnMiddlePoint(headArrow2.getStartX(),
+							headArrow2.getStartY(), headArrow2.getEndX(), headArrow2.getEndY());
+					double midX2 = pair3.getKey();
+					double midY2 = pair3.getValue();
+					Pair<Double, Double> pair4 = left.returnMoveXandY(headArrow2.getStartX(),
+							headArrow2.getStartY(), headArrow2.getEndX(), headArrow2.getEndY());
+					double mvX2 = pair4.getKey() / 5;
+					double mvY2 = pair4.getValue() / 5;
+					Label l2 = new Label();
+					l2.setText(String.valueOf("1"));
+					l2.setLayoutX(midX2 + mvX2);
+					l2.setLayoutY(midY2 + mvY2);
+					l2.setFont(new Font("Arial", 16));
+					l2.setId("fancytext");
+					mainPane.getChildren().add(l2);
+					tags.add(l2);
+					headArrowTags.put(l2, headArrow2);
+
+				}
+
+				zeroFlag3 = false;
+				zeroFlag4 = false;
+				zeroFlag5 = false;
 
 				initLTS(p);
 
@@ -4658,7 +4808,6 @@ public class MainWindowController
 		}
 
 	}
-
 
 	void initLTS(String p)
 	{

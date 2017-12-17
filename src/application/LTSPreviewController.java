@@ -6,11 +6,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 import javax.swing.text.Position;
 import javax.xml.ws.handler.MessageContext.Scope;
 
 import com.itextpdf.kernel.geom.Line;
+import com.sun.javafx.robot.impl.FXRobotHelper;
+import com.sun.javafx.stage.StageHelper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +33,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.event.Event;
 
 public class LTSPreviewController
@@ -74,11 +81,13 @@ public class LTSPreviewController
 	@FXML
 	public void initialize()
 	{
+
 		final double width = 800;
 		final double height = 600;
 		mainPane.setStyle("-fx-background-color: #F5FFFF");
 		scrollMainPane.setPrefSize(width, height);
 		readTemponaryFile();
+
 		String initial = null;
 
 		ObservableList<String> firstSplitFrom = FXCollections.observableArrayList();
@@ -169,9 +178,9 @@ public class LTSPreviewController
 				}
 			}
 
-			for(String f : tempLab)
+			for (String f : tempLab)
 			{
-				if(!arc.contains(f))
+				if (!arc.contains(f))
 				{
 					arc += f + " ";
 				}
@@ -179,13 +188,11 @@ public class LTSPreviewController
 
 			int widthPersp = name.length() * 5;
 
-			Rectangle r = new Rectangle(width/2 - 5 - widthPersp*0.80, levelY, 15 + 1.3f*widthPersp,
-					22.0f);
+			Rectangle r = new Rectangle(width / 2 - 5 - widthPersp * 0.80, levelY, 15 + 1.3f * widthPersp, 22.0f);
 			r.setFill(Paint.valueOf("FFFFFF"));
 			r.setStroke(Paint.valueOf("#555555"));
 			r.setStrokeWidth(5.0f);
 			mainPane.getChildren().add(r);
-
 
 			javafx.scene.shape.Line l = new javafx.scene.shape.Line((width / 2) - 5, levelY - 25, (width / 2) - 5,
 					levelY - 5);
@@ -194,12 +201,12 @@ public class LTSPreviewController
 			mainPane.getChildren().add(l);
 
 			Label lab = new Label(name);
-			lab.setLayoutX((width / 2) - widthPersp*0.65);
+			lab.setLayoutX((width / 2) - widthPersp * 0.65);
 			lab.setLayoutY(levelY);
 			lab.setFont(Font.font(14));
 			mainPane.getChildren().add(lab);
 
-			Label lab2 = new Label("Step " + String.valueOf(actIndex+1) + ":\t");
+			Label lab2 = new Label("Step " + String.valueOf(actIndex + 1) + ":\t");
 			lab2.setLayoutX((width / 2) - 300);
 			lab2.setLayoutY(levelY);
 			lab2.setFont(Font.font(14));
@@ -226,7 +233,12 @@ public class LTSPreviewController
 		mainPane.setMinHeight(levelY + 60);
 		this.closeButton.setLayoutY(levelY + 30);
 
+	}
 
+	@Deprecated
+	void getWindows()
+	{
+		Iterator<Window> windows = Window.impl_getWindows();
 
 	}
 
