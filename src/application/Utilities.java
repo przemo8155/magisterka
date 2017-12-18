@@ -159,6 +159,18 @@ public class Utilities
 		lin2.clear();
 	}
 
+	public void clearStartAndEndDoubleLeftArrowLists(ObservableList<LeftDoubleArrow> lin1, ObservableList<LeftDoubleArrow> lin2)
+	{
+		lin1.clear();
+		lin2.clear();
+	}
+
+	public void clearStartAndEndDoubleRightArrowLists(ObservableList<RightDoubleArrow> lin1, ObservableList<RightDoubleArrow> lin2)
+	{
+		lin1.clear();
+		lin2.clear();
+	}
+
 	public void showCircleList(ObservableList<Circle> circle)
 	{
 		for (Circle c : circle)
@@ -438,7 +450,7 @@ public class Utilities
 		}
 	}
 
-	public void createTemponaryFile(ObservableList<String> states, ObservableList<String> labels,
+	public void createTemponaryFile(String path, ObservableList<String> states, ObservableList<String> labels,
 			ObservableList<String> arcs)
 	{
 		try
@@ -447,6 +459,11 @@ public class Utilities
 			FileOutputStream fos = new FileOutputStream(fout);
 
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+			bw.write("path");
+			bw.newLine();
+			bw.write(path);
+			bw.newLine();
 
 			bw.write("states");
 			bw.newLine();

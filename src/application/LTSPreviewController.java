@@ -45,6 +45,8 @@ public class LTSPreviewController
 	ObservableList<String> labelsListFromFile = FXCollections.observableArrayList();
 	ObservableList<String> arcsListFromFile = FXCollections.observableArrayList();
 
+	private String filePath = "";
+
 	@FXML
 	private Pane mainPane;
 
@@ -54,6 +56,9 @@ public class LTSPreviewController
 	@FXML
 	private Button closeButton;
 
+	@FXML
+	private Label pathInfoLabel, pathLabel, ltsPreviewLabel;
+
 	public LTSPreviewController()
 	{
 		// TODO Auto-generated constructor stub
@@ -62,11 +67,11 @@ public class LTSPreviewController
 	private void setInitialState(String state)
 	{
 		final double width = 800;
-		Circle c = new Circle((width / 2) - 5, 70, 15.0f, Paint.valueOf("#FFFFFF"));
+		Circle c = new Circle((width / 2) - 5, 150, 15.0f, Paint.valueOf("#FFFFFF"));
 		c.setStroke(Paint.valueOf("#555555"));
 		c.setStrokeWidth(5.0f);
 		mainPane.getChildren().add(c);
-		javafx.scene.shape.Line l = new javafx.scene.shape.Line((width / 2) - 5, 20, (width / 2) - 5, 55);
+		javafx.scene.shape.Line l = new javafx.scene.shape.Line((width / 2) - 5, 100, (width / 2) - 5, 140);
 		l.setStroke(Paint.valueOf("#555555"));
 		l.setStrokeWidth(5.0f);
 		mainPane.getChildren().add(l);
@@ -84,9 +89,10 @@ public class LTSPreviewController
 
 		final double width = 800;
 		final double height = 600;
-		mainPane.setStyle("-fx-background-color: #F5FFFF");
+		mainPane.setStyle("-fx-background-color: #ffefcc");
 		scrollMainPane.setPrefSize(width, height);
 		readTemponaryFile();
+		pathLabel.setText(filePath);
 
 		String initial = null;
 
@@ -122,7 +128,7 @@ public class LTSPreviewController
 
 		}
 
-		double levelY = 120;
+		double levelY = 190;
 		String actualState = initial;
 		String name = "";
 		String prevName = "";
@@ -252,6 +258,28 @@ public class LTSPreviewController
 	void readTemponaryFile()
 	{
 		BufferedReader reader1 = null;
+
+		try
+		{
+			File file1 = new File("out_temp.txt");
+			reader1 = new BufferedReader(new FileReader(file1));
+
+			String line1;
+			while ((line1 = reader1.readLine()) != null)
+			{
+
+				if (line1.equals("path"))
+				{
+					this.filePath = reader1.readLine();
+
+				}
+			}
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
 
 		try
 		{

@@ -1977,6 +1977,8 @@ public class MainWindowController
 								}
 							}
 
+							imageViewsToRemove.clear();
+
 							if (!startHeadArrowList.isEmpty())
 							{
 								headArrowList.removeAll(startHeadArrowList);
@@ -1986,6 +1988,8 @@ public class MainWindowController
 									ha.removeFromMainPane(mainPane);
 								}
 							}
+
+							startHeadArrowList.clear();
 
 							if (!endHeadArrowList.isEmpty())
 							{
@@ -1997,6 +2001,8 @@ public class MainWindowController
 								}
 							}
 
+							endHeadArrowList.clear();
+
 							if (!leftStartDoubleArrowList.isEmpty())
 							{
 								leftDoubleArrowList.removeAll(leftStartDoubleArrowList);
@@ -2006,6 +2012,8 @@ public class MainWindowController
 									ha.removeFromMainPane(mainPane);
 								}
 							}
+
+							leftStartDoubleArrowList.clear();
 
 							if (!leftEndDoubleArrowList.isEmpty())
 							{
@@ -2017,6 +2025,8 @@ public class MainWindowController
 								}
 							}
 
+							leftEndDoubleArrowList.clear();
+
 							if (!rightEndDoubleArrowList.isEmpty())
 							{
 								rightDoubleArrowList.removeAll(rightEndDoubleArrowList);
@@ -2026,6 +2036,8 @@ public class MainWindowController
 									ha.removeFromMainPane(mainPane);
 								}
 							}
+
+							rightEndDoubleArrowList.clear();
 
 							if (!rightStartDoubleArrowList.isEmpty())
 							{
@@ -2037,11 +2049,15 @@ public class MainWindowController
 								}
 							}
 
+							rightStartDoubleArrowList.clear();
+
 							circleList.remove(myCircle);
 							mainPane.getChildren().remove(myCircle);
 							objectsDeleted += 1;
 							setMiddleLabelText("Circle removed...");
 							utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+							utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
+							utilities.clearStartAndEndDoubleRightArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
 							break;
 						}
 					}
@@ -3352,6 +3368,7 @@ public class MainWindowController
 					.add(new Image(MainWindowController.class.getResourceAsStream("resources/settings-icon.png")));
 			aptStage.show();
 			aptStage.setOnHiding(closeWindow);
+			aptStage.setResizable(false);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -4701,12 +4718,24 @@ public class MainWindowController
 
 				for (String s : arcsListFromFile)
 				{
+					int it = -1;
 					String[] parts = s.split(" ");
 					String part0 = parts[0];
 					String part1 = parts[1];
+					if (!part1.matches(".*\\d+.*"))
+					{
+
+						for (String n : labelsListFromFile)
+						{
+							if (n.contains(part1))
+							{
+								part1 = part1 + String.valueOf(labelsListFromFile.indexOf(n));
+							}
+						}
+					}
 					String part2 = parts[2];
 					part0 = part0.replaceAll("s", "");
-					part1 = part1.replaceAll("t", "");
+					part1 = part1.replaceAll("[a-zA-Z]", "");
 					part2 = part2.replaceAll("s", "");
 					Integer p0 = Integer.parseInt(part0);
 					if (p0 == 0)
@@ -4756,12 +4785,12 @@ public class MainWindowController
 					headArrow2.addToMainPane(mainPane);
 
 					LeftDoubleArrow left = new LeftDoubleArrow();
-					Pair<Double, Double> pair = left.returnMiddlePoint(headArrow1.getStartX(),
-							headArrow1.getStartY(), headArrow1.getEndX(), headArrow1.getEndY());
+					Pair<Double, Double> pair = left.returnMiddlePoint(headArrow1.getStartX(), headArrow1.getStartY(),
+							headArrow1.getEndX(), headArrow1.getEndY());
 					double midX = pair.getKey();
 					double midY = pair.getValue();
-					Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow1.getStartX(),
-							headArrow1.getStartY(), headArrow1.getEndX(), headArrow1.getEndY());
+					Pair<Double, Double> pair2 = left.returnMoveXandY(headArrow1.getStartX(), headArrow1.getStartY(),
+							headArrow1.getEndX(), headArrow1.getEndY());
 					double mvX = pair2.getKey() / 5;
 					double mvY = pair2.getValue() / 5;
 					Label l = new Label();
@@ -4774,13 +4803,12 @@ public class MainWindowController
 					tags.add(l);
 					headArrowTags.put(l, headArrow1);
 
-
-					Pair<Double, Double> pair3 = left.returnMiddlePoint(headArrow2.getStartX(),
-							headArrow2.getStartY(), headArrow2.getEndX(), headArrow2.getEndY());
+					Pair<Double, Double> pair3 = left.returnMiddlePoint(headArrow2.getStartX(), headArrow2.getStartY(),
+							headArrow2.getEndX(), headArrow2.getEndY());
 					double midX2 = pair3.getKey();
 					double midY2 = pair3.getValue();
-					Pair<Double, Double> pair4 = left.returnMoveXandY(headArrow2.getStartX(),
-							headArrow2.getStartY(), headArrow2.getEndX(), headArrow2.getEndY());
+					Pair<Double, Double> pair4 = left.returnMoveXandY(headArrow2.getStartX(), headArrow2.getStartY(),
+							headArrow2.getEndX(), headArrow2.getEndY());
 					double mvX2 = pair4.getKey() / 5;
 					double mvY2 = pair4.getValue() / 5;
 					Label l2 = new Label();
@@ -4821,7 +4849,7 @@ public class MainWindowController
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("LTSPreview.fxml"));
 			Parent root1 = (Parent) fxmlLoader.load();
-			utilities.createTemponaryFile(statesListFromFile, labelsListFromFile, arcsListFromFile);
+			utilities.createTemponaryFile(p, statesListFromFile, labelsListFromFile, arcsListFromFile);
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root1));
 			stage.initStyle(StageStyle.UNDECORATED);

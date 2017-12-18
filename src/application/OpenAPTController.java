@@ -176,6 +176,7 @@ public class OpenAPTController
 		setOutputFileButtonVisible(false);
 		setEventVisible(false);
 
+
 		descTextLabel.setWrapText(true);
 		opt2Label.setWrapText(true);
 		opt3Label.setWrapText(true);
@@ -2190,6 +2191,7 @@ public class OpenAPTController
 				}
 			}
 		});
+	
 
 	}
 
