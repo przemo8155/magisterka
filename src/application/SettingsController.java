@@ -30,23 +30,25 @@ import javafx.util.Callback;
 
 public class SettingsController
 {
+
 	Log log = new Log();
 	Logger logger = new Logger(log, null);
 
 	public String backgroundColorString = null, circleColorString = null, rectangleColorString = null,
-			lineColorString = null;
+			lineColorString = null, tagsColorString = null, markingsColorString = null;
 
 	@FXML
 	private Button cancelButton, saveButton;
 
 	@FXML
-	private Label backgroundColorLabel, circleColorLabel, rectangleColorLabel, lineColorLabel;
+	private Label backgroundColorLabel, circleColorLabel, rectangleColorLabel, lineColorLabel, markingsColorLabel,
+			tagsColorLabel;
 
 	@FXML
-	private ComboBox<String> backgroundColorBox, circleColorBox, rectangleColorBox, lineColorBox;
+	private ComboBox<String> backgroundColorBox, circleColorBox, rectangleColorBox, lineColorBox, markingsColorBox,
+			tagsColorBox;
 
 	public ObservableList<String> allEnableColors = FXCollections.observableArrayList();
-
 
 	String dir = System.getProperty("user.dir");
 	String sep = System.getProperty("file.separator");
@@ -63,60 +65,70 @@ public class SettingsController
 	public void ReadSettings()
 	{
 
-		File f = new File(dir +  sep + "settings.sat");
-		if(f.exists())
+		File f = new File(dir + sep + "settings.sat");
+		if (f.exists())
 		{
-			try {
-				BufferedReader br = new BufferedReader(new FileReader(dir + sep +"settings.sat"));
-			    StringBuilder sb = new StringBuilder();
-			    String line = br.readLine();
-			    int i = 1;
-			    while (line != null) {
-			    	if(i == 1)
-			    	{
-			    		backgroundColorString = line;
-			    	} else if(i == 2)
-			    	{
-			    		circleColorString = line;
-			    	} else if(i == 3)
-			    	{
-			    		rectangleColorString= line;
-			    	} else if(i == 4)
-			    	{
-			    		lineColorString = line;
-			    	}
-			    	i=i+1;
-			    	line = br.readLine();
-			    }
+			try
+			{
+				BufferedReader br = new BufferedReader(new FileReader(dir + sep + "settings.sat"));
+				StringBuilder sb = new StringBuilder();
+				String line = br.readLine();
+				int i = 1;
+				while (line != null)
+				{
+					if (i == 1)
+					{
+						backgroundColorString = line;
+					} else if (i == 2)
+					{
+						circleColorString = line;
+					} else if (i == 3)
+					{
+						rectangleColorString = line;
+					} else if (i == 4)
+					{
+						lineColorString = line;
+					} else if (i == 5)
+					{
+						markingsColorString = line;
+					} else if (i == 6)
+					{
+						tagsColorString = line;
+					}
+					i = i + 1;
+					line = br.readLine();
+				}
 
-			    String everything = sb.toString();
-			    i = 1;
-			    br.close();
-			} catch(IOException e){
+				String everything = sb.toString();
+				i = 1;
+				br.close();
+			} catch (IOException e)
+			{
 				logger.debug(e.getLocalizedMessage());
 
 			}
-		}
-		else
+		} else
 			try
 			{
 				FileWriter fileWriter = new FileWriter(dir + sep + "settings.sat");
-			    PrintWriter printWriter = new PrintWriter(fileWriter);
-			    printWriter.println(white);
-			    printWriter.println(white);
-			    printWriter.println(white);
-			    printWriter.println(black);
-			    setBackgroundColor(white);
-			    setCircleColor(white);
-			    setRectangleColor(white);
-			    setLineColor(black);
-			    printWriter.close();
-			}catch(IOException e)
+				PrintWriter printWriter = new PrintWriter(fileWriter);
+				printWriter.println(white);
+				printWriter.println(white);
+				printWriter.println(white);
+				printWriter.println(black);
+				printWriter.println(black);
+				printWriter.println(black);
+				setBackgroundColor(white);
+				setCircleColor(white);
+				setRectangleColor(white);
+				setLineColor(black);
+				setMarkingsColor(black);
+				setTagsColor(black);
+				printWriter.close();
+			} catch (IOException e)
 			{
 				e.printStackTrace();
 			}
-
-
 
 	}
 
@@ -124,18 +136,19 @@ public class SettingsController
 	{
 		try
 		{
-			FileWriter fileWriter = new FileWriter(dir + sep +"settings.sat");
-		    PrintWriter printWriter = new PrintWriter(fileWriter);
-		    printWriter.println(backgroundColorString);
-		    printWriter.println(circleColorString);
-		    printWriter.println(rectangleColorString);
-		    printWriter.println(lineColorString);
-		    printWriter.close();
-		}catch(IOException e)
+			FileWriter fileWriter = new FileWriter(dir + sep + "settings.sat");
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			printWriter.println(backgroundColorString);
+			printWriter.println(circleColorString);
+			printWriter.println(rectangleColorString);
+			printWriter.println(lineColorString);
+			printWriter.println(markingsColorString);
+			printWriter.println(tagsColorString);
+			printWriter.close();
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-
 
 	}
 
@@ -361,6 +374,121 @@ public class SettingsController
 
 	}
 
+
+
+	private void markingsSetItems()
+	{
+		markingsColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
+
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				final ListCell<String> cell = new ListCell<String>()
+				{
+
+					{
+						super.setPrefWidth(100);
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if (item != null)
+						{
+							setText(item);
+							if (item.contains("Default"))
+							{
+								setTextFill(Color.BLACK);
+							} else if (item.contains("White"))
+							{
+
+							} else if (item.contains("Blue"))
+							{
+								setTextFill(Color.BLUE);
+							} else if (item.contains("Red"))
+							{
+								setTextFill(Color.RED);
+							} else if (item.contains("Green"))
+							{
+								setTextFill(Color.GREEN);
+							} else if (item.contains("Yellow"))
+							{
+								setTextFill(Color.YELLOW);
+							} else if (item.contains("Pink"))
+							{
+								setTextFill(Color.PINK);
+							}
+						} else
+						{
+							setText(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
+
+	}
+
+
+	private void tagsSetItems()
+	{
+		tagsColorBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>()
+		{
+
+			@Override
+			public ListCell<String> call(ListView<String> param)
+			{
+				final ListCell<String> cell = new ListCell<String>()
+				{
+
+					{
+						super.setPrefWidth(100);
+					}
+
+					@Override
+					public void updateItem(String item, boolean empty)
+					{
+						super.updateItem(item, empty);
+						if (item != null)
+						{
+							setText(item);
+							if (item.contains("Default"))
+							{
+								setTextFill(Color.BLACK);
+							} else if (item.contains("White"))
+							{
+
+							} else if (item.contains("Blue"))
+							{
+								setTextFill(Color.BLUE);
+							} else if (item.contains("Red"))
+							{
+								setTextFill(Color.RED);
+							} else if (item.contains("Green"))
+							{
+								setTextFill(Color.GREEN);
+							} else if (item.contains("Yellow"))
+							{
+								setTextFill(Color.YELLOW);
+							} else if (item.contains("Pink"))
+							{
+								setTextFill(Color.PINK);
+							}
+						} else
+						{
+							setText(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
+
+	}
+
 	public void initialize()
 	{
 
@@ -368,12 +496,16 @@ public class SettingsController
 		circleColorBox.getItems().addAll("Default", "Black", "Blue", "Red", "Green", "Yellow", "Pink");
 		rectangleColorBox.getItems().addAll("Default", "Black", "Blue", "Red", "Green", "Yellow", "Pink");
 		lineColorBox.getItems().addAll("Default", "White", "Blue", "Red", "Green", "Yellow", "Pink");
+		markingsColorBox.getItems().addAll("Default", "White", "Blue", "Red", "Green", "Yellow", "Pink");
+		tagsColorBox.getItems().addAll("Default", "White", "Blue", "Red", "Green", "Yellow", "Pink");
 		ReadSettings();
 		setComboItems();
 		backgroundSetItems();
 		circleSetItems();
 		rectangleSetItems();
 		arrowSetItems();
+		markingsSetItems();
+		tagsSetItems();
 
 	}
 
@@ -479,11 +611,64 @@ public class SettingsController
 				setLineColor(pink);
 				break;
 		}
-		//UpdateDatabase updateDatabase = new UpdateDatabase();
-		//updateDatabase.Update(backgroundColorString, "background");
-		//updateDatabase.Update(circleColorString, "circle");
-		//updateDatabase.Update(rectangleColorString, "rectangle");
-		//updateDatabase.Update(lineColorString, "arrow");
+
+
+		switch (markingsColorBox.getSelectionModel().getSelectedIndex())
+		{
+			case 0:
+				setMarkingsColor(black);
+				break;
+			case 1:
+				setMarkingsColor(white);
+				break;
+			case 2:
+				setMarkingsColor(blue);
+				break;
+			case 3:
+				setMarkingsColor(red);
+				break;
+			case 4:
+				setMarkingsColor(green);
+				break;
+			case 5:
+				setMarkingsColor(yellow);
+				break;
+			case 6:
+				setMarkingsColor(pink);
+				break;
+		}
+
+
+
+		switch (tagsColorBox.getSelectionModel().getSelectedIndex())
+		{
+			case 0:
+				setTagsColor(black);
+				break;
+			case 1:
+				setTagsColor(white);
+				break;
+			case 2:
+				setTagsColor(blue);
+				break;
+			case 3:
+				setTagsColor(red);
+				break;
+			case 4:
+				setTagsColor(green);
+				break;
+			case 5:
+				setTagsColor(yellow);
+				break;
+			case 6:
+				setTagsColor(pink);
+				break;
+		}
+		// UpdateDatabase updateDatabase = new UpdateDatabase();
+		// updateDatabase.Update(backgroundColorString, "background");
+		// updateDatabase.Update(circleColorString, "circle");
+		// updateDatabase.Update(rectangleColorString, "rectangle");
+		// updateDatabase.Update(lineColorString, "arrow");
 
 		WriteSettings();
 
@@ -536,6 +721,26 @@ public class SettingsController
 	public void setLineColor(String a)
 	{
 		lineColorString = a;
+	}
+
+	public void setMarkingsColor(String a)
+	{
+		markingsColorString = a;
+	}
+
+	public void setTagsColor(String a)
+	{
+		tagsColorString = a;
+	}
+
+	public String getMarkingsColor()
+	{
+		return markingsColorString;
+	}
+
+	public String getTagsColor()
+	{
+		return tagsColorString;
 	}
 
 	private void getDataFromDatabase()
@@ -647,6 +852,58 @@ public class SettingsController
 				break;
 			case pink:
 				lineColorBox.getSelectionModel().select(6);
+				break;
+		}
+
+
+		switch (markingsColorString)
+		{
+			case black:
+				markingsColorBox.getSelectionModel().select(0);
+				break;
+			case white:
+				markingsColorBox.getSelectionModel().select(1);
+				break;
+			case blue:
+				markingsColorBox.getSelectionModel().select(2);
+				break;
+			case red:
+				markingsColorBox.getSelectionModel().select(3);
+				break;
+			case green:
+				markingsColorBox.getSelectionModel().select(4);
+				break;
+			case yellow:
+				markingsColorBox.getSelectionModel().select(5);
+				break;
+			case pink:
+				markingsColorBox.getSelectionModel().select(6);
+				break;
+		}
+
+
+		switch (tagsColorString)
+		{
+			case black:
+				tagsColorBox.getSelectionModel().select(0);
+				break;
+			case white:
+				tagsColorBox.getSelectionModel().select(1);
+				break;
+			case blue:
+				tagsColorBox.getSelectionModel().select(2);
+				break;
+			case red:
+				tagsColorBox.getSelectionModel().select(3);
+				break;
+			case green:
+				tagsColorBox.getSelectionModel().select(4);
+				break;
+			case yellow:
+				tagsColorBox.getSelectionModel().select(5);
+				break;
+			case pink:
+				tagsColorBox.getSelectionModel().select(6);
 				break;
 		}
 	}

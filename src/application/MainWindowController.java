@@ -219,6 +219,8 @@ public class MainWindowController
 	private String circleColor;
 	private String rectangleColor;
 	private String arrowColor;
+	private String markingsColor;
+	private String tagsColor;
 
 	private Boolean deleteSecondOfEndLine = false;
 
@@ -1529,6 +1531,7 @@ public class MainWindowController
 							l.setLayoutY(c.getCenterY() + pair.getValue());
 							l.setFont(new Font("Arial", 16));
 							l.setId("fancytext");
+							l.setTextFill(Paint.valueOf(tagsColor));
 							mainPane.getChildren().add(l);
 							tags.add(l);
 						}
@@ -1575,6 +1578,7 @@ public class MainWindowController
 							l.setLayoutY(midY + mvY);
 							l.setFont(new Font("Arial", 16));
 							l.setId("fancytext");
+							l.setTextFill(Paint.valueOf(tagsColor));
 							mainPane.getChildren().add(l);
 							tags.add(l);
 							leftDoubleArrowTags.put(l, lda);
@@ -1612,6 +1616,7 @@ public class MainWindowController
 							l.setLayoutY(midY - mvY);
 							l.setFont(new Font("Arial", 16));
 							l.setId("fancytext");
+							l.setTextFill(Paint.valueOf(tagsColor));
 							mainPane.getChildren().add(l);
 							tags.add(l);
 							rightDoubleArrowTags.put(l, lda);
@@ -1649,6 +1654,7 @@ public class MainWindowController
 							l.setLayoutY(midY + mvY);
 							l.setFont(new Font("Arial", 16));
 							l.setId("fancytext");
+							l.setTextFill(Paint.valueOf(tagsColor));
 							mainPane.getChildren().add(l);
 							tags.add(l);
 							headArrowTags.put(l, ha);
@@ -2737,7 +2743,7 @@ public class MainWindowController
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("Settings.fxml"));
 
-			Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+			Scene scene = new Scene(fxmlLoader.load(), 300, 350);
 			scene.getStylesheets().add(getClass().getResource("settings.css").toExternalForm());
 			Stage stage = new Stage();
 			stage.setTitle("Settings");
@@ -2763,6 +2769,8 @@ public class MainWindowController
 			setCircleColor();
 			setRectangleColor();
 			setArrowColor();
+			setMarkingsColor();
+			setTagsColor();
 
 		}
 	};
@@ -2814,6 +2822,16 @@ public class MainWindowController
 		for (Label l : tags)
 		{
 			mainPane.getChildren().remove(l);
+		}
+
+		for(Label l : tokensBiggerThanTen)
+		{
+			mainPane.getChildren().remove(l);
+		}
+
+		for(ImageView iv : existingImageViews)
+		{
+			mainPane.getChildren().remove(iv);
 		}
 
 		utilities.clearAllLists(circleList, rectangleList, headArrowList, leftDoubleArrowList, rightDoubleArrowList,
@@ -2880,6 +2898,8 @@ public class MainWindowController
 			setCircleColor();
 			setArrowColor();
 			setRectangleColor();
+			setMarkingsColor();
+			setTagsColor();
 
 		}
 
@@ -3099,6 +3119,8 @@ public class MainWindowController
 		rectangleColor = set.getRectangleColor();
 		circleColor = set.getCircleColor();
 		arrowColor = set.getLineColor();
+		markingsColor = set.getMarkingsColor();
+		tagsColor = set.getTagsColor();
 	}
 
 	public void setBackgroundColor()
@@ -3122,6 +3144,22 @@ public class MainWindowController
 		for (Rectangle r : rectangleList)
 		{
 			r.setFill(Paint.valueOf(rectangleColor));
+		}
+	}
+
+	protected void setMarkingsColor()
+	{
+		for(Label l : tokensBiggerThanTen)
+		{
+			l.setTextFill(Paint.valueOf(markingsColor));
+		}
+	}
+
+	protected void setTagsColor()
+	{
+		for(Label l : tags)
+		{
+			l.setTextFill(Paint.valueOf(tagsColor));
 		}
 	}
 
@@ -3283,7 +3321,7 @@ public class MainWindowController
 			numberOfTokens.setFont(new Font("Arial", 24));
 			numberOfTokens.setLayoutX(c.getCenterX() - labelInTokensRay);
 			numberOfTokens.setLayoutY(c.getCenterY() - labelInTokensRay);
-			numberOfTokens.setTextFill(Paint.valueOf("#222222"));
+			numberOfTokens.setTextFill(Paint.valueOf(markingsColor));
 			tokensBiggerThanTen.add(numberOfTokens);
 			mainPane.getChildren().add(numberOfTokens);
 
@@ -4858,6 +4896,30 @@ public class MainWindowController
 		{
 			e.printStackTrace();
 		}
+	}
+
+
+	public String getMarkingsColor()
+	{
+		return markingsColor;
+	}
+
+
+	public void setMarkingsColor(String markingsColor)
+	{
+		this.markingsColor = markingsColor;
+	}
+
+
+	public String getTagsColor()
+	{
+		return tagsColor;
+	}
+
+
+	public void setTagsColor(String tagsColor)
+	{
+		this.tagsColor = tagsColor;
 	}
 
 }
