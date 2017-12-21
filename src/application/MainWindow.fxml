@@ -32,7 +32,6 @@
               <items>
                 <MenuItem fx:id="showStatisticsMenuItem" mnemonicParsing="false" onAction="#showStatisticsMenuItem_OnAction" text="Show statistics" />
                   <MenuItem fx:id="exportPdfMenuItem" mnemonicParsing="false" onAction="#exportPdfMenuItem_OnAction" text="Export PDF" />
-                  <MenuItem fx:id="compareNetsMenuItem" mnemonicParsing="false" onAction="#compareNetsMenuItem_OnAction" text="Compare nets" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">

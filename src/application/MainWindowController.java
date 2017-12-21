@@ -304,9 +304,6 @@ public class MainWindowController
 	private MenuItem showStatisticsMenuItem;
 
 	@FXML
-	private MenuItem compareNetsMenuItem;
-
-	@FXML
 	private MenuItem openFileMenuItem;
 
 	@FXML
@@ -3829,11 +3826,6 @@ public class MainWindowController
 
 	}
 
-	@FXML
-	void compareNetsMenuItem_OnAction(ActionEvent event)
-	{
-
-	}
 
 	void setPaneResolution()
 	{
