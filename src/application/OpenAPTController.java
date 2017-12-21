@@ -2191,7 +2191,7 @@ public class OpenAPTController
 				}
 			}
 		});
-	
+
 
 	}
 
@@ -2205,7 +2205,6 @@ public class OpenAPTController
 	@FXML
 	void openButton_OnAction(ActionEvent event)
 	{
-		this.mwcPath = fileTextField.getText();
 		MainWindowController.optPath = fileTextField.getText();
 		MainWindowController.checkFileRecognition = "yes";
 		Stage closeStage = (Stage) openButton.getScene().getWindow();

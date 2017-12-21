@@ -11,9 +11,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -111,6 +114,7 @@ import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -2724,9 +2728,28 @@ public class MainWindowController
 
 	void getAllStages()
 	{
-		ObservableList<Stage> windows = FXRobotHelper.getStages();
-		Stage s = windows.get(1);
-		s.hide();
+		try
+		{
+			ObservableList<Stage> windows = FXRobotHelper.getStages();
+			Stage s = windows.get(2);
+			s.hide();
+		}catch(Exception ex)
+		{
+			ex.getMessage();
+		}
+	}
+
+	@Deprecated
+	public static Iterator<Window> impl_getWindows() {
+	    final Iterator iterator = AccessController.doPrivileged(
+	        new PrivilegedAction<Iterator>() {
+	            @Override public Iterator run() {
+	                java.util.List<Label> windowQueue = null;
+					return windowQueue.iterator();
+	            }
+	        }
+	    );
+	    return iterator;
 	}
 
 	@FXML
@@ -4896,6 +4919,8 @@ public class MainWindowController
 		{
 			e.printStackTrace();
 		}
+
+		getAllStages();
 	}
 
 
