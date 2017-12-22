@@ -1712,7 +1712,7 @@ public class MainWindowController
 				{
 					if (entry.getKey().equals(_tLab))
 					{
-						headArrowTags.remove(_tLab, entry.getValue());
+						leftDoubleArrowTags.remove(_tLab, entry.getValue());
 						break;
 					}
 				}
@@ -1721,7 +1721,7 @@ public class MainWindowController
 				{
 					if (entry.getKey().equals(_tLab))
 					{
-						headArrowTags.remove(_tLab, entry.getValue());
+						rightDoubleArrowTags.remove(_tLab, entry.getValue());
 						break;
 					}
 				}
