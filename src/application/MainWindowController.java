@@ -291,6 +291,8 @@ public class MainWindowController
 	ObservableList<FourDimensionRightObject> dimensionMinusRightDoubleArrow = FXCollections.observableArrayList();
 	ObservableList<FourDimensionRightObject> dimensionPlusRightDoubleArrow = FXCollections.observableArrayList();
 
+	ObservableList<HeadArrow> tempSecondClickHa = FXCollections.observableArrayList();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -2437,7 +2439,7 @@ public class MainWindowController
 								_cFirstPosY = myCircle.getCenterY();
 								setMiddleLabelText("First point of line...");
 								secondObject = "rectangle";
-								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								mainPane.setOnMouseMoved(secondPointOfArrow);
 								break;
 							}
 
@@ -2544,7 +2546,7 @@ public class MainWindowController
 								_cFirstPosX = myRectangle.getX() + 20;
 								_cFirstPosY = myRectangle.getY() + 20;
 								setMiddleLabelText("First point of line...");
-								// mainPane.setOnMouseMoved(secondPointOfLineEventHandler);
+								mainPane.setOnMouseMoved(secondPointOfArrow);
 								secondObject = "circle";
 								break;
 							}
@@ -4870,13 +4872,26 @@ public class MainWindowController
 		this.tagsColor = tagsColor;
 	}
 
-	EventHandler<MouseEvent> secPointOfArrow = new EventHandler<MouseEvent>()
+	EventHandler<MouseEvent> secondPointOfArrow = new EventHandler<MouseEvent>()
 	{
 
 		@Override
 		public void handle(MouseEvent event)
 		{
-			// TODO Auto-generated method stub
+			if(!tempSecondClickHa.isEmpty())
+			{
+				for(HeadArrow ha : tempSecondClickHa)
+				{
+					ha.removeFromMainPane(mainPane);
+				}
+			}
+
+			if (_cFirstPosX != 0 && _cFirstPosY != 0)
+			{
+				HeadArrow ha = new HeadArrow(_cFirstPosX, _cFirstPosY, event.getSceneX(), event.getSceneY() - minusWidth, mainPane);
+				ha.addToMainPane(mainPane);
+				tempSecondClickHa.add(ha);
+			}
 
 		}
 	};
