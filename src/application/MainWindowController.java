@@ -395,6 +395,9 @@ public class MainWindowController
 
 	};
 
+	/*
+	 * Function who display text with anim on middlescreen
+	 */
 	public void setMiddleLabelText(String text)
 	{
 		middleLabel.setDisable(false);
@@ -409,6 +412,9 @@ public class MainWindowController
 
 	}
 
+	/*
+	 * Handler removing the last line - didnt work
+	 */
 	EventHandler<MouseEvent> deleteSecondLastLineEventHandler = new EventHandler<MouseEvent>()
 	{
 
@@ -424,6 +430,9 @@ public class MainWindowController
 
 	};
 
+	/*
+	 * Handler sending action to mouse which display actual position of cursor and end of the arrow
+	 */
 	EventHandler<MouseEvent> secondPointOfLineEventHandler = new EventHandler<MouseEvent>()
 	{
 
@@ -456,6 +465,9 @@ public class MainWindowController
 		}
 	};
 
+	/*
+	 * Handler which updating data when mouse pressed on a place (circle)
+	 */
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>()
 	{
 
@@ -4857,5 +4869,16 @@ public class MainWindowController
 	{
 		this.tagsColor = tagsColor;
 	}
+
+	EventHandler<MouseEvent> secPointOfArrow = new EventHandler<MouseEvent>()
+	{
+
+		@Override
+		public void handle(MouseEvent event)
+		{
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 }
