@@ -4827,6 +4827,10 @@ public class MainWindowController
 
 	}
 
+	/*
+	 * Function which opening stage with lts and getting three lists with data
+	 */
+
 	void initLTS(String p)
 	{
 		NetParser np = new NetParser(p, "use");
@@ -4852,26 +4856,50 @@ public class MainWindowController
 		getAllStages();
 	}
 
+	/*
+	 * Marking color getter
+	 */
+
 	public String getMarkingsColor()
 	{
 		return markingsColor;
 	}
+
+
+
+	/*
+	 * Marking color setter
+	 */
 
 	public void setMarkingsColor(String markingsColor)
 	{
 		this.markingsColor = markingsColor;
 	}
 
+
+	/*
+	 * Tag color getter
+	 */
+
 	public String getTagsColor()
 	{
 		return tagsColor;
 	}
+
+
+
+	/*
+	 * Tag color setter
+	 */
 
 	public void setTagsColor(String tagsColor)
 	{
 		this.tagsColor = tagsColor;
 	}
 
+	/*
+	 * Working handler which showing actual headArrow before second click
+	 */
 	EventHandler<MouseEvent> secondPointOfArrow = new EventHandler<MouseEvent>()
 	{
 
