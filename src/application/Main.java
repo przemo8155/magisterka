@@ -1,4 +1,9 @@
-
+/*
+ * Main class - app starting from this class
+ * Opens MainWindow
+ *
+ * @author: Przemyslaw Budzich
+ */
 package application;
 
 import java.awt.event.ActionEvent;
@@ -42,19 +47,33 @@ import javafx.scene.web.WebView;
 public class Main extends Application
 {
 
-
+	/*
+	 * MainStage
+	 */
 	private static Stage pStage;
 
+
+	/*
+	 * Getter of MainStage
+	 */
 	public static Stage getPrimaryStage()
 	{
 		return pStage;
 	}
 
+
+	/*
+	 * MainStage setter
+	 */
 	private void setPrimaryStage(Stage pStage)
 	{
 		Main.pStage = pStage;
 	}
 
+	/* Start method which open MainWindow window + adding application.css style sheets to this
+	 * (non-Javadoc)
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	@Override
 	public void start(Stage primaryStage)
 	{
@@ -89,7 +108,9 @@ public class Main extends Application
 	}
 
 
-
+	/*
+	 * Main method which launing preloader first then MainWindow
+	 */
 	public static void main(String[] args)
 	{
 		//launch(args);
