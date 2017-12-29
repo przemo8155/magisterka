@@ -433,7 +433,8 @@ public class MainWindowController
 	};
 
 	/*
-	 * Handler sending action to mouse which display actual position of cursor and end of the arrow
+	 * Handler sending action to mouse which display actual position of cursor
+	 * and end of the arrow
 	 */
 	EventHandler<MouseEvent> secondPointOfLineEventHandler = new EventHandler<MouseEvent>()
 	{
@@ -466,6 +467,28 @@ public class MainWindowController
 
 		}
 	};
+
+
+	/*
+	 * Handler which updating data when mouse pressed on a place (label)
+	 */
+	EventHandler<MouseEvent> labelOnMousePressedEventHandler = new EventHandler<MouseEvent>()
+	{
+
+		@Override
+		public void handle(MouseEvent t)
+		{
+			orgSceneX = t.getSceneX();
+			orgSceneY = t.getSceneY() - minusWidth;
+			orgTranslateX = ((Label) (t.getSource())).getTranslateX();
+			orgTranslateY = ((Label) (t.getSource())).getTranslateY();
+
+		}
+
+	};
+
+
+
 
 	/*
 	 * Handler which updating data when mouse pressed on a place (circle)
@@ -2672,6 +2695,24 @@ public class MainWindowController
 							objectsMoved += 1;
 						}
 
+						if (g instanceof Label)
+						{
+							double posX = ((Label) g).getLayoutX();
+							double posY = ((Label) g).getLayoutY();
+							for (int b = 0; b < circleList.size(); b++)
+							{
+								Circle c = circleList.get(b);
+								if (c.getCenterX() - circleRay < posX && c.getCenterX() + circleRay > posX
+										&& c.getCenterY() - circleRay < posY && c.getCenterY() + circleRay > posY)
+								{
+									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+								}
+							}
+
+							objectsMoved += 1;
+						}
+
 						_it += 1;
 					} catch (Exception e)
 					{
@@ -3929,7 +3970,6 @@ public class MainWindowController
 			final Timeline timeline = new Timeline(kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9);
 			Platform.runLater(timeline::play);
 
-
 		}
 
 	}
@@ -3982,7 +4022,7 @@ public class MainWindowController
 
 				}
 
-				 else
+				else
 				{
 					deleteBitmapToken(positionX, positionY);
 				}
@@ -4865,8 +4905,6 @@ public class MainWindowController
 		return markingsColor;
 	}
 
-
-
 	/*
 	 * Marking color setter
 	 */
@@ -4876,7 +4914,6 @@ public class MainWindowController
 		this.markingsColor = markingsColor;
 	}
 
-
 	/*
 	 * Tag color getter
 	 */
@@ -4885,8 +4922,6 @@ public class MainWindowController
 	{
 		return tagsColor;
 	}
-
-
 
 	/*
 	 * Tag color setter
@@ -4906,9 +4941,9 @@ public class MainWindowController
 		@Override
 		public void handle(MouseEvent event)
 		{
-			if(!tempSecondClickHa.isEmpty())
+			if (!tempSecondClickHa.isEmpty())
 			{
-				for(HeadArrow ha : tempSecondClickHa)
+				for (HeadArrow ha : tempSecondClickHa)
 				{
 					ha.removeFromMainPane(mainPane);
 				}
@@ -4916,7 +4951,8 @@ public class MainWindowController
 
 			if (_cFirstPosX != 0 && _cFirstPosY != 0)
 			{
-				HeadArrow ha = new HeadArrow(_cFirstPosX, _cFirstPosY, event.getSceneX(), event.getSceneY() - minusWidth, mainPane);
+				HeadArrow ha = new HeadArrow(_cFirstPosX, _cFirstPosY, event.getSceneX(),
+						event.getSceneY() - minusWidth, mainPane);
 				ha.addToMainPane(mainPane);
 				tempSecondClickHa.add(ha);
 			}

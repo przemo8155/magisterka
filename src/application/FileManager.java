@@ -57,8 +57,8 @@ public class FileManager
 	public void SaveFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
 			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews,
-			ObservableList<Label> labelTokens, ObservableList<Label> tags,Map<Label, HeadArrow> haTags, Map<Label, RightDoubleArrow> rightTags,
-			Map<Label, LeftDoubleArrow> leftTags)
+			ObservableList<Label> labelTokens, ObservableList<Label> tags, Map<Label, HeadArrow> haTags,
+			Map<Label, RightDoubleArrow> rightTags, Map<Label, LeftDoubleArrow> leftTags)
 	{
 		try
 		{
@@ -273,8 +273,6 @@ public class FileManager
 				Double _d1 = l.getLayoutX();
 				Double _d2 = l.getLayoutY();
 				String _d3 = l.getText();
-				Integer _i1 = _d1.intValue();
-				Integer _i2 = _d2.intValue();
 				Integer _i3 = Integer.valueOf(_d3);
 
 				Double _d4 = rda.getStartX();
@@ -286,9 +284,9 @@ public class FileManager
 				Integer _i8 = _d8.intValue();
 				Integer _i9 = _d9.intValue();
 
-				stringBuilder.append(_i1);
+				stringBuilder.append(_d1);
 				stringBuilder.append(" ");
-				stringBuilder.append(_i2);
+				stringBuilder.append(_d2);
 				stringBuilder.append(" ");
 				stringBuilder.append(_i3);
 				stringBuilder.append(" ");
@@ -302,7 +300,6 @@ public class FileManager
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
 
-
 			final String _rightTags = "rightTags";
 			stringBuilder.append(_rightTags);
 			stringBuilder.append(System.getProperty("line.separator"));
@@ -313,8 +310,7 @@ public class FileManager
 				Double _d1 = l.getLayoutX();
 				Double _d2 = l.getLayoutY();
 				String _d3 = l.getText();
-				Integer _i1 = _d1.intValue();
-				Integer _i2 = _d2.intValue();
+
 				Integer _i3 = Integer.valueOf(_d3);
 
 				Double _d4 = rda.getStartX();
@@ -330,9 +326,9 @@ public class FileManager
 				Integer _i8 = _d8.intValue();
 				Integer _i9 = _d9.intValue();
 
-				stringBuilder.append(_i1);
+				stringBuilder.append(_d1);
 				stringBuilder.append(" ");
-				stringBuilder.append(_i2);
+				stringBuilder.append(_d2);
 				stringBuilder.append(" ");
 				stringBuilder.append(_i3);
 				stringBuilder.append(" ");
@@ -360,8 +356,6 @@ public class FileManager
 				Double _d1 = l.getLayoutX();
 				Double _d2 = l.getLayoutY();
 				String _d3 = l.getText();
-				Integer _i1 = _d1.intValue();
-				Integer _i2 = _d2.intValue();
 				Integer _i3 = Integer.valueOf(_d3);
 
 				Double _d4 = lda.getStartX();
@@ -377,9 +371,9 @@ public class FileManager
 				Integer _i8 = _d8.intValue();
 				Integer _i9 = _d9.intValue();
 
-				stringBuilder.append(_i1);
+				stringBuilder.append(_d1);
 				stringBuilder.append(" ");
-				stringBuilder.append(_i2);
+				stringBuilder.append(_d2);
 				stringBuilder.append(" ");
 				stringBuilder.append(_i3);
 				stringBuilder.append(" ");
@@ -396,7 +390,6 @@ public class FileManager
 				stringBuilder.append(_i9);
 				stringBuilder.append(System.getProperty("line.separator"));
 			}
-
 
 			final String stringToFile = stringBuilder.toString();
 			FileChooser fileChooser = new FileChooser();
@@ -454,8 +447,8 @@ public class FileManager
 	public void OpenFile(Stage stage, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
 			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews,
-			ObservableList<Label> labelTokens, ObservableList<Label> tags, Map<Label, HeadArrow> haTags, Map<Label, RightDoubleArrow> rightTags,
-			Map<Label, LeftDoubleArrow> leftTags, Pane gc)
+			ObservableList<Label> labelTokens, ObservableList<Label> tags, Map<Label, HeadArrow> haTags,
+			Map<Label, RightDoubleArrow> rightTags, Map<Label, LeftDoubleArrow> leftTags, Pane gc)
 	{
 		try
 		{
@@ -499,8 +492,8 @@ public class FileManager
 	private void Reader(File file, ObservableList<Circle> circles, ObservableList<Rectangle> squares,
 			ObservableList<HeadArrow> arrows, ObservableList<LeftDoubleArrow> leftDoubleArrows,
 			ObservableList<RightDoubleArrow> rightDoubleArrows, ObservableList<ImageView> imageViews,
-			ObservableList<Label> labelTokens, ObservableList<Label> tags,Map<Label, HeadArrow> haTags, Map<Label, RightDoubleArrow> rightTags,
-			Map<Label, LeftDoubleArrow> leftTags, Pane gc)
+			ObservableList<Label> labelTokens, ObservableList<Label> tags, Map<Label, HeadArrow> haTags,
+			Map<Label, RightDoubleArrow> rightTags, Map<Label, LeftDoubleArrow> leftTags, Pane gc)
 	{
 		Scanner scanner;
 
@@ -998,7 +991,7 @@ public class FileManager
 								break;
 							case 3:
 								labelInt = Integer.parseInt(t);
-								faze +=1;
+								faze += 1;
 								break;
 							case 4:
 								as1 = Double.parseDouble(t);
@@ -1022,7 +1015,6 @@ public class FileManager
 								l.setLayoutX(labelX);
 								l.setLayoutY(labelY);
 								l.setId("fancytext");
-								tags.add(l);
 								haTags.put(l, rda);
 								break;
 						}
@@ -1071,7 +1063,7 @@ public class FileManager
 								break;
 							case 3:
 								labelInt = Integer.parseInt(t);
-								faze +=1;
+								faze += 1;
 								break;
 							case 4:
 								as1 = Double.parseDouble(t);
@@ -1103,7 +1095,6 @@ public class FileManager
 								l.setLayoutX(labelX);
 								l.setLayoutY(labelY);
 								l.setId("fancytext");
-								tags.add(l);
 								rightTags.put(l, rda);
 								break;
 						}
@@ -1146,7 +1137,7 @@ public class FileManager
 								break;
 							case 3:
 								labelInt = Integer.parseInt(t);
-								faze +=1;
+								faze += 1;
 								break;
 							case 4:
 								as1 = Double.parseDouble(t);
@@ -1178,11 +1169,9 @@ public class FileManager
 								l.setLayoutX(labelX);
 								l.setLayoutY(labelY);
 								l.setId("fancytext");
-								tags.add(l);
 								leftTags.put(l, lda);
 								break;
 						}
-
 
 					}
 				}
