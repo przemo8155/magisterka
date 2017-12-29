@@ -293,6 +293,8 @@ public class MainWindowController
 
 	ObservableList<HeadArrow> tempSecondClickHa = FXCollections.observableArrayList();
 
+	ObservableList<Circle> moveCircleList = FXCollections.observableArrayList();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -468,7 +470,6 @@ public class MainWindowController
 		}
 	};
 
-
 	/*
 	 * Handler which updating data when mouse pressed on a place (label)
 	 */
@@ -486,9 +487,133 @@ public class MainWindowController
 		}
 
 	};
+	EventHandler<MouseEvent> labelOnMouseDraggedEventHandler = new EventHandler<MouseEvent>()
+	{
+
+		@Override
+		public void handle(MouseEvent evt)
+		{
+			try
+			{
+				Label l = ((Label) evt.getSource());
+				if(tokensBiggerThanTen.contains(l))
+				{
+					int index = tokensBiggerThanTen.indexOf(l);
+
+					Circle tempCirc = null;
+
+					for(Circle c : circleList)
+					{
+						if(c.getCenterX() - labelInTokensRay - 3 < l.getLayoutX() && c.getCenterX() + labelInTokensRay + 3 > l.getLayoutX()
+								&& c.getCenterY() - labelInTokensRay - 3 < l.getLayoutY() && c.getCenterY() + labelInTokensRay + 3 > l.getLayoutY())
+						{
+							tempCirc = c;
+							break;
+						}
+					}
+
+
+					double offsetX = evt.getSceneX();
+					double offsetY = evt.getSceneY() - minusWidth;
+
+					double newTranslateX = orgTranslateX + offsetX;
+					double newTranslateY = orgTranslateY + offsetY;
+
+					l.setLayoutX(newTranslateX - labelInTokensRay);
+					l.setLayoutY(newTranslateY - labelInTokensRay);
+
+					tokensBiggerThanTen.set(index, l);
+
+					if(tempCirc != null)
+					{
+						tempCirc.setOnMousePressed(circleOnMousePressedEventHandler);
+						tempCirc.setOnMouseDragged(circleOnMouseDraggedEventHandler);
+
+						int circIndex = circleList.indexOf(tempCirc);
+
+						for (HeadArrow ha : headArrowList)
+						{
+							if (ha.getStartX() == tempCirc.getCenterX() && ha.getStartY() == tempCirc.getCenterY())
+							{
+								startHeadArrowList.add(ha);
+								for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+								{
+									if (ha.equals(entry.getValue()))
+									{
+										moveHeadArrowTags.put(entry.getKey(), ha);
+									}
+								}
+							}
+
+						}
+
+						for (HeadArrow ha : headArrowList)
+						{
+							if (ha.getEndX() == tempCirc.getCenterX() && ha.getEndY() == tempCirc.getCenterY())
+							{
+								endHeadArrowList.add(ha);
+								for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+								{
+									if (ha.equals(entry.getValue()))
+									{
+										moveHeadArrowTags.put(entry.getKey(), ha);
+									}
+								}
+
+							}
+
+						}
+
+						headArrowList.removeAll(startHeadArrowList);
+						headArrowList.removeAll(endHeadArrowList);
 
 
 
+						tempCirc.setCenterX(l.getLayoutX() + labelInTokensRay);
+						tempCirc.setCenterY(l.getLayoutY() + labelInTokensRay);
+
+						circleList.set(circIndex, tempCirc);
+
+						for (HeadArrow ha : endHeadArrowList)
+						{
+							ha.setEndX(tempCirc.getCenterX(), mainPane);
+							ha.setEndY(tempCirc.getCenterY(), mainPane);
+							ha.setLeft(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							ha.setRight(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+
+						}
+
+						for (HeadArrow ha : startHeadArrowList)
+						{
+							ha.setStartX(tempCirc.getCenterX(), mainPane);
+							ha.setStartY(tempCirc.getCenterY(), mainPane);
+							ha.setLeft(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							ha.setRight(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+						}
+
+						headArrowList.addAll(startHeadArrowList);
+						headArrowList.addAll(endHeadArrowList);
+
+						utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+
+						moveHeadArrowTags.clear();
+
+
+					}
+
+
+
+
+
+				}
+
+			} catch (Exception e)
+			{
+				System.out.println(e.getLocalizedMessage());
+			}
+		}
+
+	};
 
 	/*
 	 * Handler which updating data when mouse pressed on a place (circle)
@@ -2697,18 +2822,8 @@ public class MainWindowController
 
 						if (g instanceof Label)
 						{
-							double posX = ((Label) g).getLayoutX();
-							double posY = ((Label) g).getLayoutY();
-							for (int b = 0; b < circleList.size(); b++)
-							{
-								Circle c = circleList.get(b);
-								if (c.getCenterX() - circleRay < posX && c.getCenterX() + circleRay > posX
-										&& c.getCenterY() - circleRay < posY && c.getCenterY() + circleRay > posY)
-								{
-									((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-									((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
-								}
-							}
+							((Label)g).setOnMousePressed(labelOnMousePressedEventHandler);
+							((Label)g).setOnMouseDragged(labelOnMouseDraggedEventHandler);
 
 							objectsMoved += 1;
 						}
