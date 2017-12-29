@@ -504,8 +504,8 @@ public class MainWindowController
 
 					for(Circle c : circleList)
 					{
-						if(c.getCenterX() - labelInTokensRay - 3 < l.getLayoutX() && c.getCenterX() + labelInTokensRay + 3 > l.getLayoutX()
-								&& c.getCenterY() - labelInTokensRay - 3 < l.getLayoutY() && c.getCenterY() + labelInTokensRay + 3 > l.getLayoutY())
+						if(c.getCenterX() - labelInTokensRay - 1 < l.getLayoutX() && c.getCenterX() + labelInTokensRay + 1 > l.getLayoutX()
+								&& c.getCenterY() - labelInTokensRay - 1 < l.getLayoutY() && c.getCenterY() + labelInTokensRay + 1 > l.getLayoutY())
 						{
 							tempCirc = c;
 							break;
@@ -564,8 +564,79 @@ public class MainWindowController
 
 						}
 
+
+						for (LeftDoubleArrow da : leftDoubleArrowList)
+						{
+							if (da.getStartX() == tempCirc.getCenterX() && da.getStartY() == tempCirc.getCenterY())
+							{
+								leftStartDoubleArrowList.add(da);
+								da.setFill(arrowColor);
+								for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+								{
+									if (da.equals(entry.getValue()))
+									{
+										moveLeftDoubleArrowTags.put(entry.getKey(), da);
+									}
+								}
+							}
+						}
+
+						for (LeftDoubleArrow da : leftDoubleArrowList)
+						{
+							if (da.getEndX() == tempCirc.getCenterX() && da.getEndY() == tempCirc.getCenterY())
+							{
+								leftEndDoubleArrowList.add(da);
+								da.setFill(arrowColor);
+								for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+								{
+									if (da.equals(entry.getValue()))
+									{
+										moveLeftDoubleArrowTags.put(entry.getKey(), da);
+									}
+								}
+							}
+						}
+
+						for (RightDoubleArrow da : rightDoubleArrowList)
+						{
+							if (da.getStartX() == tempCirc.getCenterX() && da.getStartY() == tempCirc.getCenterY())
+							{
+								rightStartDoubleArrowList.add(da);
+								da.setFill(arrowColor);
+								for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+								{
+									if (da.equals(entry.getValue()))
+									{
+										moveRightDoubleArrowTags.put(entry.getKey(), da);
+									}
+								}
+							}
+						}
+
+						for (RightDoubleArrow da : rightDoubleArrowList)
+						{
+							if (da.getEndX() == tempCirc.getCenterX() && da.getEndY() == tempCirc.getCenterY())
+							{
+								rightEndDoubleArrowList.add(da);
+								da.setFill(arrowColor);
+								for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+								{
+									if (da.equals(entry.getValue()))
+									{
+										moveRightDoubleArrowTags.put(entry.getKey(), da);
+									}
+								}
+							}
+						}
+
 						headArrowList.removeAll(startHeadArrowList);
 						headArrowList.removeAll(endHeadArrowList);
+
+						leftDoubleArrowList.removeAll(leftStartDoubleArrowList);
+						leftDoubleArrowList.removeAll(leftEndDoubleArrowList);
+
+						rightDoubleArrowList.removeAll(rightStartDoubleArrowList);
+						rightDoubleArrowList.removeAll(rightEndDoubleArrowList);
 
 
 
@@ -591,12 +662,112 @@ public class MainWindowController
 							ha.setRight(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
 						}
 
+						for (LeftDoubleArrow da : leftStartDoubleArrowList)
+						{
+							da.setLeftArrowStartX(tempCirc.getCenterX(), mainPane);
+							da.setLeftArrowStartY(tempCirc.getCenterY(), mainPane);
+							da.setLeft(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setRight(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setFill(arrowColor);
+						}
+
+						for (LeftDoubleArrow da : leftEndDoubleArrowList)
+						{
+							da.setLeftArrowEndX(tempCirc.getCenterX(), mainPane);
+							da.setLeftArrowEndY(tempCirc.getCenterY(), mainPane);
+							da.setLeft(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setRight(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setFill(arrowColor);
+						}
+
+						for (RightDoubleArrow da : rightStartDoubleArrowList)
+						{
+							da.setRightArrowStartX(tempCirc.getCenterX(), mainPane);
+							da.setRightArrowStartY(tempCirc.getCenterY(), mainPane);
+							da.setLeft(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setRight(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setFill(arrowColor);
+						}
+
+						for (RightDoubleArrow da : rightEndDoubleArrowList)
+						{
+							da.setRightArrowEndX(tempCirc.getCenterX(), mainPane);
+							da.setRightArrowEndY(tempCirc.getCenterY(), mainPane);
+							da.setLeft(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setRight(tempCirc.getCenterX(), tempCirc.getCenterY(), mainPane);
+							da.setFill(arrowColor);
+						}
+
+						for (Map.Entry<Label, HeadArrow> entry : moveHeadArrowTags.entrySet())
+						{
+							Label l2 = entry.getKey();
+							HeadArrow ha = entry.getValue();
+							Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+							Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double mvX = pair2.getKey() / 5;
+							double mvY = pair2.getValue() / 5;
+							l2.setLayoutX(midX + mvX);
+							l2.setLayoutY(midY + mvY);
+						}
+
+						for (Map.Entry<Label, LeftDoubleArrow> entry : moveLeftDoubleArrowTags.entrySet())
+						{
+							Label l2 = entry.getKey();
+							LeftDoubleArrow ha = entry.getValue();
+							Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+							Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double mvX = pair2.getKey();
+							double mvY = pair2.getValue();
+							l2.setLayoutX(midX + mvX);
+							l2.setLayoutY(midY + mvY);
+						}
+
+						for (Map.Entry<Label, RightDoubleArrow> entry : moveRightDoubleArrowTags.entrySet())
+						{
+							Label l2 = entry.getKey();
+							RightDoubleArrow ha = entry.getValue();
+							Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double midX = pair.getKey();
+							double midY = pair.getValue();
+							Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(ha.getStartX(), ha.getStartY(),
+									ha.getEndX(), ha.getEndY());
+							double mvX = pair2.getKey();
+							double mvY = pair2.getValue();
+							l2.setLayoutX(midX - mvX);
+							l2.setLayoutY(midY - mvY);
+						}
+
+
 						headArrowList.addAll(startHeadArrowList);
 						headArrowList.addAll(endHeadArrowList);
 
+						leftDoubleArrowList.addAll(leftStartDoubleArrowList);
+						leftDoubleArrowList.addAll(leftEndDoubleArrowList);
+
+						rightDoubleArrowList.addAll(rightStartDoubleArrowList);
+						rightDoubleArrowList.addAll(rightEndDoubleArrowList);
+
 						utilities.clearStartAndEndHeadArrowLists(startHeadArrowList, endHeadArrowList);
+						utilities.clearStartAndEndLeftDoubleArrowLists(leftStartDoubleArrowList, leftEndDoubleArrowList);
+						utilities.clearStartAndEndRightDoubleArrowLists(rightStartDoubleArrowList, rightEndDoubleArrowList);
 
 						moveHeadArrowTags.clear();
+						moveLeftDoubleArrowTags.clear();
+						moveRightDoubleArrowTags.clear();
+
+						for (HeadArrow ha : headArrowList)
+						{
+							ha.setFill(arrowColor);
+						}
 
 
 					}
@@ -3556,6 +3727,8 @@ public class MainWindowController
 			numberOfTokens.setLayoutX(c.getCenterX() - labelInTokensRay);
 			numberOfTokens.setLayoutY(c.getCenterY() - labelInTokensRay);
 			numberOfTokens.setTextFill(Paint.valueOf(markingsColor));
+			numberOfTokens.setOnMousePressed(labelOnMousePressedEventHandler);
+			numberOfTokens.setOnMouseDragged(labelOnMouseDraggedEventHandler);
 			tokensBiggerThanTen.add(numberOfTokens);
 			mainPane.getChildren().add(numberOfTokens);
 
