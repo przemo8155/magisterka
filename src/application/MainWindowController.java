@@ -4557,11 +4557,17 @@ public class MainWindowController
 		Platform.runLater(timeline::play);
 
 	}
+	/*
+	 * Function which opens a apt file
+	 */
 
 	public void openFile(String p)
 	{
 		try
 		{
+			/*
+			 * Clearing all elements
+			 */
 			for (Circle c : circleList)
 			{
 				mainPane.getChildren().remove(c);
@@ -4610,6 +4616,9 @@ public class MainWindowController
 			NetParser lp = new NetParser(p);
 			if (lp.isLPN(p))
 			{
+				/*
+				 * If we creating petri net
+				 */
 
 				ObservableList<String> placesListFromFile = lp.getPlacesList();
 				ObservableList<String> transitionsListFromFile = lp.getTransitionsList();
@@ -4988,6 +4997,9 @@ public class MainWindowController
 
 			else
 			{
+				/*
+				 * When we opening a LTS
+				 */
 
 				NetParser np = new NetParser(p, "use");
 				ObservableList<String> labelsListFromFile = np.getLabelsList();
