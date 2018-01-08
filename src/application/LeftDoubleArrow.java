@@ -75,6 +75,8 @@ public class LeftDoubleArrow
 
 		} else
 			return new Pair<>(mvX, mvY);
+
+
 	}
 
 	public final void setRight(double valX, double valY, Pane gc)
@@ -574,11 +576,12 @@ public class LeftDoubleArrow
 
 		double moveX = myMultiply * maxMove;
 
-		if (mainAngle > 180 && mainAngle <= 360)
+	if (mainAngle > 180 && mainAngle <= 360)
 		{
 			return maxMove - moveX;
 		} else
 			return moveX;
+
 
 	}
 

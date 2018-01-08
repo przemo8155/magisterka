@@ -2740,6 +2740,7 @@ public class MainWindowController
 					LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
 					double x = event.getSceneX();
 					double y = event.getSceneY();
+					boolean arrowExists = false;
 
 					double control1X = 0;
 					double control2X = 0;
@@ -2769,82 +2770,116 @@ public class MainWindowController
 								_cSecPosY = myCircle.getCenterY();
 
 								int _index = -1;
-
-								for (HeadArrow ha : headArrowList)
+								for(HeadArrow ha : headArrowList)
 								{
-									if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
-											&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
+									if(ha.getStartX() == _cFirstPosX && ha.getStartY() == _cFirstPosY && ha.getEndX() == _cSecPosX && ha.getEndY() == _cSecPosY)
 									{
-
-										Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX,
-												_cFirstPosY, _cSecPosX, _cSecPosY);
-										double midX = pair.getKey();
-										double midY = pair.getValue();
-
-										Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX,
-												_cFirstPosY, _cSecPosX, _cSecPosY);
-										double moveX = pair2.getKey();
-										double moveY = pair2.getValue();
-
-										control1X = midX + moveX;
-										control2X = midX - moveX;
-										control1Y = midY + moveY;
-										control2Y = midY - moveY;
-
-										ha.removeFromMainPane(mainPane);
-										_index = headArrowList.indexOf(ha);
-
+										setMiddleLabelText("That arrow exists...");
+										arrowExists = true;
+										break;
+									}
+								}
+								for(LeftDoubleArrow lda : leftDoubleArrowList)
+								{
+									if(lda.getStartX() == _cFirstPosX && lda.getStartY() == _cFirstPosY && lda.getEndX() == _cSecPosX && lda.getEndY() == _cSecPosY)
+									{
+										setMiddleLabelText("That arrow exists...");
+										arrowExists = true;
+										break;
 									}
 								}
 
-								if (_index != -1)
+								for(RightDoubleArrow rda : rightDoubleArrowList)
 								{
-									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X,
-											control1Y, _cSecPosX, _cSecPosY);
+									if(rda.getStartX() == _cFirstPosX && rda.getStartY() == _cFirstPosY && rda.getEndX() == _cSecPosX && rda.getEndY() == _cSecPosY)
+									{
+										setMiddleLabelText("That arrow exists...");
+										arrowExists = true;
+										break;
+									}
+								}
+								if(!arrowExists)
+								{
+									for (HeadArrow ha : headArrowList)
+									{
+										if (ha.getEndX() == _cFirstPosX && ha.getEndY() == _cFirstPosY
+												&& ha.getStartX() == _cSecPosX && ha.getStartY() == _cSecPosY)
+										{
 
-									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X,
-											control2Y, _cFirstPosX, _cFirstPosY);
+											Pair<Double, Double> pair = doubleArrow.returnMiddlePoint(_cFirstPosX,
+													_cFirstPosY, _cSecPosX, _cSecPosY);
+											double midX = pair.getKey();
+											double midY = pair.getValue();
 
-									path1.addToMainPane(mainPane);
-									path2.addToMainPane(mainPane);
+											Pair<Double, Double> pair2 = doubleArrow.returnMoveXandY(_cFirstPosX,
+													_cFirstPosY, _cSecPosX, _cSecPosY);
+											double moveX = pair2.getKey();
+											double moveY = pair2.getValue();
 
-									path1.setFill(arrowColor);
-									path2.setFill(arrowColor);
+											control1X = midX + moveX;
+											control2X = midX - moveX;
+											control1Y = midY + moveY;
+											control2Y = midY - moveY;
 
-									setMiddleLabelText("Second point of line...");
-									headArrowList.remove(_index);
+											ha.removeFromMainPane(mainPane);
+											_index = headArrowList.indexOf(ha);
 
-									leftDoubleArrowList.add(path1);
-									rightDoubleArrowList.add(path2);
-
-									_cFirstPosX = 0;
-									_cFirstPosY = 0;
-									_cSecPosX = 0;
-									_cSecPosY = 0;
-
-									secondObject = "";
-									break;
-
+										}
+									}
 								}
 
-								else
+								if(!arrowExists)
 								{
-									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
-											mainPane);
-									headArrow.setFill(arrowColor);
-									headArrowList.add(headArrow);
-									headArrow.addToMainPane(mainPane);
+									if (_index != -1)
+									{
+										LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X,
+												control1Y, _cSecPosX, _cSecPosY);
 
-									setMiddleLabelText("Second point of line...");
+										RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X,
+												control2Y, _cFirstPosX, _cFirstPosY);
 
-									_cFirstPosX = 0;
-									_cFirstPosY = 0;
-									_cSecPosX = 0;
-									_cSecPosY = 0;
+										path1.addToMainPane(mainPane);
+										path2.addToMainPane(mainPane);
 
-									secondObject = "";
-									break;
+										path1.setFill(arrowColor);
+										path2.setFill(arrowColor);
+
+										setMiddleLabelText("Second point of line...");
+										headArrowList.remove(_index);
+
+										leftDoubleArrowList.add(path1);
+										rightDoubleArrowList.add(path2);
+
+										_cFirstPosX = 0;
+										_cFirstPosY = 0;
+										_cSecPosX = 0;
+										_cSecPosY = 0;
+
+										secondObject = "";
+										break;
+
+									}
+
+									else
+									{
+										HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+												mainPane);
+										headArrow.setFill(arrowColor);
+										headArrowList.add(headArrow);
+										headArrow.addToMainPane(mainPane);
+
+										setMiddleLabelText("Second point of line...");
+
+										_cFirstPosX = 0;
+										_cFirstPosY = 0;
+										_cSecPosX = 0;
+										_cSecPosY = 0;
+
+										secondObject = "";
+										break;
+									}
 								}
+
 							}
 
 							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "rectangle")
@@ -2852,10 +2887,12 @@ public class MainWindowController
 								setMiddleLabelText("Second object must be rectangle...");
 							}
 						}
+						arrowExists = false;
 					}
 
 					for (Rectangle myRectangle : rectangleList)
 					{
+						arrowExists = false;
 						if ((x > myRectangle.getX() + 20 - squareRay) && (x < myRectangle.getX() + 20 + squareRay)
 								&& (y > myRectangle.getY() + 20 - squareRay + minusWidth)
 								&& (y < myRectangle.getY() + 20 + squareRay + minusWidth))
@@ -2877,6 +2914,34 @@ public class MainWindowController
 								_cSecPosY = myRectangle.getY() + 20;
 
 								int _index = -1;
+								for(HeadArrow ha : headArrowList)
+								{
+									if(ha.getStartX() == _cFirstPosX && ha.getStartY() == _cFirstPosY && ha.getEndX() == _cSecPosX && ha.getEndY() == _cSecPosY)
+									{
+										setMiddleLabelText("That arrow exists...");
+										arrowExists = true;
+										break;
+									}
+								}
+								for(LeftDoubleArrow lda : leftDoubleArrowList)
+								{
+									if(lda.getStartX() == _cFirstPosX && lda.getStartY() == _cFirstPosY && lda.getEndX() == _cSecPosX && lda.getEndY() == _cSecPosY)
+									{
+										setMiddleLabelText("That arrow exists...");
+										arrowExists = true;
+										break;
+									}
+								}
+
+								for(RightDoubleArrow rda : rightDoubleArrowList)
+								{
+									if(rda.getStartX() == _cFirstPosX && rda.getStartY() == _cFirstPosY && rda.getEndX() == _cSecPosX && rda.getEndY() == _cSecPosY)
+									{
+										setMiddleLabelText("That arrow exists...");
+										arrowExists = true;
+										break;
+									}
+								}
 
 								for (HeadArrow ha : headArrowList)
 								{
@@ -2904,57 +2969,62 @@ public class MainWindowController
 
 									}
 								}
-								if (_index != -1)
+								if(!arrowExists)
 								{
-									LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X,
-											control1Y, _cSecPosX, _cSecPosY);
+									if (_index != -1)
+									{
+										LeftDoubleArrow path1 = new LeftDoubleArrow(_cFirstPosX, _cFirstPosY, control1X,
+												control1Y, _cSecPosX, _cSecPosY);
 
-									RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X,
-											control2Y, _cFirstPosX, _cFirstPosY);
+										RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY, control2X,
+												control2Y, _cFirstPosX, _cFirstPosY);
 
-									path1.addToMainPane(mainPane);
-									path2.addToMainPane(mainPane);
+										path1.addToMainPane(mainPane);
+										path2.addToMainPane(mainPane);
 
-									path1.setFill(arrowColor);
-									path2.setFill(arrowColor);
+										path1.setFill(arrowColor);
+										path2.setFill(arrowColor);
 
-									setMiddleLabelText("Second point of line...");
-									headArrowList.remove(_index);
+										setMiddleLabelText("Second point of line...");
+										headArrowList.remove(_index);
 
-									leftDoubleArrowList.add(path1);
-									rightDoubleArrowList.add(path2);
+										leftDoubleArrowList.add(path1);
+										rightDoubleArrowList.add(path2);
 
-									_cFirstPosX = 0;
-									_cFirstPosY = 0;
-									_cSecPosX = 0;
-									_cSecPosY = 0;
+										_cFirstPosX = 0;
+										_cFirstPosY = 0;
+										_cSecPosX = 0;
+										_cSecPosY = 0;
 
-									secondObject = "";
-									break;
+										secondObject = "";
+										break;
 
-								} else
-								{
+									} else
+									{
 
-									HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
-											mainPane);
-									headArrow.setFill(arrowColor);
-									headArrowList.add(headArrow);
-									headArrow.addToMainPane(mainPane);
-									setMiddleLabelText("Second point of line...");
+										HeadArrow headArrow = new HeadArrow(_cFirstPosX, _cFirstPosY, _cSecPosX, _cSecPosY,
+												mainPane);
+										headArrow.setFill(arrowColor);
+										headArrowList.add(headArrow);
+										headArrow.addToMainPane(mainPane);
+										setMiddleLabelText("Second point of line...");
 
-									_cFirstPosX = 0;
-									_cFirstPosY = 0;
-									_cSecPosX = 0;
-									_cSecPosY = 0;
-									secondObject = "";
-									break;
+										_cFirstPosX = 0;
+										_cFirstPosY = 0;
+										_cSecPosX = 0;
+										_cSecPosY = 0;
+										secondObject = "";
+										break;
+									}
 								}
+
 							}
 							if (_cFirstPosX != 0 && _cFirstPosY != 0 && secondObject == "circle")
 							{
 								setMiddleLabelText("Second object must be circle...");
 							}
 						}
+						arrowExists = false;
 					}
 				}
 
