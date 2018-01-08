@@ -1558,7 +1558,7 @@ public class MainWindowController
 					{
 						Circle c = fdo.getC();
 						Label l = fdo.getL();
-						LeftDoubleArrow ha = fdo.getHa();
+						LeftDoubleArrow ha = fdo.getLda();
 						double positionX = c.getCenterX() - 20;
 						double positionY = c.getCenterY() - 20;
 						int i = checkBitmapToken(positionX, positionY);
@@ -1577,7 +1577,7 @@ public class MainWindowController
 					{
 						Circle c = fdo.getC();
 						Label l = fdo.getL();
-						RightDoubleArrow ha = fdo.getHa();
+						RightDoubleArrow ha = fdo.getRda();
 						double positionX = c.getCenterX() - 20;
 						double positionY = c.getCenterY() - 20;
 						int i = checkBitmapToken(positionX, positionY);
@@ -1672,7 +1672,7 @@ public class MainWindowController
 						{
 							Circle c = fdo.getC();
 							Label l = fdo.getL();
-							LeftDoubleArrow ha = fdo.getHa();
+							LeftDoubleArrow ha = fdo.getLda();
 							double positionX = c.getCenterX() - 20;
 							double positionY = c.getCenterY() - 20;
 							int i = checkBitmapToken(positionX, positionY);
@@ -1701,7 +1701,7 @@ public class MainWindowController
 						{
 							Circle c = fdo.getC();
 							Label l = fdo.getL();
-							LeftDoubleArrow ha = fdo.getHa();
+							LeftDoubleArrow ha = fdo.getLda();
 							double positionX = c.getCenterX() - 20;
 							double positionY = c.getCenterY() - 20;
 							int i = checkBitmapToken(positionX, positionY);
@@ -1746,7 +1746,7 @@ public class MainWindowController
 						{
 							Circle c = fdo.getC();
 							Label l = fdo.getL();
-							RightDoubleArrow ha = fdo.getHa();
+							RightDoubleArrow ha = fdo.getRda();
 							double positionX = c.getCenterX() - 20;
 							double positionY = c.getCenterY() - 20;
 							int i = checkBitmapToken(positionX, positionY);
@@ -1775,7 +1775,7 @@ public class MainWindowController
 						{
 							Circle c = fdo.getC();
 							Label l = fdo.getL();
-							RightDoubleArrow ha = fdo.getHa();
+							RightDoubleArrow ha = fdo.getRda();
 							double positionX = c.getCenterX() - 20;
 							double positionY = c.getCenterY() - 20;
 							int i = checkBitmapToken(positionX, positionY);
@@ -1827,12 +1827,12 @@ public class MainWindowController
 						if (fdo_left_temp != null)
 						{
 							animationWhoCantBeExecuteLeftDoubleArrow(fdo_left_temp.getC(), fdo_left_temp.getL(),
-									fdo_left_temp.getHa(), fdo_left_temp.getR());
+									fdo_left_temp.getLda(), fdo_left_temp.getR());
 						}
 						if (fdo_right_temp != null)
 						{
 							animationWhoCantBeExecuteRightDoubleArrow(fdo_right_temp.getC(), fdo_right_temp.getL(),
-									fdo_right_temp.getHa(), fdo_right_temp.getR());
+									fdo_right_temp.getRda(), fdo_right_temp.getR());
 						}
 					}
 
