@@ -77,6 +77,17 @@
 	-fx-background-color: darkgray;
 }
 
+#infoToggleButton {
+	-fx-background-image: url('resources/info.png');
+    -fx-background-size: 40.0px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+#infoToggleButton:selected{
+	-fx-background-color: darkgray;
+}
+
 #removeTokenToggleButton {
 	-fx-background-image: url('resources/removeToken.png');
     -fx-background-size: 40.0px;

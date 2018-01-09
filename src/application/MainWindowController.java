@@ -166,6 +166,8 @@ public class MainWindowController
 	Scale scaleTransform;
 	Group zoomGroup;
 
+	private Tooltip addTagTooltipTet = new Tooltip();
+
 	static int circleRay = 30, squareRay = 40, arrowRay = 30;
 
 	double _cSecPosX = 0, _cSecPosY = 0, _cFirstPosX = 0, _cFirstPosY = 0;
@@ -338,7 +340,7 @@ public class MainWindowController
 
 	@FXML
 	private ToggleButton squareToggleButton, circleToggleButton, moveToggleButton, lineToggleButton, removeToggleButton,
-			removeTokenToggleButton, addTokenToggleButton, addTagToggleButton, removeTagToggleButton;
+			removeTokenToggleButton, addTokenToggleButton, addTagToggleButton, removeTagToggleButton, infoToggleButton;
 
 	@FXML
 	private ToggleButton startAnimationToggleButton, pauseAnimationToggleButton;
@@ -1362,6 +1364,11 @@ public class MainWindowController
 	@FXML
 	void anchorPane_OnMouseClicked(MouseEvent event)
 	{
+		if(event.getSceneY() < minusWidth)
+		{
+			addTagTooltipTet.hide();
+
+		}
 		counters.circleCounter(circleList, numberOfCirclesCreatedL);
 		counters.rectangleCounter(rectangleList, numberOfRectanglesCreatedL);
 		counters.headArrowCounter(headArrowList, numberOfArrowsCreatedL);
@@ -1381,7 +1388,106 @@ public class MainWindowController
 
 		switch (selectedToggle)
 		{
+			case "info":
+				double evtX = event.getSceneX();
+				double evtY = event.getSceneY();
+
+				if (event.getButton() == MouseButton.PRIMARY)
+				{
+
+					for (Circle c : circleList)
+					{
+						if ((evtX > c.getCenterX() - circleRay) && (evtX < c.getCenterX() + circleRay)
+								&& (evtY > c.getCenterY() - circleRay + minusWidth)
+								&& (evtY < c.getCenterY() + circleRay + minusWidth))
+						{
+							try
+							{
+								if(addTagTooltipTet.getX() != c.getCenterX() && addTagTooltipTet.getY() != c.getCenterY() && !addTagTooltipTet.isShowing())
+								{
+
+									Scene _tmpScene = c.getScene();
+									Window _tmpWin = _tmpScene.getWindow();
+									int _nOfStartHa = 0;
+									int _nOfEndHa = 0;
+									for (HeadArrow ha : headArrowList)
+									{
+										if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
+										{
+											_nOfStartHa += 1;
+										}
+
+										if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
+										{
+											_nOfEndHa += 1;
+										}
+
+									}
+
+									final String _infos = "Starting simple arrows: " + String.valueOf(_nOfStartHa)
+									+ "\nEnding simple arrows: " + String.valueOf(_nOfEndHa);
+
+
+
+									addTagTooltipTet.setText("Informations:\n" + _infos);
+									addTagTooltipTet.setStyle("-fx-background-radius: 0 0 0 0; -fx-base: #AE3522; -fx-text-fill: orange;");
+
+
+									addTagTooltipTet.setX(c.getCenterX());
+									addTagTooltipTet.setY(c.getCenterY());
+									addTagTooltipTet.show(_tmpWin);
+								}
+
+								else
+								{
+									addTagTooltipTet.hide();
+									Scene _tmpScene = c.getScene();
+									Window _tmpWin = _tmpScene.getWindow();
+									int _nOfStartHa = 0;
+									int _nOfEndHa = 0;
+									for (HeadArrow ha : headArrowList)
+									{
+										if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
+										{
+											_nOfStartHa += 1;
+										}
+
+										if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
+										{
+											_nOfEndHa += 1;
+										}
+
+									}
+
+									final String _infos = "Starting simple arrows: " + String.valueOf(_nOfStartHa)
+									+ "\nEnding simple arrows: " + String.valueOf(_nOfEndHa);
+
+
+
+									addTagTooltipTet.setText("Informations:\n" + _infos);
+									addTagTooltipTet.setStyle("-fx-background-radius: 0 0 0 0; -fx-base: #AE3522; -fx-text-fill: orange;");
+
+
+									addTagTooltipTet.setX(c.getCenterX());
+									addTagTooltipTet.setY(c.getCenterY());
+									addTagTooltipTet.show(_tmpWin);
+								}
+
+							}catch(Exception e)
+							{
+								System.out.println(e.getMessage());
+							}
+
+						}
+					}
+				} else if (event.getButton() == MouseButton.SECONDARY)
+				{
+					addTagTooltipTet.hide();
+				}
+				break;
+
 			case "play":
+				addTagTooltipTet.hide();
 				boolean canRunTransition = true;
 				FourDimensionObject fdo_temp = null;
 				FourDimensionLeftObject fdo_left_temp = null;
@@ -1853,6 +1959,7 @@ public class MainWindowController
 				break;
 
 			case "addTag":
+				addTagTooltipTet.hide();
 				String tag = "";
 				for (Circle c : circleList)
 				{
@@ -2007,6 +2114,7 @@ public class MainWindowController
 				}
 				break;
 			case "removeTag":
+				addTagTooltipTet.hide();
 				showInfos(event);
 				int _localIndex = -1;
 				int _localIndex2 = -1;
@@ -2059,6 +2167,7 @@ public class MainWindowController
 				break;
 
 			case "addToken":
+				addTagTooltipTet.hide();
 				boolean foundCircle1 = false;
 
 				for (Circle c : circleList)
@@ -2098,6 +2207,7 @@ public class MainWindowController
 				break;
 
 			case "removeToken":
+				addTagTooltipTet.hide();
 				boolean foundCircle2 = false;
 				for (Circle c : circleList)
 				{
@@ -2144,6 +2254,7 @@ public class MainWindowController
 				break;
 
 			case "remove":
+				addTagTooltipTet.hide();
 				if (event.getSceneY() > minusWidth + 10)
 				{
 					double x = event.getSceneX();
@@ -2702,6 +2813,7 @@ public class MainWindowController
 				}
 				break;
 			case "circle":
+				addTagTooltipTet.hide();
 				if (event.getSceneY() > minusWidth + 10)
 				{
 					Circle c = new Circle(event.getSceneX(), event.getSceneY() - minusWidth, 20.0f,
@@ -2717,6 +2829,7 @@ public class MainWindowController
 				break;
 
 			case "square":
+				addTagTooltipTet.hide();
 				if (event.getSceneY() > minusWidth + 10)
 				{
 					Rectangle r = new Rectangle(event.getSceneX() - 20, event.getSceneY() - minusWidth - 20, 40.0f,
@@ -2732,6 +2845,7 @@ public class MainWindowController
 				break;
 
 			case "line":
+				addTagTooltipTet.hide();
 				if (event.getButton() == MouseButton.SECONDARY)
 				{
 					_cFirstPosX = 0;
@@ -3059,6 +3173,7 @@ public class MainWindowController
 		switch (selectedToggle)
 		{
 			case "move":
+				addTagTooltipTet.hide();
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
 						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags,
@@ -3133,6 +3248,7 @@ public class MainWindowController
 		addTagToggleButton.setToggleGroup(toggleButtonsGroup);
 		removeTagToggleButton.setToggleGroup(toggleButtonsGroup);
 		startAnimationToggleButton.setToggleGroup(toggleButtonsGroup);
+		infoToggleButton.setToggleGroup(toggleButtonsGroup);
 
 		circleToggleButton.setUserData("circle");
 		squareToggleButton.setUserData("square");
@@ -3144,6 +3260,7 @@ public class MainWindowController
 		addTagToggleButton.setUserData("addTag");
 		removeTagToggleButton.setUserData("removeTag");
 		startAnimationToggleButton.setUserData("play");
+		infoToggleButton.setUserData("info");
 
 		toggleButtonsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
 		{
@@ -3175,6 +3292,8 @@ public class MainWindowController
 						setMiddleLabelText("Removing tags...");
 					else if (selectedToggle == "play")
 						setMiddleLabelText("Starting animation...");
+					else if (selectedToggle == "info")
+						setMiddleLabelText("Informations about objects...");
 				}
 
 			}
@@ -5389,29 +5508,29 @@ public class MainWindowController
 						&& (evtY < c.getCenterY() + circleRay + minusWidth))
 				{
 					int _nOfStartHa = 0;
-                	int _nOfEndHa = 0;
-                	for(HeadArrow ha : headArrowList)
-                	{
-                		if(ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
-                		{
-                			_nOfStartHa += 1;
-                		}
+					int _nOfEndHa = 0;
+					for (HeadArrow ha : headArrowList)
+					{
+						if (ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
+						{
+							_nOfStartHa += 1;
+						}
 
-                		if(ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
-                		{
-                			_nOfEndHa += 1;
-                		}
+						if (ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
+						{
+							_nOfEndHa += 1;
+						}
 
-                	}
+					}
 
-                	final String _infos = "Starting simple arrows: " + String.valueOf(_nOfStartHa ) +
-                			"\nEnding simple arrows: " + String.valueOf(_nOfEndHa);
-                	Tooltip addTagTooltip = new Tooltip();
-            		Utilities.hackTooltipStartTiming(addTagTooltip);
-            		Tooltip.install(c, addTagTooltip);
-            		addTagTooltip.setText("Informations:\n" + _infos);
-            		addTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
-            				+ "-fx-font-size: 16;");
+					final String _infos = "Starting simple arrows: " + String.valueOf(_nOfStartHa)
+							+ "\nEnding simple arrows: " + String.valueOf(_nOfEndHa);
+					Tooltip addTagTooltip = new Tooltip();
+					Utilities.hackTooltipStartTiming(addTagTooltip);
+					Tooltip.install(c, addTagTooltip);
+					addTagTooltip.setText("Informations:\n" + _infos);
+					addTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; "
+							+ "-fx-text-fill: orange;" + "-fx-font-size: 16;");
 				}
 			}
 		}

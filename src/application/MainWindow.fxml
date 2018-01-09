@@ -63,6 +63,7 @@
       <Separator fx:id="toggleButtonSeparator2" layoutX="355.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
       <Separator fx:id="toggleButtonSeparator3" layoutX="478.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
       <Separator fx:id="toggleButtonSeparator4" layoutX="545.0" layoutY="29.0" orientation="VERTICAL" prefHeight="66.0" prefWidth="2.0" />
+      <ToggleButton fx:id="infoToggleButton" layoutX="666.0" layoutY="36.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" />
 
    </children>
    <opaqueInsets>
