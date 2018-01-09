@@ -1,10 +1,13 @@
-package application;
+package application.interfaces;
 
+import application.HeadArrow;
+import application.LeftDoubleArrow;
+import application.RightDoubleArrow;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public interface FourDimension
+public interface IFourDimension
 {
 	public Circle getC();
 

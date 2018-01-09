@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Comparator;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -46,6 +48,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 public class Utilities
 {
@@ -159,13 +162,15 @@ public class Utilities
 		lin2.clear();
 	}
 
-	public void clearStartAndEndDoubleLeftArrowLists(ObservableList<LeftDoubleArrow> lin1, ObservableList<LeftDoubleArrow> lin2)
+	public void clearStartAndEndDoubleLeftArrowLists(ObservableList<LeftDoubleArrow> lin1,
+			ObservableList<LeftDoubleArrow> lin2)
 	{
 		lin1.clear();
 		lin2.clear();
 	}
 
-	public void clearStartAndEndDoubleRightArrowLists(ObservableList<RightDoubleArrow> lin1, ObservableList<RightDoubleArrow> lin2)
+	public void clearStartAndEndDoubleRightArrowLists(ObservableList<RightDoubleArrow> lin1,
+			ObservableList<RightDoubleArrow> lin2)
 	{
 		lin1.clear();
 		lin2.clear();
@@ -489,12 +494,116 @@ public class Utilities
 				bw.newLine();
 			}
 
-
-
 			bw.close();
 		} catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	private void setupCustomTooltipBehavior(int openDelayInMillis, int visibleDurationInMillis, int closeDelayInMillis)
+	{
+		try
+		{
+
+			Class TTBehaviourClass = null;
+			Class<?>[] declaredClasses = Tooltip.class.getDeclaredClasses();
+			for (Class c : declaredClasses)
+			{
+				if (c.getCanonicalName().equals("javafx.scene.control.Tooltip.TooltipBehavior"))
+				{
+					TTBehaviourClass = c;
+					break;
+				}
+			}
+			if (TTBehaviourClass == null)
+			{
+				// abort
+				return;
+			}
+			Constructor constructor = TTBehaviourClass.getDeclaredConstructor(Duration.class, Duration.class,
+					Duration.class, boolean.class);
+			if (constructor == null)
+			{
+				// abort
+				return;
+			}
+			constructor.setAccessible(true);
+			Object newTTBehaviour = constructor.newInstance(new Duration(openDelayInMillis),
+					new Duration(visibleDurationInMillis), new Duration(closeDelayInMillis), false);
+			if (newTTBehaviour == null)
+			{
+				// abort
+				return;
+			}
+			Field ttbehaviourField = Tooltip.class.getDeclaredField("BEHAVIOR");
+			if (ttbehaviourField == null)
+			{
+				// abort
+				return;
+			}
+			ttbehaviourField.setAccessible(true);
+
+			// Cache the default behavior if needed.
+			Object defaultTTBehavior = ttbehaviourField.get(Tooltip.class);
+			ttbehaviourField.set(Tooltip.class, newTTBehaviour);
+
+		} catch (Exception e)
+		{
+			System.out.println("Aborted setup due to error:" + e.getMessage());
+		}
+	}
+
+	public void tempMethodOfAnim(ObservableList<HeadArrow> headArrowList, ObservableList<Circle> circleList, MouseEvent event, int circleRay, int minusWidth)
+	{
+		double evtX = event.getSceneX();
+		double evtY = event.getSceneY();
+
+		for(Circle c : circleList)
+		{
+			if ((evtX > c.getCenterX() - circleRay) && (evtX < c.getCenterX() + circleRay)
+					&& (evtY > c.getCenterY() - circleRay + minusWidth)
+					&& (evtY < c.getCenterY() + circleRay + minusWidth))
+			{
+				long startTime = System.currentTimeMillis();
+				new AnimationTimer() {
+		            @Override
+		            public void handle(long now) {
+		                long elapsedMillis = System.currentTimeMillis() - startTime ;
+		                if(elapsedMillis > 1000)
+		                {
+		                	int _nOfStartHa = 0;
+		                	int _nOfEndHa = 0;
+		                	for(HeadArrow ha : headArrowList)
+		                	{
+		                		if(ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
+		                		{
+		                			_nOfStartHa += 1;
+		                		}
+
+		                		if(ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
+		                		{
+		                			_nOfEndHa += 1;
+		                		}
+
+		                	}
+
+		                	final String _infos = "Starting simple arrows: " + String.valueOf(_nOfStartHa ) +
+		                			"\nEnding simple arrows: " + String.valueOf(_nOfEndHa);
+		                	Tooltip addTagTooltip = new Tooltip();
+		            		Utilities.hackTooltipStartTiming(addTagTooltip);
+		            		Tooltip.install(c, addTagTooltip);
+		            		addTagTooltip.setText("Informations:\n" + _infos);
+		            		addTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+		            				+ "-fx-font-size: 16;");
+		                	stop();
+		                }
+		            }
+		        }.start();
+
+
+
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -119,6 +120,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import javafx.*;
+import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -2005,6 +2007,7 @@ public class MainWindowController
 				}
 				break;
 			case "removeTag":
+				showInfos(event);
 				int _localIndex = -1;
 				int _localIndex2 = -1;
 				Label _tLab = null;
@@ -5349,6 +5352,9 @@ public class MainWindowController
 		}
 	};
 
+	/*
+	 * When we want to abort creating line after first click this gonna work
+	 */
 	EventHandler<MouseEvent> rightClickRemoveArrow = new EventHandler<MouseEvent>()
 	{
 
@@ -5369,5 +5375,46 @@ public class MainWindowController
 
 		}
 	};
+
+	private void showInfos(MouseEvent event)
+	{
+		if (event.getButton() == MouseButton.SECONDARY)
+		{
+			double evtX = event.getSceneX();
+			double evtY = event.getSceneY();
+			for (Circle c : circleList)
+			{
+				if ((evtX > c.getCenterX() - circleRay) && (evtX < c.getCenterX() + circleRay)
+						&& (evtY > c.getCenterY() - circleRay + minusWidth)
+						&& (evtY < c.getCenterY() + circleRay + minusWidth))
+				{
+					int _nOfStartHa = 0;
+                	int _nOfEndHa = 0;
+                	for(HeadArrow ha : headArrowList)
+                	{
+                		if(ha.getStartX() == c.getCenterX() && ha.getStartY() == c.getCenterY())
+                		{
+                			_nOfStartHa += 1;
+                		}
+
+                		if(ha.getEndX() == c.getCenterX() && ha.getEndY() == c.getCenterY())
+                		{
+                			_nOfEndHa += 1;
+                		}
+
+                	}
+
+                	final String _infos = "Starting simple arrows: " + String.valueOf(_nOfStartHa ) +
+                			"\nEnding simple arrows: " + String.valueOf(_nOfEndHa);
+                	Tooltip addTagTooltip = new Tooltip();
+            		Utilities.hackTooltipStartTiming(addTagTooltip);
+            		Tooltip.install(c, addTagTooltip);
+            		addTagTooltip.setText("Informations:\n" + _infos);
+            		addTagTooltip.setStyle("-fx-font: normal bold 4 Langdon; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"
+            				+ "-fx-font-size: 16;");
+				}
+			}
+		}
+	}
 
 }

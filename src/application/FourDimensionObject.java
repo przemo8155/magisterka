@@ -1,11 +1,12 @@
 
 package application;
 
+import application.interfaces.IFourDimension;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class FourDimensionObject implements FourDimension
+public class FourDimensionObject implements IFourDimension
 {
 
 	public Circle c;
