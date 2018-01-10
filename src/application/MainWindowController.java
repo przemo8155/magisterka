@@ -3256,7 +3256,7 @@ public class MainWindowController
 
                 double relativeX = -evtX + centerX;
                 double relativeY = -evtY + centerY;
-                
+
 
                 event.consume();
 
@@ -4470,6 +4470,14 @@ public class MainWindowController
 		mainPane.setMaxHeight(primaryScreenBounds.getHeight());
 		mainPane.setMinWidth(primaryScreenBounds.getWidth());
 		mainPane.setMinHeight(primaryScreenBounds.getHeight());
+
+		/*final int PANE_WIDTH = 9999;
+		final int PANE_HEIGHT = 9999;
+		mainPane.setMaxWidth(PANE_WIDTH);
+		mainPane.setMaxHeight(PANE_HEIGHT);
+		mainPane.setMinWidth(PANE_WIDTH);
+		mainPane.setMinHeight(PANE_HEIGHT);*/
+
 	}
 
 	void animationMinusHeadArrow(Circle c, Label l, HeadArrow ha, Rectangle r, int valueCirc, int valueLab)
