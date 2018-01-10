@@ -160,6 +160,11 @@ public class MainWindowController
 	int circleId = 0;
 	String secondObject = "";
 
+	double relativePaneX = 0;
+	double relativePaneY = 0;
+	double relativePaneX2 = 0;
+	double relativePaneY2 = 0;
+
 	final String cannotExecuteTransition = "Cannot execute transition...";
 
 	int mouseBothClicked = 0, mouseRightClicked = 0, mouseLeftClicked = 0;
@@ -1390,6 +1395,8 @@ public class MainWindowController
 
 		switch (selectedToggle)
 		{
+
+
 			case "info":
 				double evtX = event.getSceneX();
 				double evtY = event.getSceneY();
@@ -3214,9 +3221,18 @@ public class MainWindowController
 
 				}
 
+
+				if(event.getSource() == mainPane)
+				{
+					mainPane.setLayoutX(-event.getSceneX());
+					mainPane.setLayoutY(-event.getSceneY() + minusWidth);
+				}
+
 				break;
 		}
 	}
+
+
 
 
 
@@ -3240,22 +3256,37 @@ public class MainWindowController
 				double zoomFactor = 1.02;
                 double deltaY = event.getDeltaY();
 
-                Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-                double evtX = event.getSceneX();
-                double evtY = event.getSceneY();
-
-                double centerX = primaryScreenBounds.getWidth() / 2;
-                double centerY = primaryScreenBounds.getHeight() /2;
-
                 if (deltaY < 0){
                     zoomFactor = 0.98;
                 }
                 mainPane.setScaleX(mainPane.getScaleX() * zoomFactor);
                 mainPane.setScaleY(mainPane.getScaleY() * zoomFactor);
+                Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
-                double relativeX = -evtX + centerX;
-                double relativeY = -evtY + centerY;
+                double evtX = event.getSceneX();
+                double evtY = event.getSceneY();
+
+                double cenX = primaryScreenBounds.getWidth() / 2;
+                double cenY = primaryScreenBounds.getHeight() / 2;
+
+                double newX = 0;
+                double newY = 0;
+                if(zoomFactor > 1)
+                {
+                	newX = (evtX*(1.1f - 1f) + 1.1f*mainPane.getLayoutX());
+                    newY = (evtY*(1.1f - 1f) + 1.1f*mainPane.getLayoutY());
+                }
+                else
+                {
+                	newX = (evtX*(0.9f - 1f) + 0.9f*mainPane.getLayoutX());
+                    newY = (evtY*(0.9f - 1f) + 0.9f*mainPane.getLayoutY());
+                }
+
+                mainPane.setLayoutX(newX);
+                mainPane.setLayoutX(newY);
+
+                System.out.println(newX);
+
 
 
                 event.consume();
