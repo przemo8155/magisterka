@@ -60,6 +60,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
@@ -100,6 +101,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -3216,6 +3218,8 @@ public class MainWindowController
 		}
 	}
 
+
+
 	public void initialize()
 	{
 		mainWindowControllerReadSetting();
@@ -3224,6 +3228,41 @@ public class MainWindowController
 		setBackgroundColor();
 		setTooltips();
 		initializeStats();
+
+
+
+		mainPane.setOnScroll(new EventHandler<ScrollEvent>()
+		{
+
+			@Override
+			public void handle(ScrollEvent event)
+			{
+				double zoomFactor = 1.02;
+                double deltaY = event.getDeltaY();
+
+                Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
+                double evtX = event.getSceneX();
+                double evtY = event.getSceneY();
+
+                double centerX = primaryScreenBounds.getWidth() / 2;
+                double centerY = primaryScreenBounds.getHeight() /2;
+
+                if (deltaY < 0){
+                    zoomFactor = 0.98;
+                }
+                mainPane.setScaleX(mainPane.getScaleX() * zoomFactor);
+                mainPane.setScaleY(mainPane.getScaleY() * zoomFactor);
+
+                double relativeX = -evtX + centerX;
+                double relativeY = -evtY + centerY;
+                
+
+                event.consume();
+
+			}
+
+		});
 
 		middleLabel.setDisable(true);
 
