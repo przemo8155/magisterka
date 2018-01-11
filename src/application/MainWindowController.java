@@ -5,6 +5,7 @@ package application;
 
 import java.awt.Color;
 import java.awt.List;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,6 +30,8 @@ import java.util.concurrent.TimeUnit;
 import javax.lang.model.element.Element;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.xml.stream.EventFilter;
+import javax.xml.stream.events.XMLEvent;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
@@ -162,8 +165,7 @@ public class MainWindowController
 
 	double relativePaneX = 0;
 	double relativePaneY = 0;
-	double relativePaneX2 = 0;
-	double relativePaneY2 = 0;
+
 
 	final String cannotExecuteTransition = "Cannot execute transition...";
 
@@ -3222,11 +3224,7 @@ public class MainWindowController
 				}
 
 
-				if(event.getSource() == mainPane)
-				{
-					mainPane.setLayoutX(-event.getSceneX());
-					mainPane.setLayoutY(-event.getSceneY() + minusWidth);
-				}
+
 
 				break;
 		}
@@ -3244,6 +3242,14 @@ public class MainWindowController
 		setBackgroundColor();
 		setTooltips();
 		initializeStats();
+
+		KeyCombination ctrlP = KeyCodeCombination.keyCombination("Ctrl+P");
+
+		KeyCode kc = KeyCode.A;
+
+		mainPane.setOnKeyPressed(event -> {
+
+		});
 
 
 
