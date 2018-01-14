@@ -58,6 +58,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
@@ -3239,17 +3240,33 @@ public class MainWindowController
 		mainWindowControllerReadSetting();
 		setPaneResolution();
 
+		mainPane.setFocusTraversable(true);
 		setBackgroundColor();
 		setTooltips();
 		initializeStats();
 
-		KeyCombination ctrlP = KeyCodeCombination.keyCombination("Ctrl+P");
 
-		KeyCode kc = KeyCode.A;
 
 		mainPane.setOnKeyPressed(event -> {
+			if(event.getCode() == KeyCode.A){
+				mainPane.setLayoutX(mainPane.getLayoutX() - 10);
+			}
 
+			if(event.getCode() == KeyCode.D){
+				mainPane.setLayoutX(mainPane.getLayoutX() + 10);
+			}
+
+			if(event.getCode() == KeyCode.W){
+				mainPane.setLayoutY(mainPane.getLayoutY() - 10);
+			}
+
+			if(event.getCode() == KeyCode.S){
+				mainPane.setLayoutY(mainPane.getLayoutY() + 10);
+			}
 		});
+
+
+
 
 
 
