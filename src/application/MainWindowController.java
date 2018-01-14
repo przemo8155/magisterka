@@ -156,6 +156,9 @@ public class MainWindowController
 
 	public static Stage aptStage;
 
+	final int PANE_WIDTH = 9999;
+	final int PANE_HEIGHT = 9999;
+
 	static double moveArrowWithoutHead = 5.0f;
 
 	static int doubleArrowMove = 100;
@@ -1401,6 +1404,7 @@ public class MainWindowController
 
 
 			case "info":
+				movingMainPane();
 				double evtX = event.getSceneX();
 				double evtY = event.getSceneY();
 
@@ -3185,6 +3189,7 @@ public class MainWindowController
 		{
 			case "move":
 				hideInformationTooltip();
+				movingMainPane();
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
 						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags,
@@ -3245,25 +3250,9 @@ public class MainWindowController
 		setTooltips();
 		initializeStats();
 
+		movingMainPane();
 
 
-		mainPane.setOnKeyPressed(event -> {
-			if(event.getCode() == KeyCode.A){
-				mainPane.setLayoutX(mainPane.getLayoutX() - 10);
-			}
-
-			if(event.getCode() == KeyCode.D){
-				mainPane.setLayoutX(mainPane.getLayoutX() + 10);
-			}
-
-			if(event.getCode() == KeyCode.W){
-				mainPane.setLayoutY(mainPane.getLayoutY() - 10);
-			}
-
-			if(event.getCode() == KeyCode.S){
-				mainPane.setLayoutY(mainPane.getLayoutY() + 10);
-			}
-		});
 
 
 
@@ -3284,31 +3273,6 @@ public class MainWindowController
                 }
                 mainPane.setScaleX(mainPane.getScaleX() * zoomFactor);
                 mainPane.setScaleY(mainPane.getScaleY() * zoomFactor);
-                Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-
-                double evtX = event.getSceneX();
-                double evtY = event.getSceneY();
-
-                double cenX = primaryScreenBounds.getWidth() / 2;
-                double cenY = primaryScreenBounds.getHeight() / 2;
-
-                double newX = 0;
-                double newY = 0;
-                if(zoomFactor > 1)
-                {
-                	newX = (evtX*(1.1f - 1f) + 1.1f*mainPane.getLayoutX());
-                    newY = (evtY*(1.1f - 1f) + 1.1f*mainPane.getLayoutY());
-                }
-                else
-                {
-                	newX = (evtX*(0.9f - 1f) + 0.9f*mainPane.getLayoutX());
-                    newY = (evtY*(0.9f - 1f) + 0.9f*mainPane.getLayoutY());
-                }
-
-                mainPane.setLayoutX(newX);
-                mainPane.setLayoutX(newY);
-
-                System.out.println(newX);
 
 
 
@@ -4519,18 +4483,16 @@ public class MainWindowController
 
 	void setPaneResolution()
 	{
-		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		/*Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		mainPane.setMaxWidth(primaryScreenBounds.getWidth());
 		mainPane.setMaxHeight(primaryScreenBounds.getHeight());
 		mainPane.setMinWidth(primaryScreenBounds.getWidth());
 		mainPane.setMinHeight(primaryScreenBounds.getHeight());
-
-		/*final int PANE_WIDTH = 9999;
-		final int PANE_HEIGHT = 9999;
+*/
 		mainPane.setMaxWidth(PANE_WIDTH);
 		mainPane.setMaxHeight(PANE_HEIGHT);
 		mainPane.setMinWidth(PANE_WIDTH);
-		mainPane.setMinHeight(PANE_HEIGHT);*/
+		mainPane.setMinHeight(PANE_HEIGHT);
 
 	}
 
@@ -5710,6 +5672,46 @@ public class MainWindowController
 	void startAnimationButton_OnMouseClicked(MouseEvent event)
 	{
 		hideInformationTooltip();
+	}
+
+	void movingMainPane()
+	{
+		mainPane.setFocusTraversable(true);
+		mainPane.requestFocus();
+
+		Rectangle2D screen = Screen.getPrimary().getVisualBounds();
+		double screenX = screen.getWidth();
+		double screenY = screen.getHeight();
+
+		mainPane.setOnKeyPressed(event -> {
+			if(event.getCode() == KeyCode.A){
+				if(PANE_WIDTH - screenX > mainPane.getLayoutX())
+				{
+					mainPane.setLayoutX(mainPane.getLayoutX() - 10);
+				}
+			}
+
+			if(event.getCode() == KeyCode.D){
+				if(mainPane.getLayoutX() < 0)
+				{
+					mainPane.setLayoutX(mainPane.getLayoutX() + 10);
+				}
+			}
+
+			if(event.getCode() == KeyCode.W){
+				if(mainPane.getLayoutY() > minusWidth)
+				{
+					mainPane.setLayoutY(mainPane.getLayoutY() - 10);
+				}
+			}
+
+			if(event.getCode() == KeyCode.S){
+				if(PANE_HEIGHT - screenY - minusWidth > mainPane.getLayoutY())
+				{
+					mainPane.setLayoutY(mainPane.getLayoutY() + 10);
+				}
+			}
+		});
 	}
 
 }
