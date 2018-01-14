@@ -146,6 +146,7 @@ public class MainWindowController
 	double orgTranslateX, orgTranslateY;
 	static int minusWidth = 95;
 	protected int startingFaze = 0;
+	final double SCALE_DELTA = 1.1;
 
 	public static String optPath = "";
 	public static String checkFileRecognition = "";
@@ -3189,7 +3190,6 @@ public class MainWindowController
 		{
 			case "move":
 				hideInformationTooltip();
-				movingMainPane();
 				int _it = 0;
 				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
 						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags,
@@ -3245,42 +3245,12 @@ public class MainWindowController
 		mainWindowControllerReadSetting();
 		setPaneResolution();
 
-		mainPane.setFocusTraversable(true);
 		setBackgroundColor();
 		setTooltips();
 		initializeStats();
 
-		movingMainPane();
 
 
-
-
-
-
-
-
-		mainPane.setOnScroll(new EventHandler<ScrollEvent>()
-		{
-
-			@Override
-			public void handle(ScrollEvent event)
-			{
-				double zoomFactor = 1.02;
-                double deltaY = event.getDeltaY();
-
-                if (deltaY < 0){
-                    zoomFactor = 0.98;
-                }
-                mainPane.setScaleX(mainPane.getScaleX() * zoomFactor);
-                mainPane.setScaleY(mainPane.getScaleY() * zoomFactor);
-
-
-
-                event.consume();
-
-			}
-
-		});
 
 		middleLabel.setDisable(true);
 
@@ -4483,16 +4453,16 @@ public class MainWindowController
 
 	void setPaneResolution()
 	{
-		/*Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		mainPane.setMaxWidth(primaryScreenBounds.getWidth());
 		mainPane.setMaxHeight(primaryScreenBounds.getHeight());
 		mainPane.setMinWidth(primaryScreenBounds.getWidth());
 		mainPane.setMinHeight(primaryScreenBounds.getHeight());
-*/
+/*
 		mainPane.setMaxWidth(PANE_WIDTH);
 		mainPane.setMaxHeight(PANE_HEIGHT);
 		mainPane.setMinWidth(PANE_WIDTH);
-		mainPane.setMinHeight(PANE_HEIGHT);
+		mainPane.setMinHeight(PANE_HEIGHT);*/
 
 	}
 
@@ -5672,6 +5642,37 @@ public class MainWindowController
 	void startAnimationButton_OnMouseClicked(MouseEvent event)
 	{
 		hideInformationTooltip();
+	}
+
+	void zoomingMainPane()
+	{
+
+
+
+		mainPane.setOnScroll(new EventHandler<ScrollEvent>()
+		{
+
+			@Override
+			public void handle(ScrollEvent event)
+			{
+				 event.consume();
+
+				    if (event.getDeltaY() == 0) {
+				      return;
+				    }
+
+				    double scaleFactor =
+				      (event.getDeltaY() > 0)
+				        ? SCALE_DELTA
+				        : 1/SCALE_DELTA;
+
+				    mainPane.setScaleX(mainPane.getScaleX() * scaleFactor);
+				    mainPane.setScaleY(mainPane.getScaleY() * scaleFactor);
+
+
+			}
+
+		});
 	}
 
 	void movingMainPane()
