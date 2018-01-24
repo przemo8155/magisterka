@@ -372,6 +372,53 @@ public class Utilities
 		alert.showAndWait();
 	}
 
+	public Pair<Double, Double> returnRectangleTagPosition(Rectangle c, ObservableList<HeadArrow> haList)
+	{
+		double cPosX = c.getX() + 20;
+		double cPosY = c.getY() + 20;
+		ObservableList<Double> angles = FXCollections.observableArrayList();
+		for (HeadArrow ha : haList)
+		{
+			if (Math.abs(ha.getStartX() - cPosX) > 30 && Math.abs(ha.getStartY() - cPosY) > 30)
+			{
+				double angle = ha.returnAngle(cPosX, cPosY, ha.getEndX(), ha.getEndY());
+				angles.add(angle);
+			} else
+			{
+				double angle = ha.returnAngle(cPosX, cPosY, ha.getStartX(), ha.getStartY());
+				angles.add(angle);
+
+			}
+		}
+
+		final int _ray = 30;
+		SortedList<Double> sortedAngles = new SortedList<Double>(angles);
+		double max = 0;
+		double a1 = 0, a2 = 0;
+		if (sortedAngles.size() > 1)
+		{
+			for (Double d : sortedAngles)
+			{
+				double second = sortedAngles.get(sortedAngles.indexOf(d));
+				double tempMax = Math.abs(d - second);
+				if (tempMax > max)
+				{
+					max = tempMax;
+					a1 = d;
+					a2 = second;
+				}
+			}
+		}
+
+		final double myFinalAngle = (a1 + a2) / 2;
+		HeadArrow headArrow = new HeadArrow();
+		double e1 = headArrow.calculateX(myFinalAngle);
+		double e2 = headArrow.calculateY(myFinalAngle);
+		Pair<Double, Double> last = new Pair<Double, Double>(e1, e2);
+		return last;
+
+	}
+
 	public Pair<Double, Double> returnCircleTagPosition(Circle c, ObservableList<HeadArrow> haList)
 	{
 		double cPosX = c.getCenterX();
@@ -399,7 +446,7 @@ public class Utilities
 		{
 			for (Double d : sortedAngles)
 			{
-				double second = sortedAngles.get(sortedAngles.indexOf(d) + 1);
+				double second = sortedAngles.get(sortedAngles.indexOf(d));
 				double tempMax = Math.abs(d - second);
 				if (tempMax > max)
 				{

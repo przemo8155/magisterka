@@ -314,6 +314,10 @@ public class MainWindowController
 
 	ObservableList<Circle> moveCircleList = FXCollections.observableArrayList();
 
+
+	Map<Label, Circle> circleTags = new LinkedHashMap<Label, Circle>();
+	Map<Label, Rectangle> rectangleTags = new LinkedHashMap<Label, Rectangle>();
+
 	@FXML
 	private TitledPane titledPaneStats;
 
@@ -834,6 +838,18 @@ public class MainWindowController
 				ImageView selectedImageView = null;
 				Label selectedLabel = null;
 
+				Label circleTagLabel = null;
+
+				for(Map.Entry<Label, Circle> entry : circleTags.entrySet())
+				{
+					if(entry.getValue().equals(c))
+					{
+						circleTagLabel = entry.getKey();
+						break;
+					}
+
+				}
+
 				for (ImageView iv : existingImageViews)
 				{
 					if (iv.getLayoutX() == c.getCenterX() - 20 && iv.getLayoutY() == c.getCenterY() - 20)
@@ -1105,6 +1121,16 @@ public class MainWindowController
 					selectedLabel.setLayoutY(c.getCenterY() - 15);
 				}
 
+				if(circleTagLabel != null)
+				{
+					Pair<Double,Double> pair = utilities.returnCircleTagPosition(c, headArrowList);
+					circleTagLabel.setLayoutX(c.getCenterX() + pair.getKey());
+					circleTagLabel.setLayoutY(c.getCenterY() + pair.getValue());
+				}
+
+
+
+
 			} catch (Exception e)
 			{
 				e.printStackTrace();
@@ -1136,6 +1162,17 @@ public class MainWindowController
 			{
 				Rectangle r = ((Rectangle) t.getSource());
 				int index = rectangleList.indexOf(r);
+
+				Label rectangleTagLabel = null;
+
+				for(Map.Entry<Label, Rectangle> entry : rectangleTags.entrySet())
+				{
+					if(entry.getValue().equals(r))
+					{
+						rectangleTagLabel = entry.getKey();
+						break;
+					}
+				}
 
 				for (HeadArrow ha : headArrowList)
 				{
@@ -1371,6 +1408,13 @@ public class MainWindowController
 				for (HeadArrow ha : headArrowList)
 				{
 					ha.setFill(arrowColor);
+				}
+
+				if(rectangleTagLabel != null)
+				{
+					Pair<Double,Double> pair = utilities.returnRectangleTagPosition(r, headArrowList);
+					rectangleTagLabel.setLayoutX(r.getX() + 20 + pair.getKey());
+					rectangleTagLabel.setLayoutY(r.getY() + 20 + pair.getValue());
 				}
 			} catch (Exception e)
 			{
@@ -1998,6 +2042,7 @@ public class MainWindowController
 							l.setTextFill(Paint.valueOf(tagsColor));
 							mainPane.getChildren().add(l);
 							tags.add(l);
+							circleTags.put(l, c);
 						}
 					}
 				}
@@ -2012,7 +2057,17 @@ public class MainWindowController
 						tag = utilities.tagDialog();
 						if (utilities.checkNameTagOfCircleOrRectangle(tag) && !tag.equals(""))
 						{
-							Utilities.infoBox("rect");
+							Pair<Double, Double> pair = utilities.returnRectangleTagPosition(myRectangle, headArrowList);
+							Label l = new Label();
+							l.setText(tag);
+							l.setLayoutX(myRectangle.getX() + 20 + pair.getKey());
+							l.setLayoutY(myRectangle.getY() + 20 + pair.getValue());
+							l.setFont(new Font("Arial", 16));
+							l.setId("fancytext");
+							l.setTextFill(Paint.valueOf(tagsColor));
+							mainPane.getChildren().add(l);
+							tags.add(l);
+							rectangleTags.put(l, myRectangle);
 						}
 					}
 				}
