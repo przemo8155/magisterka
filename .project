@@ -22,6 +22,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>instruction.pdf</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/instruction.pdf</location>
+		</link>
+		<link>
 			<name>mysql-connector-java-5.1.44-bin.jar</name>
 			<type>1</type>
 			<location>C:/Users/przem/Downloads/mysql-connector-java-5.1.44/mysql-connector-java-5.1.44/mysql-connector-java-5.1.44-bin.jar</location>

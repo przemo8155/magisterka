@@ -4,6 +4,7 @@ package application;
 //tix
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.List;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -47,6 +48,7 @@ import com.sun.javafx.robot.impl.FXRobotHelper;
 import com.sun.javafx.stage.StageHelper;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -170,7 +172,6 @@ public class MainWindowController
 
 	double relativePaneX = 0;
 	double relativePaneY = 0;
-
 
 	final String cannotExecuteTransition = "Cannot execute transition...";
 
@@ -339,6 +340,9 @@ public class MainWindowController
 
 	@FXML
 	private MenuItem aboutMenuItem;
+
+	@FXML
+	private MenuItem instructionMenuItem;
 
 	@FXML
 	private MenuItem openAPTFileMenuItem;
@@ -1403,7 +1407,6 @@ public class MainWindowController
 		switch (selectedToggle)
 		{
 
-
 			case "info":
 				movingMainPane();
 				double evtX = event.getSceneX();
@@ -2022,6 +2025,7 @@ public class MainWindowController
 							&& lda.getControlY() < event.getSceneY() + arrowRay - minusWidth
 							&& lda.getControlY() > event.getSceneY() - arrowRay - minusWidth)
 					{
+
 						tag = utilities.tagDialog();
 						if (utilities.checkNameTag(tag) && !tag.equals(""))
 						{
@@ -2033,18 +2037,36 @@ public class MainWindowController
 									lda.getEndX(), lda.getEndY());
 							double mvX = pair2.getKey();
 							double mvY = pair2.getValue();
-							Label l = new Label();
-							l.setText(tag);
-							l.setLayoutX(midX + mvX);
-							l.setLayoutY(midY + mvY);
-							l.setFont(new Font("Arial", 16));
-							l.setId("fancytext");
-							l.setTextFill(Paint.valueOf(tagsColor));
-							mainPane.getChildren().add(l);
-							tags.add(l);
-							leftDoubleArrowTags.put(l, lda);
 
-							break;
+
+							boolean entryLabel = true;
+
+							for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
+							{
+								if (entry.getValue().equals(lda))
+								{
+									entryLabel = false;
+									utilities.modernInfoMessage("Tag in this place exists!");
+									break;
+								}
+							}
+
+							if(entryLabel)
+							{
+								Label l = new Label();
+								l.setText(tag);
+								l.setLayoutX(midX + mvX);
+								l.setLayoutY(midY + mvY);
+								l.setFont(new Font("Arial", 16));
+								l.setId("fancytext");
+								l.setTextFill(Paint.valueOf(tagsColor));
+								mainPane.getChildren().add(l);
+								tags.add(l);
+								leftDoubleArrowTags.put(l, lda);
+
+								break;
+							}
+
 						} else
 						{
 							break;
@@ -2071,17 +2093,33 @@ public class MainWindowController
 									lda.getEndX(), lda.getEndY());
 							double mvX = pair2.getKey();
 							double mvY = pair2.getValue();
-							Label l = new Label();
-							l.setText(tag);
-							l.setLayoutX(midX - mvX);
-							l.setLayoutY(midY - mvY);
-							l.setFont(new Font("Arial", 16));
-							l.setId("fancytext");
-							l.setTextFill(Paint.valueOf(tagsColor));
-							mainPane.getChildren().add(l);
-							tags.add(l);
-							rightDoubleArrowTags.put(l, lda);
-							break;
+
+							boolean entryLabel = true;
+
+							for (Map.Entry<Label, RightDoubleArrow> entry : rightDoubleArrowTags.entrySet())
+							{
+								if (entry.getValue().equals(lda))
+								{
+									entryLabel = false;
+									utilities.modernInfoMessage("Tag in this place exists!");
+									break;
+								}
+							}
+
+							if(entryLabel)
+							{
+								Label l = new Label();
+								l.setText(tag);
+								l.setLayoutX(midX - mvX);
+								l.setLayoutY(midY - mvY);
+								l.setFont(new Font("Arial", 16));
+								l.setId("fancytext");
+								l.setTextFill(Paint.valueOf(tagsColor));
+								mainPane.getChildren().add(l);
+								tags.add(l);
+								rightDoubleArrowTags.put(l, lda);
+								break;
+							}
 						} else
 						{
 							break;
@@ -2109,17 +2147,33 @@ public class MainWindowController
 									ha.getEndX(), ha.getEndY());
 							double mvX = pair2.getKey() / 5;
 							double mvY = pair2.getValue() / 5;
-							Label l = new Label();
-							l.setText(tag);
-							l.setLayoutX(midX + mvX);
-							l.setLayoutY(midY + mvY);
-							l.setFont(new Font("Arial", 16));
-							l.setId("fancytext");
-							l.setTextFill(Paint.valueOf(tagsColor));
-							mainPane.getChildren().add(l);
-							tags.add(l);
-							headArrowTags.put(l, ha);
-							break;
+
+							boolean entryLabel = true;
+
+							for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+							{
+								if (entry.getValue().equals(ha))
+								{
+									entryLabel = false;
+									utilities.modernInfoMessage("Tag in this place exists!");
+									break;
+								}
+							}
+
+							if(entryLabel)
+							{
+								Label l = new Label();
+								l.setText(tag);
+								l.setLayoutX(midX + mvX);
+								l.setLayoutY(midY + mvY);
+								l.setFont(new Font("Arial", 16));
+								l.setId("fancytext");
+								l.setTextFill(Paint.valueOf(tagsColor));
+								mainPane.getChildren().add(l);
+								tags.add(l);
+								headArrowTags.put(l, ha);
+								break;
+							}
 						} else
 						{
 							break;
@@ -3229,16 +3283,9 @@ public class MainWindowController
 
 				}
 
-
-
-
 				break;
 		}
 	}
-
-
-
-
 
 	public void initialize()
 	{
@@ -3248,9 +3295,6 @@ public class MainWindowController
 		setBackgroundColor();
 		setTooltips();
 		initializeStats();
-
-
-
 
 		middleLabel.setDisable(true);
 
@@ -3591,12 +3635,9 @@ public class MainWindowController
 		{
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("About Box");
-			alert.setHeaderText("Using Chernikova's Algorithm");
-			alert.setContentText("You have actions to execute:\n" + "1. Create circle\n" + "You can create a circle\n\n"
-					+ "2. Create rectangle\n" + "You can create a rectangle\n\n" + "3. Create line\n"
-					+ "You can create a line\n\n" + "4. Move\n" + "You can move a created object\n\n"
-					+ "5. Delete object\n" + "You can delete a created object\n\n" + "6. Clear all\n"
-					+ "You can clear all lists and all visible objects\n");
+			alert.setHeaderText("Graphics Petri Nets and APT GUI");
+			alert.setContentText("Created by Przemyslaw Budzich\nHomepage: https://github.com/przemo8155/magisterka\n"
+					+ "If u have any suggestion, write ;)");
 
 			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 			stage.getIcons().add(new Image(this.getClass().getResource("resources/yellowbulb.jpg").toString()));
@@ -4458,11 +4499,10 @@ public class MainWindowController
 		mainPane.setMaxHeight(primaryScreenBounds.getHeight());
 		mainPane.setMinWidth(primaryScreenBounds.getWidth());
 		mainPane.setMinHeight(primaryScreenBounds.getHeight());
-/*
-		mainPane.setMaxWidth(PANE_WIDTH);
-		mainPane.setMaxHeight(PANE_HEIGHT);
-		mainPane.setMinWidth(PANE_WIDTH);
-		mainPane.setMinHeight(PANE_HEIGHT);*/
+		/*
+		 * mainPane.setMaxWidth(PANE_WIDTH); mainPane.setMaxHeight(PANE_HEIGHT);
+		 * mainPane.setMinWidth(PANE_WIDTH); mainPane.setMinHeight(PANE_HEIGHT);
+		 */
 
 	}
 
@@ -5647,28 +5687,23 @@ public class MainWindowController
 	void zoomingMainPane()
 	{
 
-
-
 		mainPane.setOnScroll(new EventHandler<ScrollEvent>()
 		{
 
 			@Override
 			public void handle(ScrollEvent event)
 			{
-				 event.consume();
+				event.consume();
 
-				    if (event.getDeltaY() == 0) {
-				      return;
-				    }
+				if (event.getDeltaY() == 0)
+				{
+					return;
+				}
 
-				    double scaleFactor =
-				      (event.getDeltaY() > 0)
-				        ? SCALE_DELTA
-				        : 1/SCALE_DELTA;
+				double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA : 1 / SCALE_DELTA;
 
-				    mainPane.setScaleX(mainPane.getScaleX() * scaleFactor);
-				    mainPane.setScaleY(mainPane.getScaleY() * scaleFactor);
-
+				mainPane.setScaleX(mainPane.getScaleX() * scaleFactor);
+				mainPane.setScaleY(mainPane.getScaleY() * scaleFactor);
 
 			}
 
@@ -5684,35 +5719,53 @@ public class MainWindowController
 		double screenX = screen.getWidth();
 		double screenY = screen.getHeight();
 
-		mainPane.setOnKeyPressed(event -> {
-			if(event.getCode() == KeyCode.A){
-				if(PANE_WIDTH - screenX > mainPane.getLayoutX())
+		mainPane.setOnKeyPressed(event ->
+		{
+			if (event.getCode() == KeyCode.A)
+			{
+				if (PANE_WIDTH - screenX > mainPane.getLayoutX())
 				{
 					mainPane.setLayoutX(mainPane.getLayoutX() - 10);
 				}
 			}
 
-			if(event.getCode() == KeyCode.D){
-				if(mainPane.getLayoutX() < 0)
+			if (event.getCode() == KeyCode.D)
+			{
+				if (mainPane.getLayoutX() < 0)
 				{
 					mainPane.setLayoutX(mainPane.getLayoutX() + 10);
 				}
 			}
 
-			if(event.getCode() == KeyCode.W){
-				if(mainPane.getLayoutY() > minusWidth)
+			if (event.getCode() == KeyCode.W)
+			{
+				if (mainPane.getLayoutY() > minusWidth)
 				{
 					mainPane.setLayoutY(mainPane.getLayoutY() - 10);
 				}
 			}
 
-			if(event.getCode() == KeyCode.S){
-				if(PANE_HEIGHT - screenY - minusWidth > mainPane.getLayoutY())
+			if (event.getCode() == KeyCode.S)
+			{
+				if (PANE_HEIGHT - screenY - minusWidth > mainPane.getLayoutY())
 				{
 					mainPane.setLayoutY(mainPane.getLayoutY() + 10);
 				}
 			}
 		});
+	}
+
+	@FXML
+	void instructionMenuItem_OnAction(ActionEvent event)
+	{
+		try
+		{
+			Desktop.getDesktop().open(new File("instruction.pdf"));
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

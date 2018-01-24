@@ -47,6 +47,13 @@ import javafx.scene.web.WebView;
 public class Main extends Application
 {
 
+	private static Main mInstance;
+
+	public static Main getInstance() {
+        return mInstance;
+    }
+
+
 	/*
 	 * MainStage
 	 */
