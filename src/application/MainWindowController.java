@@ -1715,6 +1715,7 @@ public class MainWindowController
 						String labValS = l.getText();
 						int tagValue = Integer.parseInt(labValS);
 
+
 						if (tagValue > i)
 						{
 							canRunTransition = false;
@@ -2988,6 +2989,7 @@ public class MainWindowController
 				}
 				if (event.getButton() == MouseButton.PRIMARY)
 				{
+
 					if (event.getSceneY() > minusWidth + 10)
 					{
 						LeftDoubleArrow doubleArrow = new LeftDoubleArrow();
@@ -3077,6 +3079,23 @@ public class MainWindowController
 												control1Y = midY + moveY;
 												control2Y = midY - moveY;
 
+												Label _tmpLabel = null;
+
+												for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+												{
+													if(entry.getValue().equals(ha))
+													{
+														_tmpLabel = entry.getKey();
+													}
+												}
+
+												if(_tmpLabel != null)
+												{
+													tags.remove(_tmpLabel);
+													headArrowTags.remove(_tmpLabel, ha);
+													mainPane.getChildren().remove(_tmpLabel);
+												}
+
 												ha.removeFromMainPane(mainPane);
 												_index = headArrowList.indexOf(ha);
 
@@ -3093,6 +3112,50 @@ public class MainWindowController
 
 											RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY,
 													control2X, control2Y, _cFirstPosX, _cFirstPosY);
+
+
+											Pair<Double, Double> pair = path1.returnMiddlePoint(path1.getStartX(), path1.getStartY(),
+													path1.getEndX(), path1.getEndY());
+											double midX = pair.getKey();
+											double midY = pair.getValue();
+											Pair<Double, Double> pair2 = path1.returnMoveXandY(path1.getStartX(), path1.getStartY(),
+													path1.getEndX(), path1.getEndY());
+											double mvX = pair2.getKey();
+											double mvY = pair2.getValue();
+
+											Label l = new Label();
+											l.setText("1");
+											l.setLayoutX(midX + mvX);
+											l.setLayoutY(midY + mvY);
+											l.setFont(new Font("Arial", 16));
+											l.setId("fancytext");
+											l.setTextFill(Paint.valueOf(tagsColor));
+											mainPane.getChildren().add(l);
+											tags.add(l);
+											leftDoubleArrowTags.put(l, path1);
+
+
+
+											Pair<Double, Double> pairR = path2.returnMiddlePoint(path2.getStartX(), path2.getStartY(),
+													path2.getEndX(), path2.getEndY());
+											double midXR = pair.getKey();
+											double midYR = pair.getValue();
+											Pair<Double, Double> pair2R = path2.returnMoveXandY(path2.getStartX(), path2.getStartY(),
+													path2.getEndX(), path2.getEndY());
+											double mvXR = pair2.getKey();
+											double mvYR = pair2.getValue();
+
+											Label lR = new Label();
+											lR.setText("1");
+											lR.setLayoutX(midXR - mvXR);
+											lR.setLayoutY(midYR - mvYR);
+											lR.setFont(new Font("Arial", 16));
+											lR.setId("fancytext");
+											lR.setTextFill(Paint.valueOf(tagsColor));
+											mainPane.getChildren().add(lR);
+											tags.add(lR);
+											rightDoubleArrowTags.put(lR, path2);
+
 
 											path1.addToMainPane(mainPane);
 											path2.addToMainPane(mainPane);
@@ -3123,6 +3186,29 @@ public class MainWindowController
 											headArrow.setFill(arrowColor);
 											headArrowList.add(headArrow);
 											headArrow.addToMainPane(mainPane);
+
+
+											Pair<Double, Double> pair = headArrow.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
+													headArrow.getEndX(), headArrow.getEndY());
+											double midX = pair.getKey();
+											double midY = pair.getValue();
+											Pair<Double, Double> pair2 = headArrow.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
+													headArrow.getEndX(), headArrow.getEndY());
+											double mvX = pair2.getKey() / 5;
+											double mvY = pair2.getValue() / 5;
+
+											Label l = new Label();
+											l.setText("1");
+											l.setLayoutX(midX + mvX);
+											l.setLayoutY(midY + mvY);
+											l.setFont(new Font("Arial", 16));
+											l.setId("fancytext");
+											l.setTextFill(Paint.valueOf(tagsColor));
+											mainPane.getChildren().add(l);
+											tags.add(l);
+											headArrowTags.put(l, headArrow);
+
+
 
 											setMiddleLabelText("Second point of line...");
 
@@ -3223,6 +3309,23 @@ public class MainWindowController
 											control1Y = midY + moveY;
 											control2Y = midY - moveY;
 
+											Label _tmpLabel = null;
+
+											for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+											{
+												if(entry.getValue().equals(ha))
+												{
+													_tmpLabel = entry.getKey();
+												}
+											}
+
+											if(_tmpLabel != null)
+											{
+												tags.remove(_tmpLabel);
+												headArrowTags.remove(_tmpLabel, ha);
+												mainPane.getChildren().remove(_tmpLabel);
+											}
+
 											ha.removeFromMainPane(mainPane);
 											_index = headArrowList.indexOf(ha);
 
@@ -3237,6 +3340,49 @@ public class MainWindowController
 
 											RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY,
 													control2X, control2Y, _cFirstPosX, _cFirstPosY);
+
+
+											Pair<Double, Double> pair = path1.returnMiddlePoint(path1.getStartX(), path1.getStartY(),
+													path1.getEndX(), path1.getEndY());
+											double midX = pair.getKey();
+											double midY = pair.getValue();
+											Pair<Double, Double> pair2 = path1.returnMoveXandY(path1.getStartX(), path1.getStartY(),
+													path1.getEndX(), path1.getEndY());
+											double mvX = pair2.getKey();
+											double mvY = pair2.getValue();
+
+											Label l = new Label();
+											l.setText("1");
+											l.setLayoutX(midX + mvX);
+											l.setLayoutY(midY + mvY);
+											l.setFont(new Font("Arial", 16));
+											l.setId("fancytext");
+											l.setTextFill(Paint.valueOf(tagsColor));
+											mainPane.getChildren().add(l);
+											tags.add(l);
+											leftDoubleArrowTags.put(l, path1);
+
+
+
+											Pair<Double, Double> pairR = path2.returnMiddlePoint(path2.getStartX(), path2.getStartY(),
+													path2.getEndX(), path2.getEndY());
+											double midXR = pair.getKey();
+											double midYR = pair.getValue();
+											Pair<Double, Double> pair2R = path2.returnMoveXandY(path2.getStartX(), path2.getStartY(),
+													path2.getEndX(), path2.getEndY());
+											double mvXR = pair2.getKey();
+											double mvYR = pair2.getValue();
+
+											Label lR = new Label();
+											lR.setText("1");
+											lR.setLayoutX(midXR - mvXR);
+											lR.setLayoutY(midYR - mvYR);
+											lR.setFont(new Font("Arial", 16));
+											lR.setId("fancytext");
+											lR.setTextFill(Paint.valueOf(tagsColor));
+											mainPane.getChildren().add(lR);
+											tags.add(lR);
+											rightDoubleArrowTags.put(lR, path2);
 
 											path1.addToMainPane(mainPane);
 											path2.addToMainPane(mainPane);
@@ -3266,6 +3412,28 @@ public class MainWindowController
 											headArrow.setFill(arrowColor);
 											headArrowList.add(headArrow);
 											headArrow.addToMainPane(mainPane);
+
+
+											Pair<Double, Double> pair = headArrow.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
+													headArrow.getEndX(), headArrow.getEndY());
+											double midX = pair.getKey();
+											double midY = pair.getValue();
+											Pair<Double, Double> pair2 = headArrow.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
+													headArrow.getEndX(), headArrow.getEndY());
+											double mvX = pair2.getKey() / 5;
+											double mvY = pair2.getValue() / 5;
+
+											Label l = new Label();
+											l.setText("1");
+											l.setLayoutX(midX + mvX);
+											l.setLayoutY(midY + mvY);
+											l.setFont(new Font("Arial", 16));
+											l.setId("fancytext");
+											l.setTextFill(Paint.valueOf(tagsColor));
+											mainPane.getChildren().add(l);
+											tags.add(l);
+											headArrowTags.put(l, headArrow);
+
 											setMiddleLabelText("Second point of line...");
 
 											_cFirstPosX = 0;

@@ -6,6 +6,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
+import javafx.util.Pair;
 
 public class HeadArrow
 {
@@ -16,6 +17,11 @@ public class HeadArrow
 
 	public Line main;
 	public Line left, right;
+
+	static double maxMove = 12.0;
+	static double multiply = 0.01111111111111;
+
+	public static double moveInDoubleLine = 50.0f;
 
 	private static int width = 15;
 
@@ -45,6 +51,29 @@ public class HeadArrow
 		HeadArrow ha = (HeadArrow) obj;
 		return ha.startPointX == startPointX && ha.startPointY == startPointY && ha.endPointX == endPointX
 				&& ha.endPointY == endPointY;
+	}
+
+	public Pair<Double, Double> returnMoveXandY(double firstX, double firstY, double secX, double secY)
+	{
+		double angle = returnAngle(firstX, firstY, secX, secY);
+		double calcAngle = angle % 90;
+		double mvX = ((90 - calcAngle) * multiply) * moveInDoubleLine;
+		double mvY = calcAngle * multiply * moveInDoubleLine;
+		if (angle >= 0 && angle <= 90 || angle > 180 && angle <= 270)
+		{
+			return new Pair<>(moveInDoubleLine - mvX, moveInDoubleLine - mvY);
+
+		} else
+			return new Pair<>(mvX, mvY);
+
+
+	}
+
+	public Pair<Double, Double> returnMiddlePoint(double firstX, double firstY, double secX, double secY)
+	{
+		double midX = (firstX + secX) / 2;
+		double midY = (firstY + secY) / 2;
+		return new Pair<>(midX, midY);
 	}
 
 	public double calculateX(double angle)
