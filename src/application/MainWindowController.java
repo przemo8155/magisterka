@@ -314,7 +314,6 @@ public class MainWindowController
 
 	ObservableList<Circle> moveCircleList = FXCollections.observableArrayList();
 
-
 	Map<Label, Circle> circleTags = new LinkedHashMap<Label, Circle>();
 	Map<Label, Rectangle> rectangleTags = new LinkedHashMap<Label, Rectangle>();
 
@@ -840,9 +839,9 @@ public class MainWindowController
 
 				Label circleTagLabel = null;
 
-				for(Map.Entry<Label, Circle> entry : circleTags.entrySet())
+				for (Map.Entry<Label, Circle> entry : circleTags.entrySet())
 				{
-					if(entry.getValue().equals(c))
+					if (entry.getValue().equals(c))
 					{
 						circleTagLabel = entry.getKey();
 						break;
@@ -1121,15 +1120,12 @@ public class MainWindowController
 					selectedLabel.setLayoutY(c.getCenterY() - 15);
 				}
 
-				if(circleTagLabel != null)
+				if (circleTagLabel != null)
 				{
-					Pair<Double,Double> pair = utilities.returnCircleTagPosition(c, headArrowList);
+					Pair<Double, Double> pair = utilities.returnCircleTagPosition(c, headArrowList);
 					circleTagLabel.setLayoutX(c.getCenterX() + pair.getKey());
 					circleTagLabel.setLayoutY(c.getCenterY() + pair.getValue());
 				}
-
-
-
 
 			} catch (Exception e)
 			{
@@ -1165,9 +1161,9 @@ public class MainWindowController
 
 				Label rectangleTagLabel = null;
 
-				for(Map.Entry<Label, Rectangle> entry : rectangleTags.entrySet())
+				for (Map.Entry<Label, Rectangle> entry : rectangleTags.entrySet())
 				{
-					if(entry.getValue().equals(r))
+					if (entry.getValue().equals(r))
 					{
 						rectangleTagLabel = entry.getKey();
 						break;
@@ -1410,9 +1406,9 @@ public class MainWindowController
 					ha.setFill(arrowColor);
 				}
 
-				if(rectangleTagLabel != null)
+				if (rectangleTagLabel != null)
 				{
-					Pair<Double,Double> pair = utilities.returnRectangleTagPosition(r, headArrowList);
+					Pair<Double, Double> pair = utilities.returnRectangleTagPosition(r, headArrowList);
 					rectangleTagLabel.setLayoutX(r.getX() + 20 + pair.getKey());
 					rectangleTagLabel.setLayoutY(r.getY() + 20 + pair.getValue());
 				}
@@ -1426,9 +1422,24 @@ public class MainWindowController
 	@FXML
 	void anchorPane_OnMouseClicked(MouseEvent event)
 	{
+
+
 		if (event.getSceneY() < minusWidth)
 		{
 			hideInformationTooltip();
+
+			_cFirstPosX = 0;
+			_cSecPosX = 0;
+			_cFirstPosY = 0;
+			_cSecPosY = 0;
+			mainPane.setOnMouseMoved(null);
+			if (!tempSecondClickHa.isEmpty())
+			{
+				for (HeadArrow ha : tempSecondClickHa)
+				{
+					ha.removeFromMainPane(mainPane);
+				}
+			}
 
 		}
 		counters.circleCounter(circleList, numberOfCirclesCreatedL);
@@ -1447,7 +1458,6 @@ public class MainWindowController
 	@FXML
 	void mainPane_OnMouseClicked(MouseEvent event)
 	{
-
 		switch (selectedToggle)
 		{
 
@@ -1714,7 +1724,6 @@ public class MainWindowController
 						int i = checkBitmapToken(positionX, positionY);
 						String labValS = l.getText();
 						int tagValue = Integer.parseInt(labValS);
-
 
 						if (tagValue > i)
 						{
@@ -2058,7 +2067,8 @@ public class MainWindowController
 						tag = utilities.tagDialog();
 						if (utilities.checkNameTagOfCircleOrRectangle(tag) && !tag.equals(""))
 						{
-							Pair<Double, Double> pair = utilities.returnRectangleTagPosition(myRectangle, headArrowList);
+							Pair<Double, Double> pair = utilities.returnRectangleTagPosition(myRectangle,
+									headArrowList);
 							Label l = new Label();
 							l.setText(tag);
 							l.setLayoutX(myRectangle.getX() + 20 + pair.getKey());
@@ -2094,7 +2104,6 @@ public class MainWindowController
 							double mvX = pair2.getKey();
 							double mvY = pair2.getValue();
 
-
 							boolean entryLabel = true;
 
 							for (Map.Entry<Label, LeftDoubleArrow> entry : leftDoubleArrowTags.entrySet())
@@ -2107,7 +2116,7 @@ public class MainWindowController
 								}
 							}
 
-							if(entryLabel)
+							if (entryLabel)
 							{
 								Label l = new Label();
 								l.setText(tag);
@@ -2162,7 +2171,7 @@ public class MainWindowController
 								}
 							}
 
-							if(entryLabel)
+							if (entryLabel)
 							{
 								Label l = new Label();
 								l.setText(tag);
@@ -2216,7 +2225,7 @@ public class MainWindowController
 								}
 							}
 
-							if(entryLabel)
+							if (entryLabel)
 							{
 								Label l = new Label();
 								l.setText(tag);
@@ -3081,15 +3090,15 @@ public class MainWindowController
 
 												Label _tmpLabel = null;
 
-												for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+												for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 												{
-													if(entry.getValue().equals(ha))
+													if (entry.getValue().equals(ha))
 													{
 														_tmpLabel = entry.getKey();
 													}
 												}
 
-												if(_tmpLabel != null)
+												if (_tmpLabel != null)
 												{
 													tags.remove(_tmpLabel);
 													headArrowTags.remove(_tmpLabel, ha);
@@ -3113,13 +3122,12 @@ public class MainWindowController
 											RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY,
 													control2X, control2Y, _cFirstPosX, _cFirstPosY);
 
-
-											Pair<Double, Double> pair = path1.returnMiddlePoint(path1.getStartX(), path1.getStartY(),
-													path1.getEndX(), path1.getEndY());
+											Pair<Double, Double> pair = path1.returnMiddlePoint(path1.getStartX(),
+													path1.getStartY(), path1.getEndX(), path1.getEndY());
 											double midX = pair.getKey();
 											double midY = pair.getValue();
-											Pair<Double, Double> pair2 = path1.returnMoveXandY(path1.getStartX(), path1.getStartY(),
-													path1.getEndX(), path1.getEndY());
+											Pair<Double, Double> pair2 = path1.returnMoveXandY(path1.getStartX(),
+													path1.getStartY(), path1.getEndX(), path1.getEndY());
 											double mvX = pair2.getKey();
 											double mvY = pair2.getValue();
 
@@ -3134,14 +3142,12 @@ public class MainWindowController
 											tags.add(l);
 											leftDoubleArrowTags.put(l, path1);
 
-
-
-											Pair<Double, Double> pairR = path2.returnMiddlePoint(path2.getStartX(), path2.getStartY(),
-													path2.getEndX(), path2.getEndY());
+											Pair<Double, Double> pairR = path2.returnMiddlePoint(path2.getStartX(),
+													path2.getStartY(), path2.getEndX(), path2.getEndY());
 											double midXR = pair.getKey();
 											double midYR = pair.getValue();
-											Pair<Double, Double> pair2R = path2.returnMoveXandY(path2.getStartX(), path2.getStartY(),
-													path2.getEndX(), path2.getEndY());
+											Pair<Double, Double> pair2R = path2.returnMoveXandY(path2.getStartX(),
+													path2.getStartY(), path2.getEndX(), path2.getEndY());
 											double mvXR = pair2.getKey();
 											double mvYR = pair2.getValue();
 
@@ -3155,7 +3161,6 @@ public class MainWindowController
 											mainPane.getChildren().add(lR);
 											tags.add(lR);
 											rightDoubleArrowTags.put(lR, path2);
-
 
 											path1.addToMainPane(mainPane);
 											path2.addToMainPane(mainPane);
@@ -3187,13 +3192,14 @@ public class MainWindowController
 											headArrowList.add(headArrow);
 											headArrow.addToMainPane(mainPane);
 
-
-											Pair<Double, Double> pair = headArrow.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
-													headArrow.getEndX(), headArrow.getEndY());
+											Pair<Double, Double> pair = headArrow.returnMiddlePoint(
+													headArrow.getStartX(), headArrow.getStartY(), headArrow.getEndX(),
+													headArrow.getEndY());
 											double midX = pair.getKey();
 											double midY = pair.getValue();
-											Pair<Double, Double> pair2 = headArrow.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
-													headArrow.getEndX(), headArrow.getEndY());
+											Pair<Double, Double> pair2 = headArrow.returnMoveXandY(
+													headArrow.getStartX(), headArrow.getStartY(), headArrow.getEndX(),
+													headArrow.getEndY());
 											double mvX = pair2.getKey() / 5;
 											double mvY = pair2.getValue() / 5;
 
@@ -3207,8 +3213,6 @@ public class MainWindowController
 											mainPane.getChildren().add(l);
 											tags.add(l);
 											headArrowTags.put(l, headArrow);
-
-
 
 											setMiddleLabelText("Second point of line...");
 
@@ -3311,15 +3315,15 @@ public class MainWindowController
 
 											Label _tmpLabel = null;
 
-											for(Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
+											for (Map.Entry<Label, HeadArrow> entry : headArrowTags.entrySet())
 											{
-												if(entry.getValue().equals(ha))
+												if (entry.getValue().equals(ha))
 												{
 													_tmpLabel = entry.getKey();
 												}
 											}
 
-											if(_tmpLabel != null)
+											if (_tmpLabel != null)
 											{
 												tags.remove(_tmpLabel);
 												headArrowTags.remove(_tmpLabel, ha);
@@ -3341,13 +3345,12 @@ public class MainWindowController
 											RightDoubleArrow path2 = new RightDoubleArrow(_cSecPosX, _cSecPosY,
 													control2X, control2Y, _cFirstPosX, _cFirstPosY);
 
-
-											Pair<Double, Double> pair = path1.returnMiddlePoint(path1.getStartX(), path1.getStartY(),
-													path1.getEndX(), path1.getEndY());
+											Pair<Double, Double> pair = path1.returnMiddlePoint(path1.getStartX(),
+													path1.getStartY(), path1.getEndX(), path1.getEndY());
 											double midX = pair.getKey();
 											double midY = pair.getValue();
-											Pair<Double, Double> pair2 = path1.returnMoveXandY(path1.getStartX(), path1.getStartY(),
-													path1.getEndX(), path1.getEndY());
+											Pair<Double, Double> pair2 = path1.returnMoveXandY(path1.getStartX(),
+													path1.getStartY(), path1.getEndX(), path1.getEndY());
 											double mvX = pair2.getKey();
 											double mvY = pair2.getValue();
 
@@ -3362,14 +3365,12 @@ public class MainWindowController
 											tags.add(l);
 											leftDoubleArrowTags.put(l, path1);
 
-
-
-											Pair<Double, Double> pairR = path2.returnMiddlePoint(path2.getStartX(), path2.getStartY(),
-													path2.getEndX(), path2.getEndY());
+											Pair<Double, Double> pairR = path2.returnMiddlePoint(path2.getStartX(),
+													path2.getStartY(), path2.getEndX(), path2.getEndY());
 											double midXR = pair.getKey();
 											double midYR = pair.getValue();
-											Pair<Double, Double> pair2R = path2.returnMoveXandY(path2.getStartX(), path2.getStartY(),
-													path2.getEndX(), path2.getEndY());
+											Pair<Double, Double> pair2R = path2.returnMoveXandY(path2.getStartX(),
+													path2.getStartY(), path2.getEndX(), path2.getEndY());
 											double mvXR = pair2.getKey();
 											double mvYR = pair2.getValue();
 
@@ -3413,13 +3414,14 @@ public class MainWindowController
 											headArrowList.add(headArrow);
 											headArrow.addToMainPane(mainPane);
 
-
-											Pair<Double, Double> pair = headArrow.returnMiddlePoint(headArrow.getStartX(), headArrow.getStartY(),
-													headArrow.getEndX(), headArrow.getEndY());
+											Pair<Double, Double> pair = headArrow.returnMiddlePoint(
+													headArrow.getStartX(), headArrow.getStartY(), headArrow.getEndX(),
+													headArrow.getEndY());
 											double midX = pair.getKey();
 											double midY = pair.getValue();
-											Pair<Double, Double> pair2 = headArrow.returnMoveXandY(headArrow.getStartX(), headArrow.getStartY(),
-													headArrow.getEndX(), headArrow.getEndY());
+											Pair<Double, Double> pair2 = headArrow.returnMoveXandY(
+													headArrow.getStartX(), headArrow.getStartY(), headArrow.getEndX(),
+													headArrow.getEndY());
 											double mvX = pair2.getKey() / 5;
 											double mvY = pair2.getValue() / 5;
 
