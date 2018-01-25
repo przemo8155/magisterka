@@ -262,6 +262,7 @@ public class FileManager
 				stringBuilder.append(" ");
 				stringBuilder.append(_i3);
 				stringBuilder.append(System.getProperty("line.separator"));
+
 			}
 			final String _haTags = "haTags";
 			stringBuilder.append(_haTags);
@@ -271,7 +272,9 @@ public class FileManager
 				Label l = entry.getKey();
 				HeadArrow rda = entry.getValue();
 				Double _d1 = l.getLayoutX();
+				Integer _i1 = _d1.intValue();
 				Double _d2 = l.getLayoutY();
+				Integer _i2 = _d2.intValue();
 				String _d3 = l.getText();
 				Integer _i3 = Integer.valueOf(_d3);
 
@@ -284,9 +287,9 @@ public class FileManager
 				Integer _i8 = _d8.intValue();
 				Integer _i9 = _d9.intValue();
 
-				stringBuilder.append(_d1);
+				stringBuilder.append(_i1);
 				stringBuilder.append(" ");
-				stringBuilder.append(_d2);
+				stringBuilder.append(_i2);
 				stringBuilder.append(" ");
 				stringBuilder.append(_i3);
 				stringBuilder.append(" ");
@@ -308,7 +311,9 @@ public class FileManager
 				Label l = entry.getKey();
 				RightDoubleArrow rda = entry.getValue();
 				Double _d1 = l.getLayoutX();
+				Integer _i1 = _d1.intValue();
 				Double _d2 = l.getLayoutY();
+				Integer _i2 = _d2.intValue();
 				String _d3 = l.getText();
 
 				Integer _i3 = Integer.valueOf(_d3);
@@ -326,9 +331,9 @@ public class FileManager
 				Integer _i8 = _d8.intValue();
 				Integer _i9 = _d9.intValue();
 
-				stringBuilder.append(_d1);
+				stringBuilder.append(_i1);
 				stringBuilder.append(" ");
-				stringBuilder.append(_d2);
+				stringBuilder.append(_i2);
 				stringBuilder.append(" ");
 				stringBuilder.append(_i3);
 				stringBuilder.append(" ");
@@ -354,7 +359,9 @@ public class FileManager
 				Label l = entry.getKey();
 				LeftDoubleArrow lda = entry.getValue();
 				Double _d1 = l.getLayoutX();
+				Integer _i1 = _d1.intValue();
 				Double _d2 = l.getLayoutY();
+				Integer _i2 = _d2.intValue();
 				String _d3 = l.getText();
 				Integer _i3 = Integer.valueOf(_d3);
 
@@ -371,9 +378,9 @@ public class FileManager
 				Integer _i8 = _d8.intValue();
 				Integer _i9 = _d9.intValue();
 
-				stringBuilder.append(_d1);
+				stringBuilder.append(_i1);
 				stringBuilder.append(" ");
-				stringBuilder.append(_d2);
+				stringBuilder.append(_i2);
 				stringBuilder.append(" ");
 				stringBuilder.append(_i3);
 				stringBuilder.append(" ");
@@ -392,6 +399,9 @@ public class FileManager
 			}
 
 			final String stringToFile = stringBuilder.toString();
+
+			Utilities.infoBox(stringBuilder.toString());
+
 			FileChooser fileChooser = new FileChooser();
 			File file;
 
@@ -628,6 +638,7 @@ public class FileManager
 								le2 = Double.parseDouble(t);
 								faze = 1;
 								HeadArrow ha = new HeadArrow(ls1, ls2, le1, le2, gc);
+
 								arrows.add(ha);
 								break;
 
@@ -941,7 +952,7 @@ public class FileManager
 								l.setLayoutX(labelX);
 								l.setLayoutY(labelY);
 								l.setId("fancytext");
-								tags.add(l);
+								//tags.add(l);
 								faze = 1;
 								break;
 
@@ -961,6 +972,7 @@ public class FileManager
 		try
 		{
 			scanner = new Scanner(file);
+			int myIndex = 0;
 
 			while (scanner.hasNext())
 			{
@@ -973,6 +985,7 @@ public class FileManager
 					while (scanner.hasNext())
 					{
 						t = scanner.next();
+
 
 						if (t.equals("rightTags"))
 						{
@@ -1008,14 +1021,16 @@ public class FileManager
 							case 7:
 								ae2 = Double.parseDouble(t);
 								faze = 1;
-								HeadArrow rda = new HeadArrow(as1, as2, ae1, ae2, gc);
+								HeadArrow rda = arrows.get(myIndex);
 								Label l = new Label();
 								l.setText(labelInt.toString());
 								l.setFont(new Font("Arial", 16));
 								l.setLayoutX(labelX);
 								l.setLayoutY(labelY);
 								l.setId("fancytext");
+								tags.add(l);
 								haTags.put(l, rda);
+								myIndex += 1;
 								break;
 						}
 
@@ -1033,6 +1048,7 @@ public class FileManager
 		try
 		{
 			scanner = new Scanner(file);
+			int myIndex = 0;
 
 			while (scanner.hasNext())
 			{
@@ -1088,14 +1104,16 @@ public class FileManager
 							case 9:
 								ae2 = Double.parseDouble(t);
 								faze = 1;
-								RightDoubleArrow rda = new RightDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
+								RightDoubleArrow rda = rightDoubleArrows.get(myIndex);
 								Label l = new Label();
 								l.setText(labelInt.toString());
 								l.setFont(new Font("Arial", 16));
 								l.setLayoutX(labelX);
 								l.setLayoutY(labelY);
 								l.setId("fancytext");
+								tags.add(l);
 								rightTags.put(l, rda);
+								myIndex+=1;
 								break;
 						}
 
@@ -1113,6 +1131,7 @@ public class FileManager
 		try
 		{
 			scanner = new Scanner(file);
+			int myIndex = 0;
 
 			while (scanner.hasNext())
 			{
@@ -1162,7 +1181,7 @@ public class FileManager
 							case 9:
 								ae2 = Double.parseDouble(t);
 								faze = 1;
-								LeftDoubleArrow lda = new LeftDoubleArrow(as1, as2, ac1, ac2, ae1, ae2);
+								LeftDoubleArrow lda = leftDoubleArrows.get(myIndex);
 								Label l = new Label();
 								l.setText(labelInt.toString());
 								l.setFont(new Font("Arial", 16));
@@ -1170,6 +1189,8 @@ public class FileManager
 								l.setLayoutY(labelY);
 								l.setId("fancytext");
 								leftTags.put(l, lda);
+								tags.add(l);
+								myIndex += 1;
 								break;
 						}
 
