@@ -102,6 +102,11 @@
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/info.png</location>
 		</link>
 		<link>
+			<name>src/application/resources/logo.png</name>
+			<type>1</type>
+			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/logo.png</location>
+		</link>
+		<link>
 			<name>src/application/resources/openapt-background.png</name>
 			<type>1</type>
 			<location>D:/PrzemekWorkspace/MagisterkaBudzich/src/application/resources/openapt-background.png</location>

@@ -5,8 +5,10 @@ package application;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Graphics;
 import java.awt.List;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
@@ -97,6 +100,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
@@ -6016,12 +6020,15 @@ public class MainWindowController
 
 		WritableImage image = mainPane.snapshot(new SnapshotParameters(), null);
 
+
 		if (fileChooser.getSelectedExtensionFilter().toString().equals(ext1.toString()))
 		{
 			try
 			{
 				ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+
 				setMiddleLabelText("Exported to .png file...");
+
 			} catch (IOException e)
 			{
 				Logger.getGlobal();
@@ -6039,6 +6046,28 @@ public class MainWindowController
 				Logger.getGlobal();
 			}
 		}
+
+		try
+		{
+			Image exported = new Image(file.toURI().toURL().toExternalForm());
+			Image logo = new Image("file:resources/logo.png");
+
+		//	BufferedImage logo = ImageIO.read(new File("file:resources/logo.png"));
+			//BufferedImage exported = ImageIO.read(new File(file.toURI().toURL().toExternalForm()));
+
+			int w = (int) Math.max(exported.getWidth(), logo.getWidth());
+			int h = (int) Math.max(exported.getHeight(), logo.getHeight());
+
+			BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+
+
+		} catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 	}
 
