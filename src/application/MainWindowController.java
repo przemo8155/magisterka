@@ -4385,7 +4385,10 @@ public class MainWindowController
 	@FXML
 	void exportPdfMenuItem_OnAction(ActionEvent event)
 	{
+		createExportTmpPaneImage();
 		exportPdf.exportToPDF();
+		setMiddleLabelText("PDF file has been exported...");
+		deleteExportedTmpPaneImage();
 	}
 
 	public Pane getMainPane()
@@ -6010,16 +6013,32 @@ public class MainWindowController
 		}
 	}
 
+	public void createExportTmpPaneImage()
+	{
+		try
+		{
+			WritableImage image = mainPane.snapshot(new SnapshotParameters(), null);
+			File file = new File("tmpImage.png");
+			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+		} catch (IOException e)
+		{
+			Logger.getGlobal();
+		}
+	}
+
+	public void deleteExportedTmpPaneImage()
+	{
+		File f = new File("file:tmpImage.png");
+		if(f.exists())
+		{
+			f.delete();
+		}
+	}
+
 	@FXML
 	void exportImageMenuItem_OnAction(ActionEvent event)
 	{
-		Image logo = new Image("file:resources/logo.png");
-		ImageView iv = new ImageView(logo);
-		iv.setLayoutX(500);
-		iv.setLayoutY(500);
-		iv.setX(500);
-		iv.setY(500);
-		mainPane.getChildren().add(iv);
+
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter ext1 = new ExtensionFilter("PNG file (*.png)", "*.png");
 		FileChooser.ExtensionFilter ext2 = new ExtensionFilter("JPG file (*.jpg)", "*.jpg");
@@ -6028,7 +6047,6 @@ public class MainWindowController
 		File file = fileChooser.showSaveDialog(getAptStage());
 
 		WritableImage image = mainPane.snapshot(new SnapshotParameters(), null);
-
 
 		if (fileChooser.getSelectedExtensionFilter().toString().equals(ext1.toString()))
 		{
@@ -6055,30 +6073,6 @@ public class MainWindowController
 				Logger.getGlobal();
 			}
 		}
-
-		try
-		{
-			Image exported = new Image(file.toURI().toURL().toExternalForm());
-
-
-		//	BufferedImage logo = ImageIO.read(new File("file:resources/logo.png"));
-			//BufferedImage exported = ImageIO.read(new File(file.toURI().toURL().toExternalForm()));
-
-			int w = (int) Math.max(exported.getWidth(), logo.getWidth());
-			int h = (int) Math.max(exported.getHeight(), logo.getHeight());
-
-			BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-			Graphics g = combined.getGraphics();
-
-
-		} catch (MalformedURLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
 
 	}
 
