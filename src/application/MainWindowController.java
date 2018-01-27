@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.List;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -77,6 +78,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
+import javafx.print.PrinterJob;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -6011,6 +6013,13 @@ public class MainWindowController
 	@FXML
 	void exportImageMenuItem_OnAction(ActionEvent event)
 	{
+		Image logo = new Image("file:resources/logo.png");
+		ImageView iv = new ImageView(logo);
+		iv.setLayoutX(500);
+		iv.setLayoutY(500);
+		iv.setX(500);
+		iv.setY(500);
+		mainPane.getChildren().add(iv);
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter ext1 = new ExtensionFilter("PNG file (*.png)", "*.png");
 		FileChooser.ExtensionFilter ext2 = new ExtensionFilter("JPG file (*.jpg)", "*.jpg");
@@ -6050,7 +6059,7 @@ public class MainWindowController
 		try
 		{
 			Image exported = new Image(file.toURI().toURL().toExternalForm());
-			Image logo = new Image("file:resources/logo.png");
+
 
 		//	BufferedImage logo = ImageIO.read(new File("file:resources/logo.png"));
 			//BufferedImage exported = ImageIO.read(new File(file.toURI().toURL().toExternalForm()));
@@ -6059,7 +6068,7 @@ public class MainWindowController
 			int h = (int) Math.max(exported.getHeight(), logo.getHeight());
 
 			BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-
+			Graphics g = combined.getGraphics();
 
 
 		} catch (MalformedURLException e)
@@ -6067,6 +6076,8 @@ public class MainWindowController
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+
 
 
 	}

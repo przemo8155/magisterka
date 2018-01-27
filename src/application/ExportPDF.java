@@ -19,6 +19,7 @@ import com.itextpdf.layout.element.Text;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.print.PrinterJob;
 import javafx.scene.text.Font;
 
 public class ExportPDF
@@ -42,6 +43,13 @@ public class ExportPDF
 				Document document = new Document(pdf, PageSize.A4.rotate());
 				document.setMargins(20, 20, 20, 20);
 				PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+
+				PrinterJob job = PrinterJob.createPrinterJob();
+				 if(job != null){
+				   job.showPrintDialog(window); // Window must be your main Stage
+				   job.printPage(yourNode);
+				   job.endJob();
+				 }
 
 				Paragraph p1 = new Paragraph(title)
 						.setFont(font)
