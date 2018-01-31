@@ -3481,51 +3481,49 @@ public class MainWindowController
 	@FXML
 	void mainPane_OnMouseDragged(MouseEvent event)
 	{
-		switch (selectedToggle)
+		if(selectedToggle.equals("move"))
 		{
-			case "move":
-				hideInformationTooltip();
-				int _it = 0;
-				while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
-						leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags,
-						headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags))
+			hideInformationTooltip();
+			int _it = 0;
+			while (_it < utilities.takeMaximumFromLists(circleList, rectangleList, headArrowList,
+					leftDoubleArrowList, rightDoubleArrowList, existingImageViews, tokensBiggerThanTen, tags,
+					headArrowTags, rightDoubleArrowTags, leftDoubleArrowTags))
+			{
+				try
 				{
-					try
+					Object g = mainPane.getChildren().get(_it);
+					if (g instanceof Circle)
 					{
-						Object g = mainPane.getChildren().get(_it);
-						if (g instanceof Circle)
-						{
-							((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
-							((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
-							objectsMoved += 1;
+						((Circle) g).setOnMousePressed(circleOnMousePressedEventHandler);
+						((Circle) g).setOnMouseDragged(circleOnMouseDraggedEventHandler);
+						objectsMoved += 1;
 
-						}
-
-						if (g instanceof Rectangle)
-						{
-							((Rectangle) g).setOnMousePressed(squareOnMousePressedEventHandler);
-							((Rectangle) g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
-							objectsMoved += 1;
-						}
-
-						if (g instanceof Label)
-						{
-							((Label) g).setOnMousePressed(labelOnMousePressedEventHandler);
-							((Label) g).setOnMouseDragged(labelOnMouseDraggedEventHandler);
-
-							objectsMoved += 1;
-						}
-
-						_it += 1;
-					} catch (Exception e)
-					{
-						System.out.println(e.getLocalizedMessage());
 					}
 
+					if (g instanceof Rectangle)
+					{
+						((Rectangle) g).setOnMousePressed(squareOnMousePressedEventHandler);
+						((Rectangle) g).setOnMouseDragged(squareOnMouseDraggedEventHandler);
+						objectsMoved += 1;
+					}
+
+					if (g instanceof Label)
+					{
+						((Label) g).setOnMousePressed(labelOnMousePressedEventHandler);
+						((Label) g).setOnMouseDragged(labelOnMouseDraggedEventHandler);
+
+						objectsMoved += 1;
+					}
+
+					_it += 1;
+				} catch (Exception e)
+				{
+					System.out.println(e.getLocalizedMessage());
 				}
 
-				break;
+			}
 		}
+
 	}
 
 	public void initialize()
