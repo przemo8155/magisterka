@@ -5708,14 +5708,14 @@ public class MainWindowController
 		try
 		{
 			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("LTSPreview.fxml"));
+			fxmlLoader.setLocation(getClass().getResource("LTS.fxml"));
 			Parent root1 = (Parent) fxmlLoader.load();
 			utilities.createTemponaryFile(p, statesListFromFile, labelsListFromFile, arcsListFromFile);
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root1));
 			stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();
-		} catch (IOException e)
+		} catch (IOException e )
 		{
 			e.printStackTrace();
 		}

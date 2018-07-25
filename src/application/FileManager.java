@@ -400,7 +400,7 @@ public class FileManager
 
 			final String stringToFile = stringBuilder.toString();
 
-			Utilities.infoBox(stringBuilder.toString());
+//			Utilities.infoBox(stringBuilder.toString());
 
 			FileChooser fileChooser = new FileChooser();
 			File file;
