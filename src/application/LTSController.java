@@ -15,9 +15,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -36,6 +41,8 @@ public class LTSController
 	private Label pathInfoLabel, pathLabel, ltsPreviewLabel;
 
 	Utilities utilities = new Utilities();
+
+	private static final double defaultArrowHeadSize = 5.0;
 
 	ObservableList<String> statesListFromFile = FXCollections.observableArrayList();
 	ObservableList<String> labelsListFromFile = FXCollections.observableArrayList();
@@ -345,19 +352,42 @@ public class LTSController
 		this.closeButton.setLayoutY(levelY + 60);
 
 		ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainPane.getChildren());
-		System.out.println("size: " + workingCollection.size());
 		Collections.swap(workingCollection, 0, 1);
 		mainPane.getChildren().setAll(workingCollection);
 
 
 	}
 
-	void createLine(double posXS, double posYS, double posXE, double posYE, String text)
+	void createLine(double startX, double startY, double endX, double endY, String text)
 	{
-		Line l = new Line(posXS + 6, posYS + 10, posXE + 6, posYE + 10);
+		Line l = new Line(startX + 6, startY + 10, endX + 6, endY + 10);
 		l.setStrokeWidth(3.0f);
 		mainPane.getChildren().add(l);
 		l.toBack();
+
+		double angle = Math.atan2((endY + 10 - startY), (endX - startX)) - Math.PI / 2.0;
+        double sin = Math.sin(angle);
+        double cos = Math.cos(angle);
+        //point1
+        double x1 = (- 1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * defaultArrowHeadSize + endX;
+        double y1 = (- 1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * defaultArrowHeadSize + endY;
+        //point2
+        double x2 = (1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * defaultArrowHeadSize + endX;
+        double y2 = (1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * defaultArrowHeadSize + endY;
+
+        double minus = angle/90;
+        double Xminus = 10 - minus*5;
+        double Yminus = 10 - minus*5;
+
+        Line left = new Line(endX + 6, endY + 10, x1 + 6, y1 + 10);
+        left.setStrokeWidth(3.0f);
+		mainPane.getChildren().add(left);
+
+		Line right = new Line(endX + 6, endY + 10, x2 + 6, y2 + 10);
+        right.setStrokeWidth(3.0f);
+		mainPane.getChildren().add(right);
+
+
 
 	}
 

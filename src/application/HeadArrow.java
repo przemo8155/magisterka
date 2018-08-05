@@ -481,4 +481,12 @@ public class HeadArrow
 		this.right.setEffect(effect);
 	}
 
+	public void toBack()
+	{
+		this.main.toBack();
+		this.left.toBack();
+		this.right.toBack();
+
+	}
+
 }
