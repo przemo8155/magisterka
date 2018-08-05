@@ -24,6 +24,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LTSController
@@ -364,31 +365,12 @@ public class LTSController
 		l.setStrokeWidth(3.0f);
 		mainPane.getChildren().add(l);
 		l.toBack();
-
-		double angle = Math.atan2((endY + 10 - startY), (endX - startX)) - Math.PI / 2.0;
-        double sin = Math.sin(angle);
-        double cos = Math.cos(angle);
-        //point1
-        double x1 = (- 1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * defaultArrowHeadSize + endX;
-        double y1 = (- 1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * defaultArrowHeadSize + endY;
-        //point2
-        double x2 = (1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * defaultArrowHeadSize + endX;
-        double y2 = (1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * defaultArrowHeadSize + endY;
-
-        double minus = angle/90;
-        double Xminus = 10 - minus*5;
-        double Yminus = 10 - minus*5;
-
-        Line left = new Line(endX + 6, endY + 10, x1 + 6, y1 + 10);
-        left.setStrokeWidth(3.0f);
-		mainPane.getChildren().add(left);
-
-		Line right = new Line(endX + 6, endY + 10, x2 + 6, y2 + 10);
-        right.setStrokeWidth(3.0f);
-		mainPane.getChildren().add(right);
-
-
-
+		Text t = new Text(text);
+		t.setLayoutX((startX+6 + endX + 12)/2);
+		t.setLayoutY((startY + 10 + endY + 55)/2);
+		t.setFont(Font.font(14));
+		t.setFill(Color.BLUE);
+		mainPane.getChildren().add(t);
 	}
 
 
