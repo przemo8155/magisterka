@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -51,6 +53,24 @@ public class LTSController
 	ObservableList<String> level6 = FXCollections.observableArrayList();
 	ObservableList<String> level7 = FXCollections.observableArrayList();
 	ObservableList<String> level8 = FXCollections.observableArrayList();
+
+	ObservableList<Circle> level1Circ = FXCollections.observableArrayList();
+	ObservableList<Circle> level2Circ = FXCollections.observableArrayList();
+	ObservableList<Circle> level3Circ = FXCollections.observableArrayList();
+	ObservableList<Circle> level4Circ = FXCollections.observableArrayList();
+	ObservableList<Circle> level5Circ = FXCollections.observableArrayList();
+	ObservableList<Circle> level6Circ = FXCollections.observableArrayList();
+	ObservableList<Circle> level7Circ = FXCollections.observableArrayList();
+	ObservableList<Circle> level8Circ = FXCollections.observableArrayList();
+
+	ObservableList<Label> level1Lab = FXCollections.observableArrayList();
+	ObservableList<Label> level2Lab = FXCollections.observableArrayList();
+	ObservableList<Label> level3Lab = FXCollections.observableArrayList();
+	ObservableList<Label> level4Lab = FXCollections.observableArrayList();
+	ObservableList<Label> level5Lab = FXCollections.observableArrayList();
+	ObservableList<Label> level6Lab = FXCollections.observableArrayList();
+	ObservableList<Label> level7Lab = FXCollections.observableArrayList();
+	ObservableList<Label> level8Lab = FXCollections.observableArrayList();
 
 
 	private String filePath = "";
@@ -130,44 +150,184 @@ public class LTSController
 					level5.add(parts[2]);
 				}
 			}
+
+			for(String state : level5)
+			{
+				if(state.equals(parts[0]) && !level6.contains(parts[2]) && !level5.contains(parts[2]) && !level4.contains(parts[2]) && !level3.contains(parts[2]) && !level2.contains(parts[2]) && !level1.contains(parts[2]))
+				{
+					level6.add(parts[2]);
+				}
+			}
 		}
 
 		for(String s : level1)
 		{
-			createCircle(width/2, 200, s);
-			System.out.println("level 1: " + s);
+			createCircle(width/2, 200, s, level1Circ, level1Lab);
 		}
 
-		System.out.println();
 
 		for(String s : level2)
 		{
-			createCircle((level2.indexOf(s) + 1) * (width / (level2.size() + 1)), 300, s);
-			System.out.println("level 2: " + s);
+			createCircle((level2.indexOf(s) + 1) * (width / (level2.size() + 1)), 300, s, level2Circ, level2Lab);
 		}
 
-		System.out.println();
 
 		for(String s : level3)
 		{
-			createCircle((level3.indexOf(s) + 1) * (width / (level3.size() + 1)), 400, s);
-			System.out.println("level 3: " + s);
+			createCircle((level3.indexOf(s) + 1) * (width / (level3.size() + 1)), 400, s, level3Circ, level3Lab);
 		}
 
-		System.out.println();
 
 		for(String s : level4)
 		{
-			createCircle((level4.indexOf(s) + 1) * (width / (level4.size() + 1)), 500, s);
-			System.out.println("level 4: " + s);
+			createCircle((level4.indexOf(s) + 1) * (width / (level4.size() + 1)), 500, s, level4Circ, level4Lab);
 		}
 
-		System.out.println();
 
 		for(String s : level5)
 		{
-			createCircle((level5.indexOf(s) + 1) * (width / (level5.size() + 1)), 600, s);
-			System.out.println("level 5: " + s);
+			createCircle((level5.indexOf(s) + 1) * (width / (level5.size() + 1)), 600, s, level5Circ, level5Lab);
+		}
+
+		for(String s : level6)
+		{
+			createCircle((level6.indexOf(s) + 1) * (width / (level6.size() + 1)), 700, s, level6Circ, level6Lab);
+		}
+
+
+		for(String arc : arcsListFromFile)
+		{
+			String[] parts = arc.split(" ");
+			String one = parts[0];
+			String two = parts[2];
+			String line = parts[1];
+
+
+
+			if(level1.contains(one))
+			{
+				int indexOf = level2.indexOf(two);
+				int indexOfL1 = level1.indexOf(one);
+				if(indexOf > -1 && indexOfL1 > -1)
+				{
+					Label l = level2Lab.get(indexOf);
+					double posXE = l.getLayoutX();
+					double posYE = l.getLayoutY();
+					Label lab = level1Lab.get(indexOfL1);
+					double posXS = lab.getLayoutX();
+					double posYS = lab.getLayoutY();
+					createLine(posXS, posYS, posXE, posYE, line);
+
+				}
+			}
+
+			else if(level2.contains(one))
+			{
+				int indexOf = level3.indexOf(two);
+				int indexOfL1 = level2.indexOf(one);
+				if(indexOf > -1 && indexOfL1 > -1)
+				{
+					Label l = level3Lab.get(indexOf);
+					double posXE = l.getLayoutX();
+					double posYE = l.getLayoutY();
+
+					Label lab = level2Lab.get(indexOfL1);
+					double posXS = lab.getLayoutX();
+					double posYS = lab.getLayoutY();
+					createLine(posXS, posYS, posXE, posYE, line);
+				}
+
+			}
+
+			else if(level3.contains(one))
+			{
+				int indexOf = level4.indexOf(two);
+				int indexOfL1 = level3.indexOf(one);
+				if(indexOf > -1 && indexOfL1 > -1)
+				{
+					Label l = level4Lab.get(indexOf);
+					double posXE = l.getLayoutX();
+					double posYE = l.getLayoutY();
+
+					Label lab = level3Lab.get(indexOfL1);
+					double posXS = lab.getLayoutX();
+					double posYS = lab.getLayoutY();
+					createLine(posXS, posYS, posXE, posYE, line);
+				}
+
+			}
+
+			else if(level4.contains(one))
+			{
+				int indexOf = level5.indexOf(two);
+				int indexOfL1 = level4.indexOf(one);
+				if(indexOf > -1 && indexOfL1 > -1)
+				{
+					Label l = level5Lab.get(indexOf);
+					double posXE = l.getLayoutX();
+					double posYE = l.getLayoutY();
+
+					Label lab = level4Lab.get(indexOfL1);
+					double posXS = lab.getLayoutX();
+					double posYS = lab.getLayoutY();
+					createLine(posXS, posYS, posXE, posYE, line);
+				}
+
+			}
+
+			else if(level5.contains(one))
+			{
+				int indexOf = level6.indexOf(two);
+				int indexOfL1 = level5.indexOf(one);
+				if(indexOf > -1 && indexOfL1 > -1)
+				{
+					Label l = level6Lab.get(indexOf);
+					double posXE = l.getLayoutX();
+					double posYE = l.getLayoutY();
+
+					Label lab = level5Lab.get(indexOfL1);
+					double posXS = lab.getLayoutX();
+					double posYS = lab.getLayoutY();
+					createLine(posXS, posYS, posXE, posYE, line);
+				}
+
+			}
+
+			else if(level6.contains(one))
+			{
+				int indexOf = level7.indexOf(two);
+				int indexOfL1 = level6.indexOf(one);
+				if(indexOf > -1 && indexOfL1 > -1)
+				{
+					Label l = level7Lab.get(indexOf);
+					double posXE = l.getLayoutX();
+					double posYE = l.getLayoutY();
+
+					Label lab = level6Lab.get(indexOfL1);
+					double posXS = lab.getLayoutX();
+					double posYS = lab.getLayoutY();
+					createLine(posXS, posYS, posXE, posYE, line);
+				}
+
+			}
+
+			else if(level7.contains(one))
+			{
+				int indexOf = level8.indexOf(two);
+				int indexOfL1 = level7.indexOf(one);
+				if(indexOf > -1 && indexOfL1 > -1)
+				{
+					Label l = level8Lab.get(indexOf);
+					double posXE = l.getLayoutX();
+					double posYE = l.getLayoutY();
+
+					Label lab = level7Lab.get(indexOfL1);
+					double posXS = lab.getLayoutX();
+					double posYS = lab.getLayoutY();
+					createLine(posXS, posYS, posXE, posYE, line);
+				}
+
+			}
 		}
 
 
@@ -180,42 +340,30 @@ public class LTSController
 		scrollMainPane.setContent(mainPane);
 		scrollMainPane.setMinHeight(levelY + 60);
 		scrollMainPane.setMaxHeight(levelY + 60);
-		mainPane.setMinHeight(levelY + 60);
-		mainPane.setMinHeight(levelY + 60);
+		mainPane.setMinHeight(levelY + 100);
+		mainPane.setMinHeight(levelY + 100);
 		this.closeButton.setLayoutY(levelY + 60);
 
+		ObservableList<Node> workingCollection = FXCollections.observableArrayList(mainPane.getChildren());
+		System.out.println("size: " + workingCollection.size());
+		Collections.swap(workingCollection, 0, 1);
+		mainPane.getChildren().setAll(workingCollection);
+
 
 	}
 
-	public void drawTree(TreeNode<String> tree) {
+	void createLine(double posXS, double posYS, double posXE, double posYE, String text)
+	{
+		Line l = new Line(posXS + 6, posYS + 10, posXE + 6, posYE + 10);
+		l.setStrokeWidth(3.0f);
+		mainPane.getChildren().add(l);
+		l.toBack();
 
 	}
 
-	public static TreeNode<String> getSet1() {
-		TreeNode<String> root = new TreeNode<String>("root");
-		{
-			TreeNode<String> node0 = root.addChild("node0");
-			TreeNode<String> node1 = root.addChild("node1");
-			TreeNode<String> node2 = root.addChild("node2");
-			{
-				TreeNode<String> node20 = node2.addChild("node20");
-				TreeNode<String> node21 = node2.addChild("node21");
-				{
-					TreeNode<String> node210 = node21.addChild("node210");
-					TreeNode<String> node211 = node21.addChild("node211");
-				}
-			}
-			TreeNode<String> node3 = root.addChild("node3");
-			{
-				TreeNode<String> node30 = node3.addChild("node30");
-			}
-		}
-
-		return root;
-	}
 
 
-	void createCircle(double posX, double posY, String text)
+	void createCircle(double posX, double posY, String text, ObservableList<Circle> cList, ObservableList<Label> lList)
 	{
 		Circle c = new Circle(posX, posY, 15.0f, Paint.valueOf("#FFFFFF"));
 		mainPane.getChildren().add(c);
@@ -224,6 +372,9 @@ public class LTSController
 		lab.setLayoutY(c.getCenterY() - 10);
 		lab.setFont(Font.font(14));
 		mainPane.getChildren().add(lab);
+
+		cList.add(c);
+		lList.add(lab);
 	}
 
 	void readTemponaryFile()
