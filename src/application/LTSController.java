@@ -359,18 +359,61 @@ public class LTSController
 
 	}
 
+	double calculateLength(double startX, double startY, double endX, double endY)
+	{
+		double l1 = startX > endX ? startX - endX : endX - startX;
+		double l2 = startY > endY ? startY - endY : endY - startY;
+		double to_return = Math.sqrt(l1*l1 + l2*l2);
+
+		return to_return;
+
+	}
+
 	void createLine(double startX, double startY, double endX, double endY, String text)
 	{
 		Line l = new Line(startX + 6, startY + 10, endX + 6, endY + 10);
 		l.setStrokeWidth(3.0f);
 		mainPane.getChildren().add(l);
 		l.toBack();
+
+
 		Text t = new Text(text);
 		t.setLayoutX((startX+6 + endX + 12)/2);
 		t.setLayoutY((startY + 10 + endY + 55)/2);
 		t.setFont(Font.font(14));
 		t.setFill(Color.BLUE);
 		mainPane.getChildren().add(t);
+
+		double angle = 0;
+		angle = Math.atan2(startX - endX, startY - endY);
+		angle = angle * 180 / Math.PI;
+		System.out.println(angle);
+		/*W prawo sa katy 0-180 w lewo -1- -179*/
+		double x = 0;
+		double y = 0;
+		if(angle >= 0)
+		{
+			angle = angle - 90;
+			x = -(90-angle)*15;
+			x = x/100;
+
+
+			y = (angle)*15;
+			y = y/ 100;
+			System.out.println("x: " + x + " y: " + y);
+		}
+
+		else
+		{
+			angle = -angle;
+			angle = angle - 90;
+			x = (90-angle)*15;
+			x = x/100;
+
+			y = (angle)*15;
+			y = y/100;
+			System.out.println("x: " + x + " y: " + y);
+		}
 	}
 
 
