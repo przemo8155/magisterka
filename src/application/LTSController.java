@@ -384,36 +384,44 @@ public class LTSController
 		t.setFill(Color.BLUE);
 		mainPane.getChildren().add(t);
 
-		double angle = 0;
-		angle = Math.atan2(startX - endX, startY - endY);
-		angle = angle * 180 / Math.PI;
-		System.out.println(angle);
-		/*W prawo sa katy 0-180 w lewo -1- -179*/
-		double x = 0;
-		double y = 0;
-		if(angle >= 0)
+
+
+		double ax1 = startX + 6;
+		double ax2 = endX + 6;
+		double ay1 = startY + 10;
+		double ay2 = endY + 10;
+
+		double arrowAngle = Math.toRadians(8.0);
+		double arrowLength = 30.0;
+		double dx = ax1 - ax2;
+		double dy = ay1 - ay2;
+		double angle = Math.atan2(dy, dx);
+		double x1 = Math.cos(angle + arrowAngle) * arrowLength + ax2;
+		double y1 = Math.sin(angle + arrowAngle) * arrowLength + ay2;
+
+		double x2 = Math.cos(angle - arrowAngle) * arrowLength + ax2;
+		double y2 = Math.sin(angle - arrowAngle) * arrowLength + ay2;
+
+		HeadArrow ha = new HeadArrow();
+		double myAngle = ha.returnAngle(ax1, ay1, ax2, ay2);
+		double myX = ha.calculateX(myAngle) /2;
+		double myY = ha.calculateY(myAngle) / 2;
+
+		if(myAngle == 0)
 		{
-			angle = angle - 90;
-			x = -(90-angle)*15;
-			x = x/100;
-
-
-			y = (angle)*15;
-			y = y/ 100;
-			System.out.println("x: " + x + " y: " + y);
+			myX = 0;
 		}
 
-		else
-		{
-			angle = -angle;
-			angle = angle - 90;
-			x = (90-angle)*15;
-			x = x/100;
+		Line left = new Line(ax2 - myX, ay2 - myY, x1 - myX, y1 - myY);
+		left.setStrokeWidth(5.0f);
+		Line right = new Line(ax2 - myX, ay2 - myY, x2 - myX, y2 - myY);
+		right.setStrokeWidth(5.0f);
 
-			y = (angle)*15;
-			y = y/100;
-			System.out.println("x: " + x + " y: " + y);
-		}
+		mainPane.getChildren().add(left);
+		mainPane.getChildren().add(right);
+
+		left.toBack();
+		right.toBack();
 	}
 
 
